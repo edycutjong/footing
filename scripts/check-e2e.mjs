@@ -52,9 +52,20 @@ try {
       state = await page.evaluate(() => window.__footing);
     }
   }
+  await page.screenshot({ path: `evidence/check/${label}-${date}.png`, fullPage: true });
+  const openState = arg("--open", null);
   mkdirSync("evidence/check", { recursive: true });
-  const shot = `evidence/check/${label}-${date}.png`;
-  await page.screenshot({ path: shot, fullPage: true });
+  if (openState) {
+    // Prefer an escalation the cloud overruled (d → c), else the first chip in that state; screenshot the evidence pane.
+    const i = state.runs.findIndex((r) => r.state === openState && r.sources.length > 1);
+    const j = i >= 0 ? i : state.runs.findIndex((r) => r.state === openState);
+    if (j >= 0) {
+      await page.evaluate((idx) => document.querySelectorAll(".chip")[idx].click(), j);
+      await page.waitForSelector(".pane");
+      await new Promise((r) => setTimeout(r, 400));
+      await page.screenshot({ path: `evidence/check/${label}-${date}-pane.png` });
+    }
+  }
   const rec = { label, force, answer: answerFile ?? "seed/answers/hero.json", recordedAt: new Date().toISOString(), baseUrl: base, userAgent: ua, machine: "MacBook Pro M1 Max, 32 GB", deviceBefore, appCheckDebugTokenInjected: !!token, wallMs, banner, ...state };
   writeFileSync(`evidence/check/${label}-${date}.json`, JSON.stringify(rec, null, 2) + "\n");
   const t = state.tally;

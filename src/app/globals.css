@@ -90,7 +90,11 @@ button { font: inherit; cursor: pointer; }
 @keyframes slide { from { transform: translateX(24px); opacity: 0; } to { transform: none; opacity: 1; } }
 .pane h2 { font-family: var(--font-display), Georgia, serif; font-size: 22px; margin: 0 0 4px; }
 .pane .close { float: right; }
+.pane .verdict { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 4px; }
+.pane .verdict svg { width: 28px; height: 22px; overflow: visible; flex: none; }
+.pane { overflow-x: hidden; }
 .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+.cols > div { min-width: 0; overflow-wrap: anywhere; }
 .cols h4 { margin: 0 0 6px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
 .cols p { font-size: 17px; line-height: 1.5; margin: 0; }
 .miss { border: 1.5px solid var(--after); border-radius: 50%; padding: 0 3px; }

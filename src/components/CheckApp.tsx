@@ -57,7 +57,8 @@ function Excerpt({ input, quote }: { input?: string; quote?: string }) {
   if (!input) return <p className="data">No source text (read in the cloud from the URL).</p>;
   const text = normalize(input);
   const q = quote ? normalize(quote) : "";
-  const at = q ? text.indexOf(q) : -1;
+  // modelInput = passages + page window; the last occurrence sits in the page window, i.e. in page order.
+  const at = q ? text.lastIndexOf(q) : -1;
   if (at < 0) return <p>{text.slice(0, 500)}{text.length > 500 ? "…" : ""}</p>;
   const a = Math.max(0, at - 220), b = Math.min(text.length, at + q.length + 220);
   return <p>{a > 0 ? "…" : ""}{text.slice(a, at)}<span className="found">{text.slice(at, at + q.length)}</span>{text.slice(at + q.length, b)}{b < text.length ? "…" : ""}</p>;
@@ -82,7 +83,7 @@ function Pane({ r, onClose, onConfirm }: { r: PairRun; onClose: () => void; onCo
     <aside className="pane" role="dialog" aria-label={`Evidence for sentence ${r.pair.s + 1}`}>
       <button className="ghost close" onClick={onClose} aria-label="Close evidence">Close ✕</button>
       <h2>Sentence {r.pair.s + 1}{r.pair.n !== null ? ` · source [${r.pair.n}]` : ""}</h2>
-      <div className={`s-${r.state}${cfg.deviceNegativeStyle === "neutral" && r.state === "LIKELY_UNSUPPORTED" ? " neutral" : ""}`} style={{ display: "flex", gap: 8, alignItems: "center" }}>
+      <div className={`verdict s-${r.state}${cfg.deviceNegativeStyle === "neutral" && r.state === "LIKELY_UNSUPPORTED" ? " neutral" : ""}`}>
         <Mark state={r.state} held={r.nanoQuoteHeld} neutral={cfg.deviceNegativeStyle === "neutral"} /> <b>{VERDICT_WORDS[r.state] ?? chipText(r, cfg.deviceNegativeStyle).title}</b> <Badges sources={r.sources} />
       </div>
       {r.reason && <p style={{ margin: "6px 0 0" }}>{r.reason}</p>}
