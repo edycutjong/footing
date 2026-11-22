@@ -24,9 +24,9 @@ function chipText(r: PairRun | undefined, style: "likely" | "neutral"): { title:
     case "NOT_FOUND_TRUNCATED": return { title: r.note ?? "not found in the part read" };
     case "NOT_CHECKED": return { title: r.reason ?? "not checked" };
     case "CAP_REACHED": return { title: r.reason ?? "check skipped (cap) — tap to confirm" };
-    case "escalated": return { title: r.nanoQuoteHeld ? "Nano found a candidate quote · checking in the cloud" : "Nano's result needs the cloud · checking" };
+    case "escalated": return { title: r.nanoQuoteHeld ? "Nano found a candidate quote · checking in the cloud" : "Nano's result needs the cloud · checking", sub: r.note };
     case "triage": return { title: "reading on this laptop…" };
-    case "deciding": return { title: "deciding in the cloud…" };
+    case "deciding": return { title: "deciding in the cloud…", sub: r.note };
     default: return { title: "checking…" };
   }
 }
@@ -315,6 +315,9 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
 
   const openRun = open ? byId.get(open) : undefined;
   const checked = runs.filter((r) => !["queued", "fetching", "triage", "escalated", "deciding"].includes(r.state)).length;
+  // After a check, one click to the first citation whose source does not (fully) say the sentence (a2a r05: the "oh" beat was a hunt).
+  const firstFlag = runs.find((r) => r.state === "NOT_SUPPORTED" || r.state === "PARTIAL")
+    ?? runs.find((r) => r.state === "LIKELY_UNSUPPORTED");
   const style = cfg.deviceNegativeStyle;
   const nanoFirst = useMemo(
     () => runs.filter((r) => r.planned?.to === "DEVICE_TRIAGE").length,
@@ -344,7 +347,7 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
           <span><b>{mine ? "Your pasted answer" : hero.provenance}</b></span>
           <span>{parsed.pairs.length} citations · {parsed.sentences.length} sentences{parsed.unresolved.length ? ` · ${parsed.unresolved.length} unresolved marker(s)` : ""}</span>
           {!mine && <span title={hero.how}>how captured: unedited, see <a href="/eval">/eval</a></span>}
-          <span><a href="/about">what it checks</a> · <a href="/eval">measured results</a></span>
+          <span><a href="/about">what it checks</a> · <a href="/about#fx-hero">recorded Nano run</a> · <a href="/eval">measured results</a></span>
           <button className="ghost" style={{ padding: "2px 8px" }} onClick={() => setShowPaste((v) => !v)} aria-expanded={showPaste}>{showPaste ? "Hide paste box" : "Paste your own answer"}</button>
         </div>
       </header>
@@ -419,6 +422,11 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
             <div className="total" aria-live="polite">
               <span className="big">{runs.length ? `${t.k} of ${t.n}` : "— of —"}</span>
               <span style={{ fontSize: 18 }}>checked citations: the source doesn&apos;t say it (or says only part)</span>
+              {done && firstFlag && (
+                <button className="ghost" style={{ padding: "2px 8px" }} onClick={() => setOpen(firstFlag.pair.id)}>
+                  Open the first flagged citation (sentence {firstFlag.pair.s + 1}) →
+                </button>
+              )}
               {runs.length > 0 && t.notChecked + t.unverified > 0 && (
                 <span className="unread">· {t.notChecked + t.unverified} of {t.total} could not be checked (see the typed line)</span>
               )}
@@ -436,6 +444,7 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
               <div className="meter">
                 On a Nano laptop, <b>{nanoFirst} of {nanoLaptop}</b> citations would be read on-device first (readable pages; PDFs and pages that need JavaScript go to the cloud).
                 {meter.show && meter.settledPct !== undefined ? ` On our held-out set Nano settled ${meter.settledPct}% of those without the cloud, and ${meter.right} of ${meter.settled} of those on-device flags matched the label (M1 Max).` : ""}{" "}
+                <a href="/about#fx-hero">Watch a recorded Nano run of the sample answer →</a>{" "}
                 <a href="/eval">Measured results →</a>
               </div>
             )}
