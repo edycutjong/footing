@@ -7,6 +7,8 @@ type Run = { id: string; state: string; sources: string[]; quote?: string; reaso
 type Footing = { done: boolean; device: string; tally: { k: number; n: number; total: number; notChecked: number; unverified: number }; runs: Run[]; cloudUsed: number };
 
 test("check sources: chips land with a routing badge and every verdict carries a quote that passed the gate", async ({ page }) => {
+  const token = process.env.FIREBASE_APPCHECK_DEBUG_TOKEN; // optional, CI-runner fallback only; unset on a normal run
+  if (token) await page.addInitScript((t) => { (self as unknown as { FIREBASE_APPCHECK_DEBUG_TOKEN: string }).FIREBASE_APPCHECK_DEBUG_TOKEN = t; }, token);
   await page.goto("/");
   await page.waitForFunction(() => (window as unknown as { __footing?: Footing }).__footing?.device !== "checking", undefined, { timeout: 60_000 });
   await page.getByRole("button", { name: /Check sources/ }).click();
@@ -23,7 +25,7 @@ test("check sources: chips land with a routing badge and every verdict carries a
   expect(decided.length, "citations decided by a model").toBeGreaterThanOrEqual(5);
 
   // The routing badge is the response's real inferenceSource, and on a no-Nano browser it is the cloud.
-  await expect(page.locator(".chip .badge.c").first()).toBeVisible();
+  await expect(page.locator(".chip .badge.c", { hasText: "IN CLOUD" }).first()).toBeVisible();
   if (f.device !== "available") expect(await page.locator(".chip .badge.d").count()).toBe(0);
   for (const r of decided) expect(r.sources.length, `route recorded for ${r.id}`).toBeGreaterThan(0);
 
@@ -33,7 +35,7 @@ test("check sources: chips land with a routing badge and every verdict carries a
   expect(f.tally.k).toBeLessThanOrEqual(f.tally.n);
 
   // The evidence pane opens on a decided chip and shows the sentence beside the source quote.
-  const firstDecided = f.runs.findIndex((r) => r.state === "SUPPORTS");
+  const firstDecided = f.runs.findIndex((r) => ["SUPPORTS", "PARTIAL", "NOT_SUPPORTED"].includes(r.state));
   expect(firstDecided).toBeGreaterThanOrEqual(0);
   await page.locator(".chip").nth(firstDecided).click();
   const pane = page.getByRole("dialog");

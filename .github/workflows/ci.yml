@@ -9,7 +9,7 @@ on:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 permissions:
   contents: read
@@ -131,7 +131,7 @@ jobs:
           export BUILD_SHA="${GITHUB_SHA}"
           npx vercel pull --yes --environment=production --token "$VERCEL_TOKEN"
           npx vercel build --prod --token "$VERCEL_TOKEN"
-          npx vercel deploy --prebuilt --prod --token "$VERCEL_TOKEN"
+          npx vercel deploy --prebuilt --prod --env BUILD_SHA="$BUILD_SHA" --build-env BUILD_SHA="$BUILD_SHA" --token "$VERCEL_TOKEN"
       - name: Wait for the live build to report this commit
         run: |
           set -euo pipefail
@@ -148,7 +148,7 @@ jobs:
   e2e:
     name: "Stage 5 · E2E on the live URL (Playwright)"
     needs: [deploy]
-    if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main' && (needs.deploy.result == 'success' || needs.deploy.result == 'skipped')
+    if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main' && needs.deploy.result == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -163,6 +163,8 @@ jobs:
         env:
           CI: "true"
           BASE_URL: ${{ env.LIVE_URL }}
+          # Optional: only if reCAPTCHA Enterprise scores GitHub's datacenter runner too low for a production token.
+          FIREBASE_APPCHECK_DEBUG_TOKEN: ${{ secrets.E2E_APPCHECK_DEBUG_TOKEN }}
       - name: Upload report on failure
         if: failure()
         uses: actions/upload-artifact@v4

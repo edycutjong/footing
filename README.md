@@ -15,7 +15,6 @@
   ![Next.js](https://img.shields.io/badge/Next.js_16-black?style=flat&logo=next.js)
   ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
   ![Firebase AI Logic](https://img.shields.io/badge/Firebase_AI_Logic-hybrid_inference-FFCA28?style=flat)
-  [![CI/CD](https://github.com/edycutjong/footing/actions/workflows/ci.yml/badge.svg)](https://github.com/edycutjong/footing/actions/workflows/ci.yml)
   [![Release](https://img.shields.io/github/v/release/edycutjong/footing?style=flat&color=2B5C9E)](https://github.com/edycutjong/footing/releases)
   ![Tests](https://img.shields.io/badge/tests-191_passing-2F6B45?style=flat)
   [![License](https://img.shields.io/badge/License-Apache_2.0-yellow)](LICENSE)
@@ -112,32 +111,28 @@ and covered by the E2E run instead, see `vitest.config.ts`).
 
 **Latency per claim** (`npm run bench`, raw rows in [`evidence/bench.json`](evidence/bench.json); 20 held-out claims × 2 reps per route, one untimed warm-up
 each, M1 Max, Chrome 157, source fetching excluded): on device (Nano binary triage) **p50 1699 ms, p95 2067 ms**; in the cloud (`gemini-3.5-flash-lite`
-judge reading a 24,000-character source window) **p50 4095 ms, p95 11476 ms**. All 80 calls returned the `inferenceSource` they were meant to.
+judge reading a 24,000-character source window) **p50 4095 ms, p95 11476 ms**. All 80 calls returned the `inferenceSource` they were meant to. This is a separate run from the table above (a dev-server harness, so its numbers differ from the 1729 / 2284 ms in that table).
 
 ### 🧪 Testing & CI
-Every push runs [`.github/workflows/ci.yml`](.github/workflows/ci.yml) as seven stages: quality (lint, typecheck, unit tests with a coverage floor on Node 20 and 22)
-and security (gitleaks over the full history, `npm audit` failing on high or critical, registry signatures, licence check) in parallel; production build with a
-bundle budget; deploy to Vercel (prebuilt); **Playwright E2E against the live URL**; Lighthouse gates on the live URL; and a release gate. [`codeql.yml`](.github/workflows/codeql.yml)
-(security-extended queries) runs on push, PR and weekly once the repo is public, [`release.yml`](.github/workflows/release.yml) tags a version from the commit messages,
-and Dependabot is grouped and monthly.
+**Status, stated plainly:** the pipeline below is committed and configured, but **GitHub Actions has not run it** (the account's Actions billing blocked every job on
+2026-11-22, and the repo is private until submission), so there is no green CI badge here. Instead every stage was run on the maintainer's machine with
+[`scripts/ci-local.sh`](scripts/ci-local.sh) against the deployed commit, all passing; the receipt is [`evidence/ci-local-2026-11-22.txt`](evidence/ci-local-2026-11-22.txt).
+`v1.0.0` was tagged by hand for the same reason (`release.yml` has not executed yet).
 
-The E2E suite (`e2e/`) drives the real, unmocked flow: it opens the hosted page, presses **Check sources** on the sample answer, and asserts that chips land with an
-`IN CLOUD` route badge, every decided verdict carries a quote, and the evidence pane opens. `e2e/unplug.spec.ts` cuts the network after load and asserts the check
-reports failure and never produces a verdict. `npm run e2e:nano` repeats the flow on a Nano-enabled profile and asserts the `ON DEVICE` route really ran.
+[`.github/workflows/ci.yml`](.github/workflows/ci.yml) is configured to run seven stages on every push to `main`: quality (lint, typecheck, unit tests with a coverage floor
+on Node 20 and 22) and security (gitleaks over the full history, `npm audit` failing on high or critical, registry signatures, licence check) in parallel; production build
+with a gzip bundle budget (716 KB measured, budget 900 KB); deploy to Vercel (prebuilt); **Playwright E2E against the live URL**; Lighthouse gates on the live URL; and a
+release gate. [`codeql.yml`](.github/workflows/codeql.yml) (security-extended queries) is set to run on push, PR and weekly once the repo is public (it needs GitHub Advanced
+Security while private), [`release.yml`](.github/workflows/release.yml) tags a version from conventional commit messages, and Dependabot is grouped and monthly with majors ignored.
 
-### Honest limits (7)
-1. Footing checks that a source says what a sentence claims. It does not check the source is true.
-2. Nano binary triage on the held-out set is 13/20 (65%): fewer than two in three. We did not re-tune on those 20.
-3. The cloud judge is 14/20 (70%) on the held-out set. The quote gate catches invented quotes; it cannot catch a real quote misread.
-4. The frozen-30 numbers are not held-out and are labelled so wherever they appear.
-5. Without Nano, the first 8 citations per answer are checked in the cloud (Remote Config `citation_cloud_cap`); the rest are marked "tap to check".
-6. On-device runs are measured on one Mac (M1 Max); other hardware will differ.
-7. `AbortSignal` is not honoured on device, so the on-device timeout is a `Promise.race`; see [`docs/DX-REPORT.md`](docs/DX-REPORT.md).
+Measured on the deployed build (`evidence/lighthouse-live-2026-11-22.json`, desktop preset, 3 runs per page): performance 1.00, accessibility 1.00, SEO 1.00 and layout shift
+0.003 on `/`; best practices 0.77 on `/` because reCAPTCHA Enterprise, which App Check needs, sets a third-party cookie (the gate is 0.75, `lighthouserc.json`), and 1.00 on `/eval`.
 
-### What we got wrong
-- The first design had Nano decide three classes including "partly supported". On the frozen 30 it scored 21/30 (70%), below our 24/30
-  gate, so we re-scoped Nano to the binary triage it measures well at and gave PARTIAL to the cloud.
-- On the held-out 20, Nano binary triage scored 13/20. It is published as measured, and we did not re-tune on those 20.
+The E2E suite (`e2e/`, 11 tests, run against the live URL) drives the real, unmocked flow: it opens the hosted page, presses **Check sources** on the sample answer, and
+asserts that chips land with an `IN CLOUD` route badge, every decided verdict carries a non-empty quote (the verbatim-in-source check itself is unit-tested in
+`test/text-bm25-gate.test.ts`; a failed gate shows `UNVERIFIED`), and the evidence pane opens. `e2e/unplug.spec.ts` cuts the whole network after load, and separately blocks only
+the AI Logic hosts while sources stay readable, and asserts both times that the check reports failure and never produces a verdict. `npm run e2e:nano` repeats the flow on a
+Nano-enabled profile and asserts the `ON DEVICE` route really ran (`evidence/check/e2e-nano-2026-11-22.json`).
 
 ## 🔓 No Nano? Still works
 

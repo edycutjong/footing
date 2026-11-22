@@ -14,6 +14,6 @@ Please **do not** open a public issue for security vulnerabilities. Report them 
 You will get an acknowledgment within 48 hours and a resolution timeline after triage. Please allow a reasonable window to patch before public disclosure.
 
 ## What is already tested
-- The fetch proxy refuses calls without a valid Firebase App Check token (`e2e/smoke.spec.ts`) and blocks private, link-local and redirect-to-private targets (`test/ssrf.test.ts`).
+- The fetch proxy refuses calls without a valid Firebase App Check token (`e2e/smoke.spec.ts`) and its URL guard blocks private, link-local and metadata addresses, re-checking every redirect hop (`test/ssrf.test.ts` covers the guard as a function; the proxy follows redirects manually through it in `src/lib/net/fetchSource.ts`).
 - Gemini calls go through Firebase AI Logic with App Check enforced; no model API key ships in the client.
-- CI runs gitleaks over the full history, `npm audit` (high and critical fail the build), and CodeQL once the repository is public.
+- CI is configured to run gitleaks over the full history and `npm audit` (high and critical fail the build), and CodeQL once the repository is public. Until GitHub Actions can run, the same stages are run locally with `scripts/ci-local.sh`.

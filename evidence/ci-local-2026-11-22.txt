@@ -1,4 +1,4 @@
-# scripts/ci-local.sh receipt: sha dab36eb deployed at https://footing.edycu.dev, 2026-11-22T14:47:44Z, MacBook Pro M1 Max
+# scripts/ci-local.sh receipt: deployed sha dab36eb at https://footing.edycu.dev, harness/test files as of the commit that adds this file, 2026-11-22T14:53:34Z, MacBook Pro M1 Max
 # GitHub Actions could not start jobs on 2026-11-22 (account billing: 'recent account payments have failed or your spending limit needs to be increased'), so the CI stages were run locally.
 ── 1 lint
 > footing@0.1.0 lint
@@ -18,8 +18,8 @@ Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
       Coverage enabled with v8
  Test Files  12 passed (12)
       Tests  191 passed (191)
-   Start at  21:45:22
-   Duration  861ms (import 46%, tests 34%, transform 11%, worker 9%)
+   Start at  21:51:31
+   Duration  878ms (import 47%, tests 31%, transform 14%, worker 8%)
  % Coverage report from v8
 =============================== Coverage summary ===============================
 Statements   : 85.67% ( 598/698 )
@@ -34,15 +34,15 @@ PASS  1 unit tests + coverage floor
     │ ○
     ○ ░
     ░    gitleaks
-9:45PM INF 51 commits scanned.
-9:45PM INF scanned ~1574545 bytes (1.57 MB) in 254ms
-9:45PM INF no leaks found
+9:51PM INF 53 commits scanned.
+9:51PM INF scanned ~1580667 bytes (1.58 MB) in 272ms
+9:51PM INF no leaks found
 PASS  2 gitleaks (all history)
 ── 2 npm audit (high+critical)
 found 0 vulnerabilities
 PASS  2 npm audit (high+critical)
 ── 2 npm audit signatures
-audited 789 packages in 7s
+audited 789 packages in 8s
 789 packages have verified registry signatures
 192 packages have verified attestations
 PASS  2 npm audit signatures
@@ -62,19 +62,19 @@ PASS  2 licences (no GPL/AGPL)
 > next build
 ▲ Next.js 16.4.6 (Turbopack)
 - Environments: .env.local
-✓ Running next.config.ts took 18ms
+✓ Running next.config.ts took 60ms
 - Cache Components enabled
 - Partial Prefetching enabled
   Creating an optimized production build ...
-✓ Compiled successfully in 291ms
+✓ Compiled successfully in 301ms
   Running TypeScript ...
-  Finished TypeScript in 1179ms ...
+  Finished TypeScript in 1233ms ...
   Collecting page data using 9 workers ...
   Generating static pages using 9 workers (0/9) ...
   Generating static pages using 9 workers (2/9) 
   Generating static pages using 9 workers (4/9) 
   Generating static pages using 9 workers (6/9) 
-✓ Generating static pages using 9 workers (9/9) in 247ms
+✓ Generating static pages using 9 workers (9/9) in 258ms
   Finalizing page optimization ...
 Route (app)
 ┌ ○ /
@@ -92,19 +92,20 @@ PASS  3 production build
 client JS gzip 716 KB (budget 900)
 PASS  3 bundle budget
 ── 5 E2E on https://footing.edycu.dev
-Running 11 tests using 1 worker
-  ✓   1 [chromium] › e2e/live-flow.spec.ts:9:1 › check sources: chips land with a routing badge and every verdict carries a quote that passed the gate (45.0s)
-  ✓   2 [chromium] › e2e/responsive.spec.ts:4:3 › layout at mobile (375px): no horizontal overflow, header and check button inside the viewport (407ms)
-  ✓   3 [chromium] › e2e/responsive.spec.ts:4:3 › layout at tablet (768px): no horizontal overflow, header and check button inside the viewport (423ms)
-  ✓   4 [chromium] › e2e/responsive.spec.ts:4:3 › layout at desktop (1440px): no horizontal overflow, header and check button inside the viewport (483ms)
-  ✓   5 [chromium] › e2e/smoke.spec.ts:4:3 › smoke: the page loads the real product › home renders the answer sheet and the check button, with no console errors (424ms)
-  ✓   6 [chromium] › e2e/smoke.spec.ts:18:3 › smoke: the page loads the real product › social-card and favicon metadata are present (404ms)
-  ✓   7 [chromium] › e2e/smoke.spec.ts:26:3 › smoke: the page loads the real product › /api/health reports App Check verification on and a build sha (546ms)
-  ✓   8 [chromium] › e2e/smoke.spec.ts:35:3 › smoke: the page loads the real product › the fetch proxy refuses a call without an App Check token (337ms)
-  ✓   9 [chromium] › e2e/smoke.spec.ts:40:3 › smoke: the page loads the real product › the fetch proxy refuses a forged App Check token, even for a private address (319ms)
-  ✓  10 [chromium] › e2e/smoke.spec.ts:45:3 › smoke: the page loads the real product › /eval shows the measured accuracy rows (893ms)
-  ✓  11 [chromium] › e2e/unplug.spec.ts:9:1 › offline after load: the check reports failure and never produces a fake verdict (1.4s)
-  11 passed (51.7s)
+Running 12 tests using 1 worker
+  ✓   1 [chromium] › e2e/live-flow.spec.ts:9:1 › check sources: chips land with a routing badge and every verdict carries a quote that passed the gate (21.1s)
+  ✓   2 [chromium] › e2e/responsive.spec.ts:4:3 › layout at mobile (375px): no horizontal overflow, header and check button inside the viewport (414ms)
+  ✓   3 [chromium] › e2e/responsive.spec.ts:4:3 › layout at tablet (768px): no horizontal overflow, header and check button inside the viewport (409ms)
+  ✓   4 [chromium] › e2e/responsive.spec.ts:4:3 › layout at desktop (1440px): no horizontal overflow, header and check button inside the viewport (464ms)
+  ✓   5 [chromium] › e2e/smoke.spec.ts:4:3 › smoke: the page loads the real product › home renders the answer sheet and the check button, with no console errors (430ms)
+  ✓   6 [chromium] › e2e/smoke.spec.ts:18:3 › smoke: the page loads the real product › social-card and favicon metadata are present (398ms)
+  ✓   7 [chromium] › e2e/smoke.spec.ts:26:3 › smoke: the page loads the real product › /api/health reports App Check verification on and a build sha (477ms)
+  ✓   8 [chromium] › e2e/smoke.spec.ts:35:3 › smoke: the page loads the real product › the fetch proxy refuses a call without an App Check token (330ms)
+  ✓   9 [chromium] › e2e/smoke.spec.ts:40:3 › smoke: the page loads the real product › the fetch proxy refuses a forged App Check token, even for a private address (335ms)
+  ✓  10 [chromium] › e2e/smoke.spec.ts:45:3 › smoke: the page loads the real product › /eval shows the measured accuracy rows (580ms)
+  ✓  11 [chromium] › e2e/unplug.spec.ts:38:1 › whole network cut after load: the check reports failure and never produces a verdict (1.5s)
+  ✓  12 [chromium] › e2e/unplug.spec.ts:44:1 › AI Logic / Gemini hosts blocked, sources still readable: the cloud route fails loudly, no verdict (3.5s)
+  12 passed (30.9s)
 PASS  5 E2E on https://footing.edycu.dev
 ── 6 lighthouse gates on https://footing.edycu.dev
 ✅  .lighthouseci/ directory writable
