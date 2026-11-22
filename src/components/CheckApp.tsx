@@ -154,6 +154,8 @@ function Pane({ r, cfg, onClose, onConfirm }: { r: PairRun; cfg: FootingConfig; 
 
 /** Longest wait for initializeDeviceModel() when the model is already available (no download involved). */
 const INIT_DEADLINE_MS = 20_000;
+/** Extra wait for a still-pending availability() answer when Check is clicked early. */
+const CLICK_GRACE_MS = 5_000;
 
 export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStats }) {
   const [text, setText] = useState(() => answerToText(hero.answer, hero.sources));
@@ -173,6 +175,7 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
   const [toast, setToast] = useState<string | null>(null);
   const [banner, setBanner] = useState<string | null>(null);
   const check = useRef<Check | null>(null);
+  const availability = useRef<Promise<Device> | null>(null);
   const [cloudUsed, setCloudUsed] = useState(0);
   // Remote Config: thresholds/models/caps come from the published template; code defaults until (and unless) it loads.
   const [cfg, setCfg] = useState<FootingConfig>(DEFAULT_CONFIG);
@@ -192,7 +195,9 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
     // unavailable (checks run in the cloud); a late answer still updates the pill.
     let settled = false;
     const timer = setTimeout(() => { if (!settled) setDevice((d) => (d === "checking" ? "slow" : d)); }, 4000);
-    import("@/lib/ai/deviceModel").then((m) => m.deviceAvailability()).then((d) => { settled = true; setDevice(d); });
+    const p = import("@/lib/ai/deviceModel").then((m) => m.deviceAvailability()).catch((): Device => "unavailable");
+    availability.current = p;
+    p.then((d) => { settled = true; setDevice(d); });
     return () => clearTimeout(timer);
   }, []);
 
@@ -216,6 +221,17 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
     setCloudUsed(check.current.cloudUsed);
   }, []);
 
+  /** Clicked while availability() is still pending: wait a short grace for the real answer instead of assuming no
+   *  Nano (a live Nano laptop answered just after the 4 s "slow" mark and was sent to the cloud, a2a r03). */
+  async function lateAvailability(): Promise<Device> {
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const grace = new Promise<Device>((res) => { timer = setTimeout(() => res("unavailable"), CLICK_GRACE_MS); });
+    const d = await Promise.race([availability.current ?? Promise.resolve<Device>("unavailable"), grace]);
+    clearTimeout(timer);
+    if (d !== "unavailable") setDevice(d);
+    return d;
+  }
+
   async function runCheck() {
     setRunning(true); setDone(false); setOpen(null); setBanner(null);
     check.current = null;
@@ -236,7 +252,7 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
       setBanner("This browser could not be verified (App Check). Reload, or open /eval for the measured results.");
       return;
     }
-    let dev: Device = device === "checking" || device === "slow" ? "unavailable" : device;
+    let dev: Device = device === "checking" || device === "slow" ? await lateAvailability() : device;
     if (dev !== "unavailable" && force !== "cloud") {
       const init = initDevice(live, (p) => { setProgress(p); if (p < 1) setDevice("downloading"); });
       if (dev === "available") {
