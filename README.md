@@ -36,7 +36,8 @@ A judge without Gemini Nano still gets the full check through the cloud (see [No
 
 ### The Problem
 AI answers arrive with links that look like proof. The link may not say the sentence, or only part of it, and checking by hand means
-opening every tab.
+opening every tab. In a 2023 human audit of four popular generative search engines, only 74.5% of citations supported their associated sentence
+(Liu, Zhang and Liang, [arXiv:2304.09848](https://arxiv.org/abs/2304.09848); quoted in `evidence/problem/liu-2023-verifiability.md`).
 
 ### The Solution
 Footing fetches each cited page, picks the three best-matching passages (BM25), and asks one question per (sentence, passage) pair.
