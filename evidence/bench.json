@@ -1,0 +1,750 @@
+{
+  "recordedAt": "2026-11-22T14:32:49.889Z",
+  "set": "eval-fresh-20",
+  "reps": 2,
+  "claimsPerRep": 20,
+  "judgeModel": "gemini-3.5-flash-lite",
+  "machine": "MacBook Pro M1 Max, 32 GB",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+  "method": "page.evaluate(window.__evalPair) on the dev-only /eval/run harness: the same Firebase AI Logic calls as the app (PREFER_ON_DEVICE binary triage; ONLY_IN_CLOUD 3-class judge). One untimed warm-up per route. Quantile = nearest-rank. Excludes source fetching.",
+  "on_device": {
+    "calls": 40,
+    "ok": 40,
+    "wrongSourceOrError": 0,
+    "p50_ms": 1699,
+    "p95_ms": 2067,
+    "min_ms": 1050,
+    "max_ms": 2157
+  },
+  "in_cloud": {
+    "calls": 40,
+    "ok": 40,
+    "wrongSourceOrError": 0,
+    "p50_ms": 4095,
+    "p95_ms": 11476,
+    "min_ms": 1612,
+    "max_ms": 18129
+  },
+  "rows": [
+    {
+      "rep": 1,
+      "route": "on_device",
+      "id": "n01",
+      "ms": 2022,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "on_device",
+      "id": "n02",
+      "ms": 1050,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "on_device",
+      "id": "n03",
+      "ms": 1728,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "on_device",
+      "id": "n04",
+      "ms": 1316,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "on_device",
+      "id": "n05",
+      "ms": 1951,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "on_device",
+      "id": "n06",
+      "ms": 1470,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "on_device",
+      "id": "n07",
+      "ms": 1737,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "on_device",
+      "id": "n08",
+      "ms": 1699,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "on_device",
+      "id": "n09",
+      "ms": 1443,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "on_device",
+      "id": "n10",
+      "ms": 2031,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "on_device",
+      "id": "n11",
+      "ms": 1546,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "on_device",
+      "id": "n12",
+      "ms": 1853,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "on_device",
+      "id": "n13",
+      "ms": 1514,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "on_device",
+      "id": "n14",
+      "ms": 1663,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "on_device",
+      "id": "n15",
+      "ms": 2157,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "on_device",
+      "id": "n16",
+      "ms": 2098,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "on_device",
+      "id": "n17",
+      "ms": 1751,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "on_device",
+      "id": "n18",
+      "ms": 1586,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "on_device",
+      "id": "n19",
+      "ms": 1630,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "on_device",
+      "id": "n20",
+      "ms": 1979,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "in_cloud",
+      "id": "n01",
+      "ms": 2525,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "in_cloud",
+      "id": "n02",
+      "ms": 1782,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "in_cloud",
+      "id": "n03",
+      "ms": 7774,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "in_cloud",
+      "id": "n04",
+      "ms": 13906,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "in_cloud",
+      "id": "n05",
+      "ms": 9108,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "in_cloud",
+      "id": "n06",
+      "ms": 7258,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "in_cloud",
+      "id": "n07",
+      "ms": 9559,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "in_cloud",
+      "id": "n08",
+      "ms": 3354,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "in_cloud",
+      "id": "n09",
+      "ms": 8050,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "in_cloud",
+      "id": "n10",
+      "ms": 1856,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "in_cloud",
+      "id": "n11",
+      "ms": 2843,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "in_cloud",
+      "id": "n12",
+      "ms": 2096,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "in_cloud",
+      "id": "n13",
+      "ms": 1875,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "in_cloud",
+      "id": "n14",
+      "ms": 11119,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "in_cloud",
+      "id": "n15",
+      "ms": 3296,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "in_cloud",
+      "id": "n16",
+      "ms": 10210,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "in_cloud",
+      "id": "n17",
+      "ms": 2932,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "in_cloud",
+      "id": "n18",
+      "ms": 5808,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "in_cloud",
+      "id": "n19",
+      "ms": 9312,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 1,
+      "route": "in_cloud",
+      "id": "n20",
+      "ms": 9299,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "on_device",
+      "id": "n01",
+      "ms": 2003,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "on_device",
+      "id": "n02",
+      "ms": 1173,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "on_device",
+      "id": "n03",
+      "ms": 1792,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "on_device",
+      "id": "n04",
+      "ms": 1573,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "on_device",
+      "id": "n05",
+      "ms": 1169,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "on_device",
+      "id": "n06",
+      "ms": 1204,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "on_device",
+      "id": "n07",
+      "ms": 1603,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "on_device",
+      "id": "n08",
+      "ms": 1234,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "on_device",
+      "id": "n09",
+      "ms": 1408,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "on_device",
+      "id": "n10",
+      "ms": 2051,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "on_device",
+      "id": "n11",
+      "ms": 1566,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "on_device",
+      "id": "n12",
+      "ms": 1791,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "on_device",
+      "id": "n13",
+      "ms": 1770,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "on_device",
+      "id": "n14",
+      "ms": 1584,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "on_device",
+      "id": "n15",
+      "ms": 1276,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "on_device",
+      "id": "n16",
+      "ms": 2067,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "on_device",
+      "id": "n17",
+      "ms": 1723,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "on_device",
+      "id": "n18",
+      "ms": 1729,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "on_device",
+      "id": "n19",
+      "ms": 2045,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "on_device",
+      "id": "n20",
+      "ms": 1778,
+      "inferenceSource": "on_device",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "in_cloud",
+      "id": "n01",
+      "ms": 3055,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "in_cloud",
+      "id": "n02",
+      "ms": 1612,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "in_cloud",
+      "id": "n03",
+      "ms": 8052,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "in_cloud",
+      "id": "n04",
+      "ms": 4095,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "in_cloud",
+      "id": "n05",
+      "ms": 10857,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "in_cloud",
+      "id": "n06",
+      "ms": 8734,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "in_cloud",
+      "id": "n07",
+      "ms": 2087,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "in_cloud",
+      "id": "n08",
+      "ms": 18129,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "in_cloud",
+      "id": "n09",
+      "ms": 2070,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "in_cloud",
+      "id": "n10",
+      "ms": 1971,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "in_cloud",
+      "id": "n11",
+      "ms": 1737,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "in_cloud",
+      "id": "n12",
+      "ms": 1890,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "in_cloud",
+      "id": "n13",
+      "ms": 1939,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "in_cloud",
+      "id": "n14",
+      "ms": 10422,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "in_cloud",
+      "id": "n15",
+      "ms": 2215,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "in_cloud",
+      "id": "n16",
+      "ms": 11476,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "in_cloud",
+      "id": "n17",
+      "ms": 1728,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "in_cloud",
+      "id": "n18",
+      "ms": 9729,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "in_cloud",
+      "id": "n19",
+      "ms": 10039,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    },
+    {
+      "rep": 2,
+      "route": "in_cloud",
+      "id": "n20",
+      "ms": 9518,
+      "inferenceSource": "in_cloud",
+      "ok": true,
+      "attempts": 1
+    }
+  ]
+}
