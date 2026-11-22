@@ -204,7 +204,7 @@ export class Check {
       else if (t.error) run.sources.push(t.errorKind === "timeout" ? "device_timeout" : "device_error");
       if (reserved && t.inferenceSource === "on_device") this.cloudUsed--;
       else if (reserved) run.cloudCalls++; // SDK fallback (or an error after a possible fallback): counted
-      const held = !!t.quote && gate(t.quote, passages.join("\n"));
+      const held = !!t.quote && gate(t.quote, passages);
       run.nanoQuoteHeld = held;
       run.trail.push({ step: "triage", inferenceSource: t.inferenceSource, verdict: t.verdict, quote: t.quote, gateHeld: held, ms: t.ms, error: t.error });
       if (t.error && r.deviceMode === "ONLY_ON_DEVICE" && force === "device") {
@@ -277,16 +277,20 @@ export class Check {
       return;
     }
 
-    const modelInput = how === "text" ? `${inputs!.passages.join("\n")}\n${inputs!.window}` : how === "pdf" ? src.text : "";
-    run.modelInput = modelInput;
-    const out = judgeOutcome({ verdict: reply.verdict, quote: reply.quote ?? "" }, modelInput, {
+    // Gate segments: each passage and the window separately (never their concatenation), or the PDF's own text.
+    const segments = how === "text" ? [...inputs!.passages, inputs!.window] : how === "pdf" ? [src.text] : [];
+    run.modelInput = segments.join("\n");
+    const out = judgeOutcome({ verdict: reply.verdict, quote: reply.quote ?? "" }, segments, {
       truncated: how === "text" ? inputs!.truncated : false,
       readChars: how === "text" ? inputs!.window.length : src.text.length,
       viaUrlContext: how === "url",
     });
     run.trail[run.trail.length - 1].gateHeld = out.gateHeld;
     run.uncovered = out.gateHeld ? uncovered(s, reply.quote ?? "") : undefined;
-    this.finish(run, out.final, { reason: reply.reason, quote: reply.quote, note: out.note });
+    // PDF text extraction failed here: say so instead of "quote not found" (the model still read the PDF itself).
+    const note = how === "pdf" && !src.text && out.final !== "NOT_SUPPORTED"
+      ? "the PDF's text could not be extracted in this browser, so the quote cannot be checked" : out.note;
+    this.finish(run, out.final, { reason: reply.reason, quote: reply.quote, note });
   }
 
   /** User tap: confirm / retry one citation in the cloud (exempt from the cap, still counted). */

@@ -5,16 +5,20 @@ import { tokenize } from "../bm25";
 
 export const MIN_QUOTE_CHARS = 12;
 
-/** True when `quote` is non-empty and appears verbatim in `given` after whitespace/Unicode normalisation only.
- *  (Used by the committed eval rows; the app uses gate(), which adds the minimum length.) */
-export function quoteHeld(quote: string, given: string): boolean {
+/** What the model read, as separate contiguous segments (each BM25 passage, the page window, or the PDF text).
+ *  A quote must sit inside ONE segment: joining them would let a quote stitched across two passages pass (a2a r03). */
+export type Given = string | readonly string[];
+
+/** True when `quote` is non-empty and appears verbatim inside one segment of `given` after whitespace/Unicode
+ *  normalisation only. (The app uses gate(), which adds the minimum length.) */
+export function quoteHeld(quote: string, given: Given): boolean {
   const q = normalize(quote);
   if (!q) return false;
-  return normalize(given).includes(q);
+  return (typeof given === "string" ? [given] : given).some((seg) => normalize(seg).includes(q));
 }
 
-/** The app's gate: quote ≥ 12 chars after normalisation and a verbatim substring of the model's input. */
-export function gate(quote: string, modelInput: string): boolean {
+/** The app's gate: quote ≥ 12 chars after normalisation and a verbatim substring of one segment of the model's input. */
+export function gate(quote: string, modelInput: Given): boolean {
   return normalize(quote).length >= MIN_QUOTE_CHARS && quoteHeld(quote, modelInput);
 }
 
@@ -30,7 +34,7 @@ export interface JudgeOutcome {
 /** agents.md §4: the cloud Judge's verdict → what is shown. Code-appended notes, never model-written. */
 export function judgeOutcome(
   j: { verdict: "SUPPORTS" | "PARTIAL" | "NOT_SUPPORTED"; quote: string },
-  modelInput: string,
+  modelInput: Given,
   opts: { truncated: boolean; readChars: number; viaUrlContext?: boolean },
 ): JudgeOutcome {
   if (opts.viaUrlContext) return { final: "UNVERIFIED", gateHeld: false, counted: false, note: "read via URL context — no source text to check the quote against" };

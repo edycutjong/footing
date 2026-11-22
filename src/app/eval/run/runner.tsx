@@ -6,7 +6,7 @@ import { getGenerativeModel, InferenceMode, Schema } from "firebase/ai";
 import { firebase } from "@/lib/firebase";
 import { triagePrompt, judgePrompt, TRIAGE_PROMPT_VERSION, JUDGE_PROMPT_VERSION } from "@/lib/ai/prompts";
 import { triageConstraint, parseTriage, parseJudge } from "@/lib/ai/schemas";
-import { quoteHeld } from "@/lib/gate/quote";
+import { gate } from "@/lib/gate/quote";
 
 export interface PairInput {
   mode: "triage" | "judge";
@@ -49,7 +49,7 @@ async function evalPair(input: PairInput) {
       const out = parseTriage(raw);
       return {
         promptVersion: TRIAGE_PROMPT_VERSION, inferenceSource: res.response.inferenceSource, raw,
-        verdict: out.verdict, quote: out.quote, gateHeld: quoteHeld(out.quote, input.passages.join("\n")),
+        verdict: out.verdict, quote: out.quote, gateHeld: gate(out.quote, input.passages),
         ms: Math.round(performance.now() - t0), promptChars: prompt.length,
       };
     } catch (e) {
@@ -71,7 +71,7 @@ async function evalPair(input: PairInput) {
     return {
       promptVersion: JUDGE_PROMPT_VERSION, model: input.judgeModel, inferenceSource: res.response.inferenceSource, raw,
       verdict: out.verdict, quote: out.quote, reason: out.reason,
-      gateHeld: quoteHeld(out.quote, input.passages.join("\n") + "\n" + (input.window ?? "")),
+      gateHeld: gate(out.quote, [...input.passages, input.window ?? ""]),
       ms: Math.round(performance.now() - t0), promptChars: prompt.length, usage: res.response.usageMetadata ?? null,
     };
   } catch (e) {

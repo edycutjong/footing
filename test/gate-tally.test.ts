@@ -69,3 +69,18 @@ describe("copyWithFlags()", () => {
     expect(copyWithFlags(p, () => "deciding", true).flags).toBe(0);
   });
 });
+
+describe("a2a r03: the gate checks each segment the model read, never their concatenation", () => {
+  // Source: "The archive contains 10 maps. They are not open to the public. The reading room opens on Monday."
+  const passages = ["The archive contains 10 maps.", "The reading room opens on Monday."];
+  const window = "The archive contains 10 maps. They are not open to the public. The reading room opens on Monday.";
+  it("refuses a quote stitched across two passages (it exists in neither passage nor the source)", () => {
+    expect(gate("10 maps. The reading room", passages)).toBe(false);
+    expect(gate("10 maps. The reading room", [...passages, window])).toBe(false);
+    expect(judgeOutcome({ verdict: "SUPPORTS", quote: "10 maps. The reading room" }, [...passages, window], { truncated: false, readChars: window.length }).final).toBe("UNVERIFIED");
+  });
+  it("still holds a quote that lies inside one passage or inside the window", () => {
+    expect(gate("The reading room opens on Monday", passages)).toBe(true);
+    expect(gate("They are not open to the public", [...passages, window])).toBe(true);
+  });
+});
