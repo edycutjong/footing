@@ -15,7 +15,7 @@ read on-device first. Recorded runs of this flow on the deployed URL are in `evi
 ## 2. Turn Gemini Nano on (desktop Chrome)
 1. `chrome://flags` → enable **Gemma 4 for Built-in AI** and the Prompt API flag, relaunch.
 2. Keep at least 22 GB free on the profile's disk (the figure in Chrome's built-in AI documentation).
-3. The first on-device call starts a model download (several minutes on our Mac); the page shows progress and checks in the cloud meanwhile.
+3. The first on-device call starts a model download (several GB); the page shows progress and checks in the cloud meanwhile.
 
 ## 3. Reproduce the numbers
 ```bash
@@ -24,7 +24,7 @@ npm run eval      # recomputes every figure in evidence/summary.json from the co
 npm test          # 191 tests
 ```
 Live re-run (real Chrome with Nano plus Firebase AI Logic; needs a Firebase web config in `.env.local`):
-`npm run eval:live -- <set> <triage|judge> <userDataDir> [judgeModel]`, or open `/eval/run` in the app.
+`npm run eval:live -- <set> <triage|judge> <userDataDir> [judgeModel]`, or open `/eval/run` on a local dev server (`npm run dev`; the route is disabled in production).
 
 | Set | Nano binary triage | Cloud judge (3-class) |
 |---|---|---|
