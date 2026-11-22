@@ -1,0 +1,809 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Footing · does each cited link say what the sentence claims?</title>
+<meta name="description" content="Footing checks that each link cited in an AI answer actually says what the sentence claims. Gemini Nano triages every citation on your laptop; the cloud decides the hard calls; code checks every quote.">
+<meta name="theme-color" content="#EEF2E6">
+<link rel="canonical" href="https://footing.edycu.dev/about">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Footing">
+<meta property="og:title" content="Footing · your AI cites the page, Footing actually reads it">
+<meta property="og:description" content="Every citation in an AI answer checked against the page it cites: Gemini Nano on your laptop first, the cloud for the hard calls, code for every quote.">
+<meta property="og:url" content="https://footing.edycu.dev/about">
+<meta property="og:image" content="https://footing.edycu.dev/og-image.png?v=7dc7f41e07">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Footing: every citation ticked in pencil, the bad ones circled red, the sentence beside the source line that does not say it.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Footing · your AI cites the page, Footing actually reads it">
+<meta name="twitter:description" content="Gemini Nano triages every citation on your laptop; the cloud decides the hard calls; code checks every quote.">
+<meta name="twitter:image" content="https://footing.edycu.dev/og-image.png?v=7dc7f41e07">
+<link rel="preload" href="/landing/fonts/besley.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/landing/fonts/schibsted-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* Footing — shared by the landing (/about) and the deck (/pitch). Tokens from the design direction (workpaper on a green columnar pad). */
+@font-face{font-family:"Besley";src:url(/landing/fonts/besley.woff2) format("woff2");font-weight:400 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Besley";src:url(/landing/fonts/besley-italic.woff2) format("woff2");font-weight:400 900;font-style:italic;font-display:swap}
+@font-face{font-family:"Schibsted Grotesk";src:url(/landing/fonts/schibsted-grotesk.woff2) format("woff2");font-weight:400 700;font-display:swap}
+@font-face{font-family:"Courier Prime";src:url(/landing/fonts/courier-prime-400.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Courier Prime";src:url(/landing/fonts/courier-prime-700.woff2) format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"Besley Fallback";src:local("Georgia");size-adjust:112%;ascent-override:86%;descent-override:22%}
+@font-face{font-family:"Schibsted Fallback";src:local("Arial");size-adjust:101%;ascent-override:92%;descent-override:24%}
+:root {
+  --bg:        #EEF2E6;
+  --sheet:     #F7F9F2;
+  --ink:       #1E2B23;
+  --muted:     #5B6A5F;
+  --rule:      #B7CBB0;
+  --rule-strong: #7F9F78;
+  --before:    #8E948B;
+  --after:     #C2412D;
+  --vouched:   #2F6B45;
+  --partial:   #B7791F;
+  --partial-ink: #8A5A10;
+  --query:     #6B4F86;
+  --cloud:     #2B5C9E;
+  --device:    #1E2B23;
+  --font-display: "Besley", "Besley Fallback", "Clarendon", Georgia, serif;
+  --font-body:    "Schibsted Grotesk", "Schibsted Fallback", "Helvetica Neue", Arial, sans-serif;
+  --font-data:    "Courier Prime", "Courier New", monospace;
+  --tick-ms:   280ms;
+  /* page-only derived tones (not state colours) */
+  --mat:       #17221B;   /* the desk blotter under the hero sheet */
+  --mat-ink:   #D9E3D2;   /* text on the blotter, 12.6:1 */
+  --mat-muted: #9DB09F;   /* captions on the blotter, 6.5:1 */
+  --pad-deep:  #E2EAD9;   /* the band of reviewer notes */
+  --shadow: 0 1px 0 var(--rule), 0 8px 24px -16px rgba(30,43,35,.35);
+}
+::selection{background:#CFDCC6;color:var(--ink)}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:2px}
+
+/* ---------- route badges + chips (same as the app) ---------- */
+.badges{display:inline-flex;gap:3px;align-items:center;white-space:nowrap}
+.badge{font-family:var(--font-data);font-size:11px;padding:1px 4px;border-radius:2px;letter-spacing:.02em;white-space:nowrap;line-height:1.4}
+.badge.d{background:var(--device);color:var(--sheet)}
+.badge.c{border:1px solid var(--cloud);color:var(--cloud);background:var(--sheet)}
+.badges .arrow{color:var(--cloud);font-size:12px}
+.chip{display:inline-block;font:12px/1.5 var(--font-data);color:var(--ink);border:1px solid var(--rule-strong);background:var(--sheet);padding:1px 6px;border-radius:2px;max-width:100%;overflow-wrap:anywhere}
+
+/* ---------- the exhibit: one recorded run, replayed ---------- */
+.fx{margin:0;background:var(--sheet);color:var(--ink);border:1px solid var(--rule);box-shadow:var(--shadow);border-radius:2px;position:relative;
+  font-family:var(--font-body)}
+.fx-head{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:9px 18px;border-bottom:1px solid var(--rule)}
+.fx-ref{font:700 12px var(--font-data);letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
+.fx-clock{font:12px var(--font-data);color:var(--muted);margin-left:auto;white-space:nowrap}
+.fx-clock b{color:var(--ink);font-weight:700;display:inline-block;min-width:4ch;text-align:right}
+.fx-replay{font:600 13px var(--font-body);color:var(--ink);background:transparent;border:1.5px solid var(--ink);border-radius:2px;padding:4px 10px;cursor:pointer;
+  transition:background .15s ease,color .15s ease,transform .15s ease}
+.fx-replay:hover{background:var(--ink);color:var(--sheet)}
+.fx-replay:active{transform:translateY(1px)}
+.fx-q{margin:0;padding:7px 18px;font-size:13.5px;color:var(--muted);border-bottom:1px solid var(--rule)}
+.fx-q b{color:var(--ink);font-weight:600}
+.fx-rows{list-style:none;margin:0;padding:0}
+.fx-row{display:grid;grid-template-columns:18px 54px minmax(0,1fr) auto;gap:10px;align-items:center;padding:4px 18px;border-bottom:1px solid var(--rule);min-height:44px}
+.fx-no{font:11px var(--font-data);color:var(--before);text-align:right}
+.fx-mark{display:inline-flex;align-items:center;gap:1px;position:relative;height:22px}
+.fx-mark sup{font:11px var(--font-data);color:var(--before);vertical-align:0;margin-right:1px}
+.fx-mark svg{width:24px;height:20px;overflow:visible;flex:none}
+.fx-mark sub{font:10px var(--font-data);color:var(--muted);vertical-align:-5px;width:8px}
+.fx-text{font-size:13.5px;line-height:1.36;min-width:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.fx-badges{display:inline-flex;gap:3px;align-items:center;min-width:142px;justify-content:flex-end}
+/* mark states: wait → triage → esc (pending, cloud deciding) → final */
+.fx-row .m{display:none}
+.fx-row[data-st="wait"] .m-wait,.fx-row[data-st="triage"] .m-wait,.fx-row[data-st="esc"] .m-esc,.fx-row[data-st="final"] .m-final{display:inline-block}
+.fx-row[data-st="triage"] .m-wait circle{animation:fx-pulse .9s ease-in-out infinite;fill:var(--ink)}
+.fx-row[data-st="wait"] .fx-badges>*,.fx-row[data-st="triage"] .fx-badges>*{visibility:hidden}
+.fx-row[data-st="esc"] .fx-badges .c,.fx-row[data-st="esc"] .fx-badges .arrow{visibility:hidden}
+.fx-row[data-st="final"] .draw{stroke-dasharray:1;stroke-dashoffset:0}
+.fx.playing .fx-row[data-st="final"] .draw{animation:fx-tick var(--tick-ms) ease-out both}
+.fx.playing .fx-row[data-st="final"] .m-final{animation:fx-in var(--tick-ms) ease-out both}
+@keyframes fx-in{from{opacity:.15}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;left:0;top:0}
+.fx-row[data-st="final"] sub{color:var(--ink)}
+.fx-row:not([data-st="final"]) sub{visibility:hidden}
+.fx-row.hot{background:rgba(194,65,45,.05)}
+@keyframes fx-tick{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes fx-pulse{50%{opacity:.25}}
+/* lanes: the run's own step times, rebuilt (fetch, Nano one at a time, cloud two at a time) */
+.fx-lanes{padding:9px 18px 4px;border-bottom:1px solid var(--rule);position:relative}
+.lane{display:grid;grid-template-columns:86px minmax(0,1fr);gap:10px;align-items:center;margin:0 0 4px}
+.lane-l{font:700 11px var(--font-data);letter-spacing:.04em;color:var(--muted);white-space:nowrap}
+.lane-l.d{color:var(--device)}.lane-l.c{color:var(--cloud)}
+.track{position:relative;height:16px;background:repeating-linear-gradient(90deg,transparent 0 calc(10% - 1px),rgba(183,203,176,.7) calc(10% - 1px) 10%)}
+.track.two{height:30px}
+.bar{position:absolute;top:2px;height:12px;border-radius:1px;transform-origin:left center;font:10px/12px var(--font-data);overflow:hidden;white-space:nowrap;
+  padding-left:3px;box-sizing:border-box}
+.track.two .bar.s1{top:16px}
+.bar.f{background:var(--rule);color:var(--ink)}
+.bar.d{background:var(--device);color:var(--sheet)}
+.bar.c{background:#DCE6F2;border:1px solid var(--cloud);color:var(--cloud)}
+.bar.settle{box-shadow:inset 0 0 0 1.5px var(--after);background:var(--device)}
+.axis{display:grid;grid-template-columns:86px minmax(0,1fr);gap:10px;font:10px var(--font-data);color:var(--muted)}
+.axis span{display:flex;justify-content:space-between}
+.playhead{position:absolute;top:8px;bottom:18px;width:1.5px;background:var(--ink);left:calc(114px + (100% - 132px) * var(--p, 1));opacity:0;pointer-events:none}
+.fx.playing .playhead{opacity:.9}
+.fx-total{padding:8px 18px 10px;border-top:3px double var(--rule-strong);margin-top:-1px}
+.fx-total .big{font:900 40px/1 var(--font-display);letter-spacing:-.01em;white-space:nowrap;margin-right:10px}
+.fx-total .line{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+.fx-total .words{font-size:15px}
+.fx-total .likely{font-size:13px;color:var(--after)}
+.fx-total .data{font:12px var(--font-data);color:var(--muted);margin:4px 0 0}
+.fx-key{font:12px/1.5 var(--font-data);color:var(--muted);margin:4px 0 0;padding-top:5px;border-top:1px solid var(--rule)}
+.fx-key sub{font:10px var(--font-data);color:var(--ink);vertical-align:-2px}
+.fx-cap{font:12px/1.5 var(--font-data);color:var(--muted);margin:10px 2px 0}
+
+@media (prefers-reduced-motion: reduce){
+  .fx.playing .fx-row[data-st="final"] .draw,.fx.playing .fx-row[data-st="final"] .m-final{animation:none}
+  .fx-row[data-st="triage"] .m-wait circle{animation:none}
+}
+@media print{
+  .fx-replay{display:none}
+  .fx *{animation:none!important;transition:none!important}
+}
+/* Footing landing (/about). World: an auditor's workpaper on a green columnar pad. */
+*{box-sizing:border-box}
+html{overflow-x:clip;scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 var(--font-body);
+  scrollbar-color:var(--rule-strong) var(--bg)}
+a{color:inherit;text-underline-offset:3px;text-decoration-thickness:1px}
+a:hover{text-decoration-thickness:2px}
+img{max-width:100%;display:block}
+.skip{position:absolute;left:-999px;top:8px;background:var(--ink);color:var(--sheet);padding:8px 12px;z-index:9}
+.skip:focus{left:8px}
+.wrap{max-width:1240px;margin:0 auto;padding:0 32px}
+.pad{background-image:repeating-linear-gradient(90deg,transparent 0 119px,rgba(183,203,176,.55) 119px 120px)}
+.lbl{font:700 12px/1.4 var(--font-data);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.lbl b{color:var(--ink)}
+h1,h2,h3{font-family:var(--font-display);margin:0;color:var(--ink)}
+h2{font-weight:850;font-size:clamp(30px,3.2vw,44px);line-height:1.08;letter-spacing:-.01em;max-width:22ch}
+.lede{font-size:18px;color:var(--ink);max-width:62ch;margin:14px 0 0}
+.sec{padding:96px 0}
+.sec-head{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:24px 56px;align-items:end;margin-bottom:40px}
+.sec-head .lede{margin:0}
+.num{font-family:var(--font-data);color:var(--muted)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;font:600 15px/1 var(--font-body);color:var(--ink);text-decoration:none;padding:12px 16px;
+  border:1.5px solid var(--ink);border-radius:2px;background:transparent;transition:background .15s ease,color .15s ease,transform .15s ease,box-shadow .15s ease;cursor:pointer}
+.btn:hover{background:var(--sheet);box-shadow:0 2px 0 var(--ink);transform:translateY(-1px)}
+.btn:active{transform:translateY(1px);box-shadow:none}
+.btn.go{background:var(--ink);color:var(--sheet)}
+.btn.go:hover{background:#2C3D32;color:var(--sheet)}
+.btn svg{width:16px;height:16px;flex:none}
+.on-mat .btn{color:var(--mat-ink);border-color:var(--mat-ink)}
+.on-mat .btn:hover{background:#22312A;box-shadow:0 2px 0 var(--mat-ink)}
+.on-mat .btn.go{background:var(--mat-ink);color:var(--mat)}
+.on-mat .btn.go:hover{background:#FFFFFF;color:var(--mat)}
+
+/* top bar */
+.top{position:sticky;top:0;z-index:5;background:rgba(238,242,230,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--rule)}
+.top .wrap{display:flex;align-items:center;gap:28px;height:62px}
+.wm{display:inline-flex;align-items:center;gap:10px;font:900 24px/1 var(--font-display);text-decoration:none;letter-spacing:-.01em}
+.wm img{width:28px;height:28px;transition:transform .2s ease}
+.wm{transition:color .15s ease}
+.wm:hover{color:#3B5245;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:5px}
+.wm:hover img{transform:rotate(-6deg)}
+.top nav{display:flex;gap:22px;margin-left:auto;font-size:15px}
+.top nav a{text-decoration:none;padding:6px 0;border-bottom:1.5px solid transparent;transition:border-color .15s ease}
+.top nav a:hover{border-bottom-color:var(--ink)}
+.top .btn{padding:9px 14px;font-size:14px}
+
+/* workpaper header strip */
+.strip{border-bottom:1px solid var(--rule);background:var(--sheet)}
+.strip .wrap{display:flex;flex-wrap:wrap;gap:4px 24px;padding-top:8px;padding-bottom:8px;font:12px/1.5 var(--font-data);color:var(--muted)}
+.strip b{color:var(--ink);font-weight:700}
+
+/* hero */
+.hero{position:relative;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,5.5fr) minmax(0,6.5fr);gap:44px;align-items:start;padding-top:34px;padding-bottom:64px;position:relative;z-index:1}
+.hero-copy{padding-top:30px}
+.hero h1{font-weight:900;font-size:clamp(38px,3.7vw,54px);line-height:1.03;letter-spacing:-.018em;margin:14px 0 20px;text-wrap:balance}
+.pen{font-style:italic;font-weight:760;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 14' preserveAspectRatio='none'%3E%3Cpath d='M3 9 C 50 4 92 11 150 7 S 248 4 297 8' fill='none' stroke='%238E948B' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E") 0 94%/100% .26em no-repeat;
+  -webkit-box-decoration-break:clone;box-decoration-break:clone;padding:0 .04em;animation:pen .9s .45s cubic-bezier(.3,.7,.2,1) both}
+@keyframes pen{from{background-size:0% .26em}}
+.sub{font-size:19px;line-height:1.55;max-width:34em;margin:0}
+.sub:not(.sub2){font-size:21px;font-weight:600;line-height:1.45;margin-bottom:12px}
+.sub2{color:var(--ink)}
+.sub b{font-weight:700}
+.cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.proof{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin-top:20px;font-size:14px;color:var(--muted)}
+.proof .dot{width:4px;height:4px;border-radius:50%;background:var(--rule-strong)}
+.why{margin:26px 0 0;padding:14px 0 0;border-top:1px solid var(--rule);font-size:15.5px;line-height:1.5;max-width:40em;color:var(--ink)}
+.why b{font-family:var(--font-display);font-weight:800}
+.copy{display:inline-flex;align-items:center;gap:8px;font:13px var(--font-data);color:var(--ink);background:var(--sheet);border:1px solid var(--rule-strong);border-radius:2px;
+  padding:5px 8px;cursor:pointer;transition:border-color .15s ease,background .15s ease}
+.copy:hover{border-color:var(--ink);background:#FFFFFF}
+.copy .cp,.copy .ok{border-left:1px solid var(--rule);padding-left:8px;color:var(--muted)}
+.copy .ok{display:none;color:var(--vouched)}
+.copy.done .ok{display:inline}.copy.done .cp{display:none}
+/* the desk blotter under the sheet */
+.desk{position:relative;padding:14px 0 0}
+.desk::before{content:"";position:absolute;inset:0 -40vw -72px -28px;background:var(--mat);border-radius:2px 0 0 2px;z-index:-1;
+  background-image:radial-gradient(700px 380px at 30% 0%,rgba(127,159,120,.18),transparent 70%)}
+.desk-cap{color:var(--mat-muted);font:12px/1.5 var(--font-data);margin:0 0 12px;display:flex;gap:8px 18px;flex-wrap:wrap}
+.desk-cap b{color:var(--mat-ink);font-weight:700}
+.desk .fx{transform:rotate(-.35deg);box-shadow:0 1px 0 var(--rule),0 30px 60px -28px rgba(0,0,0,.6)}
+.desk .fx-cap{color:var(--mat-muted)}
+.desk .fx-cap a{color:var(--mat-ink)}
+
+/* receipts tape */
+.tape{background:var(--sheet);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);position:relative}
+.tape::before,.tape::after{content:"";position:absolute;left:0;right:0;height:6px;background:radial-gradient(circle at 3px 3px,var(--bg) 2px,transparent 2.5px) 0 0/12px 6px repeat-x}
+.tape::before{top:6px}.tape::after{bottom:6px}
+.tape .wrap{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));padding-top:44px;padding-bottom:40px}
+.rc{padding:0 26px;border-left:1px solid var(--rule)}
+.rc:first-child{border-left:0;padding-left:0}
+.rc-v{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 6px;border-bottom:3px double var(--rule-strong);padding-bottom:8px;margin-bottom:10px}
+.rc-n{font:900 clamp(38px,3.6vw,52px)/1 var(--font-display);letter-spacing:-.02em;font-variant-numeric:tabular-nums lining-nums}
+.rc-u{font:700 15px var(--font-data);color:var(--muted)}
+.rc p{margin:0 0 6px;font-size:15px;line-height:1.45}
+.rc code{font:12px var(--font-data);color:var(--muted);word-break:break-all}
+
+/* the exception */
+.exc-grid{display:grid;grid-template-columns:minmax(0,1fr) 56px minmax(0,1fr);align-items:stretch}
+.leaf{background:var(--sheet);border:1px solid var(--rule);box-shadow:var(--shadow);padding:22px 24px 20px;border-radius:2px;position:relative}
+.leaf .lbl{display:flex;justify-content:space-between;gap:12px;margin-bottom:14px}
+.leaf blockquote{margin:0;font:600 clamp(21px,1.9vw,26px)/1.45 var(--font-display);letter-spacing:-.005em}
+.claim{text-decoration:underline wavy var(--after) 1.6px;text-underline-offset:6px;text-decoration-skip-ink:none}
+.says{background:linear-gradient(transparent 62%,rgba(47,107,69,.2) 62% 92%,transparent 92%)}
+.leaf .mk{display:inline-block;width:30px;height:24px;vertical-align:-4px;margin-left:4px}
+.leaf .src{font:13px/1.5 var(--font-data);color:var(--muted);margin:16px 0 0;word-break:break-word}
+.leaf .ctx{font-size:15px;color:var(--muted);margin:14px 0 0;line-height:1.5}
+.vs{display:flex;align-items:center;justify-content:center;font:700 12px var(--font-data);color:var(--muted);writing-mode:vertical-rl;letter-spacing:.2em}
+.reason{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px 56px;margin-top:28px;font-size:15.5px}
+.reason p{margin:0;padding-left:16px;border-left:2px solid var(--rule-strong)}
+.reason q{font-style:italic}
+
+/* the split (bento) */
+.bento{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px}
+.card{background:var(--sheet);border:1px solid var(--rule);border-radius:2px;padding:24px 24px 22px;display:flex;flex-direction:column;gap:10px;box-shadow:var(--shadow);position:relative}
+.card h3{font-weight:800;font-size:24px;line-height:1.15;display:flex;gap:12px;align-items:flex-start}
+.card h3 svg{width:34px;height:34px;flex:none;margin-top:-2px}
+.card p{margin:0;font-size:16px;line-height:1.55}
+.card .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:8px}
+.c-nano{grid-column:span 7}.c-cloud{grid-column:span 5}.c-gate{grid-column:span 4}.c-proxy{grid-column:span 4}.c-badge{grid-column:span 4}
+.c-nano{background:var(--sheet) linear-gradient(90deg,transparent 0 calc(100% - 1px),transparent 0)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin:6px 0 2px;padding:10px 12px;border:1px solid var(--rule);font-size:14px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend svg{width:22px;height:18px}
+.routes{list-style:none;margin:4px 0 0;padding:0;font-size:15px}
+.routes li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:7px 0;border-bottom:1px solid var(--rule)}
+.routes li:last-child{border-bottom:0}
+
+/* the product, twice */
+.pair-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:28px 40px;align-items:start}
+.pair-grid .shot{grid-column:1/-1}
+.pair-note p{margin:0 0 12px;font-size:16px;max-width:46ch}
+.pair-note code{font:13px var(--font-data)}
+.browser{border:1px solid var(--rule-strong);border-radius:6px;overflow:hidden;background:var(--sheet);box-shadow:0 24px 48px -30px rgba(30,43,35,.55)}
+.browser .bar-top{display:flex;align-items:center;gap:7px;padding:9px 12px;background:#E3EADB;border-bottom:1px solid var(--rule)}
+.browser .bar-top i{width:10px;height:10px;border-radius:50%;background:#C9D3C2;display:block}
+.browser .url{margin-left:10px;font:12px var(--font-data);color:var(--muted);background:var(--sheet);border:1px solid var(--rule);border-radius:3px;padding:2px 10px;flex:1;max-width:340px}
+.browser img{width:100%;height:auto}
+.pair figcaption,.cap{font:12.5px/1.55 var(--font-data);color:var(--muted);margin:10px 0 0}
+.term{background:var(--mat);color:var(--mat-ink);border-radius:6px;padding:16px 18px 18px;font:13px/1.65 var(--font-data);box-shadow:0 24px 48px -30px rgba(0,0,0,.6);min-height:100%}
+.term .tt{display:flex;justify-content:space-between;color:var(--mat-muted);font-size:12px;border-bottom:1px solid #2C3B32;padding-bottom:8px;margin-bottom:10px}
+.term pre{margin:0;white-space:pre-wrap;word-break:break-word;font:inherit}
+.term .ln{display:block}
+.term .pr{color:var(--mat-muted)}
+.term .hi{color:#FFFFFF;font-weight:700}
+.term.typing .ln{visibility:hidden}
+.term.typing .ln.on{visibility:visible}
+.term .cur{display:inline-block;width:8px;height:15px;background:var(--mat-ink);vertical-align:-2px;margin-left:2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* measured */
+.sched{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:20px;align-items:start}
+.ledger{background:var(--sheet);border:1px solid var(--rule);border-radius:2px;box-shadow:var(--shadow);padding:20px 24px 16px;position:relative}
+.ledger h3{font-weight:800;font-size:22px;margin:4px 0 2px}
+.ledger .sub2{font-size:14px;color:var(--muted);margin:0 0 12px}
+.lrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 16px;align-items:baseline;padding:10px 0;border-top:1px solid var(--rule)}
+.lrow .k{font-size:15.5px}
+.lrow .v{font:900 26px/1 var(--font-display);white-space:nowrap;text-align:right}
+.lrow .v small{font:700 13px var(--font-data);color:var(--muted);margin-left:6px}
+.lrow .m{grid-column:1/-1;font:12px var(--font-data);color:var(--muted)}
+.foot-line{border-top:3px double var(--rule-strong);padding-top:10px;margin-top:2px;font:12.5px var(--font-data);color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.stamp{position:absolute;top:16px;right:18px;font:700 12px var(--font-data);letter-spacing:.12em;color:var(--muted);border:1.5px solid var(--muted);padding:3px 8px;transform:rotate(3deg);border-radius:2px}
+
+/* reviewer notes (honest by design) */
+.notes{background:var(--pad-deep);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.notes-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.note{padding:6px 28px 4px;border-left:1px solid var(--rule-strong)}
+.note:first-child{border-left:0;padding-left:0}
+.note p{font:italic 600 21px/1.4 var(--font-display);margin:10px 0 12px;max-width:26ch}
+.note .lbl{font-size:11px}
+
+/* faq */
+.faq-grid{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:24px 56px}
+.faq details{border-top:1px solid var(--rule-strong);padding:0}
+.faq details:last-child{border-bottom:1px solid var(--rule-strong)}
+.faq summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:30px minmax(0,1fr) 24px;gap:8px;align-items:baseline;padding:16px 0;font:700 19px/1.35 var(--font-display);transition:color .15s ease}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:hover{color:#3B5245}
+.faq summary .num{font-size:12px}
+.faq summary .pm{font:400 22px/1 var(--font-data);color:var(--muted);transition:transform .2s ease;justify-self:end}
+.faq details[open] summary .pm{transform:rotate(45deg)}
+.faq details p{margin:0 0 18px 38px;font-size:16px;max-width:64ch}
+
+/* close + footer */
+.close{background:var(--mat);color:var(--mat-ink)}
+.close .wrap{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:32px;align-items:center;padding-top:80px;padding-bottom:80px}
+.close h2{color:var(--mat-ink);max-width:18ch}
+.close p{color:var(--mat-muted);margin:14px 0 0;max-width:46ch}
+.close .cta{justify-content:flex-end;margin:0}
+footer{background:var(--mat);color:var(--mat-muted);border-top:1px solid #2C3B32;font-size:14px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:10px 26px;justify-content:space-between;padding-top:26px;padding-bottom:30px}
+footer a{color:var(--mat-ink)}
+footer .data{font:12px var(--font-data)}
+
+@media (max-width:1080px){
+  .hero .wrap{grid-template-columns:minmax(0,1fr);gap:28px;padding-top:36px}
+  .hero-copy{display:contents}
+  .hero-copy>.lbl{order:1}.hero h1{order:2;margin-bottom:4px}.sub{order:3}.cta{order:4;margin-top:4px}.sub2{order:5}.proof{order:6;margin-top:0}.why{order:7;margin-top:0}.desk{order:8;margin-top:8px}
+  .desk::before{inset:0 -32px -24px -32px;border-radius:0}
+  .desk{padding:18px 0 0;margin-bottom:12px}
+  .tape .wrap{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 0}
+  .rc:nth-child(3){border-left:0;padding-left:0}
+  .sec-head,.pair-grid,.sched,.faq-grid,.close .wrap{grid-template-columns:minmax(0,1fr)}
+  .c-nano,.c-cloud{grid-column:span 12}.c-gate,.c-proxy,.c-badge{grid-column:span 6}.c-badge{grid-column:span 12}
+  .close .cta{justify-content:flex-start}
+  .top nav{display:none}
+  .top .wrap{justify-content:space-between}
+}
+@media (max-width:720px){
+  body{font-size:16px}
+  .wrap{padding:0 18px}
+  .sec{padding:64px 0}
+  .strip .wrap{gap:2px 16px;font-size:11px}
+  .strip .wrap span:nth-child(n+3){display:none}
+  .hero h1{font-size:clamp(36px,10.4vw,46px)}
+  .sub{font-size:17px}
+  .sub:not(.sub2){font-size:18px;margin-bottom:0}
+  .hero .wrap{gap:20px}
+  .desk::before{inset:0 -18px -18px -18px}
+  .desk .fx{transform:none}
+  .fx-head{padding:10px 12px;flex-wrap:wrap}
+  .fx-q{padding:8px 12px;font-size:13px}
+  .fx-row{grid-template-columns:62px minmax(0,1fr);grid-template-areas:"mark text" "mark badges";gap:2px 8px;padding:8px 12px}
+  .fx-no{display:none}
+  .fx-mark{grid-area:mark;align-self:start;margin-top:2px}
+  .fx-text{grid-area:text;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;font-size:14px}
+  .fx-badges{grid-area:badges;justify-content:flex-start;min-width:0}
+  .fx-lanes{padding:10px 12px 6px}
+  .lane,.axis{grid-template-columns:62px minmax(0,1fr);gap:6px}
+  .lane-l{font-size:10px}
+  .playhead{left:calc(80px + (100% - 92px) * var(--p, 1))}
+  .bar{font-size:9px;padding-left:2px}
+  .fx-total{padding:10px 12px 12px}
+  .fx-total .big{font-size:34px}
+  .tape .wrap{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px 18px}
+  .rc{padding:0;border-left:0}
+  .rc p{font-size:14px}
+  .rc-u{font-size:13px}
+  .exc-grid{grid-template-columns:minmax(0,1fr)}
+  .vs{writing-mode:horizontal-tb;padding:12px 0}
+  .reason{grid-template-columns:minmax(0,1fr)}
+  .c-gate,.c-proxy,.c-badge{grid-column:span 12}
+  .notes-grid{grid-template-columns:minmax(0,1fr)}
+  .note{border-left:0;border-top:1px solid var(--rule-strong);padding:16px 0 4px}
+  .note:first-child{border-top:0;padding-top:0}
+  .faq summary{font-size:17px}
+  .faq details p{margin-left:0}
+  .lrow .v{font-size:22px}
+}
+@media (max-width:1180px) and (min-width:1081px){ .fx-badges{min-width:0} }
+@media (min-width:1081px) and (max-height:820px){
+  .hero .wrap{padding-top:32px;padding-bottom:48px}
+  .hero h1{font-size:clamp(38px,4.1vw,58px)}
+  .fx-row{min-height:34px;padding-top:5px;padding-bottom:5px}
+}
+@media (prefers-reduced-motion: reduce){ .pen{animation:none} .term .cur{animation:none} html{scroll-behavior:auto} }
+@media print{
+  .top,.skip,.copy,.close .cta{display:none}
+  .pen{animation:none}
+  .term.typing .ln{visibility:visible}
+  body{background:#fff}
+  .faq details{display:block}
+}
+
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="wrap">
+    <a class="wm" href="/about" aria-label="Footing, about"><img src="/icon.svg" alt="" width="28" height="28">Footing</a>
+    <nav aria-label="Sections">
+      <a href="#exception">The exception</a>
+      <a href="#split">How it splits</a>
+      <a href="#measured">Measured</a>
+      <a href="#faq">FAQ</a>
+      <a href="/pitch">Deck</a>
+    </nav>
+    <a class="btn go" href="/">Check an answer</a>
+  </div>
+</header>
+<div class="strip" role="note">
+  <div class="wrap"><span>WP <b>F-1</b></span><span>prepared <b>2026-11-22</b></span><span>subject: <b>an AI answer, 9 citations, 2 pages</b></span><span>cloud model: <b>gemini-3.5-flash-lite</b></span></div>
+</div>
+<main id="main">
+<section class="hero pad" aria-labelledby="h1">
+  <div class="wrap">
+    <div class="hero-copy">
+      <p class="lbl">Firebase Hybrid AI Hackathon · <b>Web (Chrome)</b></p>
+      <h1 id="h1">Your AI cites the page. Footing <span class="pen">actually reads it.</span></h1>
+      <p class="sub">Footing checks that every link in an AI answer says what its sentence claims, and shows you the page's own words.</p>
+      <p class="sub sub2">Gemini Nano on your laptop reads the best-matching passages of each cited page, <b>1,699 ms median per citation</b> in our bench (M1 Max), and marks the ones with no supporting passage itself. Every “supports” goes to the cloud for the final word, and code refuses any quote that is not <b>word for word in the source</b>.</p>
+      <div class="cta">
+        <a class="btn" href="https://github.com/edycutjong/footing"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 4 2 8l3.5 4M10.5 4 14 8l-3.5 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Source on GitHub</a>
+        <a class="btn" href="/pitch">Pitch deck</a>
+        <a class="btn go" href="/">Check an answer <span aria-hidden="true">→</span></a>
+      </div>
+      <p class="proof"><span>No login</span><i class="dot"></i><span>no keys</span><i class="dot"></i><span>works without Nano</span><i class="dot"></i><button class="copy" type="button" data-copy="npm ci &amp;&amp; npm run eval" aria-label="Copy the command npm run eval, which recomputes every number on this page"><span>npm run eval</span><span class="cp" aria-hidden="true">copy</span><span class="ok" aria-hidden="true">copied</span></button></p>
+      <p class="why"><b>Why two models?</b> On full vs partial, Nano scored 21 of 30 in our kill test, under our 24-of-30 bar. So it triages; the cloud decides.</p>
+    </div>
+    <div class="desk on-mat">
+<figure class="fx" id="fx-hero" data-total="39555" data-axis="40000" data-speed="4" data-autoplay>
+<div class="fx-head"><span class="fx-ref">Recorded run · replayed 4× · 9 citations</span><span class="fx-clock">t = <b data-clock>39.6</b> s</span><button class="fx-replay" type="button" aria-label="Replay the recorded run">Replay</button></div>
+<p class="fx-q">Question asked: <b>What does the research say about intermittent fasting?</b></p>
+<ol class="fx-rows">
+<li class="fx-row" data-st="final" data-ds="1624" data-de="7775" data-ce="15981" data-settle="0" data-final="SUPPORTS"><span class="fx-no">1</span><span class="fx-mark"><sup>[1]</sup><svg class="m m-wait" viewBox="0 0 24 20" aria-hidden="true"><circle cx="12" cy="10" r="4" fill="var(--before)"/></svg><svg class="m m-esc" viewBox="0 0 24 20" aria-hidden="true"><path d="M6 15 L6 5 Q12 4 12 8 Q12 11 6 11" stroke="var(--before)" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><text x="15" y="18" font-size="9" fill="var(--before)" font-family="Courier Prime, monospace">d</text></svg><svg class="m m-final" viewBox="0 0 24 20" aria-hidden="true"><path class="draw" pathLength="1" d="M3 11 L9 17 L21 3" stroke="var(--vouched)" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><sub>c</sub><span class="sr">says it (cloud)</span></span><span class="fx-text" title="Research on therapeutic intermittent fasts for treating obesity dates back to at least 1915, with renewed medical interest occurring in the 1960s after Bloom and his colleagues published an enthusiastic report.">Research on therapeutic intermittent fasts for treating obesity dates back to at least…</span><span class="fx-badges"><span class="badge d">ON DEVICE</span><span class="arrow">→</span><span class="badge c">IN CLOUD</span></span></li>
+<li class="fx-row" data-st="final" data-ds="7775" data-de="9886" data-ce="20413" data-settle="0" data-final="SUPPORTS"><span class="fx-no">2</span><span class="fx-mark"><sup>[1]</sup><svg class="m m-wait" viewBox="0 0 24 20" aria-hidden="true"><circle cx="12" cy="10" r="4" fill="var(--before)"/></svg><svg class="m m-esc" viewBox="0 0 24 20" aria-hidden="true"><path d="M6 15 L6 5 Q12 4 12 8 Q12 11 6 11" stroke="var(--before)" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><text x="15" y="18" font-size="9" fill="var(--before)" font-family="Courier Prime, monospace">d</text></svg><svg class="m m-final" viewBox="0 0 24 20" aria-hidden="true"><path class="draw" pathLength="1" d="M3 11 L9 17 L21 3" stroke="var(--vouched)" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><sub>c</sub><span class="sr">says it (cloud)</span></span><span class="fx-text" title="These early clinical studies investigated short-term starvation periods ranging from 1 to 14 days.">These early clinical studies investigated short-term starvation periods ranging from 1 to 14…</span><span class="fx-badges"><span class="badge d">ON DEVICE</span><span class="arrow">→</span><span class="badge c">IN CLOUD</span></span></li>
+<li class="fx-row" data-st="final" data-ds="9886" data-de="11882" data-ce="25608" data-settle="0" data-final="SUPPORTS"><span class="fx-no">3</span><span class="fx-mark"><sup>[2]</sup><svg class="m m-wait" viewBox="0 0 24 20" aria-hidden="true"><circle cx="12" cy="10" r="4" fill="var(--before)"/></svg><svg class="m m-esc" viewBox="0 0 24 20" aria-hidden="true"><path d="M6 15 L6 5 Q12 4 12 8 Q12 11 6 11" stroke="var(--before)" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><text x="15" y="18" font-size="9" fill="var(--before)" font-family="Courier Prime, monospace">d</text></svg><svg class="m m-final" viewBox="0 0 24 20" aria-hidden="true"><path class="draw" pathLength="1" d="M3 11 L9 17 L21 3" stroke="var(--vouched)" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><sub>c</sub><span class="sr">says it (cloud)</span></span><span class="fx-text" title="In animal studies, calorie restriction has been shown to successfully increase lifespan and improve overall tolerance to metabolic stresses.">In animal studies, calorie restriction has been shown to successfully increase lifespan and…</span><span class="fx-badges"><span class="badge d">ON DEVICE</span><span class="arrow">→</span><span class="badge c">IN CLOUD</span></span></li>
+<li class="fx-row" data-st="final" data-ds="11882" data-de="13900" data-ce="31262" data-settle="0" data-final="SUPPORTS"><span class="fx-no">4</span><span class="fx-mark"><sup>[1]</sup><svg class="m m-wait" viewBox="0 0 24 20" aria-hidden="true"><circle cx="12" cy="10" r="4" fill="var(--before)"/></svg><svg class="m m-esc" viewBox="0 0 24 20" aria-hidden="true"><path d="M6 15 L6 5 Q12 4 12 8 Q12 11 6 11" stroke="var(--before)" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><text x="15" y="18" font-size="9" fill="var(--before)" font-family="Courier Prime, monospace">d</text></svg><svg class="m m-final" viewBox="0 0 24 20" aria-hidden="true"><path class="draw" pathLength="1" d="M3 11 L9 17 L21 3" stroke="var(--vouched)" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><sub>c</sub><span class="sr">says it (cloud)</span></span><span class="fx-text" title="In human populations, research has evaluated whether intermittent fasting can lower the risk of diet-related conditions such as metabolic syndrome.">In human populations, research has evaluated whether intermittent fasting can lower the risk…</span><span class="fx-badges"><span class="badge d">ON DEVICE</span><span class="arrow">→</span><span class="badge c">IN CLOUD</span></span></li>
+<li class="fx-row hot" data-st="final" data-ds="13900" data-de="15456" data-ce="" data-settle="1" data-final="LIKELY_UNSUPPORTED"><span class="fx-no">5</span><span class="fx-mark"><sup>[2]</sup><svg class="m m-wait" viewBox="0 0 24 20" aria-hidden="true"><circle cx="12" cy="10" r="4" fill="var(--before)"/></svg><svg class="m m-esc" viewBox="0 0 24 20" aria-hidden="true"><path d="M6 15 L6 5 Q12 4 12 8 Q12 11 6 11" stroke="var(--before)" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><text x="15" y="18" font-size="9" fill="var(--before)" font-family="Courier Prime, monospace">d</text></svg><svg class="m m-final" viewBox="0 0 24 20" aria-hidden="true"><ellipse cx="12" cy="10" rx="10.5" ry="8" stroke="var(--after)" opacity="0.7" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3 3"/><path d="M8.5 6.5 L15.5 13.5 M15.5 6.5 L8.5 13.5" stroke="var(--after)" opacity="0.7" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><sub>d</sub><span class="sr">likely not, on device (device)</span></span><span class="fx-text" title="Although it may improve several health outcomes in overweight or obese adults, its effect on lowering blood pressure appears less pronounced than that of continuous energy restriction.">Although it may improve several health outcomes in overweight or obese adults, its…</span><span class="fx-badges"><span class="badge d">ON DEVICE</span></span></li>
+<li class="fx-row" data-st="final" data-ds="15456" data-de="17328" data-ce="35625" data-settle="0" data-final="SUPPORTS"><span class="fx-no">6</span><span class="fx-mark"><sup>[2]</sup><svg class="m m-wait" viewBox="0 0 24 20" aria-hidden="true"><circle cx="12" cy="10" r="4" fill="var(--before)"/></svg><svg class="m m-esc" viewBox="0 0 24 20" aria-hidden="true"><path d="M6 15 L6 5 Q12 4 12 8 Q12 11 6 11" stroke="var(--before)" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><text x="15" y="18" font-size="9" fill="var(--before)" font-family="Courier Prime, monospace">d</text></svg><svg class="m m-final" viewBox="0 0 24 20" aria-hidden="true"><path class="draw" pathLength="1" d="M3 11 L9 17 L21 3" stroke="var(--vouched)" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><sub>c</sub><span class="sr">says it (cloud)</span></span><span class="fx-text" title="Additionally, research does not consistently demonstrate that intermittent fasting is superior to continuous low-calorie diets regarding overall weight loss efficiency.">Additionally, research does not consistently demonstrate that intermittent fasting is superior to continuous…</span><span class="fx-badges"><span class="badge d">ON DEVICE</span><span class="arrow">→</span><span class="badge c">IN CLOUD</span></span></li>
+<li class="fx-row" data-st="final" data-ds="17328" data-de="20295" data-ce="33140" data-settle="0" data-final="UNVERIFIED"><span class="fx-no">7</span><span class="fx-mark"><sup>[2]</sup><svg class="m m-wait" viewBox="0 0 24 20" aria-hidden="true"><circle cx="12" cy="10" r="4" fill="var(--before)"/></svg><svg class="m m-esc" viewBox="0 0 24 20" aria-hidden="true"><path d="M6 15 L6 5 Q12 4 12 8 Q12 11 6 11" stroke="var(--before)" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><text x="15" y="18" font-size="9" fill="var(--before)" font-family="Courier Prime, monospace">d</text></svg><svg class="m m-final" viewBox="0 0 24 20" aria-hidden="true"><text x="12" y="16" text-anchor="middle" font-size="17" font-weight="700" fill="var(--query)" font-family="Besley, Georgia, serif">?</text></svg><sub>c</sub><span class="sr">quote not found (cloud)</span></span><span class="fx-text" title="Specific dietary methods evaluated in research include alternate-day fasting restricting intake to 25% of daily calorie needs, as well as the 5:2 diet which limits intake to 400–500 calories on two days of the week.">Specific dietary methods evaluated in research include alternate-day fasting restricting intake to 25%…</span><span class="fx-badges"><span class="badge d">ON DEVICE</span><span class="arrow">→</span><span class="badge c">IN CLOUD</span></span></li>
+<li class="fx-row" data-st="final" data-ds="20295" data-de="22654" data-ce="39555" data-settle="0" data-final="SUPPORTS"><span class="fx-no">8</span><span class="fx-mark"><sup>[1]</sup><svg class="m m-wait" viewBox="0 0 24 20" aria-hidden="true"><circle cx="12" cy="10" r="4" fill="var(--before)"/></svg><svg class="m m-esc" viewBox="0 0 24 20" aria-hidden="true"><path d="M6 15 L6 5 Q12 4 12 8 Q12 11 6 11" stroke="var(--before)" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><text x="15" y="18" font-size="9" fill="var(--before)" font-family="Courier Prime, monospace">d</text></svg><svg class="m m-final" viewBox="0 0 24 20" aria-hidden="true"><path class="draw" pathLength="1" d="M3 11 L9 17 L21 3" stroke="var(--vouched)" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><sub>c</sub><span class="sr">says it (cloud)</span></span><span class="fx-text" title="Regarding public safety, the United States National Institute on Aging states that current research remains limited and inconclusive, choosing not to recommend intermittent fasting to the general public.">Regarding public safety, the United States National Institute on Aging states that current…</span><span class="fx-badges"><span class="badge d">ON DEVICE</span><span class="arrow">→</span><span class="badge c">IN CLOUD</span></span></li>
+<li class="fx-row" data-st="final" data-ds="22654" data-de="24794" data-ce="37599" data-settle="0" data-final="PARTIAL"><span class="fx-no">9</span><span class="fx-mark"><sup>[1]</sup><svg class="m m-wait" viewBox="0 0 24 20" aria-hidden="true"><circle cx="12" cy="10" r="4" fill="var(--before)"/></svg><svg class="m m-esc" viewBox="0 0 24 20" aria-hidden="true"><path d="M6 15 L6 5 Q12 4 12 8 Q12 11 6 11" stroke="var(--before)" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><text x="15" y="18" font-size="9" fill="var(--before)" font-family="Courier Prime, monospace">d</text></svg><svg class="m m-final" viewBox="0 0 24 20" aria-hidden="true"><path class="draw" pathLength="1" d="M3 11 L9 17 L14 10" stroke="var(--partial)" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 9 L21 3" stroke="var(--partial)" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 3"/></svg><sub>c</sub><span class="sr">says part (cloud)</span></span><span class="fx-text" title="Meanwhile, the New Zealand Ministry of Health notes that while the practice may aid weight loss, it can cause low energy and hunger, and it is explicitly not recommended for individuals with insulin-dependent diabetes.">Meanwhile, the New Zealand Ministry of Health notes that while the practice may…</span><span class="fx-badges"><span class="badge d">ON DEVICE</span><span class="arrow">→</span><span class="badge c">IN CLOUD</span></span></li>
+</ol>
+<div class="fx-lanes" role="img" aria-label="Timeline rebuilt from the run: pages fetched in 1.6 s; Nano triaged 9 citations one at a time (first call 6.2 s) and settled 1; the cloud decided 8, two at a time; the run ends at 39.6 s.">
+<div class="lane"><span class="lane-l">FETCH</span><div class="track"><i class="bar f" style="left:0.000%;width:4.060%" data-s="0" data-e="1624">[1]</i><i class="bar f" style="left:0.000%;width:0.603%" data-s="0" data-e="241">[2]</i></div></div>
+<div class="lane"><span class="lane-l d">ON DEVICE</span><div class="track"><i class="bar d" style="left:4.060%;width:15.377%" data-s="1624" data-e="7775">1 · 6.2 s</i><i class="bar d" style="left:19.438%;width:5.277%" data-s="7775" data-e="9886">2</i><i class="bar d" style="left:24.715%;width:4.990%" data-s="9886" data-e="11882">3</i><i class="bar d" style="left:29.705%;width:5.045%" data-s="11882" data-e="13900">4</i><i class="bar d settle" style="left:34.750%;width:3.890%" data-s="13900" data-e="15456">5</i><i class="bar d" style="left:38.640%;width:4.680%" data-s="15456" data-e="17328">6</i><i class="bar d" style="left:43.320%;width:7.418%" data-s="17328" data-e="20295">7</i><i class="bar d" style="left:50.737%;width:5.897%" data-s="20295" data-e="22654">8</i><i class="bar d" style="left:56.635%;width:5.350%" data-s="22654" data-e="24794">9</i></div></div>
+<div class="lane"><span class="lane-l c">IN CLOUD</span><div class="track two"><i class="bar c s0" style="left:19.438%;width:20.515%" data-s="7775" data-e="15981">1</i><i class="bar c s1" style="left:24.715%;width:26.317%" data-s="9886" data-e="20413">2</i><i class="bar c s0" style="left:39.953%;width:24.067%" data-s="15981" data-e="25608">3</i><i class="bar c s1" style="left:51.032%;width:27.122%" data-s="20413" data-e="31262">4</i><i class="bar c s0" style="left:64.020%;width:25.043%" data-s="25608" data-e="35625">6</i><i class="bar c s1" style="left:78.155%;width:4.695%" data-s="31262" data-e="33140">7</i><i class="bar c s1" style="left:82.850%;width:16.038%" data-s="33140" data-e="39555">8</i><i class="bar c s0" style="left:89.062%;width:4.935%" data-s="35625" data-e="37599">9</i></div></div>
+<div class="axis"><span></span><span><i>0 s</i><i>10</i><i>20</i><i>30</i><i>40 s</i></span></div><i class="playhead" aria-hidden="true"></i></div>
+<div class="fx-total"><div class="line"><span class="big"><span data-k>1</span> of <span data-n>7</span></span><span class="words">checked citations: the source doesn't say it (or says only part)</span><span class="likely">+ <span data-likely>1</span> likely, on device (unconfirmed)</span></div><p class="data"><span data-settled>1</span> settled on this laptop · <span data-cloudn>7</span> decided in the cloud · <span data-unv>1</span> quote not found · <span style="white-space:nowrap">8 cloud calls (cap 8)</span></p><p class="fx-key"><sub>d</sub> device · <sub>c</sub> cloud · the 1 = row 9 (says part) · the likely = row 5 (no passage, on device)</p></div>
+</figure>
+<p class="fx-cap">evidence/check/nano-hero-if-2026-11-22.json · dev server, same code as production · Nano on an M1 Max · 2026-11-22 12:20 UTC. Bars rebuilt from its step times end at 39.6 s; wall clock 40.0 s.</p>
+    </div>
+  </div>
+</section>
+
+<section class="tape" aria-label="Receipts">
+  <div class="wrap">
+<div class="rc"><div class="rc-v"><span class="rc-n" data-count="1699">1,699</span><span class="rc-u">ms</span></div><p>median Nano triage per citation in the bench (p95 2,067 ms, 40 calls, M1 Max)</p><code>evidence/bench.json</code></div>
+<div class="rc"><div class="rc-v"><span class="rc-n" data-count="80">80</span><span class="rc-u">/ 80</span></div><p>calls answered where they were routed (40 device, 40 cloud)</p><code>evidence/bench.json</code></div>
+<div class="rc"><div class="rc-v"><span class="rc-n" data-count="191">191</span><span class="rc-u">tests</span></div><p>unit tests passing, plus 12 end-to-end on the live URL</p><code>evidence/ci-local-2026-11-22.txt</code></div>
+<div class="rc"><div class="rc-v"><span class="rc-n" data-count="1" data-dec="2">1.00</span><span class="rc-u">Lighthouse</span></div><p>performance and accessibility, live app page (best practices 0.77: the reCAPTCHA cookie)</p><code>evidence/lighthouse-live-2026-11-22.json</code></div>
+  </div>
+</section>
+
+<section class="sec exc" id="exception" aria-labelledby="h-exc">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="lbl">Entry 5 · the exception</p><h2 id="h-exc">Your AI cited it. The page never said it.</h2></div>
+      <p class="lede">Sentence 5 cites page [2]. The page reports no significant difference in blood pressure between the two diets; the sentence says there is one.</p>
+    </div>
+    <div class="exc-grid">
+      <figure class="leaf" style="margin:0">
+        <p class="lbl"><span>The AI's sentence · cites [2]</span><span>excepted</span></p>
+        <blockquote>Although it may improve several health outcomes in overweight or obese adults, <span class="claim">its effect on lowering blood pressure appears less pronounced than that of continuous energy restriction.</span><svg class="mk" viewBox="0 0 24 20" role="img" aria-label="red pencil: the source does not say this"><ellipse cx="12" cy="10" rx="10.5" ry="8" fill="none" stroke="var(--after)" stroke-width="2.2"/><path d="M8 6 L16 14 M16 6 L8 14" stroke="var(--after)" stroke-width="2.2" stroke-linecap="round"/></svg></blockquote>
+        <p class="src">seed/answers/hero.json · captured 2026-11-21 · unedited · underlined: the clause page [2] contradicts</p>
+      </figure>
+      <div class="vs" aria-hidden="true">against</div>
+      <figure class="leaf" style="margin:0">
+        <p class="lbl"><span>What page [2] says</span><span>source</span></p>
+        <blockquote><span class="says">“No significant differences in blood pressure, heart rate, fasting glucose, and fasting insulin.”</span></blockquote>
+        <p class="ctx">From the page's summary of a one-year trial of alternate-day fasting against daily calorie restriction, right after “Their findings when comparing the two groups:”</p>
+        <p class="src"><a href="https://nutritionsource.hsph.harvard.edu/healthy-weight/diet-reviews/intermittent-fasting/">nutritionsource.hsph.harvard.edu · intermittent fasting</a> · re-fetched 2026-11-22 15:03 UTC</p>
+      </figure>
+    </div>
+    <div class="reason">
+      <p><b>The cloud's reason</b>, verbatim (production, 2026-11-22 13:01 UTC): <q>The source text states there are no significant differences in blood pressure when comparing intermittent fasting to continuous calorie restriction.</q></p>
+      <p><b>On the device:</b> in the replay above, Nano found no supporting passage among the three it read, so the laptop settled it with no cloud call.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec split pad" id="split" aria-labelledby="h-split" style="border-top:1px solid var(--rule)">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="lbl">Routing rule · capability, not policy</p><h2 id="h-split">Two places to think. One rule decides which.</h2></div>
+      <p class="lede">Nano reads what it can on your laptop, the cloud reads what only it can, code checks both, and every chip says where.</p>
+    </div>
+    <div class="bento">
+      <article class="card c-nano">
+        <h3><svg viewBox="0 0 34 34" aria-hidden="true"><path d="M6 9h22v14H6zM3 26h28" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 16l3 3 7-7" fill="none" stroke="var(--vouched)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Nano reads first, on your laptop</h3>
+        <p>Gemini Nano in Chrome triages every readable page: yes or no, and which words say so. <b>1,699 ms</b> median, <b>2,067 ms</b> p95 in our bench (M1 Max). Alone, it settles only “no supporting passage found”.</p>
+        <div class="legend" aria-label="Tick-mark legend">
+          <span><svg viewBox="0 0 24 20" aria-hidden="true"><path d="M3 11 L9 17 L21 3" fill="none" stroke="var(--vouched)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>says it</span>
+          <span><svg viewBox="0 0 24 20" aria-hidden="true"><path d="M3 11 L9 17 L14 10" fill="none" stroke="var(--partial)" stroke-width="2.2" stroke-linecap="round"/><path d="M15 9 L21 3" fill="none" stroke="var(--partial)" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="2 3"/></svg>says part</span>
+          <span><svg viewBox="0 0 24 20" aria-hidden="true"><ellipse cx="12" cy="10" rx="10.5" ry="8" fill="none" stroke="var(--after)" stroke-width="2.2"/><path d="M8 6 L16 14 M16 6 L8 14" stroke="var(--after)" stroke-width="2.2" stroke-linecap="round"/></svg>doesn't say this</span>
+          <span><svg viewBox="0 0 24 20" aria-hidden="true"><ellipse cx="12" cy="10" rx="10.5" ry="8" fill="none" stroke="var(--after)" stroke-width="2.2" stroke-dasharray="3 3" opacity=".7"/><path d="M8.5 6.5 L15.5 13.5 M15.5 6.5 L8.5 13.5" stroke="var(--after)" stroke-width="2.2" stroke-linecap="round" opacity=".7"/></svg>likely, on device</span>
+          <span><svg viewBox="0 0 24 20" aria-hidden="true"><text x="12" y="16" text-anchor="middle" font-size="17" font-weight="700" fill="var(--query)" font-family="Besley, Georgia, serif">?</text></svg>quote not found</span>
+        </div>
+        <div class="chips"><span class="chip">InferenceMode.PREFER_ON_DEVICE</span><span class="chip">promptOptions.responseConstraint</span></div>
+      </article>
+      <article class="card c-cloud">
+        <h3><svg viewBox="0 0 34 34" aria-hidden="true"><path d="M9 25h17a6 6 0 0 0 0-12 8 8 0 0 0-15-2 7 7 0 0 0-2 14z" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>The cloud makes the hard call</h3>
+        <p>A Nano “supports” is never final: the cloud decides full or partial, and reads what Nano cannot.</p>
+        <ul class="routes">
+          <li><span>Nano found a supporting quote</span><span class="badges"><span class="badge d">ON DEVICE</span><span class="arrow">→</span><span class="badge c">IN CLOUD</span></span></li>
+          <li><span>PDF (PDF input is cloud-only)</span><span class="badges"><span class="badge c">IN CLOUD</span></span></li>
+          <li><span>Page that needs JavaScript</span><span class="badges"><span class="badge c">IN CLOUD</span></span></li>
+          <li><span>No Nano, or “Cloud only” chosen</span><span class="badges"><span class="badge c">IN CLOUD</span></span></li>
+        </ul>
+        <div class="chips"><span class="chip">ONLY_IN_CLOUD</span><span class="chip">responseSchema</span><span class="chip">tools: urlContext</span></div>
+      </article>
+      <article class="card c-gate">
+        <h3><svg viewBox="0 0 34 34" aria-hidden="true"><path d="M7 10h4l-2 6M15 10h4l-2 6" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="22" cy="21" r="6" fill="none" stroke="var(--ink)" stroke-width="2"/><path d="M26.5 25.5 31 30" stroke="var(--ink)" stroke-width="2" stroke-linecap="round"/></svg>Code checks every quote</h3>
+        <p>A quote that is not in the page word for word (after whitespace and Unicode clean-up) makes the verdict unverified, never supported.</p>
+        <div class="chips"><span class="chip">src/lib/gate/quote.ts</span></div>
+      </article>
+      <article class="card c-proxy">
+        <h3><svg viewBox="0 0 34 34" aria-hidden="true"><path d="M4 17h10M20 17h10M24 12l5 5-5 5" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="14" y="11" width="6" height="12" fill="none" stroke="var(--ink)" stroke-width="2"/></svg>A proxy that never thinks</h3>
+        <p>One route fetches the cited page: http(s) only, no private addresses, size and time caps. No model runs there; App Check guards it.</p>
+        <div class="chips"><span class="chip">ReCaptchaEnterpriseProvider</span></div>
+      </article>
+      <article class="card c-badge">
+        <h3><svg viewBox="0 0 34 34" aria-hidden="true"><rect x="4" y="12" width="12" height="10" fill="var(--ink)"/><rect x="19" y="12" width="12" height="10" fill="none" stroke="var(--cloud)" stroke-width="2"/></svg>Badged where it really ran</h3>
+        <p>Each chip reads the response's own <code>inferenceSource</code>: 80 of 80 bench calls came back from where they were sent.</p>
+        <div class="chips"><span class="chip">response.inferenceSource</span><span class="chip">Remote Config</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="sec pair" id="product" aria-labelledby="h-pair" style="border-top:1px solid var(--rule)">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="lbl">The product, twice</p><h2 id="h-pair">The live page, and the numbers under it.</h2></div>
+      <p class="lede">Rows 3 to 5 of the same answer on the production site, and the command that recomputes every figure on this page.</p>
+    </div>
+    <div class="pair-grid">
+      <figure class="shot" style="margin:0">
+        <div class="browser"><div class="bar-top"><i></i><i></i><i></i><span class="url">footing.edycu.dev</span></div>
+          <img src="/landing/img/live-rows.webp" width="1134" height="316" loading="lazy" alt="Footing, rows 3 to 5 of the sample answer: a quote not found in what the model read, a vouched sentence, and sentence 5 marked doesn't say this, each badged ON DEVICE then IN CLOUD."></div>
+      </figure>
+      <div class="pair-note">
+        <p><b>Production</b>, Nano laptop, 2026-11-22 13:01 UTC; cropped from <code>evidence/check/</code>.</p>
+        <p>Row 3: the cloud said “supports” with a quote not in its text, so code shows a violet <b>?</b>. Row 5: the cloud confirmed the replay's on-device call.</p>
+      </div>
+      <figure class="pair-term" style="margin:0">
+        <div class="term" id="term" aria-label="Output of npm run eval">
+          <div class="tt"><span>~/footing</span><span>npm run eval</span></div>
+          <pre><span class="ln"><span class="pr">$</span> npm run eval</span><span class="ln">eval-fresh-20 — held-out (fresh 20, labelled and hashed before any model run)</span><span class="ln hi">  Nano binary triage (on device): 13/20 = 65%</span><span class="ln">    settled on device: 1 (1 correct) · latency p50 1729 ms, p95 2335 ms</span><span class="ln hi">  Cloud judge gemini-3.5-flash-lite (3-class): 14/20 = 70%</span><span class="ln">    quote gate held: 20/20 · latency p50 2284 ms, p95 6924 ms</span><span class="ln"> </span><span class="ln">All figures in evidence/summary.json reproduce from the raw rows.</span><span class="ln"><span class="pr">$</span> <span class="cur" aria-hidden="true"></span></span></pre>
+        </div>
+        <figcaption>Real output; lines selected, order kept. No model calls; exits 1 on any mismatch.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="sec measured pad" id="measured" aria-labelledby="h-meas" style="border-top:1px solid var(--rule)">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><p class="lbl">Schedule M · accuracy and latency</p><h2 id="h-meas">Measured on claims it had never seen.</h2></div>
+      <p class="lede">Twenty claims were labelled before any model ran. Accuracy is modest and printed as measured; the guarantee is narrower: a quote shown as support is in the page.</p>
+    </div>
+    <div class="sched">
+<div class="ledger">
+<p class="lbl">Set A · held-out</p><h3>Fresh 20</h3>
+<p class="sub2">labelled and hashed before any model run (commit 13d2240)</p>
+<div class="lrow"><span class="k">Nano yes/no triage, on device</span><span class="v">13/20<small>65%</small></span><span class="m">settled 1 alone (1 right), sent 19 to the cloud</span></div>
+<div class="lrow"><span class="k">Cloud judge, three-way (gemini-3.5-flash-lite)</span><span class="v">14/20<small>70%</small></span><span class="m">full, partial or not supported</span></div>
+<div class="lrow"><span class="k">Cloud quotes found word for word in the page</span><span class="v">20/20</span><span class="m">the code quote gate</span></div>
+<div class="foot-line"><span>recomputed by npm run eval</span><span>evidence/summary.json</span></div>
+</div>
+<div class="ledger">
+<span class="stamp">NOT HELD-OUT</span>
+<p class="lbl">Set B · frozen</p><h3>Frozen 30</h3>
+<p class="sub2">an earlier prompt was scored on it, so it is not held-out</p>
+<div class="lrow"><span class="k">Nano yes/no triage</span><span class="v">24/30<small>80%</small></span><span class="m">settled 8 alone, all 8 right · sent 22 to the cloud</span></div>
+<div class="lrow"><span class="k">Cloud judge, three-way</span><span class="v">23/30<small>76.7%</small></span><span class="m">full, partial or not supported</span></div>
+<div class="foot-line"><span>Nano scored on the yes/no cut</span><span>evidence/summary.json</span></div>
+</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec notes" aria-labelledby="h-notes">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><h2 id="h-notes">What it does not claim.</h2></div>
+    </div>
+    <div class="notes-grid">
+      <div class="note"><p class="lbl">README · intro</p><p>“Footing checks citation faithfulness, not truth”</p></div>
+      <div class="note"><p class="lbl">README · Engineering Rigor</p><p>“Escalation is the design, not a failure: SUPPORTS is never final on device.”</p></div>
+      <div class="note"><p class="lbl">README · Engineering Rigor</p><p>“Frozen 30 (not held-out: an earlier prompt was scored on it)”</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec faq pad" id="faq" aria-labelledby="h-faq">
+  <div class="wrap faq-grid">
+    <div><h2 id="h-faq">Questions a judge would ask.</h2></div>
+    <div>
+      <details open><summary><span class="num">01</span><span>No Nano on this laptop. What do I still get?</span><span class="pm" aria-hidden="true">+</span></summary>
+        <p>The whole check, in the cloud, plus a meter of how many citations a Nano laptop would read on-device first. To get Nano: in chrome://flags enable “Gemma 4 for Built-in AI” and the Prompt API, and keep 22 GB free.</p></details>
+      <details><summary><span class="num">02</span><span>Does Footing tell me whether a claim is true?</span><span class="pm" aria-hidden="true">+</span></summary>
+        <p>No. It checks whether the cited page says the sentence. A true sentence with the wrong link gets flagged; a false one its source repeats does not.</p></details>
+      <details><summary><span class="num">03</span><span>How accurate is it, really?</span><span class="pm" aria-hidden="true">+</span></summary>
+        <p>On twenty claims labelled before any run: Nano's yes/no triage 13 of 20, the cloud's three-way verdict 14 of 20. So Nano never has the last word on “supports”, and every verdict shows the page's own words.</p></details>
+      <details><summary><span class="num">04</span><span>What leaves my laptop?</span><span class="pm" aria-hidden="true">+</span></summary>
+        <p>The cited URL goes to this site's fetch proxy, which keeps no copy. A cloud check sends the sentence and its matching passages to the cloud model; a check Nano settles alone sends no text anywhere.</p></details>
+      <details><summary><span class="num">05</span><span>What happens when the free cloud tier is busy?</span><span class="pm" aria-hidden="true">+</span></summary>
+        <p>Each answer gets at most 8 cloud calls; the rest wait for a tap. A rate-limit error shows on its citation: wait a minute and tap it again.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="close on-mat" aria-labelledby="h-close">
+  <div class="wrap">
+    <div><h2 id="h-close">Bring an answer of your own.</h2><p>Paste any AI answer with its links. No login; without Nano the whole check runs in the cloud.</p></div>
+    <div class="cta">
+      <a class="btn" href="https://github.com/edycutjong/footing">Source on GitHub</a>
+      <a class="btn" href="/pitch">Pitch deck</a>
+      <a class="btn go" href="/">Check an answer <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+</main>
+<footer>
+  <div class="wrap">
+    <span>Footing · Apache-2.0 · built for the Firebase Hybrid AI Hackathon</span>
+    <span><a href="/">Check an answer</a> · <a href="/eval">Measured results</a> · <a href="/pitch">Deck</a> · <a href="https://github.com/edycutjong/footing">Source</a></span>
+    <span class="data">v1.0.0 · figures from evidence/ at cbe0942</span>
+  </div>
+</footer>
+<script>
+/* Footing exhibit: replays ONE recorded run from its own step times. The markup is the settled final state
+   (no-JS, print, reduced motion and screenshots all see it); this script only rewinds and plays it. */
+(function () {
+  "use strict";
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function Fx(el) {
+    this.el = el;
+    this.total = +el.getAttribute("data-total");
+    this.axis = +el.getAttribute("data-axis") || this.total;
+    this.speed = +el.getAttribute("data-speed") || 4;
+    this.rows = [].slice.call(el.querySelectorAll(".fx-row"));
+    this.bars = [].slice.call(el.querySelectorAll(".bar"));
+    this.lanes = el.querySelector(".fx-lanes");
+    this.clock = el.querySelector("[data-clock]");
+    this.q = function (s) { return el.querySelector(s); };
+    this.raf = 0;
+    this.t = this.total;
+  }
+  Fx.prototype.state = function (row, t) {
+    var ds = +row.getAttribute("data-ds"), de = +row.getAttribute("data-de"), ce = row.getAttribute("data-ce");
+    if (t < ds) return "wait";
+    if (t < de) return "triage";
+    if (row.getAttribute("data-settle") === "1") return "final";
+    if (ce === "" || ce === null) return "esc";
+    return t < +ce ? "esc" : "final";
+  };
+  Fx.prototype.set = function (t) {
+    t = Math.max(0, Math.min(this.total, t));
+    this.t = t;
+    var k = 0, n = 0, likely = 0, unv = 0;
+    for (var i = 0; i < this.rows.length; i++) {
+      var r = this.rows[i], st = this.state(r, t), fin = r.getAttribute("data-final");
+      if (r.getAttribute("data-st") !== st) r.setAttribute("data-st", st);
+      if (st !== "final") continue;
+      if (r.getAttribute("data-settle") === "1") { likely++; continue; }
+      if (fin === "UNVERIFIED") { unv++; continue; }
+      n++;
+      if (fin === "PARTIAL" || fin === "NOT_SUPPORTED") k++;
+    }
+    for (var j = 0; j < this.bars.length; j++) {
+      var b = this.bars[j], s = +b.getAttribute("data-s"), e = +b.getAttribute("data-e");
+      var p = t <= s ? 0 : t >= e ? 1 : (t - s) / (e - s);
+      b.style.clipPath = p >= 1 ? "" : "inset(0 " + ((1 - p) * 100).toFixed(2) + "% 0 0)";
+    }
+    if (this.lanes) this.lanes.style.setProperty("--p", (t / this.axis).toFixed(4));
+    if (this.clock) this.clock.textContent = (t / 1000).toFixed(1);
+    this.put("[data-k]", k); this.put("[data-n]", n); this.put("[data-likely]", likely);
+    this.put("[data-settled]", likely); this.put("[data-cloudn]", n); this.put("[data-unv]", unv);
+  };
+  Fx.prototype.put = function (sel, v) {
+    var nodes = this.el.querySelectorAll(sel);
+    for (var i = 0; i < nodes.length; i++) nodes[i].textContent = String(v);
+  };
+  /* play from → to (ms of recorded time) at this.speed; resolves when done */
+  Fx.prototype.run = function (from, to, done) {
+    var self = this, start = performance.now();
+    cancelAnimationFrame(this.raf);
+    this.el.classList.add("playing");
+    this.set(from);
+    function frame(now) {
+      var t = from + (now - start) * self.speed;
+      if (t >= to) { self.set(to); self.el.classList.remove("playing"); if (done) done(); return; }
+      self.set(t);
+      self.raf = requestAnimationFrame(frame);
+    }
+    this.raf = requestAnimationFrame(frame);
+  };
+  Fx.prototype.play = function () { this.run(0, this.total); };
+  Fx.prototype.settle = function () { cancelAnimationFrame(this.raf); this.el.classList.remove("playing"); this.set(this.total); };
+
+  window.FootingFx = { make: function (el) { if (!el.__fx) el.__fx = new Fx(el); return el.__fx; } };
+
+  /* landing: autoplay once when ≥ 35 % of the sheet is on screen; Replay button always works */
+  function boot() {
+    var els = document.querySelectorAll(".fx[data-autoplay]");
+    [].forEach.call(els, function (el) {
+      var fx = window.FootingFx.make(el), btn = el.querySelector(".fx-replay");
+      if (btn) btn.addEventListener("click", function () { fx.play(); });
+      if (reduce || !("IntersectionObserver" in window)) return;
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { io.disconnect(); fx.play(); } });
+      }, { threshold: 0.35 });
+      io.observe(el);
+    });
+    window.addEventListener("beforeprint", function () {
+      [].forEach.call(document.querySelectorAll(".fx"), function (el) { window.FootingFx.make(el).settle(); });
+    });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot); else boot();
+})();
+/* Landing-only behaviour: receipts count up, the terminal types the real eval output, copy button.
+   Every element already shows its final text without JS. */
+(function () {
+  "use strict";
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function onSeen(el, fn, th) {
+    if (!el) return;
+    if (reduce || !("IntersectionObserver" in window)) return;
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { io.disconnect(); fn(); } });
+    }, { threshold: th || 0.4 });
+    io.observe(el);
+  }
+  function fmt(v, dec) { return dec ? v.toFixed(dec) : Math.round(v).toLocaleString("en-US"); }
+
+  function boot() {
+    var tape = document.querySelector(".tape");
+    onSeen(tape, function () {
+      [].forEach.call(document.querySelectorAll(".rc-n[data-count]"), function (el) {
+        var to = +el.getAttribute("data-count"), dec = +(el.getAttribute("data-dec") || 0), t0 = performance.now(), dur = 1100;
+        (function step(now) {
+          var p = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+          el.textContent = fmt(to * e, dec);
+          if (p < 1) requestAnimationFrame(step); else el.textContent = fmt(to, dec);
+        })(t0);
+      });
+    }, 0.35);
+
+    var term = document.getElementById("term");
+    onSeen(term, function () {
+      var lines = term.querySelectorAll(".ln");
+      term.classList.add("typing");
+      var i = 0;
+      (function next() {
+        if (i >= lines.length) { term.classList.remove("typing"); return; }
+        lines[i].classList.add("on");
+        i++;
+        setTimeout(next, i === 1 ? 500 : 230);
+      })();
+    }, 0.5);
+
+    [].forEach.call(document.querySelectorAll(".copy[data-copy]"), function (b) {
+      b.addEventListener("click", function () {
+        var txt = b.getAttribute("data-copy");
+        var done = function () { b.classList.add("done"); setTimeout(function () { b.classList.remove("done"); }, 1600); };
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done, done); else done();
+      });
+    });
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot); else boot();
+})();
+
+</script>
+</body>
+</html>

@@ -26,7 +26,8 @@ async function check(name, url, selector, mode = "hover", prep) {
 }
 const runCheckFirst = async () => { await page.evaluate(() => [...document.querySelectorAll("button.primary")][0].click()); await page.waitForFunction(() => window.__footing && window.__footing.done, { timeout: 150000 }); await sleep(500); };
 const openPaste = async () => { await page.click("button[aria-expanded]"); await sleep(300); };
-await check("nav link (About→/eval) hover", "/about", "main a[href='/eval']");
+await check("landing CTA (/about → /) hover", "/about", "main .hero a.btn.go");
+await check("deck control hover", "/pitch", ".hud button[data-act='next']");
 await check("seg control Cloud only hover", "/", ".seg button[aria-pressed='false']");
 await check("seg control press", "/", ".seg button[aria-pressed='false']", "press");
 await check("primary CTA hover", "/", "button.primary");

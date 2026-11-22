@@ -1,0 +1,9 @@
+{
+ "url": "https://nutritionsource.hsph.harvard.edu/healthy-weight/diet-reviews/intermittent-fasting/",
+ "fetchedAt": "2026-11-22T15:03:36Z",
+ "bytes": 107211,
+ "sha256": "767962adc429b58df8ebaf85d36126bf7be8cfaec42a393a189fdfdc5a0f6c92",
+ "why": "The landing page quotes this line beside sentence 5 of seed/answers/hero.json. The recorded runs read a copy fetched 2026-11-22 (sha256 87de253b... in evidence/check/live-r03-nano-hero-2026-11-22-1300.json, 107212 bytes); this re-fetch is the same page with a different hash (dynamic markup), so the line is quoted from this re-fetch, not from the run.",
+ "line": "No significant differences in blood pressure, heart rate, fasting glucose, and fasting insulin.",
+ "context": "the groups were similar; mostly women and generally healthy. The trial examined weight changes, compliance rates, and cardiovascular risk factors. Their findings when comparing the two groups: No significant differences in weight loss, weight regain, or body composition (e.g., fat mass, lean mass). No significant differences in blood pressure, heart rate, fasting glucose, and fasting insulin. At 12 months, although there were no differences in total cholesterol and triglycerides, the alternate-day fasting group showed significantly increased LDL cho"
+}
