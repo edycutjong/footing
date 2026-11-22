@@ -46,8 +46,9 @@ AI Logic calls on the deployed site (`evidence/spike/prod-fresh-nodebug-*.json`)
 - `gemini-3.8-flash`: 4 attempts over about 90 minutes all failed with `500 high demand` or `503 deadline expired` after 66–179 s
   (`evidence/spike/nano-cloudJudge.json`, `nano-38flash-cloudJudge.json`). `gemini-4-hydrogen`: one success after 154 s, then 500/503.
   `gemini-3.5-flash-lite`: answered every time in 2–9 s. We run the judge on flash-lite; the model name is a Remote Config key.
-- About 65 flash-lite calls that day; 429 `You exceeded your current quota` twice during the 20-pair run, both recovered after a 15–30 s
-  backoff (`evidence/eval-fresh-20/cloud-3class-*.json`, field `transientErrors`).
+- About 70 flash-lite calls that day. In the 20-pair run one pair got two consecutive 429 `You exceeded your current quota` responses and
+  succeeded on the third attempt after 15 s + 30 s backoff; another got one 500 and succeeded on retry
+  (`evidence/eval-fresh-20/cloud-3class-*.json`, fields `attempts` and `transientErrors`).
 - Grounding with Google Search through AI Logic returned 429 within 0.6 s while URL-context calls just before it succeeded
   (`evidence/spike/prod-jsonly-searchGrounding.json`): on this free tier, Search grounding was not usable for us.
 
