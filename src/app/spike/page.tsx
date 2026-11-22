@@ -4,6 +4,7 @@
 import { useState } from "react";
 import { getGenerativeModel, InferenceMode, Schema } from "firebase/ai";
 import { firebase, appCheckStatus } from "@/lib/firebase";
+import { DEFAULT_CONFIG } from "@/lib/config";
 
 const CLAIM = "The library opens at 9 a.m. on Saturdays.";
 const PASSAGE =
@@ -39,8 +40,9 @@ const judgeSchema = Schema.object({
 
 type Result = Record<string, unknown>;
 
+// Default = the app's judge model (the one the DX report measured as answering every call); ?judge= overrides (a2a r04).
 const judgeModel = () =>
-  (typeof location !== "undefined" && new URLSearchParams(location.search).get("judge")) || "gemini-3.8-flash";
+  (typeof location !== "undefined" && new URLSearchParams(location.search).get("judge")) || DEFAULT_CONFIG.judgeModel;
 
 async function timed(name: string, fn: () => Promise<Result>): Promise<Result> {
   const t0 = performance.now();

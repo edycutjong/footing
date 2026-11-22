@@ -269,6 +269,7 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
         let timer: ReturnType<typeof setTimeout> | undefined;
         const deadline = new Promise<never>((_, rej) => { timer = setTimeout(() => rej(new Error("init timeout")), INIT_DEADLINE_MS); });
         try { await Promise.race([init, deadline]); } catch { dev = "unavailable"; gaveUp = true; } finally { clearTimeout(timer); }
+        init.catch(() => undefined); // a rejection landing after the deadline is expected, not unhandled (a2a r04)
       } else {
         setDevice("downloading");
         init.then(() => setDevice("available")).catch(() => setDevice("unavailable"));
