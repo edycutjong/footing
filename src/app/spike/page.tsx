@@ -152,6 +152,16 @@ const SPIKES: Record<string, () => Promise<Result>> = {
     const res = await model.generateContent(`Read ${url}. Does it support the claim "This domain is for use in documentation examples"? Quote the exact words.`);
     return { url, inferenceSource: res.response.inferenceSource, text: res.response.text(), urlContextMetadata: res.response.candidates?.[0]?.urlContextMetadata ?? null };
   },
+  async searchGrounding() {
+    // Hero-answer source A: a Search-grounded answer through AI Logic (free tier?).
+    const model = getGenerativeModel(firebase().ai, {
+      mode: InferenceMode.ONLY_IN_CLOUD,
+      inCloudParams: { model: judgeModel(), tools: [{ googleSearch: {} }] },
+    });
+    const res = await model.generateContent("Is the Mediterranean diet good for heart health? Answer in three sentences and cite sources.");
+    const c = res.response.candidates?.[0];
+    return { model: judgeModel(), inferenceSource: res.response.inferenceSource, text: res.response.text(), groundingChunks: c?.groundingMetadata?.groundingChunks ?? null, searchEntryPoint: !!c?.groundingMetadata?.searchEntryPoint };
+  },
 };
 
 export default function Spike() {

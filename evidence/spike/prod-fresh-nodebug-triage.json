@@ -1,0 +1,19 @@
+{
+  "label": "prod-fresh-nodebug",
+  "recordedAt": "2026-11-22T11:16:42.290Z",
+  "baseUrl": "https://footing.edycu.dev",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+  "appCheckDebugTokenInjected": false,
+  "machine": "MacBook Pro M1 Max, 32 GB",
+  "result": {
+    "name": "triage",
+    "ok": true,
+    "ms": 8928,
+    "initMs": 2,
+    "initDoneBeforeAnswer": false,
+    "progressSamples": [],
+    "inferenceSource": "in_cloud",
+    "text": "{\n  \"verdict\": \"SUPPORTS\",\n  \"quote\": \"On Saturdays the library opens at 9 a.m. and closes at 1 p.m.\"\n}",
+    "prompt": "Does the passage support the claim? Answer SUPPORTS only if the passage states it. Quote the exact words you rely on.\nCLAIM: The library opens at 9 a.m. on Saturdays.\nPASSAGE: Opening hours. Monday to Friday the reading rooms open at 8 a.m. and close at 8 p.m. On Saturdays the library opens at 9 a.m. and closes at 1 p.m. The library is closed on Sundays."
+  }
+}

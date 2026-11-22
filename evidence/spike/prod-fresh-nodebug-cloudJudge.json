@@ -1,0 +1,28 @@
+{
+  "label": "prod-fresh-nodebug",
+  "recordedAt": "2026-11-22T11:16:48.450Z",
+  "baseUrl": "https://footing.edycu.dev",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+  "appCheckDebugTokenInjected": false,
+  "machine": "MacBook Pro M1 Max, 32 GB",
+  "result": {
+    "name": "cloudJudge",
+    "ok": true,
+    "ms": 6149,
+    "model": "gemini-3.5-flash-lite",
+    "inferenceSource": "in_cloud",
+    "text": "{\n  \"verdict\": \"SUPPORTS\",\n  \"quote\": \"On Saturdays the library opens at 9 a.m.\",\n  \"reason\": \"The passage explicitly states that the library opens at 9 a.m. on Saturdays, which fully supports the claim.\"\n}",
+    "usage": {
+      "promptTokenCount": 108,
+      "candidatesTokenCount": 61,
+      "totalTokenCount": 169,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 108
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

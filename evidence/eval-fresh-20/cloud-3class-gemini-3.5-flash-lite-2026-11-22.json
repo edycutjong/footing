@@ -1,0 +1,615 @@
+{
+  "set": "eval-fresh-20",
+  "mode": "judge",
+  "judgeModel": "gemini-3.5-flash-lite",
+  "recordedAt": "2026-11-22T11:22:41.188Z",
+  "machine": "MacBook Pro M1 Max, 32 GB",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+  "rows": [
+    {
+      "id": "n01",
+      "label": "SUPPORTS",
+      "gold": "SUPPORTS",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"SUPPORTS\",\n  \"quote\": \"Although honey bees represent only a small fraction of the roughly 20,000 known species of bees, they are the bee clade most familiar to humans and are also the most valuable beneficial insects to agriculture and horticulture.\",\n  \"reason\": \"The source explicitly states that honey bees represent a small fraction of the roughly 20,000 known bee species.\"\n}",
+      "verdict": "SUPPORTS",
+      "quote": "Although honey bees represent only a small fraction of the roughly 20,000 known species of bees, they are the bee clade most familiar to humans and are also the most valuable beneficial insects to agriculture and horticulture.",
+      "reason": "The source explicitly states that honey bees represent a small fraction of the roughly 20,000 known bee species.",
+      "gateHeld": true,
+      "ms": 4678,
+      "promptChars": 26684,
+      "usage": {
+        "promptTokenCount": 5716,
+        "candidatesTokenCount": 95,
+        "totalTokenCount": 5811,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 5716
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    },
+    {
+      "id": "n02",
+      "label": "NOT_SUPPORTED",
+      "gold": "NOT_SUPPORTED",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"NOT_SUPPORTED\",\n  \"quote\": \"The first Apis bees appear in the fossil record at the Eocene-Oligocene boundary (34 mya), in European deposits.\",\n  \"reason\": \"The source states that the oldest Apis fossils are found in European deposits, not North America.\"\n}",
+      "verdict": "NOT_SUPPORTED",
+      "quote": "The first Apis bees appear in the fossil record at the Eocene-Oligocene boundary (34 mya), in European deposits.",
+      "reason": "The source states that the oldest Apis fossils are found in European deposits, not North America.",
+      "gateHeld": true,
+      "ms": 5408,
+      "promptChars": 25366,
+      "usage": {
+        "promptTokenCount": 5467,
+        "candidatesTokenCount": 75,
+        "totalTokenCount": 5542,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 5467
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    },
+    {
+      "id": "n03",
+      "label": "PARTIAL",
+      "gold": "PARTIAL",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"SUPPORTS\",\n  \"quote\": \"Only one fossil species is documented from the New World, Apis nearctica, known from a single 14 million-year-old specimen from Nevada.\",\n  \"reason\": \"The source explicitly states that Apis nearctica is the only fossil honey bee species known from the New World and that it was found in Nevada by an amateur collector.\"\n}",
+      "verdict": "SUPPORTS",
+      "quote": "Only one fossil species is documented from the New World, Apis nearctica, known from a single 14 million-year-old specimen from Nevada.",
+      "reason": "The source explicitly states that Apis nearctica is the only fossil honey bee species known from the New World and that it was found in Nevada by an amateur collector.",
+      "gateHeld": true,
+      "ms": 1611,
+      "promptChars": 26191,
+      "usage": {
+        "promptTokenCount": 5602,
+        "candidatesTokenCount": 92,
+        "totalTokenCount": 5694,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 5602
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": false
+    },
+    {
+      "id": "n04",
+      "label": "SUPPORTS",
+      "gold": "SUPPORTS",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"SUPPORTS\",\n  \"quote\": \"It supports a wide diversity of life and was selected as a World Heritage Site in 1981.\",\n  \"reason\": \"The source text explicitly states that the Great Barrier Reef was selected as a World Heritage Site in 1981.\"\n}",
+      "verdict": "SUPPORTS",
+      "quote": "It supports a wide diversity of life and was selected as a World Heritage Site in 1981.",
+      "reason": "The source text explicitly states that the Great Barrier Reef was selected as a World Heritage Site in 1981.",
+      "gateHeld": true,
+      "ms": 3172,
+      "promptChars": 26036,
+      "usage": {
+        "promptTokenCount": 5732,
+        "candidatesTokenCount": 71,
+        "totalTokenCount": 5803,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 5732
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    },
+    {
+      "id": "n05",
+      "label": "NOT_SUPPORTED",
+      "gold": "NOT_SUPPORTED",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"PARTIAL\",\n  \"quote\": \"CNN labelled it one of the Seven Natural Wonders of the World in 1997.\",\n  \"reason\": \"The source states that CNN named the reef as one of the Seven Natural Wonders in 1997, not 2007.\"\n}",
+      "verdict": "PARTIAL",
+      "quote": "CNN labelled it one of the Seven Natural Wonders of the World in 1997.",
+      "reason": "The source states that CNN named the reef as one of the Seven Natural Wonders in 1997, not 2007.",
+      "gateHeld": true,
+      "ms": 1950,
+      "promptChars": 25314,
+      "usage": {
+        "promptTokenCount": 5614,
+        "candidatesTokenCount": 73,
+        "totalTokenCount": 5687,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 5614
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": false
+    },
+    {
+      "id": "n06",
+      "label": "PARTIAL",
+      "gold": "PARTIAL",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"PARTIAL\",\n  \"quote\": \"Tourism is an important economic activity for the region, generating over AUD$3 billion per year.\",\n  \"reason\": \"The source supports the revenue figure of over AUD$3 billion, but does not mention that it is Australia's biggest tourist attraction by revenue.\"\n}",
+      "verdict": "PARTIAL",
+      "quote": "Tourism is an important economic activity for the region, generating over AUD$3 billion per year.",
+      "reason": "The source supports the revenue figure of over AUD$3 billion, but does not mention that it is Australia's biggest tourist attraction by revenue.",
+      "gateHeld": true,
+      "ms": 1888,
+      "promptChars": 26062,
+      "usage": {
+        "promptTokenCount": 5741,
+        "candidatesTokenCount": 73,
+        "totalTokenCount": 5814,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 5741
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    },
+    {
+      "id": "n07",
+      "label": "SUPPORTS",
+      "gold": "SUPPORTS",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"SUPPORTS\",\n  \"quote\": \"Children from the age of 1 year and adults need 10 micrograms (mcg) of vitamin D a day.\",\n  \"reason\": \"The source explicitly states that adults and children from the age of 1 need 10 micrograms of vitamin D daily.\"\n}",
+      "verdict": "SUPPORTS",
+      "quote": "Children from the age of 1 year and adults need 10 micrograms (mcg) of vitamin D a day.",
+      "reason": "The source explicitly states that adults and children from the age of 1 need 10 micrograms of vitamin D daily.",
+      "gateHeld": true,
+      "ms": 1695,
+      "promptChars": 8309,
+      "usage": {
+        "promptTokenCount": 1905,
+        "candidatesTokenCount": 74,
+        "totalTokenCount": 1979,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1905
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    },
+    {
+      "id": "n08",
+      "label": "NOT_SUPPORTED",
+      "gold": "NOT_SUPPORTED",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"NOT_SUPPORTED\",\n  \"quote\": \"Do not take more than 100 micrograms (4,000 IU) of vitamin D a day as it could be harmful.\",\n  \"reason\": \"The source states the limit is 100 micrograms, not 200 micrograms as claimed in the sentence.\"\n}",
+      "verdict": "NOT_SUPPORTED",
+      "quote": "Do not take more than 100 micrograms (4,000 IU) of vitamin D a day as it could be harmful.",
+      "reason": "The source states the limit is 100 micrograms, not 200 micrograms as claimed in the sentence.",
+      "gateHeld": true,
+      "ms": 1731,
+      "promptChars": 8223,
+      "usage": {
+        "promptTokenCount": 1855,
+        "candidatesTokenCount": 80,
+        "totalTokenCount": 1935,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1855
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    },
+    {
+      "id": "n09",
+      "label": "PARTIAL",
+      "gold": "PARTIAL",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"PARTIAL\",\n  \"quote\": \"1 microgram of vitamin D is equal to 40 IU.\",\n  \"reason\": \"The source states that 1 microgram equals 40 IU, but does not mention that supplements are best taken with a meal.\"\n}",
+      "verdict": "PARTIAL",
+      "quote": "1 microgram of vitamin D is equal to 40 IU.",
+      "reason": "The source states that 1 microgram equals 40 IU, but does not mention that supplements are best taken with a meal.",
+      "gateHeld": true,
+      "ms": 1910,
+      "promptChars": 7738,
+      "usage": {
+        "promptTokenCount": 1754,
+        "candidatesTokenCount": 66,
+        "totalTokenCount": 1820,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1754
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    },
+    {
+      "id": "n10",
+      "label": "SUPPORTS",
+      "gold": "SUPPORTS",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"SUPPORTS\",\n  \"quote\": \"On 8 December 2020, it was jointly announced by the two countries that the new official height is 8,848.86 metres (29,031.7 ft).\",\n  \"reason\": \"The source explicitly states that a joint announcement by Nepal and China in December 2020 established Everest's height as 8,848.86 metres.\"\n}",
+      "verdict": "SUPPORTS",
+      "quote": "On 8 December 2020, it was jointly announced by the two countries that the new official height is 8,848.86 metres (29,031.7 ft).",
+      "reason": "The source explicitly states that a joint announcement by Nepal and China in December 2020 established Everest's height as 8,848.86 metres.",
+      "gateHeld": true,
+      "ms": 2020,
+      "promptChars": 25988,
+      "usage": {
+        "promptTokenCount": 6981,
+        "candidatesTokenCount": 107,
+        "totalTokenCount": 7088,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 6981
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    },
+    {
+      "id": "n11",
+      "label": "PARTIAL",
+      "gold": "PARTIAL",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"PARTIAL\",\n  \"quote\": \"Over 200 bodies remain on the mountain and have not been removed due to the dangerous conditions.\",\n  \"reason\": \"The source confirms that over 200 bodies remain on Everest, but it does not mention the cost of recovering a body.\"\n}",
+      "verdict": "PARTIAL",
+      "quote": "Over 200 bodies remain on the mountain and have not been removed due to the dangerous conditions.",
+      "reason": "The source confirms that over 200 bodies remain on Everest, but it does not mention the cost of recovering a body.",
+      "gateHeld": true,
+      "ms": 2481,
+      "promptChars": 25797,
+      "usage": {
+        "promptTokenCount": 6905,
+        "candidatesTokenCount": 72,
+        "totalTokenCount": 6977,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 6905
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    },
+    {
+      "id": "n12",
+      "label": "NOT_SUPPORTED",
+      "gold": "NOT_SUPPORTED",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"PARTIAL\",\n  \"quote\": \"On the 1924 expedition, George Mallory and Andrew Irvine made a final summit attempt on 8 June but never returned, leading to debate as to whether they were the first to reach the top.\",\n  \"reason\": \"The source states they made an attempt on 8 June 1924 and never returned, but it remains unclear whether they actually reached the summit.\"\n}",
+      "verdict": "PARTIAL",
+      "quote": "On the 1924 expedition, George Mallory and Andrew Irvine made a final summit attempt on 8 June but never returned, leading to debate as to whether they were the first to reach the top.",
+      "reason": "The source states they made an attempt on 8 June 1924 and never returned, but it remains unclear whether they actually reached the summit.",
+      "gateHeld": true,
+      "ms": 2722,
+      "promptChars": 26000,
+      "usage": {
+        "promptTokenCount": 6931,
+        "candidatesTokenCount": 98,
+        "totalTokenCount": 7029,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 6931
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 3,
+      "transientErrors": [
+        "AI: Error fetching from https://firebasevertexai.googleapis.com/v1beta/projects/footing-hybrid-ai/models/gemini-3.5-flash-lite:generateContent: [429 ] You excee",
+        "AI: Error fetching from https://firebasevertexai.googleapis.com/v1beta/projects/footing-hybrid-ai/models/gemini-3.5-flash-lite:generateContent: [429 ] You excee"
+      ],
+      "correct": false
+    },
+    {
+      "id": "n13",
+      "label": "SUPPORTS",
+      "gold": "SUPPORTS",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"SUPPORTS\",\n  \"quote\": \"Climbers usually begin their ascent from base camps above 5,000 m (16,404 ft).\",\n  \"reason\": \"The source text directly states that climbers usually begin their ascent from base camps above 5,000 metres.\"\n}",
+      "verdict": "SUPPORTS",
+      "quote": "Climbers usually begin their ascent from base camps above 5,000 m (16,404 ft).",
+      "reason": "The source text directly states that climbers usually begin their ascent from base camps above 5,000 metres.",
+      "gateHeld": true,
+      "ms": 6924,
+      "promptChars": 25788,
+      "usage": {
+        "promptTokenCount": 6901,
+        "candidatesTokenCount": 76,
+        "totalTokenCount": 6977,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 6901
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    },
+    {
+      "id": "n14",
+      "label": "SUPPORTS",
+      "gold": "SUPPORTS",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"PARTIAL\",\n  \"quote\": \"The Webb was launched on 25 December 2021 on an Ariane 5 rocket from Kourou, French Guiana.\",\n  \"reason\": \"The source states the launch date and rocket, but mentions Kourou, French Guiana instead of just French Guiana.\"\n}",
+      "verdict": "PARTIAL",
+      "quote": "The Webb was launched on 25 December 2021 on an Ariane 5 rocket from Kourou, French Guiana.",
+      "reason": "The source states the launch date and rocket, but mentions Kourou, French Guiana instead of just French Guiana.",
+      "gateHeld": true,
+      "ms": 1905,
+      "promptChars": 25811,
+      "usage": {
+        "promptTokenCount": 6081,
+        "candidatesTokenCount": 80,
+        "totalTokenCount": 6161,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 6081
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": false
+    },
+    {
+      "id": "n15",
+      "label": "NOT_SUPPORTED",
+      "gold": "NOT_SUPPORTED",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"NOT_SUPPORTED\",\n  \"quote\": \"Despite Webb's mirror diameter being 2.7 times larger than that of the Hubble Space Telescope, it produces images of comparable resolution because it observes in the infrared spectrum, which has longer wavelengths than the Hubble's visible spectrum.\",\n  \"reason\": \"The source states that Webb's images are of comparable resolution to Hubble's, not 2.7 times sharper.\"\n}",
+      "verdict": "NOT_SUPPORTED",
+      "quote": "Despite Webb's mirror diameter being 2.7 times larger than that of the Hubble Space Telescope, it produces images of comparable resolution because it observes in the infrared spectrum, which has longer wavelengths than the Hubble's visible spectrum.",
+      "reason": "The source states that Webb's images are of comparable resolution to Hubble's, not 2.7 times sharper.",
+      "gateHeld": true,
+      "ms": 4836,
+      "promptChars": 26346,
+      "usage": {
+        "promptTokenCount": 6189,
+        "candidatesTokenCount": 99,
+        "totalTokenCount": 6288,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 6189
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    },
+    {
+      "id": "n16",
+      "label": "PARTIAL",
+      "gold": "PARTIAL",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"SUPPORTS\",\n  \"quote\": \"In January 2022, it arrived at its destination, a solar orbit near the Sun-Earth L2 Lagrange point, about 1.5 million kilometers (930,000 mi) from Earth.\",\n  \"reason\": \"The source explicitly states that Webb reached its orbit near the Sun-Earth L2 point, about 1.5 million kilometers away, in January 2022 after launching on December 25, 2021 (a 30-day journey).\"\n}",
+      "verdict": "SUPPORTS",
+      "quote": "In January 2022, it arrived at its destination, a solar orbit near the Sun-Earth L2 Lagrange point, about 1.5 million kilometers (930,000 mi) from Earth.",
+      "reason": "The source explicitly states that Webb reached its orbit near the Sun-Earth L2 point, about 1.5 million kilometers away, in January 2022 after launching on December 25, 2021 (a 30-day journey).",
+      "gateHeld": true,
+      "ms": 3394,
+      "promptChars": 25966,
+      "usage": {
+        "promptTokenCount": 6126,
+        "candidatesTokenCount": 128,
+        "totalTokenCount": 6254,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 6126
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 2,
+      "transientErrors": [
+        "AI: Error fetching from https://firebasevertexai.googleapis.com/v1beta/projects/footing-hybrid-ai/models/gemini-3.5-flash-lite:generateContent: [500 ] This mode"
+      ],
+      "correct": false
+    },
+    {
+      "id": "n17",
+      "label": "SUPPORTS",
+      "gold": "SUPPORTS",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"SUPPORTS\",\n  \"quote\": \"In 2023, Brazil was the leading grower of coffee beans, producing 31% of the world's total, followed by Vietnam.\",\n  \"reason\": \"The source explicitly states that Brazil was the leading grower of coffee beans in 2023, producing 31% of the world's total.\"\n}",
+      "verdict": "SUPPORTS",
+      "quote": "In 2023, Brazil was the leading grower of coffee beans, producing 31% of the world's total, followed by Vietnam.",
+      "reason": "The source explicitly states that Brazil was the leading grower of coffee beans in 2023, producing 31% of the world's total.",
+      "gateHeld": true,
+      "ms": 8056,
+      "promptChars": 26232,
+      "usage": {
+        "promptTokenCount": 5745,
+        "candidatesTokenCount": 89,
+        "totalTokenCount": 5834,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 5745
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    },
+    {
+      "id": "n18",
+      "label": "PARTIAL",
+      "gold": "PARTIAL",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"PARTIAL\",\n  \"quote\": \"Coffee plants are cultivated in over 70 countries, primarily in the equatorial regions of the Americas, Southeast Asia, the Indian subcontinent, and Africa.\",\n  \"reason\": \"The source states that coffee is cultivated in over 70 countries, but it does not mention that it is mostly grown on smallholder farms.\"\n}",
+      "verdict": "PARTIAL",
+      "quote": "Coffee plants are cultivated in over 70 countries, primarily in the equatorial regions of the Americas, Southeast Asia, the Indian subcontinent, and Africa.",
+      "reason": "The source states that coffee is cultivated in over 70 countries, but it does not mention that it is mostly grown on smallholder farms.",
+      "gateHeld": true,
+      "ms": 1906,
+      "promptChars": 25629,
+      "usage": {
+        "promptTokenCount": 5557,
+        "candidatesTokenCount": 84,
+        "totalTokenCount": 5641,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 5557
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    },
+    {
+      "id": "n19",
+      "label": "NOT_SUPPORTED",
+      "gold": "NOT_SUPPORTED",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"PARTIAL\",\n  \"quote\": \"In another commonly repeated legend, Kaldi, a 9th-century Ethiopian or Arab goatherd, first observed the coffee plant after seeing his flock energized by chewing on the plant.\",\n  \"reason\": \"The source mentions 9th-century Ethiopia in the context of a legend about a goatherd, but does not present it as a historical report of actual coffee drinking.\"\n}",
+      "verdict": "PARTIAL",
+      "quote": "In another commonly repeated legend, Kaldi, a 9th-century Ethiopian or Arab goatherd, first observed the coffee plant after seeing his flock energized by chewing on the plant.",
+      "reason": "The source mentions 9th-century Ethiopia in the context of a legend about a goatherd, but does not present it as a historical report of actual coffee drinking.",
+      "gateHeld": true,
+      "ms": 3614,
+      "promptChars": 25494,
+      "usage": {
+        "promptTokenCount": 5540,
+        "candidatesTokenCount": 98,
+        "totalTokenCount": 5638,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 5540
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": false
+    },
+    {
+      "id": "n20",
+      "label": "SUPPORTS",
+      "gold": "SUPPORTS",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"SUPPORTS\",\n  \"quote\": \"The word coffee entered the English language in 1582 via the Dutch koffie, borrowed from the Ottoman Turkish kahve (قهوه), borrowed from the Arabic qahwah (قَهْوَة).\",\n  \"reason\": \"The source explicitly confirms that the word coffee entered English in 1582 through the Dutch koffie.\"\n}",
+      "verdict": "SUPPORTS",
+      "quote": "The word coffee entered the English language in 1582 via the Dutch koffie, borrowed from the Ottoman Turkish kahve (قهوه), borrowed from the Arabic qahwah (قَهْوَة).",
+      "reason": "The source explicitly confirms that the word coffee entered English in 1582 through the Dutch koffie.",
+      "gateHeld": true,
+      "ms": 2284,
+      "promptChars": 25445,
+      "usage": {
+        "promptTokenCount": 5533,
+        "candidatesTokenCount": 92,
+        "totalTokenCount": 5625,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 5533
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    }
+  ]
+}

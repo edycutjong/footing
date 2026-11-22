@@ -72,9 +72,9 @@
     },
     "device_negative_style": {
       "defaultValue": {
-        "value": "likely"
+        "value": "neutral"
       },
-      "description": "likely or neutral",
+      "description": "likely or neutral; neutral until settled-negative precision >= 80% on >= 4 settled pairs (pre-registered rule; fresh 20 settled 1)",
       "valueType": "STRING"
     }
   }

@@ -33,7 +33,7 @@ try {
       attempts++;
       r = await page.evaluate((i) => window.__evalPair(i), input);
       if (!r.error || mode !== "judge" || !/\[(429|500|502|503)/.test(r.error) || attempts >= 4) break;
-      errors.push(r.error.slice(0, 160));
+      errors.push(r.error.slice(0, 600));
       await sleep(15000 * attempts);
     }
     const label = labels[p.id].label;
