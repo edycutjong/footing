@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { route, afterTriage, effectiveKind, type FetchInfo } from "@/lib/route/router";
 import { DEFAULT_CONFIG as cfg } from "@/lib/config";
+import { InferenceSource } from "firebase/ai";
 
 const okHtml: FetchInfo = { ok: true, status: 200, textChars: 5000 };
 const thin: FetchInfo = { ok: true, status: 200, textChars: 120 };
@@ -167,5 +168,12 @@ describe("a2a r03: settling on device needs positive on-device provenance", () =
     expect(afterTriage({ verdict: "NOT_SUPPORTED", quote: "" }, false, cfg, 0).to).toBe("ESCALATE");
     expect(afterTriage({ verdict: "NOT_SUPPORTED", quote: "", inferenceSource: "mystery" }, false, cfg, 0).to).toBe("ESCALATE");
     expect(afterTriage({ verdict: "NOT_SUPPORTED", quote: "" }, false, cfg, cfg.citationCloudCap).to).toBe("CAP_REACHED");
+  });
+});
+
+describe("inferenceSource literals (a2a r05)", () => {
+  it("the strings the router and engine compare against are the SDK's own InferenceSource values", () => {
+    expect(InferenceSource.ON_DEVICE).toBe("on_device");
+    expect(InferenceSource.IN_CLOUD).toBe("in_cloud");
   });
 });

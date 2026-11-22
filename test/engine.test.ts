@@ -3,6 +3,8 @@ import { Check, type Deps, type SourceDoc } from "@/lib/check/engine";
 import { parseAnswer } from "@/lib/parse";
 import { DEFAULT_CONFIG as cfg } from "@/lib/config";
 
+const cfg8 = { ...cfg, citationCloudCap: 8 }; // cap-arithmetic tests pin their own cap (the shipped default is a Remote Config value)
+
 const PAGE = "The Mediterranean diet was first proposed in 1975 by Ancel Keys and Margaret Keys. ".repeat(3) +
   "Olive oil is the main source of fat in the diet. Red wine may be consumed in low amounts with meals. " +
   "It is associated with a lower risk of heart disease in several cohort studies. UNESCO listed it in 2010.";
@@ -95,7 +97,7 @@ describe("Check engine", () => {
 
   it("no Nano: the first 8 citations in document order get the cloud, the rest offer a tap", async () => {
     const d = deps();
-    const { runs, cloudUsed } = await new Check(answer(10).pairs, d, { cfg, force: "auto", device: "unavailable" }).run();
+    const { runs, cloudUsed } = await new Check(answer(10).pairs, d, { cfg: cfg8, force: "auto", device: "unavailable" }).run();
     expect(cloudUsed).toBe(8);
     expect(runs.map((r) => r.state)).toEqual([...Array(8).fill("SUPPORTS"), "NOT_CHECKED", "NOT_CHECKED"]);
     expect(runs[9].reason).toBe("cloud cap for this answer reached — tap to check this one");
@@ -103,14 +105,14 @@ describe("Check engine", () => {
 
   it("a user tap confirms past the cap and still counts", async () => {
     const d = deps();
-    const c = new Check(answer(10).pairs, d, { cfg, force: "auto", device: "unavailable" });
+    const c = new Check(answer(10).pairs, d, { cfg: cfg8, force: "auto", device: "unavailable" });
     await c.run();
     await c.confirm(c.runs[9].pair.id);
     expect(c.runs[9].state).toBe("SUPPORTS");
     expect(c.cloudUsed).toBe(9);
   });
 
-  it("retries a 429 with backoff, each attempt counted", async () => {
+  it("retries a 429 with backoff; the refused call gives its slot back (calls still counted per pair)", async () => {
     let n = 0;
     const sleep = vi.fn(async () => undefined);
     const d = deps({
@@ -122,14 +124,34 @@ describe("Check engine", () => {
     const { runs, cloudUsed } = await new Check(answer(1).pairs, d, { cfg, force: "auto", device: "unavailable" }).run();
     expect(runs[0].state).toBe("NOT_SUPPORTED");
     expect(sleep).toHaveBeenCalledWith(15000);
-    expect(cloudUsed).toBe(2);
+    expect(cloudUsed).toBe(1);
+    expect(runs[0].cloudCalls).toBe(2);
+  });
+
+  it("a2a r05: at a full cap (every slot reserved up front, no Nano) a 429 still retries with backoff and shows it", async () => {
+    let n = 0;
+    const notes: (string | undefined)[] = [];
+    const sleep = vi.fn(async () => undefined);
+    const d = deps({
+      sleep,
+      judge: async () => (++n === 1
+        ? { error: "[429] quota", errorKind: "quota", ms: 50 }
+        : { verdict: "SUPPORTS", quote: "Olive oil is the main source of fat in the diet.", reason: "stated", inferenceSource: "in_cloud", ms: 10 }),
+    });
+    const c = new Check(answer(cfg.citationCloudCap + 1).pairs, d, { cfg, force: "auto", device: "unavailable", onUpdate: (r) => { notes.push(r.note); } });
+    const { runs, cloudUsed } = await c.run();
+    expect(sleep).toHaveBeenCalledWith(15000);
+    expect(notes).toContain("cloud busy (rate limit) · retrying in 15 s");
+    expect(runs.slice(0, cfg.citationCloudCap).every((r) => r.state === "SUPPORTS")).toBe(true);
+    expect(runs[cfg.citationCloudCap].state).toBe("NOT_CHECKED");
+    expect(cloudUsed).toBe(cfg.citationCloudCap);
   });
 
   it("gives up after 2 retries with NOT CHECKED — cloud quota, retry (no canned verdict)", async () => {
     const d = deps({ judge: async () => ({ error: "[429]", errorKind: "quota", ms: 1 }) });
     const { runs, cloudUsed } = await new Check(answer(1).pairs, d, { cfg, force: "auto", device: "unavailable" }).run();
-    expect(runs[0]).toMatchObject({ state: "NOT_CHECKED", reason: "cloud quota, retry" });
-    expect(cloudUsed).toBe(3);
+    expect(runs[0]).toMatchObject({ state: "NOT_CHECKED", reason: "cloud quota, retry", cloudCalls: 3 });
+    expect(cloudUsed).toBe(1);
   });
 
   it("On-device only + PDF shows the SDK's real refusal", async () => {
@@ -193,9 +215,9 @@ describe("Check engine", () => {
         ? { verdict: "SUPPORTS", quote: "Olive oil is the main source of fat in the diet.", inferenceSource: "in_cloud", ms: 1 }
         : { verdict: "SUPPORTS", quote: "Olive oil is the main source of fat in the diet.", inferenceSource: "on_device", ms: 1 }),
     }, srcs);
-    const c = new Check(answer(8).pairs, d, { cfg, force: "auto", device: "available" });
+    const c = new Check(answer(8).pairs, d, { cfg: cfg8, force: "auto", device: "available" });
     await c.run();
-    expect(c.cloudUsed).toBeLessThanOrEqual(cfg.citationCloudCap);
+    expect(c.cloudUsed).toBeLessThanOrEqual(cfg8.citationCloudCap);
   });
 
   it("a settled negative releases its reserved fallback slot (cloudUsed stays 0)", async () => {

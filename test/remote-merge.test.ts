@@ -16,11 +16,11 @@ describe("mergeRemote", () => {
     expect(applied).toEqual([]);
   });
   it("does not report a key whose remote value equals the default", () => {
-    expect(mergeRemote(DEFAULT_CONFIG, { citation_cloud_cap: "8" }).applied).toEqual([]);
+    expect(mergeRemote(DEFAULT_CONFIG, { citation_cloud_cap: "10" }).applied).toEqual([]);
   });
   it("never mutates the defaults", () => {
     mergeRemote(DEFAULT_CONFIG, { citation_cloud_cap: "3" });
-    expect(DEFAULT_CONFIG.citationCloudCap).toBe(8);
+    expect(DEFAULT_CONFIG.citationCloudCap).toBe(10);
   });
 });
 

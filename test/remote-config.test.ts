@@ -4,8 +4,9 @@ import template from "../remoteconfig.template.json";
 const params = template.parameters as Record<string, { defaultValue: { value: string }; valueType: string }>;
 
 describe("Remote Config template", () => {
-  it("caps cloud calls per check at 8", () => {
-    expect(params.citation_cloud_cap.defaultValue.value).toBe("8");
+  it("caps automatic cloud checks per answer at 10 and matches the code default", () => {
+    expect(params.citation_cloud_cap.defaultValue.value).toBe("10");
+    expect(Number(params.citation_cloud_cap.defaultValue.value)).toBe(DEFAULT_CONFIG.citationCloudCap);
   });
   it("keeps the quote cap at 300 characters (the schema maxLength)", () => {
     expect(params.quote_max_chars.defaultValue.value).toBe("300");

@@ -129,7 +129,8 @@ export class Check {
     return p;
   }
 
-  /** Reserve a cloud slot before dispatch. Automatic calls respect the cap; user taps are exempt but still count. */
+  /** Reserve a cloud slot before dispatch. Automatic calls respect the cap; user taps are exempt but still count.
+   *  A call the cloud refused (429 / 5xx) gives its slot back before its retry (see cloudDecide). */
   private reserve(userInitiated: boolean): boolean {
     if (!userInitiated && this.cloudUsed >= this.opts.cfg.citationCloudCap) return false;
     this.cloudUsed++;
@@ -268,8 +269,16 @@ export class Check {
 
     if (!reply.verdict) {
       const retriesLeft = reply.errorKind === "malformed" ? attempt < 2 : isTransient(reply) && attempt < 3;
+      // A refused call (429 / 5xx) consumed no answer: hand its slot back before re-reserving, so a retry still runs when
+      // every slot was reserved up front (no-Nano run at a full cap). A malformed reply did consume one, so it keeps it.
+      if (retriesLeft && isTransient(reply)) this.cloudUsed--;
       if (retriesLeft && this.reserve(userInitiated)) {
-        if (isTransient(reply)) await this.sleep(15000 * attempt);
+        if (isTransient(reply)) {
+          run.note = `cloud busy (rate limit) · retrying in ${15 * attempt} s`;
+          this.emit(run);
+          await this.sleep(15000 * attempt);
+          run.note = undefined;
+        }
         return this.cloudDecide(run, src, how, userInitiated, attempt + 1);
       }
       const why = isTransient(reply) ? "cloud quota, retry" : reply.errorKind === "malformed" ? "cloud answer unreadable" : `cloud error: ${reply.error ?? "unknown"}`;

@@ -18,7 +18,7 @@ export interface FootingConfig {
 export const DEFAULT_CONFIG: FootingConfig = {
   judgeModel: "gemini-3.5-flash-lite",
   triageCloudModel: "gemini-3.5-flash-lite",
-  citationCloudCap: 8,
+  citationCloudCap: 10,
   nanoTimeoutMs: 20000,
   quoteMaxChars: 300,
   passagesTopK: 3,

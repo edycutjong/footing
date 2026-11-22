@@ -16,7 +16,7 @@
     },
     "citation_cloud_cap": {
       "defaultValue": {
-        "value": "8"
+        "value": "10"
       },
       "description": "Cloud calls per check",
       "valueType": "NUMBER"
