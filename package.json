@@ -14,7 +14,17 @@
     "eval:score": "tsx scripts/score.mjs",
     "spike": "node scripts/spike.mjs",
     "eval:live": "node scripts/eval.mjs",
-    "check:e2e": "node scripts/check-e2e.mjs"
+    "check:e2e": "node scripts/check-e2e.mjs",
+    "lint:fix": "eslint --fix",
+    "test:coverage": "vitest run --coverage",
+    "audit": "npm audit --audit-level=high",
+    "ci": "npm run audit && npm run lint && npm run typecheck && npm run test:coverage",
+    "e2e": "playwright test",
+    "e2e:local": "BASE_URL=http://localhost:3101 playwright test",
+    "e2e:nano": "node scripts/e2e-nano.mjs",
+    "lighthouse": "lhci autorun",
+    "bench": "node scripts/bench.mjs",
+    "ci:full": "npm run ci && npm run build && npm run e2e"
   },
   "dependencies": {
     "@mozilla/readability": "^0.6.0",
@@ -28,9 +38,12 @@
     "unpdf": "^1.9.1"
   },
   "devDependencies": {
+    "@lhci/cli": "^0.16.1",
+    "@playwright/test": "^1.65.1",
     "@types/node": "^22.20.5",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitest/coverage-v8": "^5.1.1",
     "eslint": "^9",
     "eslint-config-next": "16.4.6",
     "puppeteer-core": "^25.18.1",
@@ -38,5 +51,8 @@
     "typescript": "^5",
     "vitest": "^5.1.1"
   },
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "overrides": {
+    "@grpc/grpc-js": "^1.14.0"
+  }
 }

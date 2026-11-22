@@ -22,3 +22,5 @@ AGENTS.md
 CLAUDE.md
 .claude/
 graphify-out/
+lhci-reports/
+.lighthouseci/
