@@ -24,7 +24,7 @@ export default function About() {
       <h2>What leaves your laptop</h2>
       <p>
         The sentence and the matching source passages are sent to the cloud model whenever a check is decided there. A check Nano settles on its own
-        sends no text to a model. The cited URL is sent to this site&apos;s fetch proxy, which fetches it and keeps nothing.
+        sends no text to the cloud model or to this site. The cited URL is sent to this site&apos;s fetch proxy, which fetches it and keeps no copy of the page.
       </p>
       <h2>If a check fails with a quota or rate-limit message</h2>
       <p>
@@ -34,7 +34,7 @@ export default function About() {
       <h2>If your browser has no Gemini Nano</h2>
       <p>
         The full check still runs in the cloud. The meter under the results says how many citations a Nano laptop would have read on-device first.
-        Chrome needs the on-device model downloaded (about 2.5 GB) and 22 GB free disk space; the first check on such a laptop starts that download and shows its progress.
+        Chrome needs the on-device model downloaded (several GB) and plenty of free disk space (see <a href="https://developer.chrome.com/docs/ai/get-started">Chrome&apos;s requirements</a>); the first check on such a laptop starts that download and shows its progress.
       </p>
       <p><Link href="/">Check an answer</Link> · <Link href="/eval">Measured results</Link></p>
     </main>

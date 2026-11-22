@@ -84,7 +84,7 @@ describe("route(): force control", () => {
 describe("route(): cloud cap", () => {
   it("cap spent → a cloud route becomes NOT_CHECKED with a check-this-one button", () => {
     const r = route("pdf", pdf, "available", cfg, "auto", CAP);
-    expect(r).toEqual({ to: "NOT_CHECKED", capped: true, reason: "cloud cap for this answer reached — check this one" });
+    expect(r).toEqual({ to: "NOT_CHECKED", capped: true, reason: "cloud cap for this answer reached — tap to check this one" });
   });
   it("one slot left → the cloud route still runs", () => {
     expect(route("html", okHtml, "unavailable", cfg, "auto", CAP - 1).to).toBe("CLOUD_DECIDE");

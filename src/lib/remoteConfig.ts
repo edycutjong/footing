@@ -1,7 +1,7 @@
 // Firebase Remote Config client: router thresholds, model names and caps are tuned without a redeploy.
 // The in-code defaults (config.ts, mirrored in remoteconfig.template.json) apply until a fetch succeeds and on any failure.
 import { getRemoteConfig, fetchAndActivate, getAll, type RemoteConfig } from "firebase/remote-config";
-import { DEFAULT_CONFIG, RC_KEYS, type FootingConfig } from "./config";
+import { DEFAULT_CONFIG, RC_KEYS, RC_BOUNDS, type FootingConfig } from "./config";
 import { firebase } from "./firebase";
 
 /** Pure merge: apply raw Remote Config strings over the defaults; ignore unknown keys and unparsable/out-of-range values. */
@@ -13,8 +13,10 @@ export function mergeRemote(base: FootingConfig, raw: Record<string, string>): {
     if (v === undefined || v === "") continue;
     const cur = base[field];
     if (typeof cur === "number") {
+      if (!/^\d+$/.test(v.trim())) continue; // plain decimal integers only (no "0x10", "1e3", "5.5")
       const n = Number(v);
-      if (!Number.isFinite(n) || n <= 0) continue;
+      const b = RC_BOUNDS[field];
+      if (!Number.isSafeInteger(n) || (b && (n < b.min || n > b.max))) continue;
       (next as unknown as Record<string, unknown>)[field] = n;
     } else if (field === "deviceNegativeStyle") {
       if (v !== "likely" && v !== "neutral") continue;

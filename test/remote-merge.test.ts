@@ -23,3 +23,15 @@ describe("mergeRemote", () => {
     expect(DEFAULT_CONFIG.citationCloudCap).toBe(8);
   });
 });
+
+describe("mergeRemote bounds", () => {
+  it("rejects out-of-range, hex, exponent, fractional and padded numbers", () => {
+    for (const [k, v] of [["citation_cloud_cap", "1000000000"], ["citation_cloud_cap", "0"], ["cloud_concurrency", "0.5"], ["nano_timeout_ms", "1"], ["quote_max_chars", "100000"], ["citation_cloud_cap", "0x10"], ["nano_timeout_ms", "1e4"]]) {
+      expect(mergeRemote(DEFAULT_CONFIG, { [k]: v }).applied, `${k}=${v}`).toEqual([]);
+    }
+  });
+  it("accepts in-range integers, including surrounding whitespace", () => {
+    expect(mergeRemote(DEFAULT_CONFIG, { citation_cloud_cap: " 12 " }).cfg.citationCloudCap).toBe(12);
+    expect(mergeRemote(DEFAULT_CONFIG, { quote_max_chars: "300" }).applied).toEqual([]);
+  });
+});

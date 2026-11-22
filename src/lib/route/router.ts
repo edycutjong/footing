@@ -61,7 +61,7 @@ export function route(kind: Kind, fetch: FetchInfo, device: Device, cfg: Cfg, fo
   else if (device === "downloading") cloud = { to: "CLOUD_DECIDE", reason: `on-device model downloading${pct(progress)}` };
   else cloud = { to: "CLOUD_DECIDE", reason: "on-device model not downloaded yet" };
 
-  if (capSpent) return { to: "NOT_CHECKED", capped: true, reason: "cloud cap for this answer reached — check this one" };
+  if (capSpent) return { to: "NOT_CHECKED", capped: true, reason: "cloud cap for this answer reached — tap to check this one" };
   return cloud;
 }
 

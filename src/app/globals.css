@@ -115,8 +115,10 @@ button { font: inherit; cursor: pointer; }
 
 /* interaction feedback (hover / press / focus), restrained to the workpaper look; durations share one token */
 :root { --t: 140ms; }
-a, .chip, .primary, .ghost, .seg button, .pill button, .paste textarea { transition: background-color var(--t) ease, border-color var(--t) ease, color var(--t) ease, box-shadow var(--t) ease, transform var(--t) ease, opacity var(--t) ease; }
+a, .cite, .chip, .primary, .ghost, .seg button, .pill button, .paste textarea { transition: background-color var(--t) ease, border-color var(--t) ease, color var(--t) ease, box-shadow var(--t) ease, transform var(--t) ease, opacity var(--t) ease; }
 a:hover { color: #1B3F73; text-decoration: underline; text-underline-offset: 2px; }
+.cite:hover { background: #E4ECDC; }
+.cite:active { background: #D6E2CB; }
 .chip:hover { box-shadow: 0 1px 0 var(--rule-strong); transform: translateY(-1px); }
 .chip:active { transform: translateY(0); box-shadow: none; }
 .primary:not(:disabled):hover { background: #2D4538; box-shadow: 0 2px 0 var(--rule-strong); transform: translateY(-1px); }
@@ -130,4 +132,4 @@ a:hover { color: #1B3F73; text-decoration: underline; text-underline-offset: 2px
 .pill button:not(:disabled):active { transform: translateY(1px); }
 .paste textarea:hover { border-color: var(--ink); }
 .paste textarea:focus-visible { outline: none; border-color: var(--cloud); box-shadow: 0 0 0 3px rgba(43, 92, 158, 0.25); }
-@media (prefers-reduced-motion: reduce) { a, .chip, .primary, .ghost, .seg button, .pill button, .paste textarea { transition: none; } .chip:hover, .primary:hover, .chip:active, .primary:active, .ghost:active, .seg button:active, .pill button:active { transform: none; } }
+@media (prefers-reduced-motion: reduce) { a, .cite, .chip, .primary, .ghost, .seg button, .pill button, .paste textarea { transition: none; } .chip:hover, .primary:hover, .chip:active, .primary:active, .ghost:active, .seg button:active, .pill button:active { transform: none; } }

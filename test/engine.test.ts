@@ -71,7 +71,7 @@ describe("Check engine", () => {
     const { runs, cloudUsed } = await new Check(answer(10).pairs, d, { cfg, force: "auto", device: "unavailable" }).run();
     expect(cloudUsed).toBe(8);
     expect(runs.map((r) => r.state)).toEqual([...Array(8).fill("SUPPORTS"), "NOT_CHECKED", "NOT_CHECKED"]);
-    expect(runs[9].reason).toBe("cloud cap for this answer reached — check this one");
+    expect(runs[9].reason).toBe("cloud cap for this answer reached — tap to check this one");
   });
 
   it("a user tap confirms past the cap and still counts", async () => {

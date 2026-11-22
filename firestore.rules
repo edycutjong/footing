@@ -1,5 +1,5 @@
 rules_version = '2';
-// Footing keeps no server-side data: the shared result cache (spec cut #1) was not built, because a cache hit would
+// Footing keeps no server-side data: the shared result cache (a planned feature) was not built, because a cache hit would
 // skip the on-device → cloud path the app exists to show, and a public write surface invites poisoned verdicts.
 // Everything is closed.
 service cloud.firestore {

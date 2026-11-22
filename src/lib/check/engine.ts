@@ -232,7 +232,7 @@ export class Check {
       return () => this.cloudDecide(run, src, "text", userInitiated);
     }
 
-    if (!this.reserve(userInitiated)) return this.finish(run, "NOT_CHECKED", { reason: "cloud cap for this answer reached — check this one" });
+    if (!this.reserve(userInitiated)) return this.finish(run, "NOT_CHECKED", { reason: "cloud cap for this answer reached — tap to check this one" });
     run.state = "deciding";
     this.emit(run);
     const how = r.to === "CLOUD_URL_CONTEXT" ? "url" : kind === "pdf" ? "pdf" : "text";

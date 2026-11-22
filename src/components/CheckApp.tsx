@@ -176,10 +176,12 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
   const [rcInfo, setRcInfo] = useState<{ source: "remote" | "defaults" | "loading"; applied: string[]; error?: string }>({ source: "loading", applied: [] });
   const rcLoad = useRef<Promise<FootingConfig> | null>(null);
   useEffect(() => {
-    rcLoad.current = import("@/lib/remoteConfig").then((m) => m.loadRemoteConfig()).then((r) => {
+    // Never blocks a check for long: defaults win after 5 s or on any failure (chunk load, installations, network).
+    const load = import("@/lib/remoteConfig").then((m) => m.loadRemoteConfig()).then((r) => {
       setCfg(r.cfg); setRcInfo({ source: r.source, applied: r.applied, error: r.error });
       return r.cfg;
-    });
+    }).catch((e) => { setRcInfo({ source: "defaults", applied: [], error: String(e).slice(0, 200) }); return DEFAULT_CONFIG; });
+    rcLoad.current = Promise.race([load, new Promise<FootingConfig>((res) => setTimeout(() => res(DEFAULT_CONFIG), 5000))]);
   }, []);
 
   useEffect(() => {
