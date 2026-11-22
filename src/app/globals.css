@@ -43,7 +43,7 @@ button { font: inherit; cursor: pointer; }
 .row .side { padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; border-left: 1px solid var(--rule); }
 .row.active { background: #EFF4E8; }
 .cite { display: inline-flex; align-items: center; gap: 2px; vertical-align: super; font-size: 13px; line-height: 1; border: 0; background: transparent; padding: 2px 3px; color: var(--before); position: relative; }
-.cite .n { font-family: var(--font-data), monospace; }
+.cite .n { font-family: var(--font-data), monospace; color: var(--muted); }
 .cite svg { width: 22px; height: 18px; overflow: visible; }
 .chip { display: grid; grid-template-columns: 26px 1fr auto; gap: 8px; align-items: center; text-align: left; border: 1px solid var(--rule); background: #FBFCF8; border-radius: 2px; padding: 5px 8px; font-size: 14px; color: var(--ink); width: 100%; }
 .chip:hover { border-color: var(--rule-strong); background: #fff; }
@@ -79,7 +79,7 @@ button { font: inherit; cursor: pointer; }
 .typed { margin-top: 6px; color: var(--muted); }
 .meter { margin-top: 12px; padding: 10px 12px; border: 1px dashed var(--rule-strong); font-size: 15px; background: #F3F6EE; }
 .legend { margin: 16px 18px 18px 64px; border: 1px solid var(--rule-strong); padding: 10px 12px; display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 13px; }
-.legend h3 { margin: 0 12px 0 0; font-family: var(--font-display), Georgia, serif; font-size: 14px; width: 100%; }
+.legend h2 { margin: 0 12px 0 0; font-family: var(--font-display), Georgia, serif; font-size: 14px; width: 100%; }
 .legend span { display: inline-flex; align-items: center; gap: 4px; }
 .legend svg { width: 22px; height: 18px; overflow: visible; }
 .paste { padding: 12px 18px 12px 64px; border-bottom: 1px solid var(--rule); }
@@ -105,6 +105,10 @@ button { font: inherit; cursor: pointer; }
 .trail li { border-bottom: 1px solid var(--rule); padding: 6px 0; font-size: 14px; }
 .meta { margin-top: 12px; color: var(--muted); word-break: break-all; }
 
+/* Reserve the header's height before the on-device probe answers: the pill text changes length (checking → no model →
+   ready) and used to re-wrap the header, shifting the whole sheet (Lighthouse CLS 0.112). */
+.controls { min-height: 88px; align-content: flex-start; }
+@media (min-width: 901px) { .strip { grid-template-columns: 1fr 440px; } .controls { flex-direction: column; align-items: flex-end; justify-content: flex-start; } }
 @media (max-width: 1100px) { .pane { top: auto; height: 60%; width: 100%; min-width: 0; border-left: 0; border-top: 2px solid var(--rule-strong); } }
 @media (max-width: 700px) {
   .strip { grid-template-columns: 1fr; } .controls { justify-content: flex-start; }

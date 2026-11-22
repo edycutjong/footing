@@ -322,7 +322,7 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
   );
 
   return (
-    <div className="pad">
+    <main className="pad">
       <header className="strip">
         <div>
           <h1>Footing</h1>
@@ -445,7 +445,7 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
       </div>
       {openRun && <Pane r={openRun} cfg={cfg} onClose={() => setOpen(null)} onConfirm={confirm} />}
       {toast && <div className="toast" role="status">{toast}</div>}
-    </div>
+    </main>
   );
 }
 
@@ -470,7 +470,7 @@ function DevicePill({ device, progress, onDownload }: { device: Device | "checki
 function Legend({ style }: { style: "likely" | "neutral" }) {
   return (
     <div className="legend" aria-label="Tick-mark legend">
-      <h3>Tick-mark legend</h3>
+      <h2>Tick-mark legend</h2>
       <span><Mark state="SUPPORTS" /> says it</span>
       <span><Mark state="PARTIAL" /> says part</span>
       <span><Mark state="NOT_SUPPORTED" /> doesn&apos;t say this</span>
