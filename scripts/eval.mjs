@@ -1,5 +1,5 @@
 // Runs one eval set through the real Chrome profile and writes raw rows to evidence/<set>/<mode>-<date>.json.
-// Usage: node scripts/eval.mjs <set> <triage|judge> <userDataDir> [judgeModel]
+// Usage: npm run eval:live -- <set> <triage|judge> <userDataDir> [judgeModel]
 // Needs: npm run dev (port 3101), evidence/<set>/labels.json + passages.json, /tmp/footing-eval/<set>-windows.json (judge).
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { openChrome } from "./chrome.mjs";

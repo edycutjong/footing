@@ -142,7 +142,12 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
   const [cloudUsed, setCloudUsed] = useState(0);
 
   useEffect(() => {
-    import("@/lib/ai/deviceModel").then((m) => m.deviceAvailability()).then(setDevice);
+    // availability() can take minutes on a fresh profile (P1a: 152 s). After 4 s the page treats the device as
+    // unavailable (checks run in the cloud); a late answer still updates the pill.
+    let settled = false;
+    const timer = setTimeout(() => { if (!settled) setDevice((d) => (d === "checking" ? "unavailable" : d)); }, 4000);
+    import("@/lib/ai/deviceModel").then((m) => m.deviceAvailability()).then((d) => { settled = true; setDevice(d); });
+    return () => clearTimeout(timer);
   }, []);
 
   const byId = useMemo(() => new Map(runs.map((r) => [r.pair.id, r])), [runs]);

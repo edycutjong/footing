@@ -112,7 +112,8 @@ export async function fetchSource(raw: string): Promise<FetchResult> {
       }
       if (r.status >= 400) {
         r.res.resume();
-        return fail(`source returned ${r.status}`, r.status, url.href);
+        const why = r.status === 401 || r.status === 403 ? `site refused our fetch (${r.status}) — open it yourself` : `source returned ${r.status}`;
+        return fail(why, r.status, url.href);
       }
       const ct = String(r.headers["content-type"] ?? "");
       const declaredPdf = ct.toLowerCase().includes("pdf");

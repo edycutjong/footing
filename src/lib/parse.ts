@@ -60,6 +60,12 @@ function segmentSentences(text: string): string[] {
       out[out.length - 1] = out[out.length - 1].trimEnd() + " " + lead[1].trim();
       rest = piece.slice(lead[0].length);
     }
+    // "…6:40 a.m. [1]. On Sundays…": the marker's trailing punctuation also belongs to the previous sentence.
+    const punct = rest.match(/^\s*([.!?;:,]+)(?=\s|$)/);
+    if (lead && punct && out.length) {
+      out[out.length - 1] += punct[1];
+      rest = rest.slice(punct[0].length);
+    }
     if (rest.trim()) out.push(rest.trim());
   }
   return out;
@@ -73,6 +79,7 @@ export function cleanSentence(s: string): string {
     .replace(URL_RE, "")
     .replace(/\(\s*\)/g, "")
     .replace(/\s+([.,;:!?])/g, "$1")
+    .replace(/(\b\p{L}\.)\.(?!\.)/gu, "$1")
     .replace(/\s+/g, " ")
     .trim();
 }

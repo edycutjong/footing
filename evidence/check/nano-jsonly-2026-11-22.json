@@ -1,0 +1,136 @@
+{
+  "label": "nano-jsonly",
+  "force": "auto",
+  "answer": "test/fixtures/js-only-answer.md",
+  "recordedAt": "2026-11-22T11:56:05.993Z",
+  "baseUrl": "http://localhost:3101",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+  "machine": "MacBook Pro M1 Max, 32 GB",
+  "deviceBefore": "available",
+  "appCheckDebugTokenInjected": true,
+  "wallMs": 6012,
+  "banner": null,
+  "done": true,
+  "running": false,
+  "device": "available",
+  "tally": {
+    "k": 0,
+    "n": 0,
+    "j": 0,
+    "settledOnDevice": 0,
+    "decidedInCloud": 0,
+    "unverified": 2,
+    "pending": 0,
+    "notChecked": 0,
+    "total": 2
+  },
+  "cloudUsed": 2,
+  "runs": [
+    {
+      "id": "s0-0",
+      "s": 0,
+      "n": 1,
+      "url": "https://footing.edycu.dev/spike/js-only.html",
+      "sentence": "The first ferry of the day leaves the north pier at 6:40 a.m.",
+      "state": "UNVERIFIED",
+      "route": {
+        "to": "CLOUD_URL_CONTEXT",
+        "reason": "page needs JavaScript — read in the cloud"
+      },
+      "planned": {
+        "to": "CLOUD_URL_CONTEXT",
+        "reason": "page needs JavaScript — read in the cloud"
+      },
+      "sources": [
+        "in_cloud"
+      ],
+      "quote": "The first ferry of the day leaves the north pier at 6:40 a.m.",
+      "reason": "The source text contains the exact sentence stating the first ferry leaves the north pier at 6:40 a.m.",
+      "note": "read via URL context — no source text to check the quote against",
+      "trail": [
+        {
+          "step": "fetch",
+          "ms": 427,
+          "reason": "html · 200"
+        },
+        {
+          "step": "route",
+          "route": "CLOUD_URL_CONTEXT",
+          "reason": "page needs JavaScript — read in the cloud"
+        },
+        {
+          "step": "judge-url",
+          "inferenceSource": "in_cloud",
+          "verdict": "SUPPORTS",
+          "quote": "The first ferry of the day leaves the north pier at 6:40 a.m.",
+          "reason": "The source text contains the exact sentence stating the first ferry leaves the north pier at 6:40 a.m.",
+          "ms": 4410,
+          "attempt": 1,
+          "gateHeld": false
+        }
+      ],
+      "source": {
+        "finalUrl": "https://footing.edycu.dev/spike/js-only.html",
+        "sha256": "3e0dd4d237eac05dcf3289b7583654f96d1c9e8f4d68ae7f83f2e34ab3f104a4",
+        "fetchedAt": "2026-11-22T11:55:59.934Z",
+        "kind": "html",
+        "bytes": 509,
+        "status": 200
+      },
+      "cloudCalls": 1
+    },
+    {
+      "id": "s2-1",
+      "s": 2,
+      "n": 1,
+      "url": "https://footing.edycu.dev/spike/js-only.html",
+      "sentence": "On Sundays the last ferry returns at 11:15 p.m.",
+      "state": "UNVERIFIED",
+      "route": {
+        "to": "CLOUD_URL_CONTEXT",
+        "reason": "page needs JavaScript — read in the cloud"
+      },
+      "planned": {
+        "to": "CLOUD_URL_CONTEXT",
+        "reason": "page needs JavaScript — read in the cloud"
+      },
+      "sources": [
+        "in_cloud"
+      ],
+      "quote": "The last ferry returns at 11:15 p.m. on weekdays and at 9:30 p.m. on Sundays.",
+      "reason": "The source states that the last ferry returns at 9:30 p.m. on Sundays, not 11:15 p.m.",
+      "note": "read via URL context — no source text to check the quote against",
+      "trail": [
+        {
+          "step": "fetch",
+          "ms": 427,
+          "reason": "html · 200"
+        },
+        {
+          "step": "route",
+          "route": "CLOUD_URL_CONTEXT",
+          "reason": "page needs JavaScript — read in the cloud"
+        },
+        {
+          "step": "judge-url",
+          "inferenceSource": "in_cloud",
+          "verdict": "NOT_SUPPORTED",
+          "quote": "The last ferry returns at 11:15 p.m. on weekdays and at 9:30 p.m. on Sundays.",
+          "reason": "The source states that the last ferry returns at 9:30 p.m. on Sundays, not 11:15 p.m.",
+          "ms": 5089,
+          "attempt": 1,
+          "gateHeld": false
+        }
+      ],
+      "source": {
+        "finalUrl": "https://footing.edycu.dev/spike/js-only.html",
+        "sha256": "3e0dd4d237eac05dcf3289b7583654f96d1c9e8f4d68ae7f83f2e34ab3f104a4",
+        "fetchedAt": "2026-11-22T11:55:59.934Z",
+        "kind": "html",
+        "bytes": 509,
+        "status": 200
+      },
+      "cloudCalls": 1
+    }
+  ]
+}

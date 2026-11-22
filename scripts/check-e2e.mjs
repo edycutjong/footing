@@ -3,7 +3,7 @@
 // Usage: node scripts/check-e2e.mjs <label> <userDataDir> [--force auto|device|cloud] [--answer file.md] [--confirm-first-likely]
 // Needs the dev server (npm run dev, port 3101) or BASE_URL. App Check debug token (local only) from env
 // FIREBASE_APPCHECK_DEBUG_TOKEN, injected into the page and never written to disk.
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
 import { openChrome } from "./chrome.mjs";
 
 const [label, userDataDir, ...rest] = process.argv.slice(2);
@@ -12,7 +12,10 @@ const force = arg("--force", "auto");
 const answerFile = arg("--answer", null);
 const base = process.env.BASE_URL ?? "http://localhost:3101";
 const token = process.env.FIREBASE_APPCHECK_DEBUG_TOKEN;
-const date = new Date().toISOString().slice(0, 10);
+const now = new Date();
+const day = now.toISOString().slice(0, 10);
+// Never overwrite an earlier run of the same label on the same day: the second one gets -HHMM.
+const date = existsSync(`evidence/check/${label}-${day}.json`) ? `${day}-${now.toISOString().slice(11, 16).replace(":", "")}` : day;
 
 const { browser, close } = await openChrome({ userDataDir, port: Number(process.env.CDP_PORT ?? 9224) });
 try {

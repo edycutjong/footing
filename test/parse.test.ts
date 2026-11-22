@@ -13,6 +13,11 @@ describe("parseAnswer()", () => {
     expect(p.pairs[0].sentence).toBe("Vaccines train the immune system.");
     expect(p.sentences[1].cites).toHaveLength(0);
   });
+  it("keeps a marker and its full stop with the sentence after an abbreviation (a.m. [1].)", () => {
+    const p = parseAnswer("The ferry leaves at 6:40 a.m. [1]. On Sundays it returns at 9:30 p.m. [1].\n\n[1] https://x.example");
+    expect(p.sentences.map((x) => x.text)).toEqual(["The ferry leaves at 6:40 a.m.", "On Sundays it returns at 9:30 p.m."]);
+    expect(p.pairs.map((x) => x.s)).toEqual([0, 1]);
+  });
   it("reads Markdown links and keeps the link text in the sentence", () => {
     const p = parseAnswer("Olive oil is the main fat ([AHA](https://www.heart.org/x)). Wine is optional.");
     expect(p.pairs[0].url).toBe("https://www.heart.org/x");

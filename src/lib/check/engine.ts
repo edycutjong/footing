@@ -199,7 +199,8 @@ export class Check {
       run.trail.push({ step: "triage", inferenceSource: t.inferenceSource, verdict: t.verdict, quote: t.quote, gateHeld: held, ms: t.ms, error: t.error });
       if (t.error && r.deviceMode === "ONLY_ON_DEVICE" && force === "device") {
         // On-device only: show the SDK's real refusal (e.g. PDF input), never a guess.
-        return this.finish(run, "NOT_CHECKED", { reason: `On-device only: ${t.error}` });
+        const why = src.kind === "pdf" ? `PDF input is cloud-only — the on-device model refused it ("${t.error}")` : t.error;
+        return this.finish(run, "NOT_CHECKED", { reason: `On-device only: ${why}` });
       }
       const tr: TriageResult = { verdict: t.verdict, quote: t.quote, inferenceSource: t.inferenceSource, error: t.errorKind as TriageResult["error"] };
       if (force === "device") {
@@ -207,7 +208,8 @@ export class Check {
         const a = afterTriage(tr, held, cfg, 0);
         run.after = a;
         if (a.to === "SETTLED_ON_DEVICE") return this.finish(run, "LIKELY_UNSUPPORTED", { reason: a.reason });
-        return this.finish(run, "CAP_REACHED", { reason: `On-device only: ${a.reason} — tap to confirm in the cloud`, quote: t.quote });
+        const why = t.verdict === "SUPPORTS" && held ? "Nano found a candidate quote (never final on device)" : "Nano's result needs the cloud";
+        return this.finish(run, "CAP_REACHED", { reason: `On-device only: ${why} — tap to decide in the cloud`, quote: t.quote });
       }
       const a = afterTriage(tr, held, cfg, userInitiated ? 0 : this.cloudUsed);
       run.after = a;

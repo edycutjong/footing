@@ -108,7 +108,8 @@ describe("Check engine", () => {
   it("On-device only + PDF shows the SDK's real refusal", async () => {
     const d = deps({ triage: async () => ({ error: "on-device model does not accept PDF input", errorKind: "sdk", ms: 3 }) }, { "https://s0.example/p": pdf("https://s0.example/p") });
     const { runs } = await new Check(answer(1).pairs, d, { cfg, force: "device", device: "available" }).run();
-    expect(runs[0]).toMatchObject({ state: "NOT_CHECKED", reason: "On-device only: on-device model does not accept PDF input" });
+    expect(runs[0].state).toBe("NOT_CHECKED");
+    expect(runs[0].reason).toBe('On-device only: PDF input is cloud-only — the on-device model refused it ("on-device model does not accept PDF input")');
     expect(d.calls).not.toContain("judgePdf");
   });
 
