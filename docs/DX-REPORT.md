@@ -9,8 +9,9 @@ model, so `LanguageModel.availability()` never leaves `downloadable`. We spawn t
 `--remote-debugging-port` and attach with `puppeteer.connect()` (`scripts/chrome.mjs`).
 
 ## 2. `initializeDeviceModel()`: await it only in `ONLY_ON_DEVICE`
-In a profile without the model, awaiting `initializeDeviceModel()` before a `PREFER_ON_DEVICE` call blocks for the whole multi-minute
-download. Start it on the click and do not await it; the SDK answers from the cloud meanwhile
+In a fresh profile without the model, our first harness awaited `initializeDeviceModel()` before a `PREFER_ON_DEVICE` call; it had not
+answered after several minutes and we stopped the run (no evidence file was saved for it). The docs say to await it only for
+`ONLY_ON_DEVICE`. Started on the click and not awaited, the same call answered from the cloud in 4.9 s
 (`evidence/spike/fresh-triage.json`: `inferenceSource: "in_cloud"`, `initDoneBeforeAnswer: false`).
 
 ## 3. `maxLength` inside `responseConstraint` is honoured, by cutting mid-word
@@ -36,17 +37,19 @@ The console's "Get started" flow does more than enable APIs. With only the APIs 
 
 ## 7. App Check for AI Logic is enforced on `firebaseml.googleapis.com`
 Enforcing `firebasevertexai.googleapis.com` in the App Check services API returns `Service not supported`; the enforceable service is
-`firebaseml.googleapis.com`. Enforcement took between 3 and 15 minutes to take effect. After that a call with only the web API key
+`firebaseml.googleapis.com`. Enforcement was not yet effective about 3 minutes after enabling it and was effective 12 minutes after. Then a call with only the web API key
 returns `401 Firebase App Check token is invalid` (`evidence/spike/appcheck-enforced-tokenless.json`).
 reCAPTCHA Enterprise key: `gcloud recaptcha keys create --web --integration-type=SCORE --domains=<prod host>`, registered with
 `PATCH .../apps/<appId>/recaptchaEnterpriseConfig?updateMask=siteKey,tokenTtl`. A fresh Chrome profile with no debug token then completed
 AI Logic calls on the deployed site (`evidence/spike/prod-fresh-nodebug-*.json`).
 
 ## 8. Free-tier availability and quota (2026-11-22, Gemini Developer API, no billing)
-- `gemini-3.8-flash`: 4 attempts over about 90 minutes all failed with `500 high demand` or `503 deadline expired` after 66–179 s
-  (`evidence/spike/nano-cloudJudge.json`, `nano-38flash-cloudJudge.json`). `gemini-4-hydrogen`: one success after 154 s, then 500/503.
-  `gemini-3.5-flash-lite`: answered every time in 2–9 s. We run the judge on flash-lite; the model name is a Remote Config key.
-- About 70 flash-lite calls that day. In the 20-pair run one pair got two consecutive 429 `You exceeded your current quota` responses and
+- `gemini-3.8-flash`: all 5 saved attempts between 10:36 and 11:13 UTC failed with `500 high demand` or `503 deadline expired` after
+  66–179 s (`evidence/spike/nano-pdf.json`, `nano-urlContext.json`, `nano-urlContextSchema.json`, `nano-cloudJudge.json`,
+  `nano-38flash-cloudJudge.json`). `gemini-4-hydrogen`: one success after 154 s, then a 500 after 10 s and a 503 after 180 s
+  (`nano-hydrogen-*.json`). `gemini-3.5-flash-lite` answered in 2–9 s. We run the judge on flash-lite; the model name is a Remote Config key.
+- Recorded flash-lite calls that day: 65, of which 3 got 429 and 1 got 500 (`evidence/quota/observed-2026-11-22.json`, from
+  `scripts/quota-count.mjs`; a lower bound, since overwritten spike files are not counted). No RPM/RPD limit was shown to us. In the 20-pair run one pair got two consecutive 429 `You exceeded your current quota` responses and
   succeeded on the third attempt after 15 s + 30 s backoff; another got one 500 and succeeded on retry
   (`evidence/eval-fresh-20/cloud-3class-*.json`, fields `attempts` and `transientErrors`).
 - Grounding with Google Search through AI Logic returned 429 within 0.6 s while URL-context calls just before it succeeded

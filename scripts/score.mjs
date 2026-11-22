@@ -31,7 +31,7 @@ for (const [set, meta] of Object.entries(SETS)) {
       else c[r.verdict === "SUPPORTS" ? "FP" : "TN"]++;
     }
     // Router: the device settles only NOT_SUPPORTED with an empty quote; precision = share of those whose label is not SUPPORTS.
-    const settled = ok.filter((r) => r.verdict === "NOT_SUPPORTED" && !r.quote.trim());
+    const settled = ok.filter((r) => r.verdict === "NOT_SUPPORTED" && !(r.quote ?? "").trim());
     const settledRight = settled.filter((r) => r.label !== "SUPPORTS").length;
     const ms = ok.map((r) => r.ms);
     s.device = {

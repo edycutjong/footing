@@ -24,10 +24,10 @@ function SetBlock({ name, s }: { name: string; s: SetSummary }) {
           </p>
           <p>
             Settled on the laptop (NOT_SUPPORTED, no quote): {s.device.settledOnDevice} of {s.device.n}; {s.device.settledCorrect} of those were
-            labelled PARTIAL or NOT_SUPPORTED{s.device.settledNegativePrecisionPct !== null ? ` (${s.device.settledNegativePrecisionPct}%)` : ""}. The other{" "}
+            labelled PARTIAL or NOT_SUPPORTED{s.device.settledNegativePrecisionPct !== null && s.device.settledOnDevice >= 4 ? ` (${s.device.settledNegativePrecisionPct}%)` : " (too few to judge)"}. The other{" "}
             {s.device.escalated} go to the cloud model.
           </p>
-          <p><a href={REPO + s.device.file}>raw rows</a> · recorded {s.device.recordedAt}</p>
+          <p><a href={REPO + s.device.file}>raw rows</a> · <a href={`${REPO}evidence/${name}/LABELS-PROVENANCE.md`}>how the labels were made, and their limits</a> · recorded {s.device.recordedAt}</p>
         </>
       ) : <p>On-device run: not yet recorded.</p>}
       {s.cloud ? (

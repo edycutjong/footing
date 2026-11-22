@@ -21,7 +21,7 @@ try {
     await page.click(`#run-${name}`);
     await page.waitForFunction((n) => window.__spike && window.__spike[n], { timeout: 600000 }, name);
     const r = await page.evaluate((n) => window.__spike[n], name);
-    const rec = { label, recordedAt: new Date().toISOString(), baseUrl, userAgent: ua, appCheckDebugTokenInjected: !!token, machine: "MacBook Pro M1 Max, 32 GB", result: r };
+    const rec = { label, query: process.env.SPIKE_QUERY ?? "", recordedAt: new Date().toISOString(), baseUrl, userAgent: ua, appCheckDebugTokenInjected: !!token, machine: "MacBook Pro M1 Max, 32 GB", result: r };
     writeFileSync(`evidence/spike/${label}-${name}.json`, JSON.stringify(rec, null, 2) + "\n");
     console.log(name, r.ok ? "ok" : "FAIL", r.inferenceSource ?? "", r.ms + "ms", r.ok ? "" : JSON.stringify(r.error).slice(0, 300));
   }

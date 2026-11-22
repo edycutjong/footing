@@ -1,0 +1,21 @@
+{
+  "date": "2026-11-22",
+  "note": "Cloud calls that left an evidence file on this date, by model and outcome (HTTP status for failures). Free tier, Gemini Developer API, no billing. Overwritten spike files and curl probes are not counted, so this is a lower bound. No RPM/RPD limit was published to us; 429 is the observed signal.",
+  "tally": {
+    "gemini-3.5-flash-lite": {
+      "429": 3,
+      "500": 1,
+      "ok": 59,
+      "ok (triage cloud fallback)": 2
+    },
+    "gemini-3.8-flash": {
+      "500": 4,
+      "503": 1
+    },
+    "gemini-4-hydrogen": {
+      "500": 1,
+      "503": 1,
+      "ok": 1
+    }
+  }
+}

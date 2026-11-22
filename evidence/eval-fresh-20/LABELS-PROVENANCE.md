@@ -10,3 +10,8 @@ was checked absent by text search), 6 NOT_SUPPORTED (5 contradicted by the page,
 
 Limits: one labeller (the agent); a blind second pass by a human is optional (`labels-blind.csv`, no labels or model outputs).
 These claims are written, not captured from a live AI answer, so they test the checker, not how often real answers mis-cite.
+
+Correction after review (2026-11-22, after the run): `labels.json` tags n12 (Mallory and Irvine) as `contradicted`. The page says it
+remains unclear whether they reached the summit, so the claim is an unsupported overclaim rather than a contradiction: the label
+NOT_SUPPORTED stands; the provenance tag is wrong. The file is left unchanged so its pre-registered hash still verifies. Corrected
+counts: 4 contradicted, 1 unsupported overclaim, 1 mis-cited.
