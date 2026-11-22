@@ -2,27 +2,27 @@
   "label": "live-fresh-hero-2",
   "force": "auto",
   "answer": "seed/answers/hero.json",
-  "recordedAt": "2026-11-22T12:15:26.201Z",
+  "recordedAt": "2026-11-22T12:18:46.823Z",
   "baseUrl": "https://footing.edycu.dev",
   "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
   "machine": "MacBook Pro M1 Max, 32 GB",
   "deviceBefore": "slow",
   "appCheckDebugTokenInjected": false,
-  "wallMs": 29009,
+  "wallMs": 23009,
   "banner": null,
   "done": true,
   "running": false,
   "device": "downloadable",
   "tally": {
     "k": 1,
-    "n": 5,
+    "n": 7,
     "j": 0,
     "settledOnDevice": 0,
-    "decidedInCloud": 5,
-    "unverified": 0,
+    "decidedInCloud": 7,
+    "unverified": 1,
     "pending": 0,
-    "notChecked": 5,
-    "total": 10
+    "notChecked": 1,
+    "total": 9
   },
   "cloudUsed": 8,
   "config": {
@@ -35,46 +35,9 @@
     {
       "id": "s0-0",
       "s": 0,
-      "n": 3,
-      "url": "https://www.mayoclinic.org/healthy-lifestyle/nutrition-and-healthy-eating/in-depth/mediterranean-diet/art-20047801",
-      "sentence": "The Mediterranean diet is a heart-healthy eating pattern based on the traditional food choices of countries bordering the Mediterranean Sea, including Italy, Greece, Tunisia, Turkey, and Lebanon.",
-      "state": "NOT_CHECKED",
-      "route": {
-        "to": "NOT_CHECKED",
-        "reason": "site refused our fetch (403) — open it yourself"
-      },
-      "planned": {
-        "to": "NOT_CHECKED",
-        "reason": "site refused our fetch (403) — open it yourself"
-      },
-      "sources": [],
-      "reason": "site refused our fetch (403) — open it yourself",
-      "trail": [
-        {
-          "step": "fetch",
-          "ms": 315,
-          "error": "site refused our fetch (403) — open it yourself",
-          "reason": "site refused our fetch (403) — open it yourself"
-        },
-        {
-          "step": "route",
-          "route": "NOT_CHECKED",
-          "reason": "site refused our fetch (403) — open it yourself"
-        }
-      ],
-      "source": {
-        "finalUrl": "https://www.mayoclinic.org/healthy-lifestyle/nutrition-and-healthy-eating/in-depth/mediterranean-diet/art-20047801",
-        "kind": "failed",
-        "status": 403
-      },
-      "cloudCalls": 0
-    },
-    {
-      "id": "s1-1",
-      "s": 1,
       "n": 1,
-      "url": "https://en.wikipedia.org/wiki/Mediterranean_diet",
-      "sentence": "The dietary concept was first formally proposed in 1975 by American biologist Ancel Keys and chemist Margaret Keys after studying regional eating habits in the late 1950s to early 1960s.",
+      "url": "https://en.wikipedia.org/wiki/Intermittent_fasting",
+      "sentence": "Research on therapeutic intermittent fasts for treating obesity dates back to at least 1915, with renewed medical interest occurring in the 1960s after Bloom and his colleagues published an enthusiastic report.",
       "state": "SUPPORTS",
       "route": {
         "to": "CLOUD_DECIDE",
@@ -88,12 +51,12 @@
       "sources": [
         "in_cloud"
       ],
-      "quote": "The Mediterranean diet as a concept was first publicized in 1975 by American biologist Ancel Keys and chemist Margaret Keys, a husband-and-wife team. The Keys were the first to draw a correlation between cardiovascular disease and diet, based on studies in the 1950s in southern Italy.",
-      "reason": "The source explicitly states that the concept was proposed in 1975 by American biologist Ancel Keys and chemist Margaret Keys based on studies in the 1950s.",
+      "quote": "Therapeutic intermittent fasts for the treatment of obesity have been investigated since at least 1915, with a renewed interest in the medical community in the 1960s after Bloom and his colleagues published an \"enthusiastic report\".",
+      "reason": "The source explicitly matches every claim made in the sentence about the history of therapeutic intermittent fasts for treating obesity.",
       "trail": [
         {
           "step": "fetch",
-          "ms": 511,
+          "ms": 762,
           "reason": "html · 200"
         },
         {
@@ -105,19 +68,72 @@
           "step": "judge",
           "inferenceSource": "in_cloud",
           "verdict": "SUPPORTS",
-          "quote": "The Mediterranean diet as a concept was first publicized in 1975 by American biologist Ancel Keys and chemist Margaret Keys, a husband-and-wife team. The Keys were the first to draw a correlation between cardiovascular disease and diet, based on studies in the 1950s in southern Italy.",
-          "reason": "The source explicitly states that the concept was proposed in 1975 by American biologist Ancel Keys and chemist Margaret Keys based on studies in the 1950s.",
-          "ms": 3449,
+          "quote": "Therapeutic intermittent fasts for the treatment of obesity have been investigated since at least 1915, with a renewed interest in the medical community in the 1960s after Bloom and his colleagues published an \"enthusiastic report\".",
+          "reason": "The source explicitly matches every claim made in the sentence about the history of therapeutic intermittent fasts for treating obesity.",
+          "ms": 2821,
           "attempt": 1,
           "gateHeld": true
         }
       ],
       "source": {
-        "finalUrl": "https://en.wikipedia.org/wiki/Mediterranean_diet",
-        "sha256": "8d38b2a556233572c42d47d29321c804bfaa8e8741cea5b9b9609296accb8e51",
-        "fetchedAt": "2026-11-22T12:14:57.312Z",
+        "finalUrl": "https://en.wikipedia.org/wiki/Intermittent_fasting",
+        "sha256": "f5f89acbee5dbf4f283fdf482fc13bfe8af23c7a84bcd9368d51f8cf44712430",
+        "fetchedAt": "2026-11-22T12:18:23.913Z",
         "kind": "html",
-        "bytes": 588070,
+        "bytes": 606064,
+        "status": 200
+      },
+      "cloudCalls": 1
+    },
+    {
+      "id": "s1-1",
+      "s": 1,
+      "n": 1,
+      "url": "https://en.wikipedia.org/wiki/Intermittent_fasting",
+      "sentence": "These early clinical studies investigated short-term starvation periods ranging from 1 to 14 days.",
+      "state": "SUPPORTS",
+      "route": {
+        "to": "CLOUD_DECIDE",
+        "reason": "no on-device model in this browser"
+      },
+      "planned": {
+        "to": "DEVICE_TRIAGE",
+        "deviceMode": "PREFER_ON_DEVICE",
+        "reason": "readable page — checked on this laptop first"
+      },
+      "sources": [
+        "in_cloud"
+      ],
+      "quote": "Intermittent fasts, or \"short-term starvation periods\", ranged from 1 to 14 days in these early studies.",
+      "reason": "The source explicitly states that early studies on intermittent fasts and short-term starvation periods ranged from 1 to 14 days.",
+      "trail": [
+        {
+          "step": "fetch",
+          "ms": 762,
+          "reason": "html · 200"
+        },
+        {
+          "step": "route",
+          "route": "CLOUD_DECIDE",
+          "reason": "no on-device model in this browser"
+        },
+        {
+          "step": "judge",
+          "inferenceSource": "in_cloud",
+          "verdict": "SUPPORTS",
+          "quote": "Intermittent fasts, or \"short-term starvation periods\", ranged from 1 to 14 days in these early studies.",
+          "reason": "The source explicitly states that early studies on intermittent fasts and short-term starvation periods ranged from 1 to 14 days.",
+          "ms": 17904,
+          "attempt": 1,
+          "gateHeld": true
+        }
+      ],
+      "source": {
+        "finalUrl": "https://en.wikipedia.org/wiki/Intermittent_fasting",
+        "sha256": "f5f89acbee5dbf4f283fdf482fc13bfe8af23c7a84bcd9368d51f8cf44712430",
+        "fetchedAt": "2026-11-22T12:18:23.913Z",
+        "kind": "html",
+        "bytes": 606064,
         "status": 200
       },
       "cloudCalls": 1
@@ -126,82 +142,8 @@
       "id": "s2-2",
       "s": 2,
       "n": 2,
-      "url": "https://www.heart.org/en/healthy-living/healthy-eating/eat-smart/nutrition-basics/mediterranean-diet",
-      "sentence": "It centers primarily on minimally processed, plant-based foods, including plenty of fruits, vegetables, whole grains, potatoes, beans, nuts, and seeds.",
-      "state": "NOT_CHECKED",
-      "route": {
-        "to": "NOT_CHECKED",
-        "reason": "site refused our fetch (403) — open it yourself"
-      },
-      "planned": {
-        "to": "NOT_CHECKED",
-        "reason": "site refused our fetch (403) — open it yourself"
-      },
-      "sources": [],
-      "reason": "site refused our fetch (403) — open it yourself",
-      "trail": [
-        {
-          "step": "fetch",
-          "ms": 346,
-          "error": "site refused our fetch (403) — open it yourself",
-          "reason": "site refused our fetch (403) — open it yourself"
-        },
-        {
-          "step": "route",
-          "route": "NOT_CHECKED",
-          "reason": "site refused our fetch (403) — open it yourself"
-        }
-      ],
-      "source": {
-        "finalUrl": "https://www.heart.org/en/healthy-living/healthy-eating/eat-smart/nutrition-basics/mediterranean-diet",
-        "kind": "failed",
-        "status": 403
-      },
-      "cloudCalls": 0
-    },
-    {
-      "id": "s3-3",
-      "s": 3,
-      "n": 2,
-      "url": "https://www.heart.org/en/healthy-living/healthy-eating/eat-smart/nutrition-basics/mediterranean-diet",
-      "sentence": "Extra virgin olive oil is used as the primary source of fat, which research shows helps remove excess cholesterol from arteries and keep blood vessels open.",
-      "state": "NOT_CHECKED",
-      "route": {
-        "to": "NOT_CHECKED",
-        "reason": "site refused our fetch (403) — open it yourself"
-      },
-      "planned": {
-        "to": "NOT_CHECKED",
-        "reason": "site refused our fetch (403) — open it yourself"
-      },
-      "sources": [],
-      "reason": "site refused our fetch (403) — open it yourself",
-      "trail": [
-        {
-          "step": "fetch",
-          "ms": 346,
-          "error": "site refused our fetch (403) — open it yourself",
-          "reason": "site refused our fetch (403) — open it yourself"
-        },
-        {
-          "step": "route",
-          "route": "NOT_CHECKED",
-          "reason": "site refused our fetch (403) — open it yourself"
-        }
-      ],
-      "source": {
-        "finalUrl": "https://www.heart.org/en/healthy-living/healthy-eating/eat-smart/nutrition-basics/mediterranean-diet",
-        "kind": "failed",
-        "status": 403
-      },
-      "cloudCalls": 0
-    },
-    {
-      "id": "s4-4",
-      "s": 4,
-      "n": 1,
-      "url": "https://en.wikipedia.org/wiki/Mediterranean_diet",
-      "sentence": "Protein and dairy intake includes low to moderate amounts of fish, poultry, eggs, cheese, and yogurt, while red meat, refined grains, and added sugars are strictly limited.",
+      "url": "https://www.hsph.harvard.edu/nutritionsource/healthy-weight/diet-reviews/intermittent-fasting/",
+      "sentence": "In animal studies, calorie restriction has been shown to successfully increase lifespan and improve overall tolerance to metabolic stresses.",
       "state": "SUPPORTS",
       "route": {
         "to": "CLOUD_DECIDE",
@@ -215,12 +157,12 @@
       "sources": [
         "in_cloud"
       ],
-      "quote": "Moderate intakes of fish and other seafood, poultry, eggs, dairy products (primarily cheese and yogurt), and red wine. Low intakes of red meat, processed meat, refined carbohydrates, and sweets.",
-      "reason": "The source explicitly states moderate intakes of fish, poultry, eggs, cheese, and yogurt, alongside low intakes of red meat, refined grains (carbohydrates), and added sugars (sweets).",
+      "quote": "Physiologically, calorie restriction has been shown in animals to increase lifespan and improve tolerance to various metabolic stresses in the body.",
+      "reason": "The source explicitly states that calorie restriction increases lifespan and improves tolerance to metabolic stresses in animals.",
       "trail": [
         {
           "step": "fetch",
-          "ms": 511,
+          "ms": 617,
           "reason": "html · 200"
         },
         {
@@ -232,19 +174,126 @@
           "step": "judge",
           "inferenceSource": "in_cloud",
           "verdict": "SUPPORTS",
-          "quote": "Moderate intakes of fish and other seafood, poultry, eggs, dairy products (primarily cheese and yogurt), and red wine. Low intakes of red meat, processed meat, refined carbohydrates, and sweets.",
-          "reason": "The source explicitly states moderate intakes of fish, poultry, eggs, cheese, and yogurt, alongside low intakes of red meat, refined grains (carbohydrates), and added sugars (sweets).",
-          "ms": 2432,
+          "quote": "Physiologically, calorie restriction has been shown in animals to increase lifespan and improve tolerance to various metabolic stresses in the body.",
+          "reason": "The source explicitly states that calorie restriction increases lifespan and improves tolerance to metabolic stresses in animals.",
+          "ms": 3111,
           "attempt": 1,
           "gateHeld": true
         }
       ],
       "source": {
-        "finalUrl": "https://en.wikipedia.org/wiki/Mediterranean_diet",
-        "sha256": "8d38b2a556233572c42d47d29321c804bfaa8e8741cea5b9b9609296accb8e51",
-        "fetchedAt": "2026-11-22T12:14:57.312Z",
+        "finalUrl": "https://nutritionsource.hsph.harvard.edu/healthy-weight/diet-reviews/intermittent-fasting/",
+        "sha256": "87de253b95fb08dc9c75c4c80dcd02ffcb1975d9092873d5beba9c9c2e27b0ee",
+        "fetchedAt": "2026-11-22T12:18:23.936Z",
         "kind": "html",
-        "bytes": 588070,
+        "bytes": 107212,
+        "status": 200
+      },
+      "cloudCalls": 1
+    },
+    {
+      "id": "s3-3",
+      "s": 3,
+      "n": 1,
+      "url": "https://en.wikipedia.org/wiki/Intermittent_fasting",
+      "sentence": "In human populations, research has evaluated whether intermittent fasting can lower the risk of diet-related conditions such as metabolic syndrome.",
+      "state": "SUPPORTS",
+      "route": {
+        "to": "CLOUD_DECIDE",
+        "reason": "no on-device model in this browser"
+      },
+      "planned": {
+        "to": "DEVICE_TRIAGE",
+        "deviceMode": "PREFER_ON_DEVICE",
+        "reason": "readable page — checked on this laptop first"
+      },
+      "sources": [
+        "in_cloud"
+      ],
+      "quote": "Intermittent fasting has been studied to find whether it can reduce the risk of diet-related diseases, such as metabolic syndrome.",
+      "reason": "The source explicitly states that intermittent fasting has been studied to see if it can reduce the risk of diet-related diseases like metabolic syndrome.",
+      "trail": [
+        {
+          "step": "fetch",
+          "ms": 762,
+          "reason": "html · 200"
+        },
+        {
+          "step": "route",
+          "route": "CLOUD_DECIDE",
+          "reason": "no on-device model in this browser"
+        },
+        {
+          "step": "judge",
+          "inferenceSource": "in_cloud",
+          "verdict": "SUPPORTS",
+          "quote": "Intermittent fasting has been studied to find whether it can reduce the risk of diet-related diseases, such as metabolic syndrome.",
+          "reason": "The source explicitly states that intermittent fasting has been studied to see if it can reduce the risk of diet-related diseases like metabolic syndrome.",
+          "ms": 5074,
+          "attempt": 1,
+          "gateHeld": true
+        }
+      ],
+      "source": {
+        "finalUrl": "https://en.wikipedia.org/wiki/Intermittent_fasting",
+        "sha256": "f5f89acbee5dbf4f283fdf482fc13bfe8af23c7a84bcd9368d51f8cf44712430",
+        "fetchedAt": "2026-11-22T12:18:23.913Z",
+        "kind": "html",
+        "bytes": 606064,
+        "status": 200
+      },
+      "cloudCalls": 1
+    },
+    {
+      "id": "s4-4",
+      "s": 4,
+      "n": 2,
+      "url": "https://www.hsph.harvard.edu/nutritionsource/healthy-weight/diet-reviews/intermittent-fasting/",
+      "sentence": "Although it may improve several health outcomes in overweight or obese adults, its effect on lowering blood pressure appears less pronounced than that of continuous energy restriction.",
+      "state": "NOT_SUPPORTED",
+      "route": {
+        "to": "CLOUD_DECIDE",
+        "reason": "no on-device model in this browser"
+      },
+      "planned": {
+        "to": "DEVICE_TRIAGE",
+        "deviceMode": "PREFER_ON_DEVICE",
+        "reason": "readable page — checked on this laptop first"
+      },
+      "sources": [
+        "in_cloud"
+      ],
+      "quote": "",
+      "reason": "The source text states there were no significant differences in blood pressure when comparing intermittent fasting to continuous calorie restriction, rather than a less pronounced effect.",
+      "note": "no passage says this",
+      "trail": [
+        {
+          "step": "fetch",
+          "ms": 617,
+          "reason": "html · 200"
+        },
+        {
+          "step": "route",
+          "route": "CLOUD_DECIDE",
+          "reason": "no on-device model in this browser"
+        },
+        {
+          "step": "judge",
+          "inferenceSource": "in_cloud",
+          "verdict": "NOT_SUPPORTED",
+          "quote": "",
+          "reason": "The source text states there were no significant differences in blood pressure when comparing intermittent fasting to continuous calorie restriction, rather than a less pronounced effect.",
+          "ms": 1610,
+          "attempt": 1,
+          "gateHeld": false
+        }
+      ],
+      "source": {
+        "finalUrl": "https://nutritionsource.hsph.harvard.edu/healthy-weight/diet-reviews/intermittent-fasting/",
+        "sha256": "87de253b95fb08dc9c75c4c80dcd02ffcb1975d9092873d5beba9c9c2e27b0ee",
+        "fetchedAt": "2026-11-22T12:18:23.936Z",
+        "kind": "html",
+        "bytes": 107212,
         "status": 200
       },
       "cloudCalls": 1
@@ -252,10 +301,10 @@
     {
       "id": "s5-5",
       "s": 5,
-      "n": 1,
-      "url": "https://en.wikipedia.org/wiki/Mediterranean_diet",
-      "sentence": "Red wine is commonly included as an optional beverage, consumed in low to moderate amounts strictly with meals.",
-      "state": "PARTIAL",
+      "n": 2,
+      "url": "https://www.hsph.harvard.edu/nutritionsource/healthy-weight/diet-reviews/intermittent-fasting/",
+      "sentence": "Additionally, research does not consistently demonstrate that intermittent fasting is superior to continuous low-calorie diets regarding overall weight loss efficiency.",
+      "state": "SUPPORTS",
       "route": {
         "to": "CLOUD_DECIDE",
         "reason": "no on-device model in this browser"
@@ -268,12 +317,12 @@
       "sources": [
         "in_cloud"
       ],
-      "quote": "Alcohol intake is limited to wine (typically the red variety) consumed in low to moderate amounts, usually with meals.",
-      "reason": "The source states that wine is consumed in low to moderate amounts usually with meals, but it does not explicitly use the terms \"optional beverage\" or \"strictly with meals\".",
+      "quote": "However, research does not consistently show that intermittent fasting is superior to continuous low calorie diets for weight loss efficiency.",
+      "reason": "The source text explicitly states that research does not consistently show intermittent fasting is superior to continuous low-calorie diets regarding weight loss efficiency.",
       "trail": [
         {
           "step": "fetch",
-          "ms": 511,
+          "ms": 617,
           "reason": "html · 200"
         },
         {
@@ -284,20 +333,20 @@
         {
           "step": "judge",
           "inferenceSource": "in_cloud",
-          "verdict": "PARTIAL",
-          "quote": "Alcohol intake is limited to wine (typically the red variety) consumed in low to moderate amounts, usually with meals.",
-          "reason": "The source states that wine is consumed in low to moderate amounts usually with meals, but it does not explicitly use the terms \"optional beverage\" or \"strictly with meals\".",
-          "ms": 2119,
+          "verdict": "SUPPORTS",
+          "quote": "However, research does not consistently show that intermittent fasting is superior to continuous low calorie diets for weight loss efficiency.",
+          "reason": "The source text explicitly states that research does not consistently show intermittent fasting is superior to continuous low-calorie diets regarding weight loss efficiency.",
+          "ms": 1644,
           "attempt": 1,
           "gateHeld": true
         }
       ],
       "source": {
-        "finalUrl": "https://en.wikipedia.org/wiki/Mediterranean_diet",
-        "sha256": "8d38b2a556233572c42d47d29321c804bfaa8e8741cea5b9b9609296accb8e51",
-        "fetchedAt": "2026-11-22T12:14:57.312Z",
+        "finalUrl": "https://nutritionsource.hsph.harvard.edu/healthy-weight/diet-reviews/intermittent-fasting/",
+        "sha256": "87de253b95fb08dc9c75c4c80dcd02ffcb1975d9092873d5beba9c9c2e27b0ee",
+        "fetchedAt": "2026-11-22T12:18:23.936Z",
         "kind": "html",
-        "bytes": 588070,
+        "bytes": 107212,
         "status": 200
       },
       "cloudCalls": 1
@@ -305,47 +354,10 @@
     {
       "id": "s6-6",
       "s": 6,
-      "n": 3,
-      "url": "https://www.mayoclinic.org/healthy-lifestyle/nutrition-and-healthy-eating/in-depth/mediterranean-diet/art-20047801",
-      "sentence": "Following this lifestyle over the long term helps reduce stress and inflammation in the body, significantly lowering the risk of chronic conditions such as heart disease, diabetes, and Alzheimer's disease.",
-      "state": "NOT_CHECKED",
-      "route": {
-        "to": "NOT_CHECKED",
-        "reason": "site refused our fetch (403) — open it yourself"
-      },
-      "planned": {
-        "to": "NOT_CHECKED",
-        "reason": "site refused our fetch (403) — open it yourself"
-      },
-      "sources": [],
-      "reason": "site refused our fetch (403) — open it yourself",
-      "trail": [
-        {
-          "step": "fetch",
-          "ms": 315,
-          "error": "site refused our fetch (403) — open it yourself",
-          "reason": "site refused our fetch (403) — open it yourself"
-        },
-        {
-          "step": "route",
-          "route": "NOT_CHECKED",
-          "reason": "site refused our fetch (403) — open it yourself"
-        }
-      ],
-      "source": {
-        "finalUrl": "https://www.mayoclinic.org/healthy-lifestyle/nutrition-and-healthy-eating/in-depth/mediterranean-diet/art-20047801",
-        "kind": "failed",
-        "status": 403
-      },
-      "cloudCalls": 0
-    },
-    {
-      "id": "s7-7",
-      "s": 7,
-      "n": 1,
-      "url": "https://en.wikipedia.org/wiki/Mediterranean_diet",
-      "sentence": "A 2017 medical review established that this dietary pattern effectively lowers the risk of early death and aids in weight loss for obese individuals.",
-      "state": "SUPPORTS",
+      "n": 2,
+      "url": "https://www.hsph.harvard.edu/nutritionsource/healthy-weight/diet-reviews/intermittent-fasting/",
+      "sentence": "Specific dietary methods evaluated in research include alternate-day fasting restricting intake to 25% of daily calorie needs, as well as the 5:2 diet which limits intake to 400–500 calories on two days of the week.",
+      "state": "UNVERIFIED",
       "route": {
         "to": "CLOUD_DECIDE",
         "reason": "no on-device model in this browser"
@@ -358,71 +370,13 @@
       "sources": [
         "in_cloud"
       ],
-      "quote": "A 2017 review provided evidence that the Mediterranean diet lowers the risk of heart disease and early death; it may also help with weight loss in obese people.",
-      "reason": "The source explicitly states that a 2017 review provides evidence for lowering early death and helping obese individuals with weight loss.",
+      "quote": "Alternate-day fasting-Alternating between days of no food restriction with days that consist of one meal that provides about 25% of daily calorie needs. Example: The 5:2 diet approach advocates no food restriction five days of the week, cycled with a 400-500 calorie diet the other two days of the week.",
+      "reason": "The source explicitly mentions alternate-day fasting providing about 25% of daily calorie needs and the 5:2 diet limiting intake to 400-500 calories on two days of the week.",
+      "note": "quote not found in what the model read",
       "trail": [
         {
           "step": "fetch",
-          "ms": 511,
-          "reason": "html · 200"
-        },
-        {
-          "step": "route",
-          "route": "CLOUD_DECIDE",
-          "reason": "no on-device model in this browser"
-        },
-        {
-          "step": "judge",
-          "ms": 4899,
-          "error": "AI: Error fetching from https://firebasevertexai.googleapis.com/v1beta/projects/footing-hybrid-ai/models/gemini-3.5-flash-lite:generateContent: [429 ] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota excee",
-          "attempt": 1
-        },
-        {
-          "step": "judge",
-          "inferenceSource": "in_cloud",
-          "verdict": "SUPPORTS",
-          "quote": "A 2017 review provided evidence that the Mediterranean diet lowers the risk of heart disease and early death; it may also help with weight loss in obese people.",
-          "reason": "The source explicitly states that a 2017 review provides evidence for lowering early death and helping obese individuals with weight loss.",
-          "ms": 4069,
-          "attempt": 2,
-          "gateHeld": true
-        }
-      ],
-      "source": {
-        "finalUrl": "https://en.wikipedia.org/wiki/Mediterranean_diet",
-        "sha256": "8d38b2a556233572c42d47d29321c804bfaa8e8741cea5b9b9609296accb8e51",
-        "fetchedAt": "2026-11-22T12:14:57.312Z",
-        "kind": "html",
-        "bytes": 588070,
-        "status": 200
-      },
-      "cloudCalls": 2
-    },
-    {
-      "id": "s8-8",
-      "s": 8,
-      "n": 1,
-      "url": "https://en.wikipedia.org/wiki/Mediterranean_diet",
-      "sentence": "In recognition of its rich cultural values and traditions, UNESCO designated the Mediterranean diet as an Intangible Cultural Heritage of Humanity in 2010.",
-      "state": "SUPPORTS",
-      "route": {
-        "to": "CLOUD_DECIDE",
-        "reason": "no on-device model in this browser"
-      },
-      "planned": {
-        "to": "DEVICE_TRIAGE",
-        "deviceMode": "PREFER_ON_DEVICE",
-        "reason": "readable page — checked on this laptop first"
-      },
-      "sources": [
-        "in_cloud"
-      ],
-      "quote": "Mediterranean cuisine and its associated traditions and practices were recognized as an Intangible Cultural Heritage of Humanity by UNESCO in 2010 under the name \"Mediterranean Diet\".",
-      "reason": "The source explicitly confirms that UNESCO recognized the Mediterranean diet as an Intangible Cultural Heritage of Humanity in 2010.",
-      "trail": [
-        {
-          "step": "fetch",
-          "ms": 511,
+          "ms": 617,
           "reason": "html · 200"
         },
         {
@@ -434,30 +388,30 @@
           "step": "judge",
           "inferenceSource": "in_cloud",
           "verdict": "SUPPORTS",
-          "quote": "Mediterranean cuisine and its associated traditions and practices were recognized as an Intangible Cultural Heritage of Humanity by UNESCO in 2010 under the name \"Mediterranean Diet\".",
-          "reason": "The source explicitly confirms that UNESCO recognized the Mediterranean diet as an Intangible Cultural Heritage of Humanity in 2010.",
-          "ms": 2386,
+          "quote": "Alternate-day fasting-Alternating between days of no food restriction with days that consist of one meal that provides about 25% of daily calorie needs. Example: The 5:2 diet approach advocates no food restriction five days of the week, cycled with a 400-500 calorie diet the other two days of the week.",
+          "reason": "The source explicitly mentions alternate-day fasting providing about 25% of daily calorie needs and the 5:2 diet limiting intake to 400-500 calories on two days of the week.",
+          "ms": 1799,
           "attempt": 1,
-          "gateHeld": true
+          "gateHeld": false
         }
       ],
       "source": {
-        "finalUrl": "https://en.wikipedia.org/wiki/Mediterranean_diet",
-        "sha256": "8d38b2a556233572c42d47d29321c804bfaa8e8741cea5b9b9609296accb8e51",
-        "fetchedAt": "2026-11-22T12:14:57.312Z",
+        "finalUrl": "https://nutritionsource.hsph.harvard.edu/healthy-weight/diet-reviews/intermittent-fasting/",
+        "sha256": "87de253b95fb08dc9c75c4c80dcd02ffcb1975d9092873d5beba9c9c2e27b0ee",
+        "fetchedAt": "2026-11-22T12:18:23.936Z",
         "kind": "html",
-        "bytes": 588070,
+        "bytes": 107212,
         "status": 200
       },
       "cloudCalls": 1
     },
     {
-      "id": "s9-9",
-      "s": 9,
+      "id": "s7-7",
+      "s": 7,
       "n": 1,
-      "url": "https://en.wikipedia.org/wiki/Mediterranean_diet",
-      "sentence": "Today, the World Health Organization and the 2015–2020 Dietary Guidelines for Americans recognize it as one of the healthiest dietary patterns available.",
-      "state": "NOT_CHECKED",
+      "url": "https://en.wikipedia.org/wiki/Intermittent_fasting",
+      "sentence": "Regarding public safety, the United States National Institute on Aging states that current research remains limited and inconclusive, choosing not to recommend intermittent fasting to the general public.",
+      "state": "SUPPORTS",
       "route": {
         "to": "CLOUD_DECIDE",
         "reason": "no on-device model in this browser"
@@ -467,13 +421,15 @@
         "deviceMode": "PREFER_ON_DEVICE",
         "reason": "readable page — checked on this laptop first"
       },
-      "sources": [],
-      "reason": "cloud quota, retry",
-      "note": "retry",
+      "sources": [
+        "in_cloud"
+      ],
+      "quote": "The National Institute on Aging states current human research is limited, inconclusive, and not enough to recommend these diets for the general public.",
+      "reason": "The source explicitly states that the National Institute on Aging considers research limited, inconclusive, and not sufficient to recommend the diets to the general public.",
       "trail": [
         {
           "step": "fetch",
-          "ms": 511,
+          "ms": 762,
           "reason": "html · 200"
         },
         {
@@ -483,26 +439,65 @@
         },
         {
           "step": "judge",
-          "ms": 543,
-          "error": "AI: Error fetching from https://firebasevertexai.googleapis.com/v1beta/projects/footing-hybrid-ai/models/gemini-3.5-flash-lite:generateContent: [429 ] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota excee",
-          "attempt": 1
-        },
-        {
-          "step": "judge",
-          "ms": 536,
-          "error": "AI: Error fetching from https://firebasevertexai.googleapis.com/v1beta/projects/footing-hybrid-ai/models/gemini-3.5-flash-lite:generateContent: [429 ] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota excee",
-          "attempt": 2
+          "inferenceSource": "in_cloud",
+          "verdict": "SUPPORTS",
+          "quote": "The National Institute on Aging states current human research is limited, inconclusive, and not enough to recommend these diets for the general public.",
+          "reason": "The source explicitly states that the National Institute on Aging considers research limited, inconclusive, and not sufficient to recommend the diets to the general public.",
+          "ms": 5601,
+          "attempt": 1,
+          "gateHeld": true
         }
       ],
       "source": {
-        "finalUrl": "https://en.wikipedia.org/wiki/Mediterranean_diet",
-        "sha256": "8d38b2a556233572c42d47d29321c804bfaa8e8741cea5b9b9609296accb8e51",
-        "fetchedAt": "2026-11-22T12:14:57.312Z",
+        "finalUrl": "https://en.wikipedia.org/wiki/Intermittent_fasting",
+        "sha256": "f5f89acbee5dbf4f283fdf482fc13bfe8af23c7a84bcd9368d51f8cf44712430",
+        "fetchedAt": "2026-11-22T12:18:23.913Z",
         "kind": "html",
-        "bytes": 588070,
+        "bytes": 606064,
         "status": 200
       },
-      "cloudCalls": 2
+      "cloudCalls": 1
+    },
+    {
+      "id": "s8-8",
+      "s": 8,
+      "n": 1,
+      "url": "https://en.wikipedia.org/wiki/Intermittent_fasting",
+      "sentence": "Meanwhile, the New Zealand Ministry of Health notes that while the practice may aid weight loss, it can cause low energy and hunger, and it is explicitly not recommended for individuals with insulin-dependent diabetes.",
+      "state": "NOT_CHECKED",
+      "route": {
+        "to": "NOT_CHECKED",
+        "capped": true,
+        "reason": "cloud cap for this answer reached — check this one"
+      },
+      "planned": {
+        "to": "DEVICE_TRIAGE",
+        "deviceMode": "PREFER_ON_DEVICE",
+        "reason": "readable page — checked on this laptop first"
+      },
+      "sources": [],
+      "reason": "cloud cap for this answer reached — check this one",
+      "trail": [
+        {
+          "step": "fetch",
+          "ms": 762,
+          "reason": "html · 200"
+        },
+        {
+          "step": "route",
+          "route": "NOT_CHECKED",
+          "reason": "cloud cap for this answer reached — check this one"
+        }
+      ],
+      "source": {
+        "finalUrl": "https://en.wikipedia.org/wiki/Intermittent_fasting",
+        "sha256": "f5f89acbee5dbf4f283fdf482fc13bfe8af23c7a84bcd9368d51f8cf44712430",
+        "fetchedAt": "2026-11-22T12:18:23.913Z",
+        "kind": "html",
+        "bytes": 606064,
+        "status": 200
+      },
+      "cloudCalls": 0
     }
   ]
 }
