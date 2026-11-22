@@ -81,6 +81,8 @@ export function afterTriage(nano: TriageResult, gateHeld: boolean, cfg: Cfg, clo
   if (nano.error) return escalate("on-device error → sent to cloud");
   if (ranInCloud) return escalate("SDK fell back to cloud");
   if (!nano.verdict) return escalate("Nano's result needs the cloud");
+  // Settling is the device's one privilege, so it needs positive proof the answer came from the device (a2a r03).
+  if (nano.inferenceSource !== "on_device") return escalate("answer source not reported as on-device → sent to cloud");
   if (nano.verdict === "NOT_SUPPORTED" && !quote)
     return { to: "SETTLED_ON_DEVICE", reason: "Nano found no supporting passage in the 3 it read — confirm in cloud" };
   if (quote && !gateHeld) return escalate("quote not in what Nano read");

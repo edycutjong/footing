@@ -161,3 +161,11 @@ describe("afterTriage(): cap", () => {
     expect(afterTriage({ verdict: "NOT_SUPPORTED", quote: "", inferenceSource: "on_device" }, false, cfg, CAP).to).toBe("SETTLED_ON_DEVICE");
   });
 });
+
+describe("a2a r03: settling on device needs positive on-device provenance", () => {
+  it("escalates a no-quote NOT_SUPPORTED whose inferenceSource is missing or unknown", () => {
+    expect(afterTriage({ verdict: "NOT_SUPPORTED", quote: "" }, false, cfg, 0).to).toBe("ESCALATE");
+    expect(afterTriage({ verdict: "NOT_SUPPORTED", quote: "", inferenceSource: "mystery" }, false, cfg, 0).to).toBe("ESCALATE");
+    expect(afterTriage({ verdict: "NOT_SUPPORTED", quote: "" }, false, cfg, cfg.citationCloudCap).to).toBe("CAP_REACHED");
+  });
+});
