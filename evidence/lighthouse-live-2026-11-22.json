@@ -1,0 +1,78 @@
+{
+  "recordedAt": "2026-11-22T14:41:56.922Z",
+  "tool": "lhci autorun (desktop preset), 3 runs per URL, local Chrome 157, config lighthouserc.json",
+  "sha": "826dc4d",
+  "note": "best-practices 0.77 on / is two audits that fail because of the reCAPTCHA Enterprise cookie App Check requires (third-party-cookies, inspector-issues); gate is >= 0.75",
+  "pages": {
+    "https://footing.edycu.dev/": [
+      {
+        "scores": {
+          "performance": 1,
+          "accessibility": 1,
+          "best-practices": 0.77,
+          "seo": 1
+        },
+        "lcp_ms": 326,
+        "cls": 0.0028,
+        "tbt_ms": 0
+      },
+      {
+        "scores": {
+          "performance": 1,
+          "accessibility": 1,
+          "best-practices": 0.77,
+          "seo": 1
+        },
+        "lcp_ms": 242,
+        "cls": 0.0028,
+        "tbt_ms": 0
+      },
+      {
+        "scores": {
+          "performance": 1,
+          "accessibility": 1,
+          "best-practices": 0.77,
+          "seo": 1
+        },
+        "lcp_ms": 239,
+        "cls": 0.0028,
+        "tbt_ms": 0
+      }
+    ],
+    "https://footing.edycu.dev/eval": [
+      {
+        "scores": {
+          "performance": 1,
+          "accessibility": 1,
+          "best-practices": 1,
+          "seo": 1
+        },
+        "lcp_ms": 238,
+        "cls": 0,
+        "tbt_ms": 0
+      },
+      {
+        "scores": {
+          "performance": 1,
+          "accessibility": 1,
+          "best-practices": 1,
+          "seo": 1
+        },
+        "lcp_ms": 237,
+        "cls": 0,
+        "tbt_ms": 0
+      },
+      {
+        "scores": {
+          "performance": 1,
+          "accessibility": 1,
+          "best-practices": 1,
+          "seo": 1
+        },
+        "lcp_ms": 230,
+        "cls": 0,
+        "tbt_ms": 0
+      }
+    ]
+  }
+}
