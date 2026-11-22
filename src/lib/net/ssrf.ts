@@ -44,7 +44,8 @@ export function sniffKind(contentType: string, head: Uint8Array): SourceKind {
   return "unsupported";
 }
 
-export const LIMITS = { html: 2 * 1024 * 1024, pdf: 8 * 1024 * 1024, redirects: 3, timeoutMs: 8000 } as const;
+// HTML 5 MB: long Wikipedia articles exceed 2 MB of HTML (Moon: 2.14 MB on 2026-11-22) and were refused.
+export const LIMITS = { html: 5 * 1024 * 1024, pdf: 8 * 1024 * 1024, redirects: 3, timeoutMs: 8000 } as const;
 
 /** Simple per-key token bucket (in-memory, per server instance). */
 export class TokenBucket {
