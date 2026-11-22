@@ -163,8 +163,6 @@ jobs:
         env:
           CI: "true"
           BASE_URL: ${{ env.LIVE_URL }}
-          # Optional: only if reCAPTCHA Enterprise scores GitHub's datacenter runner too low for a production token.
-          FIREBASE_APPCHECK_DEBUG_TOKEN: ${{ secrets.E2E_APPCHECK_DEBUG_TOKEN }}
       - name: Upload report on failure
         if: failure()
         uses: actions/upload-artifact@v4

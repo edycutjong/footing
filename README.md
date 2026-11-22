@@ -128,7 +128,7 @@ Security while private), [`release.yml`](.github/workflows/release.yml) tags a v
 Measured on the deployed build (`evidence/lighthouse-live-2026-11-22.json`, desktop preset, 3 runs per page): performance 1.00, accessibility 1.00, SEO 1.00 and layout shift
 0.003 on `/`; best practices 0.77 on `/` because reCAPTCHA Enterprise, which App Check needs, sets a third-party cookie (the gate is 0.75, `lighthouserc.json`), and 1.00 on `/eval`.
 
-The E2E suite (`e2e/`, 11 tests, run against the live URL) drives the real, unmocked flow: it opens the hosted page, presses **Check sources** on the sample answer, and
+The E2E suite (`e2e/`, 12 tests, run against the live URL) drives the real, unmocked flow: it opens the hosted page, presses **Check sources** on the sample answer, and
 asserts that chips land with an `IN CLOUD` route badge, every decided verdict carries a non-empty quote (the verbatim-in-source check itself is unit-tested in
 `test/text-bm25-gate.test.ts`; a failed gate shows `UNVERIFIED`), and the evidence pane opens. `e2e/unplug.spec.ts` cuts the whole network after load, and separately blocks only
 the AI Logic hosts while sources stay readable, and asserts both times that the check reports failure and never produces a verdict. `npm run e2e:nano` repeats the flow on a

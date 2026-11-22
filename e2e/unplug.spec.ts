@@ -10,8 +10,6 @@ type Run = { state: string; quote?: string };
 type Footing = { done: boolean; tally: { k: number; n: number }; runs: Run[] }; // n = citations with a final verdict, k = flagged ones
 
 async function openAndWait(page: Page) {
-  const token = process.env.FIREBASE_APPCHECK_DEBUG_TOKEN; // optional, CI-runner fallback only
-  if (token) await page.addInitScript((t) => { (self as unknown as { FIREBASE_APPCHECK_DEBUG_TOKEN: string }).FIREBASE_APPCHECK_DEBUG_TOKEN = t; }, token);
   await page.goto("/");
   await page.waitForFunction(() => (window as unknown as { __footing?: { device: string } }).__footing?.device !== "checking", undefined, { timeout: 60_000 });
 }

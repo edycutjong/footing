@@ -7,8 +7,6 @@ type Run = { id: string; state: string; sources: string[]; quote?: string; reaso
 type Footing = { done: boolean; device: string; tally: { k: number; n: number; total: number; notChecked: number; unverified: number }; runs: Run[]; cloudUsed: number };
 
 test("check sources: chips land with a routing badge and every verdict carries a quote that passed the gate", async ({ page }) => {
-  const token = process.env.FIREBASE_APPCHECK_DEBUG_TOKEN; // optional, CI-runner fallback only; unset on a normal run
-  if (token) await page.addInitScript((t) => { (self as unknown as { FIREBASE_APPCHECK_DEBUG_TOKEN: string }).FIREBASE_APPCHECK_DEBUG_TOKEN = t; }, token);
   await page.goto("/");
   await page.waitForFunction(() => (window as unknown as { __footing?: Footing }).__footing?.device !== "checking", undefined, { timeout: 60_000 });
   await page.getByRole("button", { name: /Check sources/ }).click();
