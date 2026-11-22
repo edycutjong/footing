@@ -11,7 +11,7 @@
     "typecheck": "tsc --noEmit",
     "eval:prepare": "tsx scripts/eval-prepare.mts",
     "eval": "node scripts/eval-report.mjs",
-    "eval:score": "node scripts/score.mjs",
+    "eval:score": "tsx scripts/score.mjs",
     "spike": "node scripts/spike.mjs",
     "eval:live": "node scripts/eval.mjs",
     "check:e2e": "node scripts/check-e2e.mjs"

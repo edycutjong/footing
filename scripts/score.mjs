@@ -1,6 +1,11 @@
 // Scores the raw eval rows into evidence/summary.json (the only source of figures shown on pages).
-// Usage: node scripts/score.mjs   (reads the newest device-binary-* and cloud-3class-* file per set)
+// Usage: npm run eval:score   (tsx; reads the newest device-binary-* and cloud-3class-* file per set)
 import { readdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
+import { gate } from "../src/lib/gate/quote.ts";
+
+// How gateHeld was computed when the rows were recorded. "joined": the quote anywhere in passages + window joined, no
+// minimum length (rows before a2a r03). "segment": the app's gate — inside ONE passage or the window, >= 12 chars.
+const GATE_RULES = { joined: "quote found in the passages and page window joined (no minimum length)", segment: "the app's gate: inside one passage or the page window, at least 12 characters" };
 
 const SETS = { "eval-30": { heldOut: false, note: "frozen 30, labelled 2026-11-21; an earlier prompt was scored on it, so not held-out" },
                "eval-fresh-20": { heldOut: true, note: "fresh 20, labelled and hashed before any model run" } };
@@ -46,6 +51,8 @@ for (const [set, meta] of Object.entries(SETS)) {
   const cl = newest(set, "cloud-3class-");
   if (cl) {
     const rows = cl.data.rows;
+    const passages = new Map(JSON.parse(readFileSync(`evidence/${set}/passages.json`, "utf8")).map((p) => [p.id, p.passages]));
+    const rule = cl.data.gateRule ?? "joined";
     const ok = rows.filter((r) => r.verdict);
     const labels = ["SUPPORTS", "PARTIAL", "NOT_SUPPORTED"];
     const m = Object.fromEntries(labels.map((g) => [g, Object.fromEntries(labels.map((p) => [p, 0]))]));
@@ -54,7 +61,12 @@ for (const [set, meta] of Object.entries(SETS)) {
     s.cloud = {
       file: cl.file, model: cl.data.judgeModel, recordedAt: cl.data.recordedAt, n: rows.length, errors: rows.length - ok.length,
       correct: ok.filter((r) => r.correct).length, accuracyPct: pct(ok.filter((r) => r.correct).length, rows.length), confusion: m,
-      quoteGateHeld: ok.filter((r) => r.gateHeld).length, retriedCalls: rows.filter((r) => r.attempts > 1).length,
+      quoteGateHeld: ok.filter((r) => r.gateHeld).length, quoteGateRule: GATE_RULES[rule],
+      // Recomputed offline with the app's gate against the committed passages only (the page window is not committed),
+      // so it is a lower bound on what the app's gate would hold.
+      quoteInOnePassage: ok.filter((r) => r.quote && gate(r.quote, passages.get(r.id) ?? [])).length,
+      // A found quote proves the words exist, not that the verdict is right: wrong verdicts whose quote held.
+      wrongWithQuoteHeld: ok.filter((r) => r.gateHeld && !r.correct).length, retriedCalls: rows.filter((r) => r.attempts > 1).length,
       latencyMs: { p50: quantile(ms, 0.5), p95: quantile(ms, 0.95) },
     };
   }

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-22T11:29:52.959Z",
+  "generatedAt": "2026-11-22T12:53:53.868Z",
   "machine": "MacBook Pro M1 Max, 32 GB (on-device runs)",
   "sets": {
     "eval-30": {
@@ -54,6 +54,9 @@
           }
         },
         "quoteGateHeld": 21,
+        "quoteGateRule": "quote found in the passages and page window joined (no minimum length)",
+        "quoteInOnePassage": 14,
+        "wrongWithQuoteHeld": 5,
         "retriedCalls": 0,
         "latencyMs": {
           "p50": 2762,
@@ -113,6 +116,9 @@
           }
         },
         "quoteGateHeld": 20,
+        "quoteGateRule": "quote found in the passages and page window joined (no minimum length)",
+        "quoteInOnePassage": 18,
+        "wrongWithQuoteHeld": 6,
         "retriedCalls": 2,
         "latencyMs": {
           "p50": 2284,

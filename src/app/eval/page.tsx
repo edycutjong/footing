@@ -5,7 +5,7 @@ import summary from "../../../evidence/summary.json";
 export const metadata: Metadata = { title: "Footing · measured results" };
 
 type Dev = { n: number; correct: number; accuracyPct: number; confusion: Record<string, number>; settledOnDevice: number; settledCorrect: number; settledNegativePrecisionPct: number | null; escalated: number; latencyMs: { p50: number; p95: number }; recordedAt: string; file: string };
-type Cloud = { n: number; correct: number; accuracyPct: number; model: string; confusion: Record<string, Record<string, number>>; quoteGateHeld: number; latencyMs: { p50: number; p95: number }; recordedAt: string; file: string };
+type Cloud = { n: number; correct: number; accuracyPct: number; model: string; confusion: Record<string, Record<string, number>>; quoteGateHeld: number; quoteGateRule?: string; quoteInOnePassage?: number; wrongWithQuoteHeld?: number; latencyMs: { p50: number; p95: number }; recordedAt: string; file: string };
 type SetSummary = { heldOut: boolean; note: string; device?: Dev; cloud?: Cloud };
 
 const REPO = "https://github.com/edycutjong/footing/blob/main/";
@@ -38,6 +38,13 @@ function SetBlock({ name, s }: { name: string; s: SetSummary }) {
             {s.cloud.correct} of {s.cloud.n} correct ({s.cloud.accuracyPct}%) · quote found verbatim in its input: {s.cloud.quoteGateHeld} of {s.cloud.n} ·
             latency p50 {s.cloud.latencyMs.p50} ms, p95 {s.cloud.latencyMs.p95} ms
           </p>
+          {s.cloud.quoteGateRule && (
+            <p className="data">
+              Quote check used for these rows: {s.cloud.quoteGateRule}
+              {s.cloud.quoteInOnePassage !== undefined && <> · inside a single passage: {s.cloud.quoteInOnePassage} of {s.cloud.n}</>}.
+              {s.cloud.wrongWithQuoteHeld !== undefined && <> A found quote proves the words are in the source, not that the verdict is right: {s.cloud.wrongWithQuoteHeld} wrong verdict{s.cloud.wrongWithQuoteHeld === 1 ? "" : "s"} still had a real quote.</>}
+            </p>
+          )}
           <table style={{ borderCollapse: "collapse" }}>
             <thead><tr><th style={{ textAlign: "left", paddingRight: 12 }}>label ↓ / verdict →</th>{LABELS.map((l) => <th key={l} style={{ paddingRight: 12 }}>{l}</th>)}</tr></thead>
             <tbody>

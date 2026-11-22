@@ -42,7 +42,7 @@ try {
     console.log(p.id, gold, r.verdict ?? "ERR", r.gateHeld ?? "", r.inferenceSource ?? "", `${r.ms}ms`, attempts > 1 ? `attempts=${attempts}` : "", r.error ? r.error.slice(0, 120) : "");
     if (mode === "judge") await sleep(Number(process.env.JUDGE_GAP_MS ?? 2000));
   }
-  const rec = { set, mode, judgeModel: mode === "judge" ? judgeModel : null, recordedAt: new Date().toISOString(), machine: "MacBook Pro M1 Max, 32 GB", userAgent: ua, rows };
+  const rec = { set, mode, judgeModel: mode === "judge" ? judgeModel : null, recordedAt: new Date().toISOString(), gateRule: "segment", machine: "MacBook Pro M1 Max, 32 GB", userAgent: ua, rows };
   if (existsSync(outPath)) console.log(`overwriting ${outPath}`);
   writeFileSync(outPath, JSON.stringify(rec, null, 2) + "\n");
   console.log(`wrote ${outPath}`);
