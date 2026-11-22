@@ -4,20 +4,23 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Footing · pitch deck</title>
-<meta name="description" content="Footing pitch deck: checks that each link cited in an AI answer says what the sentence claims, with Gemini Nano on the laptop and the cloud for the hard calls.">
+<meta name="description" content="Footing pitch deck: checks that each link cited in an AI answer says what the sentence claims, with Gemini Nano on the laptop and the cloud for the final call.">
+<meta name="author" content="edycutjong">
 <meta name="theme-color" content="#17221B">
 <link rel="canonical" href="https://footing.edycu.dev/pitch">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Footing">
 <meta property="og:title" content="Footing · pitch deck">
-<meta property="og:description" content="Your AI cites the page. Footing actually reads it: Gemini Nano triages every citation on the laptop, the cloud decides the hard calls, code checks every quote.">
+<meta property="og:description" content="Footing deck: Gemini Nano reads every citation on the laptop, the cloud makes the final call, code checks every quote.">
 <meta property="og:url" content="https://footing.edycu.dev/pitch">
-<meta property="og:image" content="https://footing.edycu.dev/og-image.png?v=7dc7f41e07">
+<meta property="og:image" content="https://footing.edycu.dev/og-card.png?v=4df5b19389">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://footing.edycu.dev/og-image.png?v=7dc7f41e07">
+<meta name="twitter:title" content="Footing · pitch deck">
+<meta name="twitter:description" content="Footing deck: Gemini Nano reads every citation on the laptop, the cloud makes the final call, code checks every quote.">
+<meta name="twitter:image" content="https://footing.edycu.dev/og-card.png?v=4df5b19389">
 <link rel="preload" href="/landing/fonts/besley.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 /* Footing — shared by the landing (/about) and the deck (/pitch). Tokens from the design direction (workpaper on a green columnar pad). */
@@ -80,9 +83,9 @@
 .fx-q b{color:var(--ink);font-weight:600}
 .fx-rows{list-style:none;margin:0;padding:0}
 .fx-row{display:grid;grid-template-columns:18px 54px minmax(0,1fr) auto;gap:10px;align-items:center;padding:4px 18px;border-bottom:1px solid var(--rule);min-height:44px}
-.fx-no{font:11px var(--font-data);color:var(--before);text-align:right}
+.fx-no{font:11px var(--font-data);color:var(--muted);text-align:right}
 .fx-mark{display:inline-flex;align-items:center;gap:1px;position:relative;height:22px}
-.fx-mark sup{font:11px var(--font-data);color:var(--before);vertical-align:0;margin-right:1px}
+.fx-mark sup{font:11px var(--font-data);color:var(--muted);vertical-align:0;margin-right:1px}
 .fx-mark svg{width:24px;height:20px;overflow:visible;flex:none}
 .fx-mark sub{font:10px var(--font-data);color:var(--muted);vertical-align:-5px;width:8px}
 .fx-text{font-size:13.5px;line-height:1.36;min-width:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
@@ -188,7 +191,7 @@ body{font-family:var(--font-body);color:var(--ink)}
 .tab{display:flex;align-items:center;gap:16px;background:var(--sheet);border:1px solid var(--rule);border-bottom:0;padding:14px 22px;font:22px var(--font-data);color:var(--muted);
   margin-left:calc(var(--i) * 26px);box-shadow:0 -6px 16px -12px rgba(30,43,35,.4)}
 .tab:last-child{border-bottom:1px solid var(--rule)}
-.tab .tn{font:700 20px var(--font-data);color:var(--before);width:40px}
+.tab .tn{font:700 20px var(--font-data);color:var(--muted);width:40px}
 .tab .dot{width:12px;height:12px;border-radius:50%;background:var(--before);margin-left:auto}
 
 /* 4 solution */
@@ -234,7 +237,7 @@ body{font-family:var(--font-body);color:var(--ink)}
 #s7 .fxw{position:absolute;left:120px;top:232px;width:820px;transform:scale(1.12);transform-origin:0 0}
 #s7 .fxw .fx-q{display:none}
 #s7 .steps{position:absolute;left:1180px;top:262px;width:620px;list-style:none;margin:0;padding:0;counter-reset:st}
-#s7 .steps li{font-size:30px;line-height:1.35;color:var(--mat-muted);padding:22px 0 22px 66px;position:relative;border-top:1px solid #2C3B32;transition:color .3s ease}
+#s7 .steps li{font-size:36px;line-height:1.35;color:var(--mat-muted);padding:30px 0 30px 70px;position:relative;border-top:1px solid #2C3B32;transition:color .3s ease}
 #s7 .steps li::before{counter-increment:st;content:counter(st);position:absolute;left:0;top:20px;width:44px;height:44px;border-radius:50%;border:2px solid var(--mat-muted);
   font:700 22px/40px var(--font-data);text-align:center}
 #s7 .steps li.cur{color:var(--mat-ink)}
@@ -245,7 +248,7 @@ body{font-family:var(--font-body);color:var(--ink)}
 #s7 .fx-total.emph{background:#FFF7E8;box-shadow:inset 0 0 0 2px var(--ink)}
 
 /* 8 measured */
-.meas{display:grid;grid-template-columns:1fr 1fr;gap:44px;margin-top:70px}
+.meas{display:grid;grid-template-columns:1fr 1fr;gap:44px;margin-top:96px}
 .ledger{background:var(--sheet);border:1px solid var(--rule);box-shadow:var(--shadow);padding:30px 36px 24px;border-radius:2px;position:relative}
 .ledger h3{font:800 46px/1.1 var(--font-display);margin:6px 0 18px}
 .ledger .sub2{font-size:22px;color:var(--muted);margin:0 0 14px}
@@ -320,7 +323,7 @@ body.debug-contrast .slide *{outline:1px dashed rgba(194,65,45,.35)}
 .demo2 .dc{font-size:30px;line-height:1.3;margin:0;display:flex;gap:16px;align-items:flex-start}
 #s6 h2{max-width:none}
 
-#s3 .impact{font-size:34px;line-height:1.4;max-width:24ch;margin:56px 0 0;padding-top:24px;border-top:3px double var(--rule-strong)}
+#s3 .impact{font-size:38px;line-height:1.4;max-width:22ch;margin:96px 0 0;padding-top:24px;border-top:3px double var(--rule-strong)}
 #s3 .impact b{font:900 56px var(--font-display);white-space:nowrap}
 #s7 .hint{transition:color .3s ease,font-size .3s ease}
 #s7[data-step="0"] .hint{color:var(--mat-ink);font-size:28px}
@@ -363,7 +366,7 @@ body.debug-contrast .slide *{outline:1px dashed rgba(194,65,45,.35)}
 <div class="fx-total"><div class="line"><span class="big"><span data-k>1</span> of <span data-n>7</span></span><span class="words">checked citations: the source doesn't say it (or says only part)</span><span class="likely">+ <span data-likely>1</span> likely, on device (unconfirmed)</span></div><p class="data"><span data-settled>1</span> settled on this laptop · <span data-cloudn>7</span> decided in the cloud · <span data-unv>1</span> quote not found · <span style="white-space:nowrap">8 cloud calls (cap 8)</span></p><p class="fx-key"><sub>d</sub> device · <sub>c</sub> cloud · the 1 = row 9 (says part) · the likely = row 5 (no passage, on device)</p></div>
 </figure>
   </div>
-  <div class="foot"><span>Footing · <b>v1.0.0</b> · build cbe0942</span><span>01 / 11</span></div>
+  <div class="foot"><span>Footing · <b>v1.0.0</b> · build aa33bc4</span><span>01 / 11</span></div>
   <aside class="speaker-notes">AI answers come with links that look like proof. Footing opens every one and checks the sentence against the page it cites. On the right is a real run on our sample answer: nine citations, each marked in pencil.</aside>
 </section>
 
@@ -407,7 +410,7 @@ body.debug-contrast .slide *{outline:1px dashed rgba(194,65,45,.35)}
       <img src="/landing/img/live-fold.webp" width="1166" height="760" loading="lazy" alt="Footing — the live page checking the sample answer: each sentence with its pencil mark and an ON DEVICE then IN CLOUD route badge."></div>
     <p class="cap">Production run, Nano laptop, 2026-11-22 13:01 UTC</p>
   </figure>
-  <div class="foot"><span>Footing · <b>v1.0.0</b> · cropped capture · slide 8 replays a different run (dev server, 2026-11-22 12:20 UTC)</span><span>04 / 11</span></div>
+  <div class="foot"><span>Footing · <b>v1.0.0</b> · cropped · not the slide 8 run (2026-11-22 12:20 UTC): verdicts vary run to run; here code refused row 3's quote</span><span>04 / 11</span></div>
   <aside class="speaker-notes">This is the live site, not a mockup. Every row is a sentence, every mark is a verdict, and every badge says where the model ran. Green tick: the page says it. Violet question mark: the model's quote was not in the page, so code refused it.</aside>
 </section>
 
@@ -547,8 +550,8 @@ body.debug-contrast .slide *{outline:1px dashed rgba(194,65,45,.35)}
   <button type="button" data-act="prev" aria-label="Previous slide">←</button>
   <span class="count" aria-live="polite"><span id="cur">01</span> / 11</span>
   <button type="button" data-act="next" aria-label="Next slide">→</button>
-  <button type="button" data-act="overview" aria-label="Slide overview (Esc)">grid</button>
-  <button type="button" data-act="presenter" aria-label="Presenter notes (P)">notes</button>
+  <button type="button" data-act="overview" aria-label="overview of all slides (Esc)">overview</button>
+  <button type="button" data-act="presenter" aria-label="notes for the presenter (P)">notes</button>
 </div>
 <div class="notes-panel" id="notes" aria-live="polite"></div>
 <script>
