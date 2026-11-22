@@ -8,7 +8,11 @@
     "start": "next start -p 3101",
     "lint": "eslint",
     "test": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "eval:prepare": "tsx scripts/eval-prepare.mts",
+    "eval": "node scripts/eval.mjs",
+    "eval:score": "node scripts/score.mjs",
+    "spike": "node scripts/spike.mjs"
   },
   "dependencies": {
     "@mozilla/readability": "^0.6.0",

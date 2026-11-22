@@ -1,0 +1,28 @@
+{
+  "label": "prod-jsonly",
+  "recordedAt": "2026-11-22T11:25:09.118Z",
+  "baseUrl": "https://footing.edycu.dev",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+  "appCheckDebugTokenInjected": false,
+  "machine": "MacBook Pro M1 Max, 32 GB",
+  "result": {
+    "name": "urlContext",
+    "ok": true,
+    "ms": 14038,
+    "url": "https://footing.edycu.dev/spike/js-only.html",
+    "inferenceSource": "in_cloud",
+    "text": "\"The first ferry of the day leaves the north pier at 6:40 a.m. The last ferry returns at 11:15 p.m. on weekdays and at 9:30 p.m. on Sundays.\"",
+    "urlContextMetadata": {
+      "urlMetadata": [
+        {
+          "retrievedUrl": "https://footing.edycu.dev/spike/js-only.html",
+          "urlRetrievalStatus": "URL_RETRIEVAL_STATUS_ERROR"
+        },
+        {
+          "retrievedUrl": "https://footing.edycu.dev/spike/js-only.html",
+          "urlRetrievalStatus": "URL_RETRIEVAL_STATUS_SUCCESS"
+        }
+      ]
+    }
+  }
+}

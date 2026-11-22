@@ -1,0 +1,18 @@
+{
+  "label": "prod-jsonly",
+  "recordedAt": "2026-11-22T11:25:09.748Z",
+  "baseUrl": "https://footing.edycu.dev",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+  "appCheckDebugTokenInjected": false,
+  "machine": "MacBook Pro M1 Max, 32 GB",
+  "result": {
+    "name": "searchGrounding",
+    "ok": false,
+    "ms": 616,
+    "error": {
+      "name": "FirebaseError",
+      "code": "fetch-error",
+      "message": "AI: Error fetching from https://firebasevertexai.googleapis.com/v1beta/projects/footing-hybrid-ai/models/gemini-3.5-flash-lite:generateContent: [429 ] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit.  [{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://aistudio.google.com/docs/rate-limits\"}]}] (AI/fetch-error)"
+    }
+  }
+}
