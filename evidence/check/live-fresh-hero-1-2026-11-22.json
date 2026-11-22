@@ -1,0 +1,502 @@
+{
+  "label": "live-fresh-hero-1",
+  "force": "auto",
+  "answer": "seed/answers/hero.json",
+  "recordedAt": "2026-11-22T12:14:51.920Z",
+  "baseUrl": "https://footing.edycu.dev",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+  "machine": "MacBook Pro M1 Max, 32 GB",
+  "deviceBefore": "slow",
+  "appCheckDebugTokenInjected": false,
+  "wallMs": 13006,
+  "banner": null,
+  "done": true,
+  "running": false,
+  "device": "downloadable",
+  "tally": {
+    "k": 2,
+    "n": 6,
+    "j": 0,
+    "settledOnDevice": 0,
+    "decidedInCloud": 6,
+    "unverified": 0,
+    "pending": 0,
+    "notChecked": 4,
+    "total": 10
+  },
+  "cloudUsed": 6,
+  "config": {
+    "source": "remote",
+    "applied": [],
+    "judgeModel": "gemini-3.5-flash-lite",
+    "cap": 8
+  },
+  "runs": [
+    {
+      "id": "s0-0",
+      "s": 0,
+      "n": 3,
+      "url": "https://www.mayoclinic.org/healthy-lifestyle/nutrition-and-healthy-eating/in-depth/mediterranean-diet/art-20047801",
+      "sentence": "The Mediterranean diet is a heart-healthy eating pattern based on the traditional food choices of countries bordering the Mediterranean Sea, including Italy, Greece, Tunisia, Turkey, and Lebanon.",
+      "state": "NOT_CHECKED",
+      "route": {
+        "to": "NOT_CHECKED",
+        "reason": "site refused our fetch (403) — open it yourself"
+      },
+      "planned": {
+        "to": "NOT_CHECKED",
+        "reason": "site refused our fetch (403) — open it yourself"
+      },
+      "sources": [],
+      "reason": "site refused our fetch (403) — open it yourself",
+      "trail": [
+        {
+          "step": "fetch",
+          "ms": 1044,
+          "error": "site refused our fetch (403) — open it yourself",
+          "reason": "site refused our fetch (403) — open it yourself"
+        },
+        {
+          "step": "route",
+          "route": "NOT_CHECKED",
+          "reason": "site refused our fetch (403) — open it yourself"
+        }
+      ],
+      "source": {
+        "finalUrl": "https://www.mayoclinic.org/healthy-lifestyle/nutrition-and-healthy-eating/in-depth/mediterranean-diet/art-20047801",
+        "kind": "failed",
+        "status": 403
+      },
+      "cloudCalls": 0
+    },
+    {
+      "id": "s1-1",
+      "s": 1,
+      "n": 1,
+      "url": "https://en.wikipedia.org/wiki/Mediterranean_diet",
+      "sentence": "The dietary concept was first formally proposed in 1975 by American biologist Ancel Keys and chemist Margaret Keys after studying regional eating habits in the late 1950s to early 1960s.",
+      "state": "SUPPORTS",
+      "route": {
+        "to": "CLOUD_DECIDE",
+        "reason": "no on-device model in this browser"
+      },
+      "planned": {
+        "to": "DEVICE_TRIAGE",
+        "deviceMode": "PREFER_ON_DEVICE",
+        "reason": "readable page — checked on this laptop first"
+      },
+      "sources": [
+        "in_cloud"
+      ],
+      "quote": "The Mediterranean diet is a dietary concept that was first proposed in 1975 by American biologist Ancel Keys and chemist Margaret Keys. It is inspired by the eating habits and traditional foods of Greece, Italy and the Mediterranean coasts of France and Spain, as observed in the late 1950s to early 1960s.",
+      "reason": "The source explicitly confirms all the details regarding the creators, year, and the timeframe of the study.",
+      "trail": [
+        {
+          "step": "fetch",
+          "ms": 1370,
+          "reason": "html · 200"
+        },
+        {
+          "step": "route",
+          "route": "CLOUD_DECIDE",
+          "reason": "no on-device model in this browser"
+        },
+        {
+          "step": "judge",
+          "inferenceSource": "in_cloud",
+          "verdict": "SUPPORTS",
+          "quote": "The Mediterranean diet is a dietary concept that was first proposed in 1975 by American biologist Ancel Keys and chemist Margaret Keys. It is inspired by the eating habits and traditional foods of Greece, Italy and the Mediterranean coasts of France and Spain, as observed in the late 1950s to early 1960s.",
+          "reason": "The source explicitly confirms all the details regarding the creators, year, and the timeframe of the study.",
+          "ms": 4469,
+          "attempt": 1,
+          "gateHeld": true
+        }
+      ],
+      "source": {
+        "finalUrl": "https://en.wikipedia.org/wiki/Mediterranean_diet",
+        "sha256": "8d38b2a556233572c42d47d29321c804bfaa8e8741cea5b9b9609296accb8e51",
+        "fetchedAt": "2026-11-22T12:14:39.952Z",
+        "kind": "html",
+        "bytes": 588070,
+        "status": 200
+      },
+      "cloudCalls": 1
+    },
+    {
+      "id": "s2-2",
+      "s": 2,
+      "n": 2,
+      "url": "https://www.heart.org/en/healthy-living/healthy-eating/eat-smart/nutrition-basics/mediterranean-diet",
+      "sentence": "It centers primarily on minimally processed, plant-based foods, including plenty of fruits, vegetables, whole grains, potatoes, beans, nuts, and seeds.",
+      "state": "NOT_CHECKED",
+      "route": {
+        "to": "NOT_CHECKED",
+        "reason": "site refused our fetch (403) — open it yourself"
+      },
+      "planned": {
+        "to": "NOT_CHECKED",
+        "reason": "site refused our fetch (403) — open it yourself"
+      },
+      "sources": [],
+      "reason": "site refused our fetch (403) — open it yourself",
+      "trail": [
+        {
+          "step": "fetch",
+          "ms": 535,
+          "error": "site refused our fetch (403) — open it yourself",
+          "reason": "site refused our fetch (403) — open it yourself"
+        },
+        {
+          "step": "route",
+          "route": "NOT_CHECKED",
+          "reason": "site refused our fetch (403) — open it yourself"
+        }
+      ],
+      "source": {
+        "finalUrl": "https://www.heart.org/en/healthy-living/healthy-eating/eat-smart/nutrition-basics/mediterranean-diet",
+        "kind": "failed",
+        "status": 403
+      },
+      "cloudCalls": 0
+    },
+    {
+      "id": "s3-3",
+      "s": 3,
+      "n": 2,
+      "url": "https://www.heart.org/en/healthy-living/healthy-eating/eat-smart/nutrition-basics/mediterranean-diet",
+      "sentence": "Extra virgin olive oil is used as the primary source of fat, which research shows helps remove excess cholesterol from arteries and keep blood vessels open.",
+      "state": "NOT_CHECKED",
+      "route": {
+        "to": "NOT_CHECKED",
+        "reason": "site refused our fetch (403) — open it yourself"
+      },
+      "planned": {
+        "to": "NOT_CHECKED",
+        "reason": "site refused our fetch (403) — open it yourself"
+      },
+      "sources": [],
+      "reason": "site refused our fetch (403) — open it yourself",
+      "trail": [
+        {
+          "step": "fetch",
+          "ms": 535,
+          "error": "site refused our fetch (403) — open it yourself",
+          "reason": "site refused our fetch (403) — open it yourself"
+        },
+        {
+          "step": "route",
+          "route": "NOT_CHECKED",
+          "reason": "site refused our fetch (403) — open it yourself"
+        }
+      ],
+      "source": {
+        "finalUrl": "https://www.heart.org/en/healthy-living/healthy-eating/eat-smart/nutrition-basics/mediterranean-diet",
+        "kind": "failed",
+        "status": 403
+      },
+      "cloudCalls": 0
+    },
+    {
+      "id": "s4-4",
+      "s": 4,
+      "n": 1,
+      "url": "https://en.wikipedia.org/wiki/Mediterranean_diet",
+      "sentence": "Protein and dairy intake includes low to moderate amounts of fish, poultry, eggs, cheese, and yogurt, while red meat, refined grains, and added sugars are strictly limited.",
+      "state": "SUPPORTS",
+      "route": {
+        "to": "CLOUD_DECIDE",
+        "reason": "no on-device model in this browser"
+      },
+      "planned": {
+        "to": "DEVICE_TRIAGE",
+        "deviceMode": "PREFER_ON_DEVICE",
+        "reason": "readable page — checked on this laptop first"
+      },
+      "sources": [
+        "in_cloud"
+      ],
+      "quote": "Moderate intakes of fish and other seafood, poultry, eggs, dairy products (primarily cheese and yogurt), and red wine. Low intakes of red meat, processed meat, refined carbohydrates, and sweets.",
+      "reason": "The source explicitly states moderate intakes of fish, poultry, eggs, cheese, and yogurt, and low intakes of red meat, refined grains (refined carbohydrates), and added sugars (sweets).",
+      "trail": [
+        {
+          "step": "fetch",
+          "ms": 1370,
+          "reason": "html · 200"
+        },
+        {
+          "step": "route",
+          "route": "CLOUD_DECIDE",
+          "reason": "no on-device model in this browser"
+        },
+        {
+          "step": "judge",
+          "inferenceSource": "in_cloud",
+          "verdict": "SUPPORTS",
+          "quote": "Moderate intakes of fish and other seafood, poultry, eggs, dairy products (primarily cheese and yogurt), and red wine. Low intakes of red meat, processed meat, refined carbohydrates, and sweets.",
+          "reason": "The source explicitly states moderate intakes of fish, poultry, eggs, cheese, and yogurt, and low intakes of red meat, refined grains (refined carbohydrates), and added sugars (sweets).",
+          "ms": 3002,
+          "attempt": 1,
+          "gateHeld": true
+        }
+      ],
+      "source": {
+        "finalUrl": "https://en.wikipedia.org/wiki/Mediterranean_diet",
+        "sha256": "8d38b2a556233572c42d47d29321c804bfaa8e8741cea5b9b9609296accb8e51",
+        "fetchedAt": "2026-11-22T12:14:39.952Z",
+        "kind": "html",
+        "bytes": 588070,
+        "status": 200
+      },
+      "cloudCalls": 1
+    },
+    {
+      "id": "s5-5",
+      "s": 5,
+      "n": 1,
+      "url": "https://en.wikipedia.org/wiki/Mediterranean_diet",
+      "sentence": "Red wine is commonly included as an optional beverage, consumed in low to moderate amounts strictly with meals.",
+      "state": "PARTIAL",
+      "route": {
+        "to": "CLOUD_DECIDE",
+        "reason": "no on-device model in this browser"
+      },
+      "planned": {
+        "to": "DEVICE_TRIAGE",
+        "deviceMode": "PREFER_ON_DEVICE",
+        "reason": "readable page — checked on this laptop first"
+      },
+      "sources": [
+        "in_cloud"
+      ],
+      "quote": "Alcohol intake is limited to wine (typically the red variety) consumed in low to moderate amounts, usually with meals.",
+      "reason": "The source states red wine is consumed in low to moderate amounts with meals, but it does not claim that it is an optional beverage or consumed strictly with meals.",
+      "trail": [
+        {
+          "step": "fetch",
+          "ms": 1370,
+          "reason": "html · 200"
+        },
+        {
+          "step": "route",
+          "route": "CLOUD_DECIDE",
+          "reason": "no on-device model in this browser"
+        },
+        {
+          "step": "judge",
+          "inferenceSource": "in_cloud",
+          "verdict": "PARTIAL",
+          "quote": "Alcohol intake is limited to wine (typically the red variety) consumed in low to moderate amounts, usually with meals.",
+          "reason": "The source states red wine is consumed in low to moderate amounts with meals, but it does not claim that it is an optional beverage or consumed strictly with meals.",
+          "ms": 2116,
+          "attempt": 1,
+          "gateHeld": true
+        }
+      ],
+      "source": {
+        "finalUrl": "https://en.wikipedia.org/wiki/Mediterranean_diet",
+        "sha256": "8d38b2a556233572c42d47d29321c804bfaa8e8741cea5b9b9609296accb8e51",
+        "fetchedAt": "2026-11-22T12:14:39.952Z",
+        "kind": "html",
+        "bytes": 588070,
+        "status": 200
+      },
+      "cloudCalls": 1
+    },
+    {
+      "id": "s6-6",
+      "s": 6,
+      "n": 3,
+      "url": "https://www.mayoclinic.org/healthy-lifestyle/nutrition-and-healthy-eating/in-depth/mediterranean-diet/art-20047801",
+      "sentence": "Following this lifestyle over the long term helps reduce stress and inflammation in the body, significantly lowering the risk of chronic conditions such as heart disease, diabetes, and Alzheimer's disease.",
+      "state": "NOT_CHECKED",
+      "route": {
+        "to": "NOT_CHECKED",
+        "reason": "site refused our fetch (403) — open it yourself"
+      },
+      "planned": {
+        "to": "NOT_CHECKED",
+        "reason": "site refused our fetch (403) — open it yourself"
+      },
+      "sources": [],
+      "reason": "site refused our fetch (403) — open it yourself",
+      "trail": [
+        {
+          "step": "fetch",
+          "ms": 1044,
+          "error": "site refused our fetch (403) — open it yourself",
+          "reason": "site refused our fetch (403) — open it yourself"
+        },
+        {
+          "step": "route",
+          "route": "NOT_CHECKED",
+          "reason": "site refused our fetch (403) — open it yourself"
+        }
+      ],
+      "source": {
+        "finalUrl": "https://www.mayoclinic.org/healthy-lifestyle/nutrition-and-healthy-eating/in-depth/mediterranean-diet/art-20047801",
+        "kind": "failed",
+        "status": 403
+      },
+      "cloudCalls": 0
+    },
+    {
+      "id": "s7-7",
+      "s": 7,
+      "n": 1,
+      "url": "https://en.wikipedia.org/wiki/Mediterranean_diet",
+      "sentence": "A 2017 medical review established that this dietary pattern effectively lowers the risk of early death and aids in weight loss for obese individuals.",
+      "state": "SUPPORTS",
+      "route": {
+        "to": "CLOUD_DECIDE",
+        "reason": "no on-device model in this browser"
+      },
+      "planned": {
+        "to": "DEVICE_TRIAGE",
+        "deviceMode": "PREFER_ON_DEVICE",
+        "reason": "readable page — checked on this laptop first"
+      },
+      "sources": [
+        "in_cloud"
+      ],
+      "quote": "A 2017 review provided evidence that the Mediterranean diet lowers the risk of heart disease and early death; it may also help with weight loss in obese people.",
+      "reason": "The source explicitly confirms that a 2017 review provided evidence for lowering the risk of early death and aiding in weight loss for obese people.",
+      "trail": [
+        {
+          "step": "fetch",
+          "ms": 1370,
+          "reason": "html · 200"
+        },
+        {
+          "step": "route",
+          "route": "CLOUD_DECIDE",
+          "reason": "no on-device model in this browser"
+        },
+        {
+          "step": "judge",
+          "inferenceSource": "in_cloud",
+          "verdict": "SUPPORTS",
+          "quote": "A 2017 review provided evidence that the Mediterranean diet lowers the risk of heart disease and early death; it may also help with weight loss in obese people.",
+          "reason": "The source explicitly confirms that a 2017 review provided evidence for lowering the risk of early death and aiding in weight loss for obese people.",
+          "ms": 6122,
+          "attempt": 1,
+          "gateHeld": true
+        }
+      ],
+      "source": {
+        "finalUrl": "https://en.wikipedia.org/wiki/Mediterranean_diet",
+        "sha256": "8d38b2a556233572c42d47d29321c804bfaa8e8741cea5b9b9609296accb8e51",
+        "fetchedAt": "2026-11-22T12:14:39.952Z",
+        "kind": "html",
+        "bytes": 588070,
+        "status": 200
+      },
+      "cloudCalls": 1
+    },
+    {
+      "id": "s8-8",
+      "s": 8,
+      "n": 1,
+      "url": "https://en.wikipedia.org/wiki/Mediterranean_diet",
+      "sentence": "In recognition of its rich cultural values and traditions, UNESCO designated the Mediterranean diet as an Intangible Cultural Heritage of Humanity in 2010.",
+      "state": "SUPPORTS",
+      "route": {
+        "to": "CLOUD_DECIDE",
+        "reason": "no on-device model in this browser"
+      },
+      "planned": {
+        "to": "DEVICE_TRIAGE",
+        "deviceMode": "PREFER_ON_DEVICE",
+        "reason": "readable page — checked on this laptop first"
+      },
+      "sources": [
+        "in_cloud"
+      ],
+      "quote": "Mediterranean cuisine and its associated traditions and practices were recognized as an Intangible Cultural Heritage of Humanity by UNESCO in 2010 under the name \"Mediterranean Diet\".",
+      "reason": "The source explicitly states that UNESCO recognized the Mediterranean diet as an Intangible Cultural Heritage of Humanity in 2010.",
+      "trail": [
+        {
+          "step": "fetch",
+          "ms": 1370,
+          "reason": "html · 200"
+        },
+        {
+          "step": "route",
+          "route": "CLOUD_DECIDE",
+          "reason": "no on-device model in this browser"
+        },
+        {
+          "step": "judge",
+          "inferenceSource": "in_cloud",
+          "verdict": "SUPPORTS",
+          "quote": "Mediterranean cuisine and its associated traditions and practices were recognized as an Intangible Cultural Heritage of Humanity by UNESCO in 2010 under the name \"Mediterranean Diet\".",
+          "reason": "The source explicitly states that UNESCO recognized the Mediterranean diet as an Intangible Cultural Heritage of Humanity in 2010.",
+          "ms": 2373,
+          "attempt": 1,
+          "gateHeld": true
+        }
+      ],
+      "source": {
+        "finalUrl": "https://en.wikipedia.org/wiki/Mediterranean_diet",
+        "sha256": "8d38b2a556233572c42d47d29321c804bfaa8e8741cea5b9b9609296accb8e51",
+        "fetchedAt": "2026-11-22T12:14:39.952Z",
+        "kind": "html",
+        "bytes": 588070,
+        "status": 200
+      },
+      "cloudCalls": 1
+    },
+    {
+      "id": "s9-9",
+      "s": 9,
+      "n": 1,
+      "url": "https://en.wikipedia.org/wiki/Mediterranean_diet",
+      "sentence": "Today, the World Health Organization and the 2015–2020 Dietary Guidelines for Americans recognize it as one of the healthiest dietary patterns available.",
+      "state": "PARTIAL",
+      "route": {
+        "to": "CLOUD_DECIDE",
+        "reason": "no on-device model in this browser"
+      },
+      "planned": {
+        "to": "DEVICE_TRIAGE",
+        "deviceMode": "PREFER_ON_DEVICE",
+        "reason": "readable page — checked on this laptop first"
+      },
+      "sources": [
+        "in_cloud"
+      ],
+      "quote": "The Mediterranean diet is one of three healthy diets recommended in the 2015-2020 Dietary Guidelines for Americans, along with the DASH diet and vegetarian diet. It is also recognized by the World Health Organization as a healthy eating pattern.",
+      "reason": "The source mentions it is recommended by the Dietary Guidelines and recognized by the WHO, but does not state it is 'one of the healthiest dietary patterns available'.",
+      "trail": [
+        {
+          "step": "fetch",
+          "ms": 1370,
+          "reason": "html · 200"
+        },
+        {
+          "step": "route",
+          "route": "CLOUD_DECIDE",
+          "reason": "no on-device model in this browser"
+        },
+        {
+          "step": "judge",
+          "inferenceSource": "in_cloud",
+          "verdict": "PARTIAL",
+          "quote": "The Mediterranean diet is one of three healthy diets recommended in the 2015-2020 Dietary Guidelines for Americans, along with the DASH diet and vegetarian diet. It is also recognized by the World Health Organization as a healthy eating pattern.",
+          "reason": "The source mentions it is recommended by the Dietary Guidelines and recognized by the WHO, but does not state it is 'one of the healthiest dietary patterns available'.",
+          "ms": 2001,
+          "attempt": 1,
+          "gateHeld": true
+        }
+      ],
+      "source": {
+        "finalUrl": "https://en.wikipedia.org/wiki/Mediterranean_diet",
+        "sha256": "8d38b2a556233572c42d47d29321c804bfaa8e8741cea5b9b9609296accb8e51",
+        "fetchedAt": "2026-11-22T12:14:39.952Z",
+        "kind": "html",
+        "bytes": 588070,
+        "status": 200
+      },
+      "cloudCalls": 1
+    }
+  ]
+}
