@@ -1,0 +1,162 @@
+[
+  {
+    "id": "n01",
+    "claim": "Honey bees make up only a small share of the roughly 20,000 known bee species.",
+    "url": "https://en.wikipedia.org/wiki/Honey_bee",
+    "label": "SUPPORTS",
+    "prov": "faithful",
+    "src": "f1"
+  },
+  {
+    "id": "n02",
+    "claim": "The oldest Apis fossils, about 34 million years old, were found in North America.",
+    "url": "https://en.wikipedia.org/wiki/Honey_bee",
+    "label": "NOT_SUPPORTED",
+    "prov": "contradicted",
+    "src": "f1"
+  },
+  {
+    "id": "n03",
+    "claim": "Only one fossil honey bee species is known from the New World, Apis nearctica, found in Nevada by an amateur collector.",
+    "url": "https://en.wikipedia.org/wiki/Honey_bee",
+    "label": "PARTIAL",
+    "prov": "appended-clause",
+    "src": "f1"
+  },
+  {
+    "id": "n04",
+    "claim": "The Great Barrier Reef became a World Heritage Site in 1981.",
+    "url": "https://en.wikipedia.org/wiki/Great_Barrier_Reef",
+    "label": "SUPPORTS",
+    "prov": "faithful",
+    "src": "f2"
+  },
+  {
+    "id": "n05",
+    "claim": "CNN named the Great Barrier Reef one of the Seven Natural Wonders of the World in 2007.",
+    "url": "https://en.wikipedia.org/wiki/Great_Barrier_Reef",
+    "label": "NOT_SUPPORTED",
+    "prov": "contradicted",
+    "src": "f2"
+  },
+  {
+    "id": "n06",
+    "claim": "Tourism on the Great Barrier Reef generates over AUD$3 billion a year, making it Australia's biggest tourist attraction by revenue.",
+    "url": "https://en.wikipedia.org/wiki/Great_Barrier_Reef",
+    "label": "PARTIAL",
+    "prov": "appended-clause",
+    "src": "f2"
+  },
+  {
+    "id": "n07",
+    "claim": "Adults and children from the age of 1 need 10 micrograms of vitamin D a day.",
+    "url": "https://www.nhs.uk/conditions/vitamins-and-minerals/vitamin-d/",
+    "label": "SUPPORTS",
+    "prov": "faithful",
+    "src": "f3"
+  },
+  {
+    "id": "n08",
+    "claim": "The NHS says adults can safely take up to 200 micrograms of vitamin D a day.",
+    "url": "https://www.nhs.uk/conditions/vitamins-and-minerals/vitamin-d/",
+    "label": "NOT_SUPPORTED",
+    "prov": "contradicted",
+    "src": "f3"
+  },
+  {
+    "id": "n09",
+    "claim": "One microgram of vitamin D equals 40 IU, and supplements are best taken with a meal.",
+    "url": "https://www.nhs.uk/conditions/vitamins-and-minerals/vitamin-d/",
+    "label": "PARTIAL",
+    "prov": "appended-clause",
+    "src": "f3"
+  },
+  {
+    "id": "n10",
+    "claim": "A 2020 joint survey by Nepal and China put Everest's height at 8,848.86 metres.",
+    "url": "https://en.wikipedia.org/wiki/Mount_Everest",
+    "label": "SUPPORTS",
+    "prov": "faithful",
+    "src": "f4"
+  },
+  {
+    "id": "n11",
+    "claim": "More than 200 bodies remain on Everest, and recovering a single body can cost over $70,000.",
+    "url": "https://en.wikipedia.org/wiki/Mount_Everest",
+    "label": "PARTIAL",
+    "prov": "appended-clause",
+    "src": "f4"
+  },
+  {
+    "id": "n12",
+    "claim": "George Mallory and Andrew Irvine reached the summit on 8 June 1924 and died on the way down.",
+    "url": "https://en.wikipedia.org/wiki/Mount_Everest",
+    "label": "NOT_SUPPORTED",
+    "prov": "contradicted",
+    "src": "f4"
+  },
+  {
+    "id": "n13",
+    "claim": "Everest climbers usually start their ascent from base camps above 5,000 metres.",
+    "url": "https://en.wikipedia.org/wiki/Mount_Everest",
+    "label": "SUPPORTS",
+    "prov": "faithful",
+    "src": "f4"
+  },
+  {
+    "id": "n14",
+    "claim": "The Webb telescope launched on 25 December 2021 on an Ariane 5 rocket from French Guiana.",
+    "url": "https://en.wikipedia.org/wiki/James_Webb_Space_Telescope",
+    "label": "SUPPORTS",
+    "prov": "faithful",
+    "src": "f5"
+  },
+  {
+    "id": "n15",
+    "claim": "Because Webb's mirror is 2.7 times larger than Hubble's, its images are about 2.7 times sharper.",
+    "url": "https://en.wikipedia.org/wiki/James_Webb_Space_Telescope",
+    "label": "NOT_SUPPORTED",
+    "prov": "contradicted",
+    "src": "f5"
+  },
+  {
+    "id": "n16",
+    "claim": "Webb reached its orbit near the Sun-Earth L2 point, about 1.5 million kilometres from Earth, after a 30-day journey.",
+    "url": "https://en.wikipedia.org/wiki/James_Webb_Space_Telescope",
+    "label": "PARTIAL",
+    "prov": "appended-clause",
+    "src": "f5"
+  },
+  {
+    "id": "n17",
+    "claim": "Brazil was the leading coffee grower in 2023, producing 31% of the world's total.",
+    "url": "https://en.wikipedia.org/wiki/Coffee",
+    "label": "SUPPORTS",
+    "prov": "faithful",
+    "src": "f7"
+  },
+  {
+    "id": "n18",
+    "claim": "Coffee is grown in more than 70 countries, mostly on smallholder farms.",
+    "url": "https://en.wikipedia.org/wiki/Coffee",
+    "label": "PARTIAL",
+    "prov": "appended-clause",
+    "src": "f7"
+  },
+  {
+    "id": "n19",
+    "claim": "The earliest reports of coffee drinking come from Ethiopia in the 9th century.",
+    "url": "https://en.wikipedia.org/wiki/Coffee",
+    "label": "NOT_SUPPORTED",
+    "prov": "mis-cited",
+    "src": "f7"
+  },
+  {
+    "id": "n20",
+    "claim": "The English word coffee arrived in 1582 through the Dutch koffie.",
+    "url": "https://en.wikipedia.org/wiki/Coffee",
+    "label": "SUPPORTS",
+    "prov": "faithful",
+    "src": "f7"
+  }
+]
