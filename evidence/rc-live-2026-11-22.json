@@ -1,0 +1,10 @@
+{
+  "what": "Remote Config takes effect on the deployed page without a redeploy: citation_cloud_cap published 8 -> 10 -> 8 through the Remote Config REST API; each state read by scripts/rc-probe.mjs from a fresh headless Chrome profile against https://footing.edycu.dev (window.__footing.config).",
+  "recordedAt": "2026-11-22T12:30Z",
+  "rows": [
+    { "published": "v2 (8)", "probe": {"source":"remote","applied":[],"judgeModel":"gemini-3.5-flash-lite","cap":8} },
+    { "published": "v3 (citation_cloud_cap=10)", "probe": {"source":"remote","applied":["citation_cloud_cap"],"judgeModel":"gemini-3.5-flash-lite","cap":10} },
+    { "published": "v4 (back to 8, identical to remoteconfig.template.json)", "probe": {"source":"remote","applied":[],"judgeModel":"gemini-3.5-flash-lite","cap":8} }
+  ],
+  "healthAfter": {"ok":true,"sha":"d5eb8a2","rcTemplateVersion":"4","appCheckVerify":true}
+}
