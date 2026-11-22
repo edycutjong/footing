@@ -68,12 +68,12 @@ calls a model API.
 
 | Mode | Used for | Real call |
 |---|---|---|
-| `InferenceMode.PREFER_ON_DEVICE` | Nano binary triage `SUPPORTS \| NOT_SUPPORTED` + quote, with `onDeviceParams.promptOptions.responseConstraint`; the SDK falls back to the cloud model in `inCloudParams` if Nano is unavailable | `src/lib/ai/models.ts:28-33` |
+| `InferenceMode.PREFER_ON_DEVICE` | Nano binary triage `SUPPORTS \| NOT_SUPPORTED` + quote, with `onDeviceParams.promptOptions.responseConstraint`; `inCloudParams` is the safety net if a Nano call falls back at runtime (badged `IN CLOUD`, still escalated, `router.ts:82`); when Nano is missing or downloading the router skips triage and sends the citation straight to the cloud judge (`router.ts:60-61`) | `src/lib/ai/models.ts:28-33` |
 | `InferenceMode.ONLY_ON_DEVICE` | the "On-device only" switch, and the case where this answer's cloud cap is spent | `src/lib/ai/models.ts:29` |
 | `InferenceMode.ONLY_IN_CLOUD` + `responseSchema` | the deciding judge, 3-class `SUPPORTS \| PARTIAL \| NOT_SUPPORTED`; also reads PDFs (PDF input is cloud-only) | `src/lib/ai/models.ts:39-41` |
 | `ONLY_IN_CLOUD` + `tools: [{ urlContext: {} }]` | pages that need JavaScript (URL context is cloud-only) | `src/lib/ai/models.ts:46-51` |
 | `model.generateContent(...)` | the runtime calls: Nano triage (`PREFER_ON_DEVICE` / `ONLY_ON_DEVICE`), cloud judge, PDF judge, URL-context judge | `src/lib/check/browserDeps.ts:82-83`, `:98-101` |
-| `response.inferenceSource` | the badge on every chip; recorded for every call in the run trail | `src/lib/check/browserDeps.ts:62,89`, `src/lib/check/engine.ts:203` |
+| `response.inferenceSource` | the badge on every chip; recorded for every call in the run trail | `src/lib/check/browserDeps.ts:62,89`, `src/lib/check/engine.ts:204` |
 | `initializeAppCheck` + `ReCaptchaEnterpriseProvider` | App Check on, enforced for AI Logic | `src/lib/firebase.ts:39-40` |
 | Remote Config `fetchAndActivate` | model names and the cloud cap, changeable without a deploy | `src/lib/remoteConfig.ts:44` |
 
@@ -83,10 +83,11 @@ The split is about **capability, not policy** (`src/lib/route/router.ts:41`):
 - **Readable HTML and Nano available:** triage on the laptop (`PREFER_ON_DEVICE`).
 - **PDF:** cloud only. PDF input is cloud-only in AI Logic.
 - **Page that needs JavaScript** (fetched text under 400 characters): cloud with the URL context tool. Its verdict is shown as `UNVERIFIED`:
-  there is no fetched text to check the quote against (`src/lib/gate/quote.ts:40`).
+  there is no fetched text to check the quote against (`src/lib/gate/quote.ts:41`).
 - **Nano missing, still downloading, or "Cloud only" chosen:** cloud.
-- **Nano alone settles only one thing:** "no supporting passage found in the 3 it read" (`src/lib/route/router.ts:86-87`). Every Nano `SUPPORTS`
-  that passes the quote gate escalates to the cloud (or, once this answer's cap is spent, waits for a tap to confirm), which decides full vs partial. Nano is never described as deciding "partly supported".
+- **Nano alone settles only one thing:** "no supporting passage found in the 3 it read" (`src/lib/route/router.ts:86-87`). Everything else
+  escalates to the cloud (or, once this answer's cap is spent, waits for a click): every Nano `SUPPORTS` (the cloud decides full vs partial), a
+  `NOT_SUPPORTED` that quotes related text, a quote not in what Nano read, a timeout or an unreadable reply (`router.ts:79-91`). Nano is never described as deciding "partly supported".
 
 App Check: the debug provider is for localhost and the test harness only; its token is passed through the `FIREBASE_APPCHECK_DEBUG_TOKEN` env var and is never written to this repo,
 and the production build ships the reCAPTCHA Enterprise provider.
@@ -109,6 +110,9 @@ Machine for on-device runs: MacBook Pro M1 Max, 32 GB, Chrome 157. Cloud judge: 
 How the work splits between laptop and cloud: on the frozen 30, Nano settled 8 of 30 pairs on device (all 8 labelled partial or not supported) and escalated 22; on the
 fresh 20 it settled 1 and escalated 19 (`evidence/summary.json`). So the measured cloud saving is small: 8 of 30 and 1 of 20 calls, and 1 of 9 on
 the sample answer's recorded Nano run (`evidence/check/nano-hero-if-2026-11-22.json`). Escalation is the design, not a failure: `SUPPORTS` is never final on device.
+An escalated citation pays for both calls, and Nano triage runs one citation at a time, so the hybrid is not faster end to end: on the sample answer
+the recorded Nano run took 40.0 s wall clock (`evidence/check/nano-hero-if-2026-11-22.json`, dev server) and a no-Nano run on the deployed site 21.0 s
+(`evidence/check/live-r05-fresh-hero-2026-11-22.json`). What the laptop buys is that the citations it settles never reach a model server.
 
 Tests: **193 passing** in 12 files (`npm test`), covering the router, quote gate, SSRF guard, App Check verification, parser,
 extractor, tally and the check engine. Line coverage of `src/lib` is 88.5% (`npm run test:coverage`; the Firebase-SDK glue files are excluded

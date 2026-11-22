@@ -32,7 +32,7 @@ export interface JudgeOutcome {
   note?: string;
 }
 
-/** agents.md §4: the cloud Judge's verdict → what is shown. Code-appended notes, never model-written. */
+/** The cloud judge's verdict → what is shown. Code-appended notes, never model-written. */
 export function judgeOutcome(
   j: { verdict: "SUPPORTS" | "PARTIAL" | "NOT_SUPPORTED"; quote: string },
   modelInput: Given,

@@ -6,7 +6,9 @@ Live: https://footing.edycu.dev (no login). Measured results: https://footing.ed
 1. Open https://footing.edycu.dev. The sample answer is pre-filled (if you changed it, open the paste box, press **Fill the sample**, then **Use this answer**).
 2. Press **Check sources**. Each citation becomes a chip. Each chip shows its route badge, `ON DEVICE` or `IN CLOUD`, taken from the response's
    `inferenceSource`. A chip that holds opens an evidence pane with the exact quote the source contains.
-3. The footed total counts what the sources vouch for. Use the force control (Auto, On-device only, Cloud only) to see both routes.
+3. The total reads "k of n": of the n citations a model decided, k are not (fully) said by their source. **Open the first flagged citation** opens
+   the first of those beside the source's own words. No Nano? A recorded Nano run of the sample plays at https://footing.edycu.dev/about#fx-hero.
+   Use the force control (Auto, On-device only, Cloud only) to see both routes.
 
 On a laptop without Gemini Nano every pair runs in the cloud (first 10 per answer automatically, the rest on a click) and a meter reads how many citations a Nano laptop would
 read on-device first. Recorded runs of this flow on the deployed URL are in `evidence/check/` (JSON plus a screenshot per run; `nano-…` files are Nano runs; `fresh-hero`, `live-fresh-hero` and `live-r0N-fresh-hero` are fresh-profile runs without Nano). Example, `evidence/check/nano-hero-if-2026-11-22.json` (the run replayed on `/about`): Nano present, 9 citations, all 9 triaged

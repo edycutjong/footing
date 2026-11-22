@@ -4,12 +4,12 @@
 //   judge  — cloud only (InferenceMode.ONLY_IN_CLOUD), 3-class responseSchema; also reads PDFs (inline) and
 //            JS-only pages (URL context tool). Every result carries response.inferenceSource → the chip badge.
 import { getGenerativeModel, InferenceMode, Schema, type GenerativeModel, type RequestOptions } from "firebase/ai";
-
-/** Cloud request deadline (the SDK default is 180 s); a timed-out call shows NOT CHECKED with a retry tap. */
-export const CLOUD_REQUEST: RequestOptions = { timeout: 60_000 };
 import { firebase } from "../firebase";
 import { triageConstraint } from "./schemas";
 import type { FootingConfig } from "../config";
+
+/** Cloud request deadline (the SDK default is 180 s); a timed-out call shows NOT CHECKED with a retry tap. */
+export const CLOUD_REQUEST: RequestOptions = { timeout: 60_000 };
 
 const TEXT_EN = { expectedInputs: [{ type: "text" as const, languages: ["en"] }], expectedOutputs: [{ type: "text" as const, languages: ["en"] }] };
 

@@ -315,7 +315,7 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
 
   const openRun = open ? byId.get(open) : undefined;
   const checked = runs.filter((r) => !["queued", "fetching", "triage", "escalated", "deciding"].includes(r.state)).length;
-  // After a check, one click to the first citation whose source does not (fully) say the sentence (a2a r05: the "oh" beat was a hunt).
+  // After a check, one click to the first citation whose source does not (fully) say the sentence (otherwise the judge has to hunt for it).
   const firstFlag = runs.find((r) => r.state === "NOT_SUPPORTED" || r.state === "PARTIAL")
     ?? runs.find((r) => r.state === "LIKELY_UNSUPPORTED");
   const style = cfg.deviceNegativeStyle;

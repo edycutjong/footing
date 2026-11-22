@@ -55,9 +55,9 @@ function SetBlock({ name, s }: { name: string; s: SetSummary }) {
           </table>
           {s.cloud.correct / s.cloud.n < 0.8 ? (
             <p>
-              The cloud model is under 80% too, the accuracy bar we set for the on-device kill test. So Footing never shows a verdict without its
-              quote: the quoted words must be found verbatim in the source text the model read, or the citation is marked UNVERIFIED. That proves the
-              words are there, not that the verdict is right.
+              The cloud model is under 80% too, the accuracy bar we set for the on-device kill test. So a SUPPORTS or PARTIAL verdict is shown only
+              with its quote found verbatim in the source text the model read, or the citation is marked UNVERIFIED; a cloud NOT_SUPPORTED may instead
+              report that no passage says it, with nothing to quote. A found quote proves the words are there, not that the verdict is right.
             </p>
           ) : null}
           <p><a href={REPO + s.cloud.file}>raw rows</a> · recorded {s.cloud.recordedAt}</p>

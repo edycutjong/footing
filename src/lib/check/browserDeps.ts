@@ -103,7 +103,7 @@ export function browserDeps(cfg: FootingConfig): Deps {
 }
 
 /** Start the on-device model on the Check click (docs: must follow a user gesture). Not awaited by the check:
- *  while it downloads, PREFER_ON_DEVICE answers come from the cloud and are badged so. */
+ *  while it downloads, the router sends each citation straight to the cloud judge (router.ts, device "downloading"). */
 export function initDevice(cfg: FootingConfig, onProgress: (p: number) => void): Promise<void> {
   return triageModel(cfg, "PREFER_ON_DEVICE").initializeDeviceModel(onProgress);
 }
