@@ -16,6 +16,7 @@
   ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
   ![Firebase AI Logic](https://img.shields.io/badge/Firebase_AI_Logic-hybrid_inference-FFCA28?style=flat)
   [![CI/CD](https://github.com/edycutjong/footing/actions/workflows/ci.yml/badge.svg)](https://github.com/edycutjong/footing/actions/workflows/ci.yml)
+  [![Release](https://img.shields.io/github/v/release/edycutjong/footing?style=flat&color=2B5C9E)](https://github.com/edycutjong/footing/releases)
   ![Tests](https://img.shields.io/badge/tests-191_passing-2F6B45?style=flat)
   [![License](https://img.shields.io/badge/License-Apache_2.0-yellow)](LICENSE)
 
