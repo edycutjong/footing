@@ -2,7 +2,7 @@
 // The check page: answer sheet → Check sources → chips flip per citation (route badge = the response's real
 // inferenceSource) → footed total → evidence pane → Copy answer with flags.
 import { useEffect, useMemo, useRef, useState, useCallback } from "react";
-import { parseAnswer, answerToText, type Parsed } from "@/lib/parse";
+import { parseAnswer, answerToText, MAX_ANSWER_CHARS, type Parsed } from "@/lib/parse";
 import { DEFAULT_CONFIG, type FootingConfig } from "@/lib/config";
 import { tally, copyWithFlags, type ChipState } from "@/lib/tally";
 import type { Device, Force } from "@/lib/route/router";
@@ -152,6 +152,9 @@ function Pane({ r, cfg, onClose, onConfirm }: { r: PairRun; cfg: FootingConfig; 
   );
 }
 
+/** Longest wait for initializeDeviceModel() when the model is already available (no download involved). */
+const INIT_DEADLINE_MS = 20_000;
+
 export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStats }) {
   const [text, setText] = useState(() => answerToText(hero.answer, hero.sources));
   const [mine, setMine] = useState(false);
@@ -205,26 +208,42 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
     };
   });
 
+  // Only the current check may paint: an older check (or a confirm tap on it) finishing after the answer changed or a
+  // new check started is ignored, so its rows can never land on a different sentence (a2a r03).
   const update = useCallback((_r: PairRun, all: PairRun[]) => {
+    if (!check.current || all !== check.current.runs) return;
     setRuns(all.map((x) => ({ ...x, trail: [...x.trail], sources: [...x.sources] })));
-    setCloudUsed(check.current?.cloudUsed ?? 0);
+    setCloudUsed(check.current.cloudUsed);
   }, []);
 
   async function runCheck() {
     setRunning(true); setDone(false); setOpen(null); setBanner(null);
+    check.current = null;
+    try {
+      await runCheckInner();
+    } catch (e) {
+      setBanner(`The check stopped: ${String((e as Error).message ?? e).slice(0, 160)}. Reload to try again.`);
+    } finally {
+      setRunning(false); // always released, even if an import, App Check or the engine throws
+    }
+  }
+
+  async function runCheckInner() {
     const [{ appCheckStatus }, { browserDeps, initDevice }] = await Promise.all([import("@/lib/firebase"), import("@/lib/check/browserDeps")]);
     const ac = await appCheckStatus();
     const live = (await rcLoad.current) ?? DEFAULT_CONFIG;
     if (!ac.ok) {
       setBanner("This browser could not be verified (App Check). Reload, or open /eval for the measured results.");
-      setRunning(false);
       return;
     }
     let dev: Device = device === "checking" || device === "slow" ? "unavailable" : device;
     if (dev !== "unavailable" && force !== "cloud") {
       const init = initDevice(live, (p) => { setProgress(p); if (p < 1) setDevice("downloading"); });
       if (dev === "available") {
-        try { await init; } catch { dev = "unavailable"; }
+        // Bounded: a stuck initialisation sends this check to the cloud instead of hanging the button (a2a r03).
+        let timer: ReturnType<typeof setTimeout> | undefined;
+        const deadline = new Promise<never>((_, rej) => { timer = setTimeout(() => rej(new Error("init timeout")), INIT_DEADLINE_MS); });
+        try { await Promise.race([init, deadline]); } catch { dev = "unavailable"; } finally { clearTimeout(timer); }
       } else {
         setDevice("downloading");
         init.then(() => setDevice("available")).catch(() => setDevice("unavailable"));
@@ -234,16 +253,19 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
     check.current = c;
     setRuns(c.runs.map((x) => ({ ...x })));
     await c.run();
+    if (check.current !== c) return;
     setRuns(c.runs.map((x) => ({ ...x })));
     setCloudUsed(c.cloudUsed);
-    setRunning(false); setDone(true);
+    setDone(true);
   }
 
   async function confirm(id: string) {
-    if (!check.current) return;
-    await check.current.confirm(id);
-    setRuns(check.current.runs.map((x) => ({ ...x })));
-    setCloudUsed(check.current.cloudUsed);
+    const c = check.current; // the check this tap belongs to, captured across the await
+    if (!c) return;
+    await c.confirm(id);
+    if (check.current !== c) return;
+    setRuns(c.runs.map((x) => ({ ...x })));
+    setCloudUsed(c.cloudUsed);
   }
   async function confirmAll() {
     const ids = runs.filter((r) => r.state === "LIKELY_UNSUPPORTED").map((r) => r.pair.id);
@@ -307,12 +329,12 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
           {showPaste && (
             <div className="paste">
               <label htmlFor="paste" className="data">Paste an AI answer with Markdown links, [n] references + a source list, or bare URLs</label>
-              <textarea id="paste" value={draft} onChange={(e) => setDraft(e.target.value)} placeholder={"The Moon takes 27.3 days to orbit Earth [1].\n\nSources:\n[1] https://en.wikipedia.org/wiki/Moon"} />
+              <textarea id="paste" maxLength={MAX_ANSWER_CHARS} value={draft} onChange={(e) => setDraft(e.target.value)} placeholder={"The Moon takes 27.3 days to orbit Earth [1].\n\nSources:\n[1] https://en.wikipedia.org/wiki/Moon"} />
               <div style={{ display: "flex", gap: 10, alignItems: "center", marginTop: 6 }}>
                 <span className="data">{draftCount} citation{draftCount === 1 ? "" : "s"} found</span>
-                <button className="ghost" disabled={!draftCount || running} onClick={() => { setText(draft); setMine(true); setRuns([]); setDone(false); setShowPaste(false); }}>Use this answer</button>
+                <button className="ghost" disabled={!draftCount || running} onClick={() => { check.current = null; setText(draft); setMine(true); setRuns([]); setDone(false); setShowPaste(false); }}>Use this answer</button>
                 <button className="ghost" onClick={() => setDraft(answerToText(hero.answer, hero.sources))}>Fill the sample</button>
-                {mine && <button className="ghost" onClick={() => { setText(answerToText(hero.answer, hero.sources)); setMine(false); setRuns([]); setDone(false); }}>Back to the sample answer</button>}
+                {mine && <button className="ghost" onClick={() => { check.current = null; setText(answerToText(hero.answer, hero.sources)); setMine(false); setRuns([]); setDone(false); }}>Back to the sample answer</button>}
               </div>
             </div>
           )}

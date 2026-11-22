@@ -19,7 +19,10 @@ function errorKind(msg: string): string {
 
 function race<T>(p: Promise<T>, ms: number): Promise<T> {
   // AbortSignal is ignored on device (P1a spike), so the timeout is a race.
-  return Promise.race([p, new Promise<T>((_, rej) => setTimeout(() => rej(Object.assign(new Error(`timeout ${ms} ms`), { timeout: true })), ms))]);
+  // It stops the WAIT, not the work: the SDK call may still finish later, and its result is then ignored.
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const deadline = new Promise<T>((_, rej) => { timer = setTimeout(() => rej(Object.assign(new Error(`timeout ${ms} ms`), { timeout: true })), ms); });
+  return Promise.race([p, deadline]).finally(() => clearTimeout(timer));
 }
 
 export async function appCheckToken(): Promise<string> {
@@ -71,8 +74,8 @@ export function browserDeps(cfg: FootingConfig): Deps {
     getSource: fetchSourceDoc,
     async triage(sentence, passages, mode, src) {
       const t0 = now();
-      const model = triageModel(cfg, mode);
       try {
+        const model = triageModel(cfg, mode);
         const res = await race(
           src.kind === "pdf"
             // On-device only + PDF: pass the PDF so the SDK's own refusal is what the user sees.

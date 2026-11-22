@@ -3,7 +3,10 @@
 //            with a cloud fallback the SDK manages (inCloudParams); ONLY_ON_DEVICE when forced or the cloud cap is spent.
 //   judge  — cloud only (InferenceMode.ONLY_IN_CLOUD), 3-class responseSchema; also reads PDFs (inline) and
 //            JS-only pages (URL context tool). Every result carries response.inferenceSource → the chip badge.
-import { getGenerativeModel, InferenceMode, Schema, type GenerativeModel } from "firebase/ai";
+import { getGenerativeModel, InferenceMode, Schema, type GenerativeModel, type RequestOptions } from "firebase/ai";
+
+/** Cloud request deadline (the SDK default is 180 s); a timed-out call shows NOT CHECKED with a retry tap. */
+export const CLOUD_REQUEST: RequestOptions = { timeout: 60_000 };
 import { firebase } from "../firebase";
 import { triageConstraint } from "./schemas";
 import type { FootingConfig } from "../config";
@@ -29,14 +32,14 @@ export function triageModel(cfg: FootingConfig, mode: "PREFER_ON_DEVICE" | "ONLY
       model: cfg.triageCloudModel,
       generationConfig: { responseMimeType: "application/json", responseSchema: TRIAGE_SCHEMA_CLOUD, temperature: 0 },
     },
-  });
+  }, CLOUD_REQUEST);
 }
 
 export function judgeModel(cfg: FootingConfig): GenerativeModel {
   return getGenerativeModel(firebase().ai, {
     mode: InferenceMode.ONLY_IN_CLOUD,
     inCloudParams: { model: cfg.judgeModel, generationConfig: { responseMimeType: "application/json", responseSchema: VERDICT3_SCHEMA, temperature: 0 } },
-  });
+  }, CLOUD_REQUEST);
 }
 
 export function judgeUrlModel(cfg: FootingConfig): GenerativeModel {
@@ -47,5 +50,5 @@ export function judgeUrlModel(cfg: FootingConfig): GenerativeModel {
       tools: [{ urlContext: {} }],
       generationConfig: { responseMimeType: "application/json", responseSchema: VERDICT3_SCHEMA, temperature: 0 },
     },
-  });
+  }, CLOUD_REQUEST);
 }
