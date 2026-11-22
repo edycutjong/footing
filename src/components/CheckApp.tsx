@@ -268,7 +268,7 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
         // Bounded: a stuck initialisation sends this check to the cloud instead of hanging the button (a2a r03).
         let timer: ReturnType<typeof setTimeout> | undefined;
         const deadline = new Promise<never>((_, rej) => { timer = setTimeout(() => rej(new Error("init timeout")), INIT_DEADLINE_MS); });
-        try { await Promise.race([init, deadline]); } catch { dev = "unavailable"; gaveUp = true; } finally { clearTimeout(timer); }
+        try { await Promise.race([init, deadline]); } catch { dev = "unavailable"; gaveUp = true; setDevice("unavailable"); } finally { clearTimeout(timer); }
         init.catch(() => undefined); // a rejection landing after the deadline is expected, not unhandled (a2a r04)
       } else {
         setDevice("downloading");

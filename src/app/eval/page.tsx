@@ -42,7 +42,7 @@ function SetBlock({ name, s }: { name: string; s: SetSummary }) {
             <p className="data">
               Quote check used for these rows: {s.cloud.quoteGateRule}
               {s.cloud.quoteInOnePassage !== undefined && <> · re-checked with the app&apos;s stricter gate, inside a single retrieved passage: at least {s.cloud.quoteInOnePassage} of {s.cloud.n} (the page window those runs also read is not in the committed files, so this is a lower bound)</>}.
-              {s.cloud.wrongWithQuoteHeld !== undefined && <> A found quote proves the words are in the source, not that the verdict is right: {s.cloud.wrongWithQuoteHeld} wrong verdict{s.cloud.wrongWithQuoteHeld === 1 ? "" : "s"} still had a quote that passed this check.</>}
+              {s.cloud.wrongWithQuoteHeld !== undefined && <> A found quote proves the words are in the source, not that the verdict is right: {s.cloud.wrongWithQuoteHeld} wrong verdict{s.cloud.wrongWithQuoteHeld === 1 ? "" : "s"} still had a quote that passed the recorded check (rule above).</>}
             </p>
           )}
           <table style={{ borderCollapse: "collapse" }}>

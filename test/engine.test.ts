@@ -36,6 +36,26 @@ describe("Check engine", () => {
     expect(runs[0].sources).toEqual(["in_cloud"]);
   });
 
+  it("QA P1d: a malformed cloud reply (e.g. quote missing) retries once, then NOT CHECKED with a retry tap — never a verdict", async () => {
+    let n = 0;
+    const d = deps({ judge: async () => { n++; return { error: "judge quote missing or not a string", errorKind: "malformed", inferenceSource: "in_cloud", ms: 1 }; } });
+    const { runs } = await new Check(answer(1).pairs, d, { cfg, force: "cloud", device: "unavailable" }).run();
+    expect(n).toBe(2);
+    expect(runs[0]).toMatchObject({ state: "NOT_CHECKED", reason: "cloud answer unreadable", note: "retry", cloudCalls: 2 });
+    expect(runs[0].quote).toBeUndefined();
+  });
+
+  it("QA P1d: malformed then valid → the valid reply is gated and shown", async () => {
+    let n = 0;
+    const d = deps({ judge: async () => (++n === 1
+      ? { error: "judge quote missing or not a string", errorKind: "malformed", ms: 1 }
+      : { verdict: "SUPPORTS", quote: "Olive oil is the main source of fat in the diet.", reason: "stated", inferenceSource: "in_cloud", ms: 1 }) });
+    const { runs } = await new Check(answer(1).pairs, d, { cfg, force: "cloud", device: "unavailable" }).run();
+    expect(n).toBe(2);
+    expect(runs[0].state).toBe("SUPPORTS");
+    expect(runs[0].trail.filter((t) => t.step === "judge").map((t) => t.attempt)).toEqual([1, 2]);
+  });
+
   it("a2a r03: a PDF whose text could not be extracted is UNVERIFIED with that reason, never SUPPORTS", async () => {
     const d = deps({}, { "https://s0.example/p": { ...pdf("https://s0.example/p"), text: "" } });
     const { runs } = await new Check(answer(1).pairs, d, { cfg, force: "auto", device: "available" }).run();
