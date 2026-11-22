@@ -1,0 +1,9 @@
+
+ RUN  v5.1.1 /Users/edycu/Hackathon/devpost/devpost-firebasehybridaihackathon/footing/build
+
+
+ Test Files  12 passed (12)
+      Tests  193 passed (193)
+   Start at  23:49:34
+   Duration  656ms (import 51%, tests 32%, transform 15%, worker 2%)
+

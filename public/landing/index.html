@@ -449,7 +449,7 @@ footer .data{font:12px var(--font-data)}
     </div>
     <div class="desk on-mat">
 <figure class="fx" id="fx-hero" data-total="39555" data-axis="40000" data-speed="4" data-autoplay>
-<div class="fx-head"><span class="fx-ref">Recorded run · replayed 4× · 9 citations</span><span class="fx-clock">t = <b data-clock>39.6</b> s</span><button class="fx-replay" type="button" aria-label="Replay the recorded run">Replay</button></div>
+<div class="fx-head"><span class="fx-ref">Recorded run · played at 4× speed · 9 citations</span><span class="fx-clock">t = <b data-clock>39.6</b> s</span><button class="fx-replay" type="button" aria-label="Replay the recorded run">Replay</button></div>
 <p class="fx-q">Question asked: <b>What does the research say about intermittent fasting?</b></p>
 <ol class="fx-rows">
 <li class="fx-row" data-st="final" data-ds="1624" data-de="7775" data-ce="15981" data-settle="0" data-final="SUPPORTS"><span class="fx-no">1</span><span class="fx-mark"><sup>[1]</sup><svg class="m m-wait" viewBox="0 0 24 20" aria-hidden="true"><circle cx="12" cy="10" r="4" fill="var(--before)"/></svg><svg class="m m-esc" viewBox="0 0 24 20" aria-hidden="true"><path d="M6 15 L6 5 Q12 4 12 8 Q12 11 6 11" stroke="var(--before)" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><text x="15" y="18" font-size="9" fill="var(--before)" font-family="Courier Prime, monospace">d</text></svg><svg class="m m-final" viewBox="0 0 24 20" aria-hidden="true"><path class="draw" pathLength="1" d="M3 11 L9 17 L21 3" stroke="var(--vouched)" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><sub>c</sub><span class="sr">says it (cloud)</span></span><span class="fx-text" title="Research on therapeutic intermittent fasts for treating obesity dates back to at least 1915, with renewed medical interest occurring in the 1960s after Bloom and his colleagues published an enthusiastic report.">Research on therapeutic intermittent fasts for treating obesity dates back to at least…</span><span class="fx-badges"><span class="badge d">ON DEVICE</span><span class="arrow">→</span><span class="badge c">IN CLOUD</span></span></li>
@@ -478,7 +478,7 @@ footer .data{font:12px var(--font-data)}
   <div class="wrap">
 <div class="rc"><div class="rc-v"><span class="rc-n" data-count="1699">1,699</span><span class="rc-u">ms</span></div><p>median Nano triage per citation in the bench (p95 2,067 ms, 40 calls, M1 Max)</p><code>evidence/bench.json</code></div>
 <div class="rc"><div class="rc-v"><span class="rc-n" data-count="80">80</span><span class="rc-u">/ 80</span></div><p>calls answered where they were routed (40 device, 40 cloud)</p><code>evidence/bench.json</code></div>
-<div class="rc"><div class="rc-v"><span class="rc-n" data-count="191">191</span><span class="rc-u">tests</span></div><p>unit tests passing, plus 12 end-to-end on the live URL</p><code>evidence/ci-local-2026-11-22.txt</code></div>
+<div class="rc"><div class="rc-v"><span class="rc-n" data-count="193">193</span><span class="rc-u">tests</span></div><p>unit tests passing (evidence/vitest-2026-11-22.txt), plus 12 end-to-end on the live URL</p><code>evidence/ci-local-2026-11-22.txt</code></div>
 <div class="rc"><div class="rc-v"><span class="rc-n" data-count="1" data-dec="2">1.00</span><span class="rc-u">Lighthouse</span></div><p>performance and accessibility, live app page (best practices 0.77: the reCAPTCHA cookie)</p><code>evidence/lighthouse-live-2026-11-22.json</code></div>
   </div>
 </section>
@@ -597,7 +597,7 @@ footer .data{font:12px var(--font-data)}
 <p class="sub2">labelled and hashed before any model run (commit 13d2240)</p>
 <div class="lrow"><span class="k">Nano yes/no triage, on device</span><span class="v">13/20<small>65%</small></span><span class="m">settled 1 alone (1 right), sent 19 to the cloud</span></div>
 <div class="lrow"><span class="k">Cloud judge, three-way (gemini-3.5-flash-lite)</span><span class="v">14/20<small>70%</small></span><span class="m">full, partial or not supported</span></div>
-<div class="lrow"><span class="k">Cloud quotes found word for word in the page</span><span class="v">20/20</span><span class="m">the code quote gate</span></div>
+<div class="lrow"><span class="k">Cloud quotes found word for word in what it read</span><span class="v">20/20</span><span class="m">eval rule (passages joined); inside one passage, as the app checks: at least 18/20</span></div>
 <div class="foot-line"><span>recomputed by npm run eval</span><span>evidence/summary.json</span></div>
 </div>
 <div class="ledger">
@@ -638,7 +638,7 @@ footer .data{font:12px var(--font-data)}
       <details><summary><span class="num">04</span><span>What leaves my laptop?</span><span class="pm" aria-hidden="true">+</span></summary>
         <p>The cited URL goes to this site's fetch proxy, which keeps no copy. A cloud check sends the sentence and its matching passages to the cloud model; a check Nano settles alone sends no text anywhere.</p></details>
       <details><summary><span class="num">05</span><span>What happens when the free cloud tier is busy?</span><span class="pm" aria-hidden="true">+</span></summary>
-        <p>Each answer gets at most 8 cloud calls; the rest wait for a tap. A rate-limit error shows on its citation: wait a minute and tap it again.</p></details>
+        <p>Each answer gets up to 10 citations checked in the cloud automatically; the rest wait for a click. A rate-limited call retries by itself after 15 s, then 30 s; if it still fails, its citation says so: click it again.</p></details>
     </div>
   </div>
 </section>

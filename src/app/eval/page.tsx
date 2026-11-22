@@ -24,8 +24,8 @@ function SetBlock({ name, s }: { name: string; s: SetSummary }) {
             {s.device.confusion.FP} · TN {s.device.confusion.TN} · latency p50 {s.device.latencyMs.p50} ms, p95 {s.device.latencyMs.p95} ms
           </p>
           <p>
-            Settled on the laptop (NOT_SUPPORTED, no quote): {s.device.settledOnDevice} of {s.device.n}; {s.device.settledCorrect} of those were
-            labelled PARTIAL or NOT_SUPPORTED{s.device.settledNegativePrecisionPct !== null && s.device.settledOnDevice >= 4 ? ` (${s.device.settledNegativePrecisionPct}%)` : " (too few to judge)"}. The other{" "}
+            Settled on the laptop (NOT_SUPPORTED, no quote): {s.device.settledOnDevice} of {s.device.n}; of those, {s.device.settledCorrect} labelled
+            PARTIAL or NOT_SUPPORTED{s.device.settledNegativePrecisionPct !== null && s.device.settledOnDevice >= 4 ? ` (${s.device.settledNegativePrecisionPct}%)` : " (too few to judge)"}. The other{" "}
             {s.device.escalated} go to the cloud model.
           </p>
           <p><a href={REPO + s.device.file}>raw rows</a> · <a href={`${REPO}evidence/${name}/LABELS-PROVENANCE.md`}>how the labels were made, and their limits</a> · recorded {s.device.recordedAt}</p>
@@ -55,8 +55,9 @@ function SetBlock({ name, s }: { name: string; s: SetSummary }) {
           </table>
           {s.cloud.correct / s.cloud.n < 0.8 ? (
             <p>
-              That is below the 24-of-30 (80%) bar we set for the on-device test. So Footing is designed never to show a verdict on the model&apos;s word
-              alone: the quoted words must be found verbatim in the source text the model read, or the citation is marked UNVERIFIED.
+              The cloud model is under 80% too, the accuracy bar we set for the on-device kill test. So Footing never shows a verdict without its
+              quote: the quoted words must be found verbatim in the source text the model read, or the citation is marked UNVERIFIED. That proves the
+              words are there, not that the verdict is right.
             </p>
           ) : null}
           <p><a href={REPO + s.cloud.file}>raw rows</a> · recorded {s.cloud.recordedAt}</p>
@@ -73,7 +74,7 @@ export default function EvalPage() {
       <h1>Footing · measured results</h1>
       <p>
         Footing checks whether each link cited in an AI answer says what the sentence claims. These are the raw measurements behind every number
-        we show. On-device runs: {summary.machine}. Generated {summary.generatedAt}.
+        we show. Machine: {summary.machine}. Generated {summary.generatedAt}.
       </p>
       {Object.entries(sets).map(([name, s]) => <SetBlock key={name} name={name} s={s} />)}
       <p><Link href="/">Check an answer</Link></p>

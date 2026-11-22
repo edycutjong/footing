@@ -8,12 +8,12 @@ Live: https://footing.edycu.dev (no login). Measured results: https://footing.ed
    `inferenceSource`. A chip that holds opens an evidence pane with the exact quote the source contains.
 3. The footed total counts what the sources vouch for. Use the force control (Auto, On-device only, Cloud only) to see both routes.
 
-On a laptop without Gemini Nano every pair runs in the cloud (first 8 per answer) and a meter reads how many citations a Nano laptop would
-read on-device first. Recorded runs of this flow on the deployed URL are in `evidence/check/` (JSON plus a screenshot per run; `nano-…` files are Nano runs; `fresh-hero`, `live-fresh-hero` and `live-r0N-fresh-hero` are fresh-profile runs without Nano). Example, `evidence/check/nano-hero-2026-11-22.json`: Nano present, 8 citations decided in the cloud, 2 not checked
-(their sources returned 403), total 10.
+On a laptop without Gemini Nano every pair runs in the cloud (first 10 per answer automatically, the rest on a click) and a meter reads how many citations a Nano laptop would
+read on-device first. Recorded runs of this flow on the deployed URL are in `evidence/check/` (JSON plus a screenshot per run; `nano-…` files are Nano runs; `fresh-hero`, `live-fresh-hero` and `live-r0N-fresh-hero` are fresh-profile runs without Nano). Example, `evidence/check/nano-hero-if-2026-11-22.json` (the run replayed on `/about`): Nano present, 9 citations, all 9 triaged
+`ON DEVICE`; 1 settled on the laptop (no supporting passage, unconfirmed) and 8 escalated `IN CLOUD`: 6 says it, 1 says part, 1 quote not found.
 
 ## 2. Turn Gemini Nano on (desktop Chrome)
-1. `chrome://flags` → enable **Gemma 4 for Built-in AI** and the Prompt API flag, relaunch.
+1. `chrome://flags` → enable `#gemma4-for-built-in-ai` (**Gemma 4 for Built-in AI**) and `#prompt-api`, relaunch.
 2. Keep at least 22 GB free on the profile's disk (the figure in Chrome's built-in AI documentation).
 3. The first on-device call starts a model download (several GB); the page shows progress and checks in the cloud meanwhile.
 
@@ -21,7 +21,7 @@ read on-device first. Recorded runs of this flow on the deployed URL are in `evi
 ```bash
 npm ci
 npm run eval      # recomputes every figure in evidence/summary.json from the committed raw rows; exits 1 on a mismatch
-npm test          # 191 tests
+npm test          # 193 tests
 ```
 Live re-run (real Chrome with Nano plus Firebase AI Logic; needs a Firebase web config in `.env.local`):
 `npm run eval:live -- <set> <triage|judge> <userDataDir> [judgeModel]`, or open `/eval/run` on a local dev server (`npm run dev`; the route is disabled in production).

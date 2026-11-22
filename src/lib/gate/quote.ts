@@ -1,5 +1,6 @@
 // The quote gate: code, not a model, decides whether a quoted span exists in the exact text the model was given.
-// Canonical verdict/evidence contract: a model's verdict is shown only if its quote passes this gate.
+// Canonical verdict/evidence contract: a SUPPORTS or PARTIAL verdict is shown only if its quote passes this gate. One exception:
+// a cloud NOT_SUPPORTED with no quote is shown as the model's report that no passage says it (nothing to verify), never as evidence.
 import { normalize } from "../text";
 import { tokenize } from "../bm25";
 

@@ -345,7 +345,7 @@ body.debug-contrast .slide *{outline:1px dashed rgba(194,65,45,.35)}
   <p class="mat-cap"><b>Recorded run</b> · the sample answer, final state</p>
   <div class="fxw" data-stage>
 <figure class="fx" id="fx-cover" data-total="39555" data-axis="40000" data-speed="4">
-<div class="fx-head"><span class="fx-ref">Recorded run · replayed 4× · 9 citations</span><span class="fx-clock">t = <b data-clock>39.6</b> s</span><button class="fx-replay" type="button" aria-label="Replay the recorded run">Replay</button></div>
+<div class="fx-head"><span class="fx-ref">Recorded run · played at 4× speed · 9 citations</span><span class="fx-clock">t = <b data-clock>39.6</b> s</span><button class="fx-replay" type="button" aria-label="Replay the recorded run">Replay</button></div>
 <p class="fx-q">Question asked: <b>What does the research say about intermittent fasting?</b></p>
 <ol class="fx-rows">
 <li class="fx-row" data-st="final" data-ds="1624" data-de="7775" data-ce="15981" data-settle="0" data-final="SUPPORTS"><span class="fx-no">1</span><span class="fx-mark"><sup>[1]</sup><svg class="m m-wait" viewBox="0 0 24 20" aria-hidden="true"><circle cx="12" cy="10" r="4" fill="var(--before)"/></svg><svg class="m m-esc" viewBox="0 0 24 20" aria-hidden="true"><path d="M6 15 L6 5 Q12 4 12 8 Q12 11 6 11" stroke="var(--before)" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><text x="15" y="18" font-size="9" fill="var(--before)" font-family="Courier Prime, monospace">d</text></svg><svg class="m m-final" viewBox="0 0 24 20" aria-hidden="true"><path class="draw" pathLength="1" d="M3 11 L9 17 L21 3" stroke="var(--vouched)" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><sub>c</sub><span class="sr">says it (cloud)</span></span><span class="fx-text" title="Research on therapeutic intermittent fasts for treating obesity dates back to at least 1915, with renewed medical interest occurring in the 1960s after Bloom and his colleagues published an enthusiastic report.">Research on therapeutic intermittent fasts for treating obesity dates back to at least…</span><span class="fx-badges"><span class="badge d">ON DEVICE</span><span class="arrow">→</span><span class="badge c">IN CLOUD</span></span></li>
@@ -366,7 +366,7 @@ body.debug-contrast .slide *{outline:1px dashed rgba(194,65,45,.35)}
 <div class="fx-total"><div class="line"><span class="big"><span data-k>1</span> of <span data-n>7</span></span><span class="words">checked citations: the source doesn't say it (or says only part)</span><span class="likely">+ <span data-likely>1</span> likely, on device (unconfirmed)</span></div><p class="data"><span data-settled>1</span> settled on this laptop · <span data-cloudn>7</span> decided in the cloud · <span data-unv>1</span> quote not found · <span style="white-space:nowrap">8 cloud calls (cap 8)</span></p><p class="fx-key"><sub>d</sub> device · <sub>c</sub> cloud · the 1 = row 9 (says part) · the likely = row 5 (no passage, on device)</p></div>
 </figure>
   </div>
-  <div class="foot"><span>Footing · <b>v1.0.0</b> · build aa33bc4</span><span>01 / 11</span></div>
+  <div class="foot"><span>Footing · <b>v1.0.0</b> · figures at aa33bc4</span><span>01 / 11</span></div>
   <aside class="speaker-notes">AI answers come with links that look like proof. Footing opens every one and checks the sentence against the page it cites. On the right is a real run on our sample answer: nine citations, each marked in pencil.</aside>
 </section>
 
@@ -383,7 +383,7 @@ body.debug-contrast .slide *{outline:1px dashed rgba(194,65,45,.35)}
 
 <section class="slide" id="s3" aria-label="Slide 3, the problem">
   <p class="lbl">The problem</p>
-  <h2>Nine links. Nine tabs.</h2>
+  <h2>Nine citations, checked by hand.</h2>
   <p class="body">Dewi has an AI answer and an essay due. Checking it means opening every source and hunting for the line.</p>
   <p class="impact">In the sample answer, <b>3 of 9</b> citations did not check out cleanly.</p>
   <div class="tabs" data-stage aria-label="Nine cited pages, none opened">
@@ -438,11 +438,11 @@ body.debug-contrast .slide *{outline:1px dashed rgba(194,65,45,.35)}
   <h2>Why not one model?</h2>
   <div class="why3">
     <div class="w x"><h3>Nano alone</h3><p><b>21/30</b> at full vs partial. Under our 24/30 bar.</p></div>
-    <div class="w x"><h3>Cloud alone</h3><p>Spends quota on every citation, even the clear no's.</p></div>
+    <div class="w x"><h3>Cloud alone</h3><p>All 20 held-out claims go up. With Nano: 19.</p></div>
     <div class="w on"><h3>Both</h3><p>Nano reads every citation locally; the cloud decides every “supports”.</p></div>
   </div>
   <div class="foot"><span>Footing · <b>v1.0.0</b> · kill test 2026-11-21, Chrome 157, M1 Max · evidence/p0c/ · src/lib/route/router.ts</span><span>06 / 11</span></div>
-  <aside class="speaker-notes">We measured before we split. On the frozen thirty claims Nano got 21 right at telling full support from partial, under our bar of 24, so it never makes that call. The cloud alone would spend quota on every citation. So Nano triages everything on the laptop and the cloud makes the final call on anything Nano thinks is supported.</aside>
+  <aside class="speaker-notes">We measured before we split. On the frozen thirty claims Nano got 21 right at telling full support from partial, under our bar of 24, so it never makes that call. The cloud alone would spend quota on every citation. On the 20 held-out claims Nano kept 1 off the cloud, 8 of the frozen 30: a small saving, and we say so. So Nano triages everything on the laptop and the cloud makes the final call on anything Nano thinks is supported.</aside>
 </section>
 
 <section class="slide" id="s6" aria-label="Slide 7, the demo">
@@ -468,7 +468,7 @@ body.debug-contrast .slide *{outline:1px dashed rgba(194,65,45,.35)}
   </div>
   <div class="fxw" data-stage>
 <figure class="fx" id="fx-step" data-total="39555" data-axis="40000" data-speed="4">
-<div class="fx-head"><span class="fx-ref">Recorded run · replayed 4× · 9 citations</span><span class="fx-clock">t = <b data-clock>39.6</b> s</span><button class="fx-replay" type="button" aria-label="Replay the recorded run">Replay</button></div>
+<div class="fx-head"><span class="fx-ref">Recorded run · played at 4× speed · 9 citations</span><span class="fx-clock">t = <b data-clock>39.6</b> s</span><button class="fx-replay" type="button" aria-label="Replay the recorded run">Replay</button></div>
 <p class="fx-q">Question asked: <b>What does the research say about intermittent fasting?</b></p>
 <ol class="fx-rows">
 <li class="fx-row" data-st="final" data-ds="1624" data-de="7775" data-ce="15981" data-settle="0" data-final="SUPPORTS"><span class="fx-no">1</span><span class="fx-mark"><sup>[1]</sup><svg class="m m-wait" viewBox="0 0 24 20" aria-hidden="true"><circle cx="12" cy="10" r="4" fill="var(--before)"/></svg><svg class="m m-esc" viewBox="0 0 24 20" aria-hidden="true"><path d="M6 15 L6 5 Q12 4 12 8 Q12 11 6 11" stroke="var(--before)" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><text x="15" y="18" font-size="9" fill="var(--before)" font-family="Courier Prime, monospace">d</text></svg><svg class="m m-final" viewBox="0 0 24 20" aria-hidden="true"><path class="draw" pathLength="1" d="M3 11 L9 17 L21 3" stroke="var(--vouched)" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><sub>c</sub><span class="sr">says it (cloud)</span></span><span class="fx-text" title="Research on therapeutic intermittent fasts for treating obesity dates back to at least 1915, with renewed medical interest occurring in the 1960s after Bloom and his colleagues published an enthusiastic report.">Research on therapeutic intermittent fasts for treating obesity dates back to at least…</span><span class="fx-badges"><span class="badge d">ON DEVICE</span><span class="arrow">→</span><span class="badge c">IN CLOUD</span></span></li>
@@ -518,7 +518,7 @@ body.debug-contrast .slide *{outline:1px dashed rgba(194,65,45,.35)}
   <p class="lbl">What shipped</p>
   <h2>Shipped, and checkable.</h2>
   <div class="ship">
-    <div><b>191</b><span>unit tests</span><code>npm test</code></div>
+    <div><b>193</b><span>unit tests</span><code>npm test</code></div>
     <div><b>12</b><span>E2E tests, live URL</span><code>Playwright</code></div>
     <div><b>1.00</b><span>Lighthouse performance, accessibility</span></div>
     <div><b>80/80</b><span>calls answered where routed</span></div>

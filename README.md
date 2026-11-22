@@ -16,7 +16,7 @@
   ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
   ![Firebase AI Logic](https://img.shields.io/badge/Firebase_AI_Logic-hybrid_inference-FFCA28?style=flat)
   [![Release](https://img.shields.io/github/v/release/edycutjong/footing?style=flat&color=2B5C9E)](https://github.com/edycutjong/footing/releases)
-  ![Tests](https://img.shields.io/badge/tests-191_passing-2F6B45?style=flat)
+  ![Tests](https://img.shields.io/badge/tests-193_passing-2F6B45?style=flat)
   [![License](https://img.shields.io/badge/License-Apache_2.0-yellow)](LICENSE)
 
 </div>
@@ -42,7 +42,8 @@ opening every tab.
 Footing fetches each cited page, picks the three best-matching passages (BM25), and asks one question per (sentence, passage) pair.
 **Gemini Nano on your laptop triages every citation with a median under 2 seconds on our M1 Max and marks the ones with no supporting passage itself; every citation Nano thinks is supported goes to a cloud model for the final call.** Then plain code
 checks that every quote the model relied on exists, word for word, in the text the model was given. A verdict whose quote is not found is
-shown as `UNVERIFIED`, never as supported.
+shown as `UNVERIFIED`, never as supported. The gate proves the quoted words are in the source; it does not prove the model read them
+correctly (on the fresh 20, 6 wrong cloud verdicts still carried a quote that was found, `/eval`).
 
 ## 🏗️ Architecture & Tech Stack
 
@@ -70,6 +71,7 @@ calls a model API.
 | `InferenceMode.ONLY_ON_DEVICE` | the "On-device only" switch, and the case where this answer's cloud cap is spent | `src/lib/ai/models.ts:29` |
 | `InferenceMode.ONLY_IN_CLOUD` + `responseSchema` | the deciding judge, 3-class `SUPPORTS \| PARTIAL \| NOT_SUPPORTED`; also reads PDFs (PDF input is cloud-only) | `src/lib/ai/models.ts:39-41` |
 | `ONLY_IN_CLOUD` + `tools: [{ urlContext: {} }]` | pages that need JavaScript (URL context is cloud-only) | `src/lib/ai/models.ts:46-51` |
+| `model.generateContent(...)` | the runtime calls: Nano triage (`PREFER_ON_DEVICE` / `ONLY_ON_DEVICE`), cloud judge, PDF judge, URL-context judge | `src/lib/check/browserDeps.ts:82-83`, `:98-101` |
 | `response.inferenceSource` | the badge on every chip; recorded for every call in the run trail | `src/lib/check/browserDeps.ts:62,89`, `src/lib/check/engine.ts:203` |
 | `initializeAppCheck` + `ReCaptchaEnterpriseProvider` | App Check on, enforced for AI Logic | `src/lib/firebase.ts:39-40` |
 | Remote Config `fetchAndActivate` | model names and the cloud cap, changeable without a deploy | `src/lib/remoteConfig.ts:44` |
@@ -79,9 +81,10 @@ The split is about **capability, not policy** (`src/lib/route/router.ts:41`):
 
 - **Readable HTML and Nano available:** triage on the laptop (`PREFER_ON_DEVICE`).
 - **PDF:** cloud only. PDF input is cloud-only in AI Logic.
-- **Page that needs JavaScript** (fetched text under 400 characters): cloud with the URL context tool.
+- **Page that needs JavaScript** (fetched text under 400 characters): cloud with the URL context tool. Its verdict is shown as `UNVERIFIED`:
+  there is no fetched text to check the quote against (`src/lib/gate/quote.ts:40`).
 - **Nano missing, still downloading, or "Cloud only" chosen:** cloud.
-- **Nano alone settles only one thing:** "no supporting passage found in the 3 it read" (`src/lib/route/router.ts:69`). Every Nano `SUPPORTS`
+- **Nano alone settles only one thing:** "no supporting passage found in the 3 it read" (`src/lib/route/router.ts:86-87`). Every Nano `SUPPORTS`
   that passes the quote gate escalates to the cloud (or, once this answer's cap is spent, waits for a tap to confirm), which decides full vs partial. Nano is never described as deciding "partly supported".
 
 App Check: the debug provider is for localhost and the test harness only; its token is passed through the `FIREBASE_APPCHECK_DEBUG_TOKEN` env var and is never written to this repo,
@@ -102,10 +105,11 @@ Machine for on-device runs: MacBook Pro M1 Max, 32 GB, Chrome 157. Cloud judge: 
 | **Fresh 20, held-out** (labelled and committed before any run, `13d2240`) | **13/20 = 65%**; latency p50 1729 ms, p95 2335 ms | **14/20 = 70%**; latency p50 2284 ms, p95 6924 ms |
 | Frozen 30 (**not** held-out: an earlier prompt was scored on it) | 24/30 = 80% (binary cut); p50 1838 ms, p95 3099 ms | 23/30 = 76.7% |
 
-How the work splits between laptop and cloud: on the frozen 30, Nano settled 8 of 30 pairs on device (all 8 correct) and escalated 22; on the
-fresh 20 it settled 1 and escalated 19 (`evidence/summary.json`). Escalation is the design, not a failure: `SUPPORTS` is never final on device.
+How the work splits between laptop and cloud: on the frozen 30, Nano settled 8 of 30 pairs on device (all 8 labelled partial or not supported) and escalated 22; on the
+fresh 20 it settled 1 and escalated 19 (`evidence/summary.json`). So the measured cloud saving is small: 8 of 30 and 1 of 20 calls, and 1 of 9 on
+the sample answer's recorded Nano run (`evidence/check/nano-hero-if-2026-11-22.json`). Escalation is the design, not a failure: `SUPPORTS` is never final on device.
 
-Tests: **191 passing** in 12 files (`npm test`), covering the router, quote gate, SSRF guard, App Check verification, parser,
+Tests: **193 passing** in 12 files (`npm test`), covering the router, quote gate, SSRF guard, App Check verification, parser,
 extractor, tally and the check engine. Line coverage of `src/lib` is 88.5% (`npm run test:coverage`; the Firebase-SDK glue files are excluded
 and covered by the E2E run instead, see `vitest.config.ts`).
 
@@ -136,10 +140,12 @@ Nano-enabled profile and asserts the `ON DEVICE` route really ran (`evidence/che
 
 ## 🔓 No Nano? Still works
 
-A judge on a laptop without Gemini Nano loses nothing: every pair is checked in the cloud and badged `IN CLOUD`, and a meter reads how many
-citations the same router rule would have read on-device first on a Nano laptop. A **force path** control (Auto, On-device only, Cloud only) shows both routes.
+A judge on a laptop without Gemini Nano still gets every check: each pair is checked in the cloud (up to 10 per answer automatically, the rest
+on a click) and badged `IN CLOUD`, and a meter reads how many citations the same router rule would have read on-device first on a Nano laptop.
+What that judge cannot see live is Nano itself; a recorded Nano run of the sample answer plays at [/about](https://footing.edycu.dev/about). A **force path** control (Auto, On-device only, Cloud only) shows both routes.
 
-To turn Nano on in desktop Chrome: open `chrome://flags`, enable **Gemma 4 for Built-in AI** (the flag the hackathon FAQ names) and the Prompt API flag, relaunch, and make sure
+To turn Nano on in desktop Chrome: enable `chrome://flags/#gemma4-for-built-in-ai` (**Gemma 4 for Built-in AI**, the flag the hackathon FAQ names) and
+`chrome://flags/#prompt-api`, relaunch, and make sure
 the profile's disk has at least 22 GB free (the figure in Chrome's built-in AI documentation). The first on-device call starts a model download,
 and the page shows its progress.
 
@@ -152,7 +158,7 @@ Node 22 (what we developed on), a Firebase web app with AI Logic enabled and an 
 ```bash
 npm ci
 npm run dev        # http://localhost:3101
-npm test           # 191 tests
+npm test           # 193 tests
 npm run ci         # audit + lint + typecheck + tests with coverage
 npm run e2e        # Playwright against https://footing.edycu.dev (BASE_URL=http://localhost:3101 npm run e2e for local)
 npm run bench      # per-claim p50/p95 on device and in the cloud (needs a Nano profile, see DEMO.md)
@@ -173,7 +179,8 @@ scripts/           npm run eval and the live harnesses
 
 ## 🧱 Pre-existing work and what is new
 
-Everything in this repository was written during the submission window; its history starts on 2026-11-22. Third-party libraries: `firebase`, `next`,
+Everything in this repository was written during the submission window; its history starts on 2026-11-22. The kill test and the frozen-30 labels (2026-11-21, also inside the window) were made in
+a scratch harness before the repo existed; their outputs are committed under `evidence/p0c/` and `evidence/eval-30/`. Third-party libraries: `firebase`, `next`,
 `react`, `@mozilla/readability`, `linkedom`, `jose`, `ipaddr.js`, `unpdf` (see `package.json`). No code, HTML or assets copied from other entries.
 
 ## 📽️ Demo Materials

@@ -1,4 +1,5 @@
-// Output contracts for both models, plus strict parsers (anything off-schema is an error, never a guess).
+// Output contracts for both models, plus parsers: an unknown verdict or a missing/non-string quote is an error, never a guess
+// (an absent reason becomes "", since the reason is display text only).
 
 export const TRIAGE_VERDICTS = ["SUPPORTS", "NOT_SUPPORTED"] as const;
 export const JUDGE_VERDICTS = ["SUPPORTS", "PARTIAL", "NOT_SUPPORTED"] as const;
