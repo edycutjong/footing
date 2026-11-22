@@ -546,14 +546,14 @@ body.debug-contrast .slide *{outline:1px dashed rgba(194,65,45,.35)}
 
 </div>
 </main>
-<div class="hud" aria-label="Deck controls">
+<nav class="hud" aria-label="Deck controls">
   <button type="button" data-act="prev" aria-label="Previous slide">←</button>
   <span class="count" aria-live="polite"><span id="cur">01</span> / 11</span>
   <button type="button" data-act="next" aria-label="Next slide">→</button>
   <button type="button" data-act="overview" aria-label="overview of all slides (Esc)">overview</button>
   <button type="button" data-act="presenter" aria-label="notes for the presenter (P)">notes</button>
-</div>
-<div class="notes-panel" id="notes" aria-live="polite"></div>
+</nav>
+<aside class="notes-panel" id="notes" aria-label="Presenter notes" aria-live="polite"></aside>
 <script>
 /* Footing exhibit: replays ONE recorded run from its own step times. The markup is the settled final state
    (no-JS, print, reduced motion and screenshots all see it); this script only rewinds and plays it. */
