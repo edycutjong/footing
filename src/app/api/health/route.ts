@@ -1,13 +1,12 @@
 // Health: build sha, published Remote Config template version, whether App Check verification can run, render time. No secrets.
-import { NextResponse } from "next/server";
-
-export const dynamic = "force-dynamic";
+import { NextResponse, connection } from "next/server";
 
 async function withTimeout<T>(p: Promise<T>, ms: number): Promise<T> {
   return Promise.race([p, new Promise<T>((_, rej) => setTimeout(() => rej(new Error("timeout")), ms))]);
 }
 
 export async function GET() {
+  await connection(); // dynamic: never prerendered at build time
   const project = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
   const appId = process.env.NEXT_PUBLIC_FIREBASE_APP_ID;
   const key = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
