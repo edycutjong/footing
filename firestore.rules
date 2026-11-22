@@ -1,19 +1,9 @@
 rules_version = '2';
-// Public result cache: anyone may read; only signed-in (anonymous) App-Check-passing clients may create
-// a well-formed record; nothing is ever updated or deleted. Everything else is closed.
+// Footing keeps no server-side data: the shared result cache (spec cut #1) was not built, because a cache hit would
+// skip the on-device → cloud path the app exists to show, and a public write surface invites poisoned verdicts.
+// Everything is closed.
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /checks/{id} {
-      allow read: if true;
-      allow create: if request.auth != null
-        && request.resource.data.keys().hasOnly(['finalUrl', 'sentence', 'verdict', 'quote', 'reason', 'trail',
-             'contentSha256', 'judgeModel', 'appVersion', 'createdAt'])
-        && request.resource.data.verdict in ['SUPPORTS', 'PARTIAL', 'NOT_SUPPORTED', 'UNVERIFIED']
-        && request.resource.data.quote is string && request.resource.data.quote.size() <= 300
-        && request.resource.data.sentence is string && request.resource.data.sentence.size() <= 2000
-        && request.resource.data.finalUrl is string && request.resource.data.finalUrl.size() <= 2048;
-      allow update, delete: if false;
-    }
     match /{document=**} {
       allow read, write: if false;
     }

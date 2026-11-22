@@ -3,7 +3,7 @@
 // inferenceSource) → footed total → evidence pane → Copy answer with flags.
 import { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import { parseAnswer, answerToText, type Parsed } from "@/lib/parse";
-import { DEFAULT_CONFIG } from "@/lib/config";
+import { DEFAULT_CONFIG, type FootingConfig } from "@/lib/config";
 import { tally, copyWithFlags, type ChipState } from "@/lib/tally";
 import type { Device, Force } from "@/lib/route/router";
 import { Check, type PairRun } from "@/lib/check/engine";
@@ -12,8 +12,6 @@ import { Mark, Badges } from "./Mark";
 
 export interface Hero { id: string; question: string; answer: string; sources: string[]; capturedAt: string; provenance: string; how: string }
 export interface MeterStats { show: boolean; settledPct?: number; right?: number; settled?: number; n?: number }
-
-const cfg = DEFAULT_CONFIG;
 
 function chipText(r: PairRun | undefined, style: "likely" | "neutral"): { title: string; sub?: string } {
   if (!r) return { title: "not checked yet" };
@@ -83,7 +81,7 @@ function Circled({ sentence, words }: { sentence: string; words?: string[] }) {
   })}</p>;
 }
 
-function Pane({ r, onClose, onConfirm }: { r: PairRun; onClose: () => void; onConfirm: (id: string) => void }) {
+function Pane({ r, cfg, onClose, onConfirm }: { r: PairRun; cfg: FootingConfig; onClose: () => void; onConfirm: (id: string) => void }) {
   const ref = useRef<HTMLElement>(null);
   useEffect(() => {
     // Modal focus: move focus in, keep Tab inside, give it back to the chip that opened the pane.
@@ -173,6 +171,16 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
   const [banner, setBanner] = useState<string | null>(null);
   const check = useRef<Check | null>(null);
   const [cloudUsed, setCloudUsed] = useState(0);
+  // Remote Config: thresholds/models/caps come from the published template; code defaults until (and unless) it loads.
+  const [cfg, setCfg] = useState<FootingConfig>(DEFAULT_CONFIG);
+  const [rcInfo, setRcInfo] = useState<{ source: "remote" | "defaults" | "loading"; applied: string[]; error?: string }>({ source: "loading", applied: [] });
+  const rcLoad = useRef<Promise<FootingConfig> | null>(null);
+  useEffect(() => {
+    rcLoad.current = import("@/lib/remoteConfig").then((m) => m.loadRemoteConfig()).then((r) => {
+      setCfg(r.cfg); setRcInfo({ source: r.source, applied: r.applied, error: r.error });
+      return r.cfg;
+    });
+  }, []);
 
   useEffect(() => {
     // availability() can take minutes on a fresh profile (P1a: 152 s). After 4 s the page treats the device as
@@ -190,7 +198,7 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
 
   useEffect(() => {
     (window as unknown as { __footing: unknown }).__footing = {
-      done, running, device, force, tally: t, cloudUsed,
+      done, running, device, force, tally: t, cloudUsed, config: { source: rcInfo.source, applied: rcInfo.applied, judgeModel: cfg.judgeModel, cap: cfg.citationCloudCap },
       runs: runs.map((r) => ({ id: r.pair.id, s: r.pair.s, n: r.pair.n, url: r.pair.url, sentence: r.pair.sentence, state: r.state, route: r.route, after: r.after, planned: r.planned, sources: r.sources, quote: r.quote, reason: r.reason, note: r.note, trail: r.trail, source: r.source, cloudCalls: r.cloudCalls })),
     };
   });
@@ -204,6 +212,7 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
     setRunning(true); setDone(false); setOpen(null); setBanner(null);
     const [{ appCheckStatus }, { browserDeps, initDevice }] = await Promise.all([import("@/lib/firebase"), import("@/lib/check/browserDeps")]);
     const ac = await appCheckStatus();
+    const live = (await rcLoad.current) ?? DEFAULT_CONFIG;
     if (!ac.ok) {
       setBanner("This browser could not be verified (App Check). Reload, or open /eval for the measured results.");
       setRunning(false);
@@ -211,7 +220,7 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
     }
     let dev: Device = device === "checking" || device === "slow" ? "unavailable" : device;
     if (dev !== "unavailable" && force !== "cloud") {
-      const init = initDevice(cfg, (p) => { setProgress(p); if (p < 1) setDevice("downloading"); });
+      const init = initDevice(live, (p) => { setProgress(p); if (p < 1) setDevice("downloading"); });
       if (dev === "available") {
         try { await init; } catch { dev = "unavailable"; }
       } else {
@@ -219,7 +228,7 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
         init.then(() => setDevice("available")).catch(() => setDevice("unavailable"));
       }
     }
-    const c = new Check(parsed.pairs, browserDeps(cfg), { cfg, force, device: dev, progress, onUpdate: update });
+    const c = new Check(parsed.pairs, browserDeps(live), { cfg: live, force, device: dev, progress, onUpdate: update });
     check.current = c;
     setRuns(c.runs.map((x) => ({ ...x })));
     await c.run();
@@ -382,7 +391,7 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
           <Legend style={style} />
         </section>
       </div>
-      {openRun && <Pane r={openRun} onClose={() => setOpen(null)} onConfirm={confirm} />}
+      {openRun && <Pane r={openRun} cfg={cfg} onClose={() => setOpen(null)} onConfirm={confirm} />}
       {toast && <div className="toast" role="status">{toast}</div>}
     </div>
   );

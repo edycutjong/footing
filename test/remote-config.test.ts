@@ -7,7 +7,7 @@ describe("Remote Config template", () => {
   it("caps cloud calls per check at 8", () => {
     expect(params.citation_cloud_cap.defaultValue.value).toBe("8");
   });
-  it("keeps the quote cap aligned with the Firestore rule (300)", () => {
+  it("keeps the quote cap at 300 characters (the schema maxLength)", () => {
     expect(params.quote_max_chars.defaultValue.value).toBe("300");
   });
   it("types every numeric default as NUMBER", () => {
