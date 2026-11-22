@@ -112,3 +112,22 @@ button { font: inherit; cursor: pointer; }
   .q, .actions, .foot, .paste { padding-left: 18px; } .legend { margin-left: 18px; }
   .total .big { font-size: 32px; } .pane { height: 100%; } .cols { grid-template-columns: 1fr; }
 }
+
+/* interaction feedback (hover / press / focus), restrained to the workpaper look; durations share one token */
+:root { --t: 140ms; }
+a, .chip, .primary, .ghost, .seg button, .pill button, .paste textarea { transition: background-color var(--t) ease, border-color var(--t) ease, color var(--t) ease, box-shadow var(--t) ease, transform var(--t) ease, opacity var(--t) ease; }
+a:hover { color: #1B3F73; text-decoration: underline; text-underline-offset: 2px; }
+.chip:hover { box-shadow: 0 1px 0 var(--rule-strong); transform: translateY(-1px); }
+.chip:active { transform: translateY(0); box-shadow: none; }
+.primary:not(:disabled):hover { background: #2D4538; box-shadow: 0 2px 0 var(--rule-strong); transform: translateY(-1px); }
+.primary:not(:disabled):active { transform: translateY(1px); box-shadow: none; }
+.ghost:not(:disabled):hover { background: #E4ECDC; border-color: var(--ink); }
+.ghost:not(:disabled):active { transform: translateY(1px); }
+.seg button:not([aria-pressed="true"]):not(:disabled):hover { background: #E4ECDC; }
+.seg button:not(:disabled):active { transform: translateY(1px); }
+.seg button:disabled, .ghost:disabled { cursor: not-allowed; opacity: 0.55; }
+.pill button:not(:disabled):hover { background: #2D4538; }
+.pill button:not(:disabled):active { transform: translateY(1px); }
+.paste textarea:hover { border-color: var(--ink); }
+.paste textarea:focus-visible { outline: none; border-color: var(--cloud); box-shadow: 0 0 0 3px rgba(43, 92, 158, 0.25); }
+@media (prefers-reduced-motion: reduce) { a, .chip, .primary, .ghost, .seg button, .pill button, .paste textarea { transition: none; } .chip:hover, .primary:hover, .chip:active, .primary:active, .ghost:active, .seg button:active, .pill button:active { transform: none; } }
