@@ -86,8 +86,12 @@ export function cleanSentence(s: string): string {
     .trim();
 }
 
+/** Longest answer parsed (characters). Bounds the parser's worst case on pathological pastes: 28 KB of repeated
+ *  "http://" took 440 ms before this cap (a2a r03); real AI answers are far shorter. */
+export const MAX_ANSWER_CHARS = 20_000;
+
 export function parseAnswer(raw: string): Parsed {
-  const { body, sources } = splitSources(raw);
+  const { body, sources } = splitSources(raw.slice(0, MAX_ANSWER_CHARS));
   const unresolved = new Set<number>();
   const sentences: Sentence[] = [];
   const pairs: Pair[] = [];

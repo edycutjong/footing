@@ -126,8 +126,11 @@ export async function fetchSource(raw: string): Promise<FetchResult> {
         return fail(why, r.status, url.href);
       }
       const ct = String(r.headers["content-type"] ?? "");
-      const declaredPdf = ct.toLowerCase().includes("pdf");
-      const buf = await readBody(r.res, declaredPdf ? LIMITS.pdf : Math.max(LIMITS.html, LIMITS.pdf));
+      // Read cap by declared type: declared HTML stops at 2 MB; only an undeclared type may read up to the PDF cap
+      // (so a PDF served without a PDF content type can still be sniffed).
+      const lct = ct.toLowerCase();
+      const cap = lct.includes("pdf") ? LIMITS.pdf : /html|xml|text\/plain/.test(lct) ? LIMITS.html : LIMITS.pdf;
+      const buf = await readBody(r.res, cap);
       const kind = sniffKind(ct, buf.subarray(0, 1024));
       if (kind === "unsupported") return fail(`unsupported content type ${ct.split(";")[0] || "unknown"}`, r.status, url.href);
       if (kind === "html" && buf.length > LIMITS.html) return fail("source larger than 2 MB", r.status, url.href);

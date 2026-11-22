@@ -79,3 +79,14 @@ describe("splitSources() / cleanSentence() / answerToText()", () => {
     expect(p.pairs.map((x) => x.url)).toEqual(["https://a.example", "https://b.example"]);
   });
 });
+
+describe("a2a r03: answer length cap", () => {
+  it("parses at most MAX_ANSWER_CHARS and stays fast on a pathological paste", async () => {
+    const { MAX_ANSWER_CHARS } = await import("@/lib/parse");
+    const t = performance.now();
+    parseAnswer("1 " + "http://".repeat(20000) + "<");
+    expect(performance.now() - t).toBeLessThan(1500);
+    const tail = "Late claim [1].\n\nSources:\n[1] https://example.org/late";
+    expect(parseAnswer("x".repeat(MAX_ANSWER_CHARS) + "\n\n" + tail).pairs).toHaveLength(0);
+  });
+});
