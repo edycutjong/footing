@@ -110,9 +110,9 @@ Machine for on-device runs: MacBook Pro M1 Max, 32 GB, Chrome 157. Cloud judge: 
 How the work splits between laptop and cloud: on the frozen 30, Nano settled 8 of 30 pairs on device (all 8 labelled partial or not supported) and escalated 22; on the
 fresh 20 it settled 1 and escalated 19 (`evidence/summary.json`). So the measured cloud saving is small: 8 of 30 and 1 of 20 calls, and 1 of 9 on
 the sample answer's recorded Nano run (`evidence/check/nano-hero-if-2026-11-22.json`). Escalation is the design, not a failure: `SUPPORTS` is never final on device.
-An escalated citation pays for both calls, and Nano triage runs one citation at a time, so the hybrid is not faster end to end: on the sample answer
-the recorded Nano run took 40.0 s wall clock (`evidence/check/nano-hero-if-2026-11-22.json`, dev server) and a no-Nano run on the deployed site 21.0 s
-(`evidence/check/live-r05-fresh-hero-2026-11-22.json`). What the laptop buys is that the citations it settles never reach a model server.
+An escalated citation pays for both calls, and Nano triage runs one citation at a time, so the hybrid is not faster end to end: on the deployed site
+the sample answer took 18.0–36.0 s wall clock with Nano (median 27.0 s, 3 runs, `evidence/check/live-r03-nano-hero-*.json`) and 17.0–41.0 s without
+(median 21.0 s, 7 runs, `evidence/check/live-*fresh-hero*.json`). What the laptop buys is that the citations it settles never reach a model server.
 
 Tests: **193 passing** in 12 files (`npm test`), covering the router, quote gate, SSRF guard, App Check verification, parser,
 extractor, tally and the check engine. Line coverage of `src/lib` is 88.5% (`npm run test:coverage`; the Firebase-SDK glue files are excluded
@@ -125,7 +125,7 @@ judge reading a 24,000-character source window) **p50 4095 ms, p95 11476 ms**. A
 ### 🧪 Testing & CI
 **Status, stated plainly:** the pipeline below is committed and configured, but **GitHub Actions has not run it** (the account's Actions billing blocked every job on
 2026-11-22, and the repo is private until submission), so there is no green CI badge here. Instead every stage was run on the maintainer's machine with
-[`scripts/ci-local.sh`](scripts/ci-local.sh) against the deployed commit, all passing; the receipt is [`evidence/ci-local-2026-11-22.txt`](evidence/ci-local-2026-11-22.txt).
+[`scripts/ci-local.sh`](scripts/ci-local.sh) against the commit deployed at the time (2026-11-22), all passing; the receipt is [`evidence/ci-local-2026-11-22.txt`](evidence/ci-local-2026-11-22.txt) (191 unit tests then; the 193 on the current commit are in [`evidence/vitest-2026-11-22.txt`](evidence/vitest-2026-11-22.txt)).
 `v1.0.0` was tagged by hand for the same reason (`release.yml` has not executed yet).
 
 [`.github/workflows/ci.yml`](.github/workflows/ci.yml) is configured to run seven stages on every push to `main`: quality (lint, typecheck, unit tests with a coverage floor

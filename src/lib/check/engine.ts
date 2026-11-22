@@ -274,7 +274,7 @@ export class Check {
       if (retriesLeft && isTransient(reply)) this.cloudUsed--;
       if (retriesLeft && this.reserve(userInitiated)) {
         if (isTransient(reply)) {
-          run.note = `cloud busy (rate limit) · retrying in ${15 * attempt} s`;
+          run.note = `${reply.errorKind === "quota" ? "cloud busy (rate limit)" : "cloud server error"} · retrying in ${15 * attempt} s`;
           this.emit(run);
           await this.sleep(15000 * attempt);
           run.note = undefined;
