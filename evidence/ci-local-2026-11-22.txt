@@ -1,0 +1,130 @@
+# scripts/ci-local.sh receipt: sha dab36eb deployed at https://footing.edycu.dev, 2026-11-22T14:47:44Z, MacBook Pro M1 Max
+# GitHub Actions could not start jobs on 2026-11-22 (account billing: 'recent account payments have failed or your spending limit needs to be increased'), so the CI stages were run locally.
+── 1 lint
+> footing@0.1.0 lint
+> eslint
+PASS  1 lint
+── 1 typecheck
+> footing@0.1.0 typecheck
+> tsc --noEmit
+PASS  1 typecheck
+── 1 unit tests + coverage floor
+> footing@0.1.0 test:coverage
+> vitest run --coverage
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+ RUN  v5.1.1 /Users/edycu/Hackathon/devpost/devpost-firebasehybridaihackathon/footing/build
+      Coverage enabled with v8
+ Test Files  12 passed (12)
+      Tests  191 passed (191)
+   Start at  21:45:22
+   Duration  861ms (import 46%, tests 34%, transform 11%, worker 9%)
+ % Coverage report from v8
+=============================== Coverage summary ===============================
+Statements   : 85.67% ( 598/698 )
+Branches     : 77.26% ( 401/519 )
+Functions    : 86.13% ( 87/101 )
+Lines        : 88.52% ( 463/523 )
+================================================================================
+PASS  1 unit tests + coverage floor
+── 2 gitleaks (all history)
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+9:45PM INF 51 commits scanned.
+9:45PM INF scanned ~1574545 bytes (1.57 MB) in 254ms
+9:45PM INF no leaks found
+PASS  2 gitleaks (all history)
+── 2 npm audit (high+critical)
+found 0 vulnerabilities
+PASS  2 npm audit (high+critical)
+── 2 npm audit signatures
+audited 789 packages in 7s
+789 packages have verified registry signatures
+192 packages have verified attestations
+PASS  2 npm audit signatures
+── 2 licences (no GPL/AGPL)
+├─ Apache-2.0: 85
+├─ MIT: 45
+├─ BSD-2-Clause: 12
+├─ BSD-3-Clause: 11
+├─ ISC: 10
+├─ LGPL-3.0-or-later: 1
+├─ CC-BY-4.0: 1
+├─ UNLICENSED: 1
+└─ 0BSD: 1
+PASS  2 licences (no GPL/AGPL)
+── 3 production build
+> footing@0.1.0 build
+> next build
+▲ Next.js 16.4.6 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 18ms
+- Cache Components enabled
+- Partial Prefetching enabled
+  Creating an optimized production build ...
+✓ Compiled successfully in 291ms
+  Running TypeScript ...
+  Finished TypeScript in 1179ms ...
+  Collecting page data using 9 workers ...
+  Generating static pages using 9 workers (0/9) ...
+  Generating static pages using 9 workers (2/9) 
+  Generating static pages using 9 workers (4/9) 
+  Generating static pages using 9 workers (6/9) 
+✓ Generating static pages using 9 workers (9/9) in 247ms
+  Finalizing page optimization ...
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /about
+├ ƒ /api/fetch
+├ ƒ /api/health
+├ ○ /eval
+├ ○ /eval/run
+└ ○ /spike
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+PASS  3 production build
+── 3 bundle budget
+client JS gzip 716 KB (budget 900)
+PASS  3 bundle budget
+── 5 E2E on https://footing.edycu.dev
+Running 11 tests using 1 worker
+  ✓   1 [chromium] › e2e/live-flow.spec.ts:9:1 › check sources: chips land with a routing badge and every verdict carries a quote that passed the gate (45.0s)
+  ✓   2 [chromium] › e2e/responsive.spec.ts:4:3 › layout at mobile (375px): no horizontal overflow, header and check button inside the viewport (407ms)
+  ✓   3 [chromium] › e2e/responsive.spec.ts:4:3 › layout at tablet (768px): no horizontal overflow, header and check button inside the viewport (423ms)
+  ✓   4 [chromium] › e2e/responsive.spec.ts:4:3 › layout at desktop (1440px): no horizontal overflow, header and check button inside the viewport (483ms)
+  ✓   5 [chromium] › e2e/smoke.spec.ts:4:3 › smoke: the page loads the real product › home renders the answer sheet and the check button, with no console errors (424ms)
+  ✓   6 [chromium] › e2e/smoke.spec.ts:18:3 › smoke: the page loads the real product › social-card and favicon metadata are present (404ms)
+  ✓   7 [chromium] › e2e/smoke.spec.ts:26:3 › smoke: the page loads the real product › /api/health reports App Check verification on and a build sha (546ms)
+  ✓   8 [chromium] › e2e/smoke.spec.ts:35:3 › smoke: the page loads the real product › the fetch proxy refuses a call without an App Check token (337ms)
+  ✓   9 [chromium] › e2e/smoke.spec.ts:40:3 › smoke: the page loads the real product › the fetch proxy refuses a forged App Check token, even for a private address (319ms)
+  ✓  10 [chromium] › e2e/smoke.spec.ts:45:3 › smoke: the page loads the real product › /eval shows the measured accuracy rows (893ms)
+  ✓  11 [chromium] › e2e/unplug.spec.ts:9:1 › offline after load: the check reports failure and never produces a fake verdict (1.4s)
+  11 passed (51.7s)
+PASS  5 E2E on https://footing.edycu.dev
+── 6 lighthouse gates on https://footing.edycu.dev
+✅  .lighthouseci/ directory writable
+✅  Configuration file found
+✅  Chrome installation found
+⚠️   GitHub token not set
+Healthcheck passed!
+Running Lighthouse 3 time(s) on https://footing.edycu.dev/
+Run #1...done.
+Run #2...done.
+Run #3...done.
+Running Lighthouse 3 time(s) on https://footing.edycu.dev/eval
+Run #1...done.
+Run #2...done.
+Run #3...done.
+Done running Lighthouse!
+Checking assertions against 2 URL(s), 6 total run(s)
+All results processed!
+Dumping 6 reports to disk at /Users/edycu/Hackathon/devpost/devpost-firebasehybridaihackathon/footing/build/lhci-reports...
+Done writing reports to disk.
+Done running autorun.
+PASS  6 lighthouse gates on https://footing.edycu.dev
+ALL STAGES PASSED
