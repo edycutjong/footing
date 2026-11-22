@@ -176,6 +176,8 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
   const [banner, setBanner] = useState<string | null>(null);
   const check = useRef<Check | null>(null);
   const availability = useRef<Promise<Device> | null>(null);
+  // Bumped whenever the answer changes or a new check starts: a check whose start-up was overtaken never installs itself.
+  const generation = useRef(0);
   const [cloudUsed, setCloudUsed] = useState(0);
   // Remote Config: thresholds/models/caps come from the published template; code defaults until (and unless) it loads.
   const [cfg, setCfg] = useState<FootingConfig>(DEFAULT_CONFIG);
@@ -235,8 +237,9 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
   async function runCheck() {
     setRunning(true); setDone(false); setOpen(null); setBanner(null);
     check.current = null;
+    const gen = ++generation.current;
     try {
-      await runCheckInner();
+      await runCheckInner(gen);
     } catch (e) {
       setBanner(`The check stopped: ${String((e as Error).message ?? e).slice(0, 160)}. Reload to try again.`);
     } finally {
@@ -244,7 +247,7 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
     }
   }
 
-  async function runCheckInner() {
+  async function runCheckInner(gen: number) {
     const [{ appCheckStatus }, { browserDeps, initDevice }] = await Promise.all([import("@/lib/firebase"), import("@/lib/check/browserDeps")]);
     const ac = await appCheckStatus();
     const live = (await rcLoad.current) ?? DEFAULT_CONFIG;
@@ -271,6 +274,7 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
         init.then(() => setDevice("available")).catch(() => setDevice("unavailable"));
       }
     }
+    if (gen !== generation.current) return; // the answer changed (or another check started) during start-up (a2a r04)
     const c = new Check(parsed.pairs, browserDeps(live), { cfg: live, force, device: dev, progress, onUpdate: update });
     check.current = c;
     setRuns(c.runs.map((x) => ({ ...x })));
@@ -354,9 +358,9 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
               <textarea id="paste" maxLength={MAX_ANSWER_CHARS} value={draft} onChange={(e) => setDraft(e.target.value)} placeholder={"The Moon takes 27.3 days to orbit Earth [1].\n\nSources:\n[1] https://en.wikipedia.org/wiki/Moon"} />
               <div style={{ display: "flex", gap: 10, alignItems: "center", marginTop: 6 }}>
                 <span className="data">{draftCount} citation{draftCount === 1 ? "" : "s"} found</span>
-                <button className="ghost" disabled={!draftCount || running} onClick={() => { check.current = null; setText(draft); setMine(true); setRuns([]); setDone(false); setShowPaste(false); }}>Use this answer</button>
+                <button className="ghost" disabled={!draftCount || running} onClick={() => { check.current = null; generation.current++; setText(draft); setMine(true); setRuns([]); setDone(false); setShowPaste(false); }}>Use this answer</button>
                 <button className="ghost" onClick={() => setDraft(answerToText(hero.answer, hero.sources))}>Fill the sample</button>
-                {mine && <button className="ghost" onClick={() => { check.current = null; setText(answerToText(hero.answer, hero.sources)); setMine(false); setRuns([]); setDone(false); }}>Back to the sample answer</button>}
+                {mine && <button className="ghost" disabled={running} onClick={() => { check.current = null; generation.current++; setText(answerToText(hero.answer, hero.sources)); setMine(false); setRuns([]); setDone(false); }}>Back to the sample answer</button>}
               </div>
             </div>
           )}
