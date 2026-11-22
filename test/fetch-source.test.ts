@@ -46,3 +46,15 @@ describe("readBody (decompression never outlives an aborted source)", () => {
     await expect(q).rejects.toThrow(/larger than/);
   });
 });
+
+describe("readCapFor (a2a r03: declared HTML never reads to the PDF cap)", () => {
+  it("caps by declared type", async () => {
+    const { readCapFor } = await import("@/lib/net/fetchSource");
+    const { LIMITS } = await import("@/lib/net/ssrf");
+    expect(readCapFor("text/html; charset=utf-8")).toBe(LIMITS.html);
+    expect(readCapFor("application/xhtml+xml")).toBe(LIMITS.html);
+    expect(readCapFor("application/pdf")).toBe(LIMITS.pdf);
+    expect(readCapFor("application/octet-stream")).toBe(LIMITS.pdf); // undeclared: may still sniff as PDF
+    expect(LIMITS.html).toBeLessThan(LIMITS.pdf);
+  });
+});

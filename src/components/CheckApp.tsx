@@ -254,12 +254,18 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
     }
     let dev: Device = device === "checking" || device === "slow" ? await lateAvailability() : device;
     if (dev !== "unavailable" && force !== "cloud") {
-      const init = initDevice(live, (p) => { setProgress(p); if (p < 1) setDevice("downloading"); });
+      let gaveUp = false; // after the init deadline, late progress callbacks no longer move the pill
+      let init: Promise<void>;
+      try {
+        init = initDevice(live, (p) => { if (gaveUp) return; setProgress(p); if (p < 1) setDevice("downloading"); });
+      } catch (e) {
+        init = Promise.reject(e); // a synchronous SDK throw falls back to the cloud like any init failure
+      }
       if (dev === "available") {
         // Bounded: a stuck initialisation sends this check to the cloud instead of hanging the button (a2a r03).
         let timer: ReturnType<typeof setTimeout> | undefined;
         const deadline = new Promise<never>((_, rej) => { timer = setTimeout(() => rej(new Error("init timeout")), INIT_DEADLINE_MS); });
-        try { await Promise.race([init, deadline]); } catch { dev = "unavailable"; } finally { clearTimeout(timer); }
+        try { await Promise.race([init, deadline]); } catch { dev = "unavailable"; gaveUp = true; } finally { clearTimeout(timer); }
       } else {
         setDevice("downloading");
         init.then(() => setDevice("available")).catch(() => setDevice("unavailable"));

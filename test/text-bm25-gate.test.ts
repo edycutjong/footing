@@ -64,7 +64,9 @@ describe("schemas", () => {
     // a2a r03: a present field of the wrong type is malformed, never coerced into a counted "no passage says this"
     expect(() => parseJudge('{"verdict":"NOT_SUPPORTED","quote":42,"reason":"x"}')).toThrow(/quote/);
     expect(() => parseJudge('{"verdict":"PARTIAL","quote":"q","reason":{"a":1}}')).toThrow(/reason/);
-    expect(parseJudge('{"verdict":"NOT_SUPPORTED","reason":"none"}').quote).toBe("");
+    expect(() => parseJudge('{"verdict":"NOT_SUPPORTED","reason":"none"}')).toThrow(/quote/);
+    expect(() => parseJudge('{"verdict":"NOT_SUPPORTED","quote":null,"reason":"none"}')).toThrow(/quote/);
+    expect(parseJudge('{"verdict":"NOT_SUPPORTED","quote":""}')).toMatchObject({ quote: "", reason: "" });
   });
   it("caps the device quote with maxLength", () => {
     expect(triageConstraint(300).properties.quote.maxLength).toBe(300);

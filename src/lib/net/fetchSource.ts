@@ -100,6 +100,14 @@ function charsetOf(ct: string, head: Buffer): string {
   try { new TextDecoder(cs); return cs; } catch { return "utf-8"; }
 }
 
+/** Read cap by declared type: declared HTML/XML/text stops at the HTML cap; only a PDF or an undeclared type may read up
+ *  to the PDF cap (so a PDF served without a PDF content type can still be sniffed). */
+export function readCapFor(contentType: string): number {
+  const ct = contentType.toLowerCase();
+  if (ct.includes("pdf")) return LIMITS.pdf;
+  return /html|xml|text\/plain/.test(ct) ? LIMITS.html : LIMITS.pdf;
+}
+
 export async function fetchSource(raw: string): Promise<FetchResult> {
   const fetchedAt = new Date().toISOString();
   const hops: FetchResult["hops"] = [];
@@ -126,11 +134,7 @@ export async function fetchSource(raw: string): Promise<FetchResult> {
         return fail(why, r.status, url.href);
       }
       const ct = String(r.headers["content-type"] ?? "");
-      // Read cap by declared type: declared HTML stops at the HTML cap; only an undeclared type may read up to the PDF cap
-      // (so a PDF served without a PDF content type can still be sniffed).
-      const lct = ct.toLowerCase();
-      const cap = lct.includes("pdf") ? LIMITS.pdf : /html|xml|text\/plain/.test(lct) ? LIMITS.html : LIMITS.pdf;
-      const buf = await readBody(r.res, cap);
+      const buf = await readBody(r.res, readCapFor(ct));
       const kind = sniffKind(ct, buf.subarray(0, 1024));
       if (kind === "unsupported") return fail(`unsupported content type ${ct.split(";")[0] || "unknown"}`, r.status, url.href);
       if (kind === "html" && buf.length > LIMITS.html) return fail(`source larger than ${LIMITS.html / 1024 / 1024} MB`, r.status, url.href);

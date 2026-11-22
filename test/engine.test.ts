@@ -36,6 +36,13 @@ describe("Check engine", () => {
     expect(runs[0].sources).toEqual(["in_cloud"]);
   });
 
+  it("a2a r03: a PDF whose text could not be extracted is UNVERIFIED with that reason, never SUPPORTS", async () => {
+    const d = deps({}, { "https://s0.example/p": { ...pdf("https://s0.example/p"), text: "" } });
+    const { runs } = await new Check(answer(1).pairs, d, { cfg, force: "auto", device: "available" }).run();
+    expect(runs[0].state).toBe("UNVERIFIED");
+    expect(runs[0].note).toMatch(/could not be extracted/);
+  });
+
   it("settles a Nano NOT_SUPPORTED with no quote on device: no cloud call, cap untouched", async () => {
     const d = deps();
     const c = new Check(answer(1).pairs, d, { cfg, force: "auto", device: "available" });

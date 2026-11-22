@@ -37,8 +37,9 @@ export function parseTriage(text: string): TriageOut {
 export function parseJudge(text: string): JudgeOut {
   const o = obj(text);
   if (!JUDGE_VERDICTS.includes(o.verdict as JudgeVerdict)) throw new Error(`bad judge verdict: ${String(o.verdict)}`);
-  // Absent fields may default to "", but a present field of the wrong type is a malformed answer: coercing it to ""
-  // would turn {"verdict":"NOT_SUPPORTED","quote":42} into a counted "no passage says this" (a2a r03).
-  for (const k of ["quote", "reason"] as const) if (o[k] != null && typeof o[k] !== "string") throw new Error(`judge ${k} is not a string`);
-  return { verdict: o.verdict as JudgeVerdict, quote: typeof o.quote === "string" ? o.quote : "", reason: typeof o.reason === "string" ? o.reason : "" };
+  // quote is required by VERDICT3_SCHEMA: missing, null or non-string is a malformed answer, never coerced to "" (which
+  // would turn it into a counted "no passage says this", a2a r03). reason is display-only: absent → "", wrong type → malformed.
+  if (typeof o.quote !== "string") throw new Error("judge quote missing or not a string");
+  if (o.reason != null && typeof o.reason !== "string") throw new Error("judge reason is not a string");
+  return { verdict: o.verdict as JudgeVerdict, quote: o.quote, reason: typeof o.reason === "string" ? o.reason : "" };
 }
