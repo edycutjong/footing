@@ -47,7 +47,7 @@ function SetBlock({ name, s }: { name: string; s: SetSummary }) {
           </table>
           {s.cloud.correct / s.cloud.n < 0.8 ? (
             <p>
-              That is below the 24-of-30 (80%) bar we set for the on-device test. So Footing never shows a verdict on the model&apos;s word
+              That is below the 24-of-30 (80%) bar we set for the on-device test. So Footing is designed never to show a verdict on the model&apos;s word
               alone: the quoted words must be found verbatim in the source text the model read, or the citation is marked UNVERIFIED.
             </p>
           ) : null}
