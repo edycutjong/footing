@@ -1,0 +1,14 @@
+{
+  "label": "appcheck-enforced-tokenless",
+  "recordedAt": "2026-11-22T11:13:26.624736Z",
+  "request": "POST firebasevertexai.googleapis.com/v1beta/projects/footing-hybrid-ai/models/gemini-3.5-flash-lite:generateContent with the public web API key and NO X-Firebase-AppCheck header",
+  "enforcement": "App Check service firebaseml.googleapis.com = ENFORCED (set 2026-11-22T11:00:54Z)",
+  "httpStatus": 401,
+  "response": {
+    "error": {
+      "code": 401,
+      "message": "Firebase App Check token is invalid.",
+      "status": "UNAUTHENTICATED"
+    }
+  }
+}

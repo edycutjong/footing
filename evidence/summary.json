@@ -1,0 +1,69 @@
+{
+  "generatedAt": "2026-11-22T11:14:33.490Z",
+  "machine": "MacBook Pro M1 Max, 32 GB (on-device runs)",
+  "sets": {
+    "eval-30": {
+      "heldOut": false,
+      "note": "frozen 30, labelled 2026-11-21; an earlier prompt was scored on it, so not held-out",
+      "device": {
+        "file": "evidence/eval-30/device-binary-2026-11-22.json",
+        "recordedAt": "2026-11-22T11:07:45.842Z",
+        "n": 30,
+        "errors": 0,
+        "correct": 24,
+        "accuracyPct": 80,
+        "confusion": {
+          "TP": 10,
+          "FN": 2,
+          "FP": 4,
+          "TN": 14
+        },
+        "onDevice": 30,
+        "settledOnDevice": 8,
+        "settledNegativePrecisionPct": 100,
+        "settledCorrect": 8,
+        "escalated": 22,
+        "latencyMs": {
+          "p50": 1838,
+          "p95": 3099
+        }
+      },
+      "cloud": {
+        "file": "evidence/eval-30/cloud-3class-gemini-3.5-flash-lite-2026-11-22.json",
+        "model": "gemini-3.5-flash-lite",
+        "recordedAt": "2026-11-22T11:10:37.350Z",
+        "n": 30,
+        "errors": 0,
+        "correct": 23,
+        "accuracyPct": 76.7,
+        "confusion": {
+          "SUPPORTS": {
+            "SUPPORTS": 9,
+            "PARTIAL": 3,
+            "NOT_SUPPORTED": 0
+          },
+          "PARTIAL": {
+            "SUPPORTS": 1,
+            "PARTIAL": 7,
+            "NOT_SUPPORTED": 1
+          },
+          "NOT_SUPPORTED": {
+            "SUPPORTS": 0,
+            "PARTIAL": 2,
+            "NOT_SUPPORTED": 7
+          }
+        },
+        "quoteGateHeld": 21,
+        "retriedCalls": 0,
+        "latencyMs": {
+          "p50": 2762,
+          "p95": 8200
+        }
+      }
+    },
+    "eval-fresh-20": {
+      "heldOut": true,
+      "note": "fresh 20, labelled and hashed before any model run"
+    }
+  }
+}

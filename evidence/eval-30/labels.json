@@ -1,0 +1,242 @@
+[
+  {
+    "id": "c01",
+    "claim": "For example, the Moon rotates on its axis every 27 Earth days, matching its orbital period",
+    "url": "https://science.nasa.gov/moon/facts/",
+    "label": "SUPPORTS",
+    "prov": "natural",
+    "src": "s2"
+  },
+  {
+    "id": "c02",
+    "claim": "Deregulation continued in 1999 with the repeal of key provisions of the 1933 Glass\u2013Steagall Act, which enabled institutions to mix low-risk commercial banking with high-risk investment banking and proprietary trading",
+    "url": "https://en.wikipedia.org/wiki/Financial_crisis_of_2007%E2%80%932008",
+    "label": "SUPPORTS",
+    "prov": "natural",
+    "src": "s9"
+  },
+  {
+    "id": "c03",
+    "claim": "Lenders funded these subprime mortgages by repackaging them into complex private-label mortgage-backed securities (PMBS) and selling them to global investors",
+    "url": "https://www.federalreservehistory.org/essays/subprime-mortgage-crisis",
+    "label": "SUPPORTS",
+    "prov": "natural",
+    "src": "s10"
+  },
+  {
+    "id": "c04",
+    "claim": "Although both methods yield the exact same final code integration, `git rebase` avoids extra merge commits and produces a linear history where work appears to have occurred in series rather than in parallel",
+    "url": "https://git-scm.com/book/en/v2/Git-Branching-Rebasing",
+    "label": "SUPPORTS",
+    "prov": "natural",
+    "src": "s18"
+  },
+  {
+    "id": "c05",
+    "claim": "The official specification was originally published as a W3C Recommendation and is currently maintained as part of the WHATWG Fetch Living Standard",
+    "url": "https://en.wikipedia.org/wiki/Cross-origin_resource_sharing",
+    "label": "SUPPORTS",
+    "prov": "natural",
+    "src": "s25"
+  },
+  {
+    "id": "c06",
+    "claim": "The dietary concept was first formally proposed in 1975 by American biologist Ancel Keys and chemist Margaret Keys after studying regional eating habits in the late 1950s to early 1960s",
+    "url": "https://en.wikipedia.org/wiki/Mediterranean_diet",
+    "label": "SUPPORTS",
+    "prov": "natural",
+    "src": "s39"
+  },
+  {
+    "id": "c07",
+    "claim": "Extra virgin olive oil is used as the primary source of fat, which research shows helps remove excess cholesterol from arteries and keep blood vessels open",
+    "url": "https://www.heart.org/en/healthy-living/healthy-eating/eat-smart/nutrition-basics/mediterranean-diet",
+    "label": "PARTIAL",
+    "prov": "natural",
+    "src": "s40"
+  },
+  {
+    "id": "c08",
+    "claim": "In recognition of its rich cultural values and traditions, UNESCO designated the Mediterranean diet as an Intangible Cultural Heritage of Humanity in 2010",
+    "url": "https://en.wikipedia.org/wiki/Mediterranean_diet",
+    "label": "SUPPORTS",
+    "prov": "natural",
+    "src": "s39"
+  },
+  {
+    "id": "c09",
+    "claim": "It also provides options such as `--empty=drop` to automatically drop commits that become redundant after rebasing onto upstream changes",
+    "url": "https://git-scm.com/docs/git-rebase",
+    "label": "SUPPORTS",
+    "prov": "natural",
+    "src": "s19"
+  },
+  {
+    "id": "c10",
+    "claim": "Beyond JavaScript `fetch()` calls, CORS applies to CSS `@font-face` web fonts, WebGL textures, and images drawn to an HTML `<canvas>` element",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS",
+    "label": "SUPPORTS",
+    "prov": "natural",
+    "src": "s24"
+  },
+  {
+    "id": "c11",
+    "claim": "A 2017 medical review established that this dietary pattern effectively lowers the risk of early death and aids in weight loss for obese individuals",
+    "url": "https://en.wikipedia.org/wiki/Mediterranean_diet",
+    "label": "PARTIAL",
+    "prov": "natural",
+    "src": "s39"
+  },
+  {
+    "id": "c12",
+    "claim": "Python creator Guido van Rossum implemented a single global lock because it was significantly easier to construct than a complex, fine-grained locking system",
+    "url": "https://en.wikipedia.org/wiki/Global_interpreter_lock",
+    "label": "PARTIAL",
+    "prov": "natural",
+    "src": "s6"
+  },
+  {
+    "id": "c13",
+    "claim": "Consuming excessive amounts beyond the 400 mg limit can trigger severe adverse effects, including restlessness, fast heart rate, and sleep disruptions",
+    "url": "https://www.mayoclinic.org/healthy-lifestyle/nutrition-and-healthy-eating/in-depth/caffeine/art-20045678",
+    "label": "PARTIAL",
+    "prov": "natural",
+    "src": "s17"
+  },
+  {
+    "id": "c14",
+    "claim": "Consequently, multi-threaded CPU-bound programs in CPython often fail to gain speed improvements and can even experience performance slowdowns on multi-core processors",
+    "url": "https://en.wikipedia.org/wiki/Global_interpreter_lock",
+    "label": "SUPPORTS",
+    "prov": "natural",
+    "src": "s6"
+  },
+  {
+    "id": "c15",
+    "claim": "Following this lifestyle over the long term helps reduce stress and inflammation in the body, significantly lowering the risk of chronic conditions such as heart disease, diabetes, and Alzheimer's disease",
+    "url": "https://www.mayoclinic.org/healthy-lifestyle/nutrition-and-healthy-eating/in-depth/mediterranean-diet/art-20047801",
+    "label": "PARTIAL",
+    "prov": "natural",
+    "src": "s41"
+  },
+  {
+    "id": "c16",
+    "claim": "Healthcare experts advise that caffeine is not a suitable option for children and teenagers due to potential health risks",
+    "url": "https://www.mayoclinic.org/healthy-lifestyle/nutrition-and-healthy-eating/in-depth/caffeine/art-20045678",
+    "label": "PARTIAL",
+    "prov": "natural",
+    "src": "s17"
+  },
+  {
+    "id": "c17",
+    "claim": "Today, the World Health Organization and the 2015\u20132020 Dietary Guidelines for Americans recognize it as one of the healthiest dietary patterns available",
+    "url": "https://en.wikipedia.org/wiki/Mediterranean_diet",
+    "label": "SUPPORTS",
+    "prov": "natural",
+    "src": "s39"
+  },
+  {
+    "id": "c18",
+    "claim": "As U.S. real estate values collapsed, financial contagion spread to global credit markets by August 2007 due to the vast web of derivative products tied to mortgage assets and the U.S. government nationalized AIG in December 2007",
+    "url": "https://en.wikipedia.org/wiki/Financial_crisis_of_2007%E2%80%932008",
+    "label": "PARTIAL",
+    "prov": "appended-clause",
+    "src": "s9"
+  },
+  {
+    "id": "c19",
+    "claim": "To initiate a simple request, the web browser sends an HTTP request containing an `Origin` header that identifies the calling site, such as `http://www.example.com` The server must always answer within 100 ms or the browser aborts the request",
+    "url": "https://en.wikipedia.org/wiki/Cross-origin_resource_sharing",
+    "label": "PARTIAL",
+    "prov": "appended-clause",
+    "src": "s25"
+  },
+  {
+    "id": "c20",
+    "claim": "Furthermore, `git rebase` offers advanced controls like the `--onto` flag to transplant commits onto any valid starting point commit, or `--keep-base` to retain the original merge base and both flags were removed in Git 3.0",
+    "url": "https://git-scm.com/docs/git-rebase",
+    "label": "PARTIAL",
+    "prov": "appended-clause",
+    "src": "s19"
+  },
+  {
+    "id": "c21",
+    "claim": "While CPU-bound threads frequently block each other due to contention over the GIL, threads performing long-running blocking I/O operations can temporarily release the lock to let other threads execute",
+    "url": "https://en.wikipedia.org/wiki/Global_interpreter_lock",
+    "label": "SUPPORTS",
+    "prov": "natural",
+    "src": "s6"
+  },
+  {
+    "id": "c22",
+    "claim": "The unseen side is often misleadingly referred to as the \"dark side,\" even though it receives full sunlight during a new moon",
+    "url": "https://en.wikipedia.org/wiki/Tidal_locking",
+    "label": "NOT_SUPPORTED",
+    "prov": "mis-cited",
+    "src": "s1"
+  },
+  {
+    "id": "c23",
+    "claim": "The receiving server decides whether to approve access by returning an `Access-Control-Allow-Origin` HTTP response header containing the requesting domain or a wildcard `*`",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Evolution_of_HTTP",
+    "label": "NOT_SUPPORTED",
+    "prov": "mis-cited",
+    "src": "s31"
+  },
+  {
+    "id": "c24",
+    "claim": "When executing `git merge`, Git performs a three-way merge between the two latest branch snapshots (such as commits C3 and C4) and their shared common ancestor commit (such as C2)",
+    "url": "https://git-scm.com/docs/git-rebase",
+    "label": "NOT_SUPPORTED",
+    "prov": "mis-cited",
+    "src": "s19"
+  },
+  {
+    "id": "c25",
+    "claim": "Deregulation continued in 1999 with the repeal of key provisions of the 1933 Glass\u2013Steagall Act, which enabled institutions to mix low-risk commercial banking with high-risk investment banking and proprietary trading",
+    "url": "https://www.federalreservehistory.org/essays/subprime-mortgage-crisis",
+    "label": "NOT_SUPPORTED",
+    "prov": "mis-cited",
+    "src": "s10"
+  },
+  {
+    "id": "c26",
+    "claim": "Servers can also explicitly inform browsers whether user credentials like HTTP Authentication data or Cookies should be included in the transaction",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Evolution_of_HTTP",
+    "label": "NOT_SUPPORTED",
+    "prov": "mis-cited",
+    "src": "s31"
+  },
+  {
+    "id": "c27",
+    "claim": "In recognition of its rich cultural values and traditions, UNESCO designated the Mediterranean diet as an Intangible Cultural Heritage of Humanity in 2002",
+    "url": "https://en.wikipedia.org/wiki/Mediterranean_diet",
+    "label": "NOT_SUPPORTED",
+    "prov": "contradicted",
+    "src": "s39"
+  },
+  {
+    "id": "c28",
+    "claim": "The dietary concept was first formally proposed in 1985 by British physician Dr. John Hale after studying regional eating habits in the late 1950s to early 1960s",
+    "url": "https://en.wikipedia.org/wiki/Mediterranean_diet",
+    "label": "NOT_SUPPORTED",
+    "prov": "contradicted",
+    "src": "s39"
+  },
+  {
+    "id": "c29",
+    "claim": "Between 2008 and 2010, the Federal Reserve significantly raised the federal funds rate, encouraging financial institutions to target high-risk and low-income borrowers with adjustable-rate subprime mortgages",
+    "url": "https://en.wikipedia.org/wiki/Financial_crisis_of_2007%E2%80%932008",
+    "label": "NOT_SUPPORTED",
+    "prov": "contradicted",
+    "src": "s9"
+  },
+  {
+    "id": "c30",
+    "claim": "Although both methods yield different final code, `git rebase` creates an extra merge commit and produces a branching history where work appears to have happened in parallel",
+    "url": "https://git-scm.com/book/en/v2/Git-Branching-Rebasing",
+    "label": "NOT_SUPPORTED",
+    "prov": "contradicted",
+    "src": "s18"
+  }
+]

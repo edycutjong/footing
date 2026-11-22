@@ -1,0 +1,910 @@
+{
+  "set": "eval-30",
+  "mode": "judge",
+  "judgeModel": "gemini-3.5-flash-lite",
+  "recordedAt": "2026-11-22T11:10:37.350Z",
+  "machine": "MacBook Pro M1 Max, 32 GB",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+  "rows": [
+    {
+      "id": "c01",
+      "label": "SUPPORTS",
+      "gold": "SUPPORTS",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"SUPPORTS\",\n  \"quote\": \"The Moon makes a complete orbit around Earth in 27 Earth days and rotates or spins at that same rate, or in that same amount of time.\",\n  \"reason\": \"The source explicitly confirms the Moon rotates on its axis every 27 Earth days, matching its orbital period.\"\n}",
+      "verdict": "SUPPORTS",
+      "quote": "The Moon makes a complete orbit around Earth in 27 Earth days and rotates or spins at that same rate, or in that same amount of time.",
+      "reason": "The source explicitly confirms the Moon rotates on its axis every 27 Earth days, matching its orbital period.",
+      "gateHeld": true,
+      "ms": 8879,
+      "promptChars": 9085,
+      "usage": {
+        "promptTokenCount": 1990,
+        "candidatesTokenCount": 78,
+        "totalTokenCount": 2068,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1990
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    },
+    {
+      "id": "c02",
+      "label": "SUPPORTS",
+      "gold": "SUPPORTS",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"SUPPORTS\",\n  \"quote\": \"During the 1990s, the U.S. Congress passed legislation intended to expand affordable housing through looser financing laws, and in 1999 parts of the 1933 Banking Act (Glass-Steagall Act) were repealed, enabling institutions to mix low-risk operations, such as commercial banking and insurance, with higher-risk operations such as investment banking and proprietary trading.\",\n  \"reason\": \"The source text directly supports all parts of the sentence regarding the 1999 repeal of provisions of the Glass-Steagall Act and its effects on combining commercial and investment banking.\"\n}",
+      "verdict": "SUPPORTS",
+      "quote": "During the 1990s, the U.S. Congress passed legislation intended to expand affordable housing through looser financing laws, and in 1999 parts of the 1933 Banking Act (Glass-Steagall Act) were repealed, enabling institutions to mix low-risk operations, such as commercial banking and insurance, with higher-risk operations such as investment banking and proprietary trading.",
+      "reason": "The source text directly supports all parts of the sentence regarding the 1999 repeal of provisions of the Glass-Steagall Act and its effects on combining commercial and investment banking.",
+      "gateHeld": true,
+      "ms": 2417,
+      "promptChars": 25830,
+      "usage": {
+        "promptTokenCount": 6403,
+        "candidatesTokenCount": 147,
+        "totalTokenCount": 6550,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 6403
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    },
+    {
+      "id": "c03",
+      "label": "SUPPORTS",
+      "gold": "SUPPORTS",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"SUPPORTS\",\n  \"quote\": \"In the early and mid-2000s, high-risk mortgages became available from lenders who funded mortgages by repackaging them into pools that were sold to investors. New financial products were used to apportion these risks, with private-label mortgage-backed securities (PMBS) providing most of the funding of subprime mortgages.\",\n  \"reason\": \"The source explicitly states that lenders funded subprime mortgages by repackaging them into private-label mortgage-backed securities (PMBS) sold to investors.\"\n}",
+      "verdict": "SUPPORTS",
+      "quote": "In the early and mid-2000s, high-risk mortgages became available from lenders who funded mortgages by repackaging them into pools that were sold to investors. New financial products were used to apportion these risks, with private-label mortgage-backed securities (PMBS) providing most of the funding of subprime mortgages.",
+      "reason": "The source explicitly states that lenders funded subprime mortgages by repackaging them into private-label mortgage-backed securities (PMBS) sold to investors.",
+      "gateHeld": true,
+      "ms": 2249,
+      "promptChars": 11457,
+      "usage": {
+        "promptTokenCount": 2406,
+        "candidatesTokenCount": 122,
+        "totalTokenCount": 2528,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 2406
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    },
+    {
+      "id": "c04",
+      "label": "SUPPORTS",
+      "gold": "SUPPORTS",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"SUPPORTS\",\n  \"quote\": \"There is no difference in the end product of the integration, but rebasing makes for a cleaner history. If you examine the log of a rebased branch, it looks like a linear history: it appears that all the work happened in series, even when it originally happened in parallel.\",\n  \"reason\": \"The source text confirms that both methods yield the same end product while rebasing creates a linear history where parallel work appears to have occurred in series.\"\n}",
+      "verdict": "SUPPORTS",
+      "quote": "There is no difference in the end product of the integration, but rebasing makes for a cleaner history. If you examine the log of a rebased branch, it looks like a linear history: it appears that all the work happened in series, even when it originally happened in parallel.",
+      "reason": "The source text confirms that both methods yield the same end product while rebasing creates a linear history where parallel work appears to have occurred in series.",
+      "gateHeld": true,
+      "ms": 4388,
+      "promptChars": 13774,
+      "usage": {
+        "promptTokenCount": 3130,
+        "candidatesTokenCount": 111,
+        "totalTokenCount": 3241,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 3130
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    },
+    {
+      "id": "c05",
+      "label": "SUPPORTS",
+      "gold": "SUPPORTS",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"SUPPORTS\",\n  \"quote\": \"An earlier specification was published as a W3C Recommendation. [...] The specification for CORS is included as part of the WHATWG's Fetch Living Standard.\",\n  \"reason\": \"The source explicitly states that an earlier specification was published as a W3C Recommendation and that the current specification is part of the WHATWG's Fetch Living Standard.\"\n}",
+      "verdict": "SUPPORTS",
+      "quote": "An earlier specification was published as a W3C Recommendation. [...] The specification for CORS is included as part of the WHATWG's Fetch Living Standard.",
+      "reason": "The source explicitly states that an earlier specification was published as a W3C Recommendation and that the current specification is part of the WHATWG's Fetch Living Standard.",
+      "gateHeld": false,
+      "ms": 2762,
+      "promptChars": 12104,
+      "usage": {
+        "promptTokenCount": 3077,
+        "candidatesTokenCount": 89,
+        "totalTokenCount": 3166,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 3077
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    },
+    {
+      "id": "c06",
+      "label": "SUPPORTS",
+      "gold": "SUPPORTS",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"PARTIAL\",\n  \"quote\": \"The Mediterranean diet as a concept was first publicized in 1975 by American biologist Ancel Keys and chemist Margaret Keys, a husband-and-wife team.\",\n  \"reason\": \"The source states the concept was publicized in 1975 by Ancel and Margaret Keys based on studies in the 1950s, but does not explicitly mention the late 1950s to early 1960s timeframe for studying eating habits in the matched passage.\"\n}",
+      "verdict": "PARTIAL",
+      "quote": "The Mediterranean diet as a concept was first publicized in 1975 by American biologist Ancel Keys and chemist Margaret Keys, a husband-and-wife team.",
+      "reason": "The source states the concept was publicized in 1975 by Ancel and Margaret Keys based on studies in the 1950s, but does not explicitly mention the late 1950s to early 1960s timeframe for studying eating habits in the matched passage.",
+      "gateHeld": true,
+      "ms": 1927,
+      "promptChars": 26095,
+      "usage": {
+        "promptTokenCount": 6382,
+        "candidatesTokenCount": 121,
+        "totalTokenCount": 6503,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 6382
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": false
+    },
+    {
+      "id": "c07",
+      "label": "PARTIAL",
+      "gold": "PARTIAL",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"PARTIAL\",\n  \"quote\": \"A Mediterranean-style diet typically includes: plenty of fruits, vegetables, bread and other grains, potatoes, beans, nuts and seeds; olive oil as a primary fat source\",\n  \"reason\": \"The source confirms olive oil is a primary fat source and a Mediterranean diet helps remove cholesterol, but combines these ideas across different sentences rather than linking extra virgin olive oil directly as the sole cause for removing cholesterol.\"\n}",
+      "verdict": "PARTIAL",
+      "quote": "A Mediterranean-style diet typically includes: plenty of fruits, vegetables, bread and other grains, potatoes, beans, nuts and seeds; olive oil as a primary fat source",
+      "reason": "The source confirms olive oil is a primary fat source and a Mediterranean diet helps remove cholesterol, but combines these ideas across different sentences rather than linking extra virgin olive oil directly as the sole cause for removing cholesterol.",
+      "gateHeld": true,
+      "ms": 3714,
+      "promptChars": 5860,
+      "usage": {
+        "promptTokenCount": 1163,
+        "candidatesTokenCount": 102,
+        "totalTokenCount": 1265,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1163
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    },
+    {
+      "id": "c08",
+      "label": "SUPPORTS",
+      "gold": "SUPPORTS",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"SUPPORTS\",\n  \"quote\": \"Mediterranean cuisine and its associated traditions and practices were recognized as an Intangible Cultural Heritage of Humanity by UNESCO in 2010 under the name \\\"Mediterranean Diet\\\".\",\n  \"reason\": \"The source explicitly confirms that UNESCO recognized the Mediterranean diet as an Intangible Cultural Heritage of Humanity in 2010 due to its associated traditions and practices.\"\n}",
+      "verdict": "SUPPORTS",
+      "quote": "Mediterranean cuisine and its associated traditions and practices were recognized as an Intangible Cultural Heritage of Humanity by UNESCO in 2010 under the name \"Mediterranean Diet\".",
+      "reason": "The source explicitly confirms that UNESCO recognized the Mediterranean diet as an Intangible Cultural Heritage of Humanity in 2010 due to its associated traditions and practices.",
+      "gateHeld": true,
+      "ms": 1752,
+      "promptChars": 25133,
+      "usage": {
+        "promptTokenCount": 6186,
+        "candidatesTokenCount": 93,
+        "totalTokenCount": 6279,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 6186
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    },
+    {
+      "id": "c09",
+      "label": "SUPPORTS",
+      "gold": "SUPPORTS",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"SUPPORTS\",\n  \"quote\": \"--empty=(drop|keep|stop) How to handle commits that are not empty to start and are not clean cherry-picks of any upstream commit, but which become empty after rebasing (because they contain a subset of already upstream changes): drop The commit will be dropped.\",\n  \"reason\": \"The source explicitly explains the option --empty=drop for automatically dropping commits that become empty after rebasing.\"\n}",
+      "verdict": "SUPPORTS",
+      "quote": "--empty=(drop|keep|stop) How to handle commits that are not empty to start and are not clean cherry-picks of any upstream commit, but which become empty after rebasing (because they contain a subset of already upstream changes): drop The commit will be dropped.",
+      "reason": "The source explicitly explains the option --empty=drop for automatically dropping commits that become empty after rebasing.",
+      "gateHeld": true,
+      "ms": 2438,
+      "promptChars": 18425,
+      "usage": {
+        "promptTokenCount": 4171,
+        "candidatesTokenCount": 102,
+        "totalTokenCount": 4273,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 4171
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    },
+    {
+      "id": "c10",
+      "label": "SUPPORTS",
+      "gold": "SUPPORTS",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"SUPPORTS\",\n  \"quote\": \"CSS: Web Fonts via @font-face CSS Shapes from images JavaScript: Invocations of fetch() or XMLHttpRequest, as discussed above WebGL textures Images/video frames drawn to a canvas using drawImage() without tainting the canvas, allowing its pixel data to be read or exported\",\n  \"reason\": \"The source explicitly lists fetch() calls, @font-face web fonts, WebGL textures, and images drawn to a canvas as cases where CORS applies.\"\n}",
+      "verdict": "SUPPORTS",
+      "quote": "CSS: Web Fonts via @font-face CSS Shapes from images JavaScript: Invocations of fetch() or XMLHttpRequest, as discussed above WebGL textures Images/video frames drawn to a canvas using drawImage() without tainting the canvas, allowing its pixel data to be read or exported",
+      "reason": "The source explicitly lists fetch() calls, @font-face web fonts, WebGL textures, and images drawn to a canvas as cases where CORS applies.",
+      "gateHeld": true,
+      "ms": 3780,
+      "promptChars": 26824,
+      "usage": {
+        "promptTokenCount": 6153,
+        "candidatesTokenCount": 114,
+        "totalTokenCount": 6267,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 6153
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    },
+    {
+      "id": "c11",
+      "label": "PARTIAL",
+      "gold": "PARTIAL",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"PARTIAL\",\n  \"quote\": \"A 2017 review provided evidence that the Mediterranean diet lowers the risk of heart disease and early death; it may also help with weight loss in obese people.\",\n  \"reason\": \"The source states that a 2017 review provided evidence that the diet lowers early death and may help with weight loss in obese people, but it attributes the weight loss benefit as something that 'may' happen rather than definitively stating it aids in weight loss.\"\n}",
+      "verdict": "PARTIAL",
+      "quote": "A 2017 review provided evidence that the Mediterranean diet lowers the risk of heart disease and early death; it may also help with weight loss in obese people.",
+      "reason": "The source states that a 2017 review provided evidence that the diet lowers early death and may help with weight loss in obese people, but it attributes the weight loss benefit as something that 'may' happen rather than definitively stating it aids in weight loss.",
+      "gateHeld": false,
+      "ms": 2538,
+      "promptChars": 25792,
+      "usage": {
+        "promptTokenCount": 6331,
+        "candidatesTokenCount": 112,
+        "totalTokenCount": 6443,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 6331
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    },
+    {
+      "id": "c12",
+      "label": "PARTIAL",
+      "gold": "PARTIAL",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"PARTIAL\",\n  \"quote\": \"reasons for employing a global interpreter lock include: increased speed of single-threaded programs (no necessity to acquire or release locks on all data structures separately), easy integration of C libraries that usually are not thread-safe, ease of implementation (having a single GIL is much simpler to implement than a lock-free interpreter or one using fine-grained locks).\",\n  \"reason\": \"The source mentions ease of implementation over fine-grained locks, but does not mention Guido van Rossum implementing it.\"\n}",
+      "verdict": "PARTIAL",
+      "quote": "reasons for employing a global interpreter lock include: increased speed of single-threaded programs (no necessity to acquire or release locks on all data structures separately), easy integration of C libraries that usually are not thread-safe, ease of implementation (having a single GIL is much simpler to implement than a lock-free interpreter or one using fine-grained locks).",
+      "reason": "The source mentions ease of implementation over fine-grained locks, but does not mention Guido van Rossum implementing it.",
+      "gateHeld": false,
+      "ms": 2226,
+      "promptChars": 7814,
+      "usage": {
+        "promptTokenCount": 1696,
+        "candidatesTokenCount": 120,
+        "totalTokenCount": 1816,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1696
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    },
+    {
+      "id": "c13",
+      "label": "PARTIAL",
+      "gold": "PARTIAL",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"PARTIAL\",\n  \"quote\": \"Even among adults, heavy caffeine use can cause bad side effects.\",\n  \"reason\": \"The source mentions heavy caffeine use causes bad side effects, but does not specifically list restlessness, fast heart rate, and sleep disruptions.\"\n}",
+      "verdict": "PARTIAL",
+      "quote": "Even among adults, heavy caffeine use can cause bad side effects.",
+      "reason": "The source mentions heavy caffeine use causes bad side effects, but does not specifically list restlessness, fast heart rate, and sleep disruptions.",
+      "gateHeld": true,
+      "ms": 1528,
+      "promptChars": 2625,
+      "usage": {
+        "promptTokenCount": 575,
+        "candidatesTokenCount": 64,
+        "totalTokenCount": 639,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 575
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    },
+    {
+      "id": "c14",
+      "label": "SUPPORTS",
+      "gold": "SUPPORTS",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"SUPPORTS\",\n  \"quote\": \"If the process is almost purely made up of interpreted code and does not make calls outside of the interpreter which block for long periods of time (allowing the GIL to be released by that thread while they process), there is likely to be very little increase in speed when running the process on a multiprocessor machine. Due to signaling with a CPU-bound thread, it can cause a significant slowdown, even on single processors.\",\n  \"reason\": \"The source text confirms that CPython has a GIL which limits parallelism, resulting in little speed increase or even significant slowdowns on multi-core processors for CPU-bound threaded programs.\"\n}",
+      "verdict": "SUPPORTS",
+      "quote": "If the process is almost purely made up of interpreted code and does not make calls outside of the interpreter which block for long periods of time (allowing the GIL to be released by that thread while they process), there is likely to be very little increase in speed when running the process on a multiprocessor machine. Due to signaling with a CPU-bound thread, it can cause a significant slowdown, even on single processors.",
+      "reason": "The source text confirms that CPython has a GIL which limits parallelism, resulting in little speed increase or even significant slowdowns on multi-core processors for CPU-bound threaded programs.",
+      "gateHeld": true,
+      "ms": 5875,
+      "promptChars": 7548,
+      "usage": {
+        "promptTokenCount": 1657,
+        "candidatesTokenCount": 144,
+        "totalTokenCount": 1801,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1657
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    },
+    {
+      "id": "c15",
+      "label": "PARTIAL",
+      "gold": "PARTIAL",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"SUPPORTS\",\n  \"quote\": \"Studies also suggest that this type of diet may lower stress and inflammation in the body. As a result, it may lower the risk of diseases linked to inflammation. These include heart disease, diabetes, cancer and Alzheimer's disease.\",\n  \"reason\": \"The source explicitly states that following the diet lowers stress and inflammation, reducing the risk of heart disease, diabetes, and Alzheimer's disease.\"\n}",
+      "verdict": "SUPPORTS",
+      "quote": "Studies also suggest that this type of diet may lower stress and inflammation in the body. As a result, it may lower the risk of diseases linked to inflammation. These include heart disease, diabetes, cancer and Alzheimer's disease.",
+      "reason": "The source explicitly states that following the diet lowers stress and inflammation, reducing the risk of heart disease, diabetes, and Alzheimer's disease.",
+      "gateHeld": true,
+      "ms": 4762,
+      "promptChars": 13836,
+      "usage": {
+        "promptTokenCount": 3293,
+        "candidatesTokenCount": 99,
+        "totalTokenCount": 3392,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 3293
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": false
+    },
+    {
+      "id": "c16",
+      "label": "PARTIAL",
+      "gold": "PARTIAL",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"PARTIAL\",\n  \"quote\": \"Caffeine use may be safe for adults, but it's not a good idea for children.\",\n  \"reason\": \"The source mentions it is not a good idea for children, but omits mention of teenagers and healthcare experts.\"\n}",
+      "verdict": "PARTIAL",
+      "quote": "Caffeine use may be safe for adults, but it's not a good idea for children.",
+      "reason": "The source mentions it is not a good idea for children, but omits mention of teenagers and healthcare experts.",
+      "gateHeld": true,
+      "ms": 5097,
+      "promptChars": 2720,
+      "usage": {
+        "promptTokenCount": 566,
+        "candidatesTokenCount": 67,
+        "totalTokenCount": 633,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 566
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    },
+    {
+      "id": "c17",
+      "label": "SUPPORTS",
+      "gold": "SUPPORTS",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"PARTIAL\",\n  \"quote\": \"The Mediterranean diet is one of three healthy diets recommended in the 2015-2020 Dietary Guidelines for Americans, along with the DASH diet and vegetarian diet.[16] It is also recognized by the World Health Organization as a healthy eating pattern.[17]\",\n  \"reason\": \"The source supports that the 2015-2020 Dietary Guidelines recommend it as one of three healthy diets and that the WHO recognizes it, but does not explicitly state it is 'one of the healthiest dietary patterns available'.\"\n}",
+      "verdict": "PARTIAL",
+      "quote": "The Mediterranean diet is one of three healthy diets recommended in the 2015-2020 Dietary Guidelines for Americans, along with the DASH diet and vegetarian diet.[16] It is also recognized by the World Health Organization as a healthy eating pattern.[17]",
+      "reason": "The source supports that the 2015-2020 Dietary Guidelines recommend it as one of three healthy diets and that the WHO recognizes it, but does not explicitly state it is 'one of the healthiest dietary patterns available'.",
+      "gateHeld": true,
+      "ms": 5529,
+      "promptChars": 25323,
+      "usage": {
+        "promptTokenCount": 6243,
+        "candidatesTokenCount": 130,
+        "totalTokenCount": 6373,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 6243
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": false
+    },
+    {
+      "id": "c18",
+      "label": "PARTIAL",
+      "gold": "PARTIAL",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"PARTIAL\",\n  \"quote\": \"As housing demand and prices continued to fall, the financial contagion spread to global credit markets by August 2007.\",\n  \"reason\": \"The source supports the real estate values collapsing and the financial contagion spreading by August 2007 due to mortgage assets and derivatives, but it states that AIG was taken over in September 2008 rather than December 2007.\"\n}",
+      "verdict": "PARTIAL",
+      "quote": "As housing demand and prices continued to fall, the financial contagion spread to global credit markets by August 2007.",
+      "reason": "The source supports the real estate values collapsing and the financial contagion spreading by August 2007 due to mortgage assets and derivatives, but it states that AIG was taken over in September 2008 rather than December 2007.",
+      "gateHeld": true,
+      "ms": 3427,
+      "promptChars": 26922,
+      "usage": {
+        "promptTokenCount": 6629,
+        "candidatesTokenCount": 102,
+        "totalTokenCount": 6731,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 6629
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    },
+    {
+      "id": "c19",
+      "label": "PARTIAL",
+      "gold": "PARTIAL",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"PARTIAL\",\n  \"quote\": \"The browser sends the GET request with an extra Origin HTTP header to service.example.com containing the domain that served the parent page: http://www.example.com\",\n  \"reason\": \"The source mentions the Origin header containing the calling site, but does not state any 100 ms timeout requirement.\"\n}",
+      "verdict": "PARTIAL",
+      "quote": "The browser sends the GET request with an extra Origin HTTP header to service.example.com containing the domain that served the parent page: http://www.example.com",
+      "reason": "The source mentions the Origin header containing the calling site, but does not state any 100 ms timeout requirement.",
+      "gateHeld": true,
+      "ms": 2186,
+      "promptChars": 12479,
+      "usage": {
+        "promptTokenCount": 3182,
+        "candidatesTokenCount": 84,
+        "totalTokenCount": 3266,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 3182
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    },
+    {
+      "id": "c20",
+      "label": "PARTIAL",
+      "gold": "PARTIAL",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"NOT_SUPPORTED\",\n  \"quote\": \"\",\n  \"reason\": \"The source text does not mention Git 3.0 or the removal of the --onto and --keep-base flags.\"\n}",
+      "verdict": "NOT_SUPPORTED",
+      "quote": "",
+      "reason": "The source text does not mention Git 3.0 or the removal of the --onto and --keep-base flags.",
+      "gateHeld": false,
+      "ms": 1636,
+      "promptChars": 18219,
+      "usage": {
+        "promptTokenCount": 4160,
+        "candidatesTokenCount": 52,
+        "totalTokenCount": 4212,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 4160
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": false
+    },
+    {
+      "id": "c21",
+      "label": "SUPPORTS",
+      "gold": "SUPPORTS",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"PARTIAL\",\n  \"quote\": \"although some implementations provide for CPU intensive code to release the GIL, allowing multiple threads to use multiple cores.\",\n  \"reason\": \"The source mentions some implementations allow releasing the GIL for CPU intensive code, but does not state that CPU-bound threads frequently block each other due to contention over it.\"\n}",
+      "verdict": "PARTIAL",
+      "quote": "although some implementations provide for CPU intensive code to release the GIL, allowing multiple threads to use multiple cores.",
+      "reason": "The source mentions some implementations allow releasing the GIL for CPU intensive code, but does not state that CPU-bound threads frequently block each other due to contention over it.",
+      "gateHeld": true,
+      "ms": 4588,
+      "promptChars": 8134,
+      "usage": {
+        "promptTokenCount": 1752,
+        "candidatesTokenCount": 79,
+        "totalTokenCount": 1831,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 1752
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": false
+    },
+    {
+      "id": "c22",
+      "label": "NOT_SUPPORTED",
+      "gold": "NOT_SUPPORTED",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"NOT_SUPPORTED\",\n  \"quote\": \"\",\n  \"reason\": \"The source text does not mention that the unseen side receives full sunlight during a new moon.\"\n}",
+      "verdict": "NOT_SUPPORTED",
+      "quote": "",
+      "reason": "The source text does not mention that the unseen side receives full sunlight during a new moon.",
+      "gateHeld": false,
+      "ms": 3866,
+      "promptChars": 26124,
+      "usage": {
+        "promptTokenCount": 6729,
+        "candidatesTokenCount": 45,
+        "totalTokenCount": 6774,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 6729
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    },
+    {
+      "id": "c23",
+      "label": "NOT_SUPPORTED",
+      "gold": "NOT_SUPPORTED",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"NOT_SUPPORTED\",\n  \"quote\": \"The server transmitted how much and when to lift such restrictions to the client using a new set of HTTP headers.\",\n  \"reason\": \"The text mentions CORS headers lifting restrictions, but does not state the specific details about approving access with Access-Control-Allow-Origin and wildcards.\"\n}",
+      "verdict": "NOT_SUPPORTED",
+      "quote": "The server transmitted how much and when to lift such restrictions to the client using a new set of HTTP headers.",
+      "reason": "The text mentions CORS headers lifting restrictions, but does not state the specific details about approving access with Access-Control-Allow-Origin and wildcards.",
+      "gateHeld": true,
+      "ms": 1876,
+      "promptChars": 16661,
+      "usage": {
+        "promptTokenCount": 4013,
+        "candidatesTokenCount": 79,
+        "totalTokenCount": 4092,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 4013
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    },
+    {
+      "id": "c24",
+      "label": "NOT_SUPPORTED",
+      "gold": "NOT_SUPPORTED",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"NOT_SUPPORTED\",\n  \"quote\": \"\",\n  \"reason\": \"The provided text is about git rebase options and does not mention git merge or its mechanics.\"\n}",
+      "verdict": "NOT_SUPPORTED",
+      "quote": "",
+      "reason": "The provided text is about git rebase options and does not mention git merge or its mechanics.",
+      "gateHeld": false,
+      "ms": 3081,
+      "promptChars": 18799,
+      "usage": {
+        "promptTokenCount": 4273,
+        "candidatesTokenCount": 46,
+        "totalTokenCount": 4319,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 4273
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    },
+    {
+      "id": "c25",
+      "label": "NOT_SUPPORTED",
+      "gold": "NOT_SUPPORTED",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"NOT_SUPPORTED\",\n  \"quote\": \"\",\n  \"reason\": \"The source text discusses the subprime mortgage crisis and housing market, but it does not mention the 1933 Glass-Steagall Act or financial deregulation in 1999.\"\n}",
+      "verdict": "NOT_SUPPORTED",
+      "quote": "",
+      "reason": "The source text discusses the subprime mortgage crisis and housing market, but it does not mention the 1933 Glass-Steagall Act or financial deregulation in 1999.",
+      "gateHeld": false,
+      "ms": 1768,
+      "promptChars": 11517,
+      "usage": {
+        "promptTokenCount": 2418,
+        "candidatesTokenCount": 67,
+        "totalTokenCount": 2485,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 2418
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    },
+    {
+      "id": "c26",
+      "label": "NOT_SUPPORTED",
+      "gold": "NOT_SUPPORTED",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"NOT_SUPPORTED\",\n  \"quote\": \"\",\n  \"reason\": \"The provided source text does not contain information about servers explicitly informing browsers whether HTTP Authentication data or Cookies should be included in transactions.\"\n}",
+      "verdict": "NOT_SUPPORTED",
+      "quote": "",
+      "reason": "The provided source text does not contain information about servers explicitly informing browsers whether HTTP Authentication data or Cookies should be included in transactions.",
+      "gateHeld": false,
+      "ms": 3133,
+      "promptChars": 16762,
+      "usage": {
+        "promptTokenCount": 4017,
+        "candidatesTokenCount": 52,
+        "totalTokenCount": 4069,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 4017
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    },
+    {
+      "id": "c27",
+      "label": "NOT_SUPPORTED",
+      "gold": "NOT_SUPPORTED",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"PARTIAL\",\n  \"quote\": \"Mediterranean cuisine and its associated traditions and practices were recognized as an Intangible Cultural Heritage of Humanity by UNESCO in 2010 under the name \\\"Mediterranean Diet\\\".\",\n  \"reason\": \"The source states that UNESCO recognized it in 2010, not 2002 as claimed in the sentence.\"\n}",
+      "verdict": "PARTIAL",
+      "quote": "Mediterranean cuisine and its associated traditions and practices were recognized as an Intangible Cultural Heritage of Humanity by UNESCO in 2010 under the name \"Mediterranean Diet\".",
+      "reason": "The source states that UNESCO recognized it in 2010, not 2002 as claimed in the sentence.",
+      "gateHeld": true,
+      "ms": 8200,
+      "promptChars": 25133,
+      "usage": {
+        "promptTokenCount": 6186,
+        "candidatesTokenCount": 86,
+        "totalTokenCount": 6272,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 6186
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": false
+    },
+    {
+      "id": "c28",
+      "label": "NOT_SUPPORTED",
+      "gold": "NOT_SUPPORTED",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"PARTIAL\",\n  \"quote\": \"The Mediterranean diet as a concept was first publicized in 1975 by American biologist Ancel Keys and chemist Margaret Keys.\",\n  \"reason\": \"The source states the diet was proposed in 1975 by Ancel and Margaret Keys, not in 1985 by Dr. John Hale.\"\n}",
+      "verdict": "PARTIAL",
+      "quote": "The Mediterranean diet as a concept was first publicized in 1975 by American biologist Ancel Keys and chemist Margaret Keys.",
+      "reason": "The source states the diet was proposed in 1975 by Ancel and Margaret Keys, not in 1985 by Dr. John Hale.",
+      "gateHeld": false,
+      "ms": 3118,
+      "promptChars": 26099,
+      "usage": {
+        "promptTokenCount": 6367,
+        "candidatesTokenCount": 84,
+        "totalTokenCount": 6451,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 6367
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": false
+    },
+    {
+      "id": "c29",
+      "label": "NOT_SUPPORTED",
+      "gold": "NOT_SUPPORTED",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"NOT_SUPPORTED\",\n  \"quote\": \"As the Federal Reserve (Fed) lowered the federal funds rate from 2000 to 2003, institutions increasingly targeted low-income homebuyers, largely belonging to racial minority groups, with high-risk subprime loans\",\n  \"reason\": \"The source states the Federal Reserve lowered rates from 2000 to 2003 rather than raising them between 2008 and 2010.\"\n}",
+      "verdict": "NOT_SUPPORTED",
+      "quote": "As the Federal Reserve (Fed) lowered the federal funds rate from 2000 to 2003, institutions increasingly targeted low-income homebuyers, largely belonging to racial minority groups, with high-risk subprime loans",
+      "reason": "The source states the Federal Reserve lowered rates from 2000 to 2003 rather than raising them between 2008 and 2010.",
+      "gateHeld": true,
+      "ms": 2446,
+      "promptChars": 26988,
+      "usage": {
+        "promptTokenCount": 6622,
+        "candidatesTokenCount": 112,
+        "totalTokenCount": 6734,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 6622
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    },
+    {
+      "id": "c30",
+      "label": "NOT_SUPPORTED",
+      "gold": "NOT_SUPPORTED",
+      "promptVersion": "judge-3class-v1",
+      "model": "gemini-3.5-flash-lite",
+      "inferenceSource": "in_cloud",
+      "raw": "{\n  \"verdict\": \"NOT_SUPPORTED\",\n  \"quote\": \"If you examine the log of a rebased branch, it looks like a linear history: it appears that all the work happened in series, even when it originally happened in parallel.\",\n  \"reason\": \"The source states that merging produces a branching history and rebasing produces a linear history, whereas the sentence claims the opposite about git rebase creating a branching history.\"\n}",
+      "verdict": "NOT_SUPPORTED",
+      "quote": "If you examine the log of a rebased branch, it looks like a linear history: it appears that all the work happened in series, even when it originally happened in parallel.",
+      "reason": "The source states that merging produces a branching history and rebasing produces a linear history, whereas the sentence claims the opposite about git rebase creating a branching history.",
+      "gateHeld": true,
+      "ms": 1425,
+      "promptChars": 13751,
+      "usage": {
+        "promptTokenCount": 3113,
+        "candidatesTokenCount": 95,
+        "totalTokenCount": 3208,
+        "promptTokensDetails": [
+          {
+            "modality": "TEXT",
+            "tokenCount": 3113
+          }
+        ],
+        "serviceTier": "standard"
+      },
+      "attempts": 1,
+      "transientErrors": [],
+      "correct": true
+    }
+  ]
+}

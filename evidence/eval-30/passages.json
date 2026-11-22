@@ -1,0 +1,362 @@
+[
+  {
+    "id": "c01",
+    "claim": "For example, the Moon rotates on its axis every 27 Earth days, matching its orbital period",
+    "url": "https://science.nasa.gov/moon/facts/",
+    "contentSha256": "d20eb2057134bcfdd40a4a1ab50f5f5d1e8265c34200eac6d5c6d79950f6438b",
+    "contentChars": 7343,
+    "passages": [
+      "The Moon makes a complete orbit around Earth in 27 Earth days and rotates or spins at that same rate, or in that same amount of time. Because Earth is moving as well - rotating on its axis as it orbits the Sun - from our perspective, the Moon appears to orbit us every 29 days. Rings The Moon has no rings.",
+      "During a \"full moon,\" the hemisphere of the Moon we can see from Earth is fully illuminated by the Sun. And a \"new moon\" occurs when the far side of the Moon has full sunlight, and the side facing us is having its night. The Moon makes a complete orbit around Earth in 27 Earth days and rotates or spins at that same rate, or in that same amount of time.",
+      "That means 30 Earth-sized planets could fit in between Earth and the Moon. The Moon is slowly moving away from Earth, getting about an inch farther away each year. Orbit and Rotation The Moon is rotating at the same rate that it revolves around Earth (called synchronous rotation), so the same hemisphere faces Earth all the time."
+    ]
+  },
+  {
+    "id": "c02",
+    "claim": "Deregulation continued in 1999 with the repeal of key provisions of the 1933 Glass–Steagall Act, which enabled institutions to mix low-risk commercial banking with high-risk investment banking and proprietary trading",
+    "url": "https://en.wikipedia.org/wiki/Financial_crisis_of_2007%E2%80%932008",
+    "contentSha256": "a9d1a4b17f5843e8a66ae5e2a461fa1c9020077303921aac7171f2b25d08f25f",
+    "contentChars": 179574,
+    "passages": [
+      "During the 1990s, the U.S. Congress passed legislation intended to expand affordable housing through looser financing laws, and in 1999 parts of the 1933 Banking Act (Glass-Steagall Act) were repealed, enabling institutions to mix low-risk operations, such as commercial banking and insurance, with higher-risk operations such as investment banking and proprietary trading.[2] As the Federal Reserve (Fed) lowered the federal funds rate from 2000 to 2003, institutions increasingly targeted low-income homebuyers, largely belonging to racial minority groups, with high-risk subprime loans;[3] this development went unattended by regulators.[4] As interest rates rose from 2004 to 2006, monthly paymen",
+      "\"Reflections on Glass-Steagall and Maniacal Deregulation\". Common Dreams. ↑ Strategische Unternehmensfuehrung Nr. 1, 1999.",
+      "\"Consequences of The Glass-Steagall Act Repeal\". Investopedia. Archived from the original on February 14, 2025."
+    ]
+  },
+  {
+    "id": "c03",
+    "claim": "Lenders funded these subprime mortgages by repackaging them into complex private-label mortgage-backed securities (PMBS) and selling them to global investors",
+    "url": "https://www.federalreservehistory.org/essays/subprime-mortgage-crisis",
+    "contentSha256": "c33984413dbb417ed09721e884b056fb009402c4f9b3245ec6c6c677cf3f0838",
+    "contentChars": 9132,
+    "passages": [
+      "In the early and mid-2000s, high-risk mortgages became available from lenders who funded mortgages by repackaging them into pools that were sold to investors. New financial products were used to apportion these risks, with private-label mortgage-backed securities (PMBS) providing most of the funding of subprime mortgages. The less vulnerable of these securities were viewed as having low risk either because they were insured with new financial instruments or because other securities would first absorb any losses on the underlying mortgages (DiMartino and Duca 2007).",
+      "When house prices peaked, mortgage refinancing and selling homes became less viable means of settling mortgage debt and mortgage loss rates began rising for lenders and investors. In April 2007, New Century Financial Corp., a leading subprime mortgage lender, filed for bankruptcy. Shortly thereafter, large numbers of PMBS and PMBS-backed securities were downgraded to high risk, and several subprime lenders closed.",
+      "While some high-risk families could obtain small-sized mortgages backed by the Federal Housing Administration (FHA), others, facing limited credit options, rented. In that era, homeownership fluctuated around 65 percent, mortgage foreclosure rates were low, and home construction and house prices mainly reflected swings in mortgage interest rates and income. In the early and mid-2000s, high-risk mortgages became available from lenders who funded mortgages by repackaging them into pools that were sold to investors."
+    ]
+  },
+  {
+    "id": "c04",
+    "claim": "Although both methods yield the exact same final code integration, `git rebase` avoids extra merge commits and produces a linear history where work appears to have occurred in series rather than in parallel",
+    "url": "https://git-scm.com/book/en/v2/Git-Branching-Rebasing",
+    "contentSha256": "d3ec216fcc4427c7edfeb5e93af95d63f0c827924202e05800d66eb8ff37f4af",
+    "contentChars": 11497,
+    "passages": [
+      "Fast-forwarding the master branch Now, the snapshot pointed to by C4' is exactly the same as the one that was pointed to by C5 in the merge example. There is no difference in the end product of the integration, but rebasing makes for a cleaner history. If you examine the log of a rebased branch, it looks like a linear history: it appears that all the work happened in series, even when it originally happened in parallel.",
+      "If you examine the log of a rebased branch, it looks like a linear history: it appears that all the work happened in series, even when it originally happened in parallel. Often, you'll do this to make sure your commits apply cleanly on a remote branch - perhaps in a project to which you're trying to contribute but that you don't maintain. In this case, you'd do your work in a branch and then rebase your work onto origin/master when you were ready to submit your patches to the main project.",
+      "In this case, you'd do your work in a branch and then rebase your work onto origin/master when you were ready to submit your patches to the main project. That way, the maintainer doesn't have to do any integration work - just a fast-forward or a clean apply. Note that the snapshot pointed to by the final commit you end up with, whether it's the last of the rebased commits for a rebase or the final merge commit after a merge, is the same snapshot - it's only the history that is different."
+    ]
+  },
+  {
+    "id": "c05",
+    "claim": "The official specification was originally published as a W3C Recommendation and is currently maintained as part of the WHATWG Fetch Living Standard",
+    "url": "https://en.wikipedia.org/wiki/Cross-origin_resource_sharing",
+    "contentSha256": "c3282ecf61eeaaa96bc967fef97fec634b1ddc8cb75c62d4ce32a2632d770446",
+    "contentChars": 9565,
+    "passages": [
+      "The specification for CORS is included as part of the WHATWG's Fetch Living Standard.[2] This specification describes how CORS is currently implemented in browsers.[3] An earlier specification was published as a W3C Recommendation.[4] Path of an XMLHttpRequest (XHR) through CORSFor HTTP requests made from JavaScript that can't be made by using a <form> tag pointing to another domain or containing non-safelisted headers, the specification mandates that browsers \"preflight\" the request, soliciting supported methods from the server with an HTTP OPTIONS request method, and then, upon \"approval\" from the server, sending the actual request with the actual HTTP request method. Servers can also noti",
+      "Certain \"cross-domain\" HTTP requests, notably Ajax requests, are forbidden by default by the same-origin security policy. CORS defines a way in which a web browser and server can interact to determine whether it is safe to allow the cross-origin request.[1] It allows for more freedom and functionality than purely same-origin requests, but is more secure[how?] than simply allowing all cross-origin requests. The specification for CORS is included as part of the WHATWG's Fetch Living Standard.[2] This specification describes how CORS is currently implemented in browsers.[3] An earlier specification was published as a W3C Recommendation.[4] Path of an XMLHttpRequest (XHR) through CORSFor HTTP re",
+      "Cross Origin Resource Sharing\". caniuse.com. Retrieved 2012-07-12. Fetch Living Standard (the current specification for CORS) Detailed how-to information for enabling CORS support in various (web) servers HTML5 Rocks explains how CORS works in detail Online CORS misconfiguration scanner Archived 2020-08-10 at the Wayback Machine"
+    ]
+  },
+  {
+    "id": "c06",
+    "claim": "The dietary concept was first formally proposed in 1975 by American biologist Ancel Keys and chemist Margaret Keys after studying regional eating habits in the late 1950s to early 1960s",
+    "url": "https://en.wikipedia.org/wiki/Mediterranean_diet",
+    "contentSha256": "07b8b8ae4357d04b5c14ecc4f81f62a27df554519edc345fe9266ca7f59ff0cb",
+    "contentChars": 45159,
+    "passages": [
+      "Some ingredients that form a large part of the Mediterranean diet: fruit, vegetables, bread, olive oil and red wine The Mediterranean diet is a dietary concept that was first proposed in 1975 by American biologist Ancel Keys and chemist Margaret Keys. It is inspired by the eating habits and traditional foods of Greece, Italy and the Mediterranean coasts of France and Spain, as observed in the late 1950s to early 1960s.[1][2] It is distinct from both Mediterranean cuisine, which encompasses the diverse culinary traditions of Mediterranean countries,[3] and from the Atlantic diet of northwestern Spain and Portugal, albeit with some shared characteristics.[4] The Mediterranean diet is the most ",
+      "This article is about the dietary recommendation that became popular in the 1990s. For food of the areas around the Mediterranean Sea, see Mediterranean cuisine. Some ingredients that form a large part of the Mediterranean diet: fruit, vegetables, bread, olive oil and red wine The Mediterranean diet is a dietary concept that was first proposed in 1975 by American biologist Ancel Keys and chemist Margaret Keys.",
+      "S2CID 4453972. 1 2 3 Ancel Keys; Margaret Keys (December 1975). How to eat well and stay well the Mediterranean way."
+    ]
+  },
+  {
+    "id": "c07",
+    "claim": "Extra virgin olive oil is used as the primary source of fat, which research shows helps remove excess cholesterol from arteries and keep blood vessels open",
+    "url": "https://www.heart.org/en/healthy-living/healthy-eating/eat-smart/nutrition-basics/mediterranean-diet",
+    "contentSha256": "f61eb3db3d650a5d0effd5a0683891f2f104b2c638785da6e0b5f0618e100de6",
+    "contentChars": 3666,
+    "passages": [
+      "There is some evidence that a Mediterranean diet rich in virgin olive oil may help the body remove excess cholesterol from arteries and keep blood vessels open. What you eat affects many aspects of your overall health, including brain health. A healthy diet can improve your ability to think, remember and process information as you age.",
+      "However, there are some common factors. A Mediterranean-style diet typically includes: plenty of fruits, vegetables, bread and other grains, potatoes, beans, nuts and seeds; olive oil as a primary fat source; and dairy products, eggs, fish and poultry in low to moderate amounts. Fish and poultry are more common than red meat in this diet.",
+      "A Mediterranean-style diet can help you achieve the American Heart Association's recommendations for a healthy dietary pattern that: emphasizes vegetables, fruits, whole grains, beans and legumes; includes low-fat or fat-free dairy products, fish, poultry, non-tropical vegetable oils and nuts; and limits added sugars, sugary beverages, sodium, highly processed foods, refined carbohydrates, saturated fats, and fatty or processed meats. This style of eating can play a big role in preventing heart disease and stroke and reducing risk factors such as obesity, diabetes, high cholesterol and high blood pressure. There is some evidence that a Mediterranean diet rich in virgin olive oil may help the"
+    ]
+  },
+  {
+    "id": "c08",
+    "claim": "In recognition of its rich cultural values and traditions, UNESCO designated the Mediterranean diet as an Intangible Cultural Heritage of Humanity in 2010",
+    "url": "https://en.wikipedia.org/wiki/Mediterranean_diet",
+    "contentSha256": "07b8b8ae4357d04b5c14ecc4f81f62a27df554519edc345fe9266ca7f59ff0cb",
+    "contentChars": 45159,
+    "passages": [
+      "Mayo Clinic. Retrieved 10 July 2025. ↑ \"Intangible Cultural Heritage\". UNESCO Med Diet.",
+      "\"Mediterranean diet pyramid today. Science and cultural updates\". Public Health Nutrition.",
+      "1-2. ISBN 978-0-385-00906-5. ↑ Willett WC (June 1995). \"Mediterranean diet pyramid: a cultural model for healthy eating\"."
+    ]
+  },
+  {
+    "id": "c09",
+    "claim": "It also provides options such as `--empty=drop` to automatically drop commits that become redundant after rebasing onto upstream changes",
+    "url": "https://git-scm.com/docs/git-rebase",
+    "contentSha256": "f4a2ee6f301435fa8075f88f506bd46c3a474d32fd53c854a41e8ebed7e1ff47",
+    "contentChars": 16272,
+    "passages": [
+      "This option may become a no-op in the future once the merge backend handles everything the apply one does. See also INCOMPATIBLE OPTIONS below. --empty=(drop|keep|stop) How to handle commits that are not empty to start and are not clean cherry-picks of any upstream commit, but which become empty after rebasing (because they contain a subset of already upstream changes): drop The commit will be dropped. This is the default behavior. keep The commit will be kept.",
+      "For commits which do not start empty but become empty after rebasing, see the --empty flag. See also INCOMPATIBLE OPTIONS below. --reapply-cherry-picks --no-reapply-cherry-picks Reapply all clean cherry-picks of any upstream commit instead of preemptively dropping them. (If these commits then become empty after rebasing, because they contain a subset of already upstream changes, the behavior towards them is controlled by the --empty flag.)",
+      "(If these commits then become empty after rebasing, because they contain a subset of already upstream changes, the behavior towards them is controlled by the --empty flag.) In the absence of --keep-base (or if --no-reapply-cherry-picks is given), these commits will be automatically dropped. Because this necessitates reading all upstream commits, this can be expensive in repositories with a large number of upstream commits that need to be read."
+    ]
+  },
+  {
+    "id": "c10",
+    "claim": "Beyond JavaScript `fetch()` calls, CORS applies to CSS `@font-face` web fonts, WebGL textures, and images drawn to an HTML `<canvas>` element",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS",
+    "contentSha256": "56749f03e5ac80a53edd920bea335623d93f2c634b236ae4ed15eaf217f72a92",
+    "contentChars": 24778,
+    "passages": [
+      "What requests use CORS? The cross-origin sharing standard can enable cross-origin HTTP requests for cases such as: HTML: Resources fetched by HTML elements with the crossorigin attribute, such as <img crossorigin=\"anonymous\"> JavaScript modules loaded using <script type=\"module\"> and their imports, even when the crossorigin attribute is omitted CSS: Web Fonts via @font-face CSS Shapes from images JavaScript: Invocations of fetch() or XMLHttpRequest, as discussed above WebGL textures Images/video frames drawn to a canvas using drawImage() without tainting the canvas, allowing its pixel data to be read or exported If a site merely embeds a resource with no way to read its data, or merely write",
+      "Those are called simple requests from the obsolete CORS spec, though the Fetch spec (which now defines CORS) doesn't use that term. The motivation is that the <form> element from HTML 4.0 (which predates cross-site fetch() and XMLHttpRequest) can submit simple requests to any origin, so anyone writing a server must already be protecting against cross-site request forgery (CSRF). Under this assumption, the server doesn't have to opt-in (by responding to a preflight request) to receive any request that looks like a form submission, since the threat of CSRF is no worse than that of form submission.",
+      "For example, suppose web content at https://foo.example wishes to fetch JSON content from domain https://bar.other. Code of this sort might be used in JavaScript deployed on foo.example: jsconst fetchPromise = fetch(\"https://bar.other\"); fetchPromise .then((response) => response.json()) .then((data) => { console.log(data); }); This operation performs a simple exchange between the client and the server, using CORS headers to handle the privileges: Let's look at what the browser will send to the server in this case: httpGET /resources/public-data/ HTTP/1.1 Host: bar.other User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:71.0) Gecko/20100101 Firefox/71.0 Accept: text/html,applicatio"
+    ]
+  },
+  {
+    "id": "c11",
+    "claim": "A 2017 medical review established that this dietary pattern effectively lowers the risk of early death and aids in weight loss for obese individuals",
+    "url": "https://en.wikipedia.org/wiki/Mediterranean_diet",
+    "contentSha256": "07b8b8ae4357d04b5c14ecc4f81f62a27df554519edc345fe9266ca7f59ff0cb",
+    "contentChars": 45159,
+    "passages": [
+      "(April 2016). \"Systematic Review of the Mediterranean Diet for Long-Term Weight Loss\". The American Journal of Medicine.",
+      "The research concluded that Mediterranean, low-carbohydrate, low-glycemic index, and high-protein diets are effective in improving markers of risk for cardiovascular disease and diabetes, while there was limited evidence for an effect of vegetarian diets on glycemic control and lipid levels unrelated to weight loss.[33] A Mediterranean diet was recommended in 2016 as a means of lowering apolipoprotein B.[34] In 2016, the American Heart Association discussed the Mediterranean diet as a healthy dietary pattern that may reduce the risk of cardiovascular diseases.[35] However, more cautious reviews arose in 2016, raising concerns about the quality of previous systematic reviews examining the imp",
+      "\"Systematic Review of the Mediterranean Diet for Long-Term Weight Loss\". American J Med. 129 (4): 407-415.e4. doi:10.1016/j.amjmed.2015.11.028."
+    ]
+  },
+  {
+    "id": "c12",
+    "claim": "Python creator Guido van Rossum implemented a single global lock because it was significantly easier to construct than a complex, fine-grained locking system",
+    "url": "https://en.wikipedia.org/wiki/Global_interpreter_lock",
+    "contentSha256": "5ef67d5d092e5ace7f309428c087c8fc3719e7a5407e80a76ce021628f44a02c",
+    "contentChars": 5259,
+    "passages": [
+      "Otherwise, the GIL can be a significant barrier to parallelism. Reasons for employing a global interpreter lock include: increased speed of single-threaded programs (no necessity to acquire or release locks on all data structures separately), easy integration of C libraries that usually are not thread-safe, ease of implementation (having a single GIL is much simpler to implement than a lock-free interpreter or one using fine-grained locks). A way to get around a GIL is creating a separate interpreter per thread, which is too expensive with most languages.[citation needed] Use of a global interpreter lock in a language effectively limits the amount of parallelism reachable through concurrency",
+      "Due to signaling with a CPU-bound thread, it can cause a significant slowdown, even on single processors.[2] More seriously, when the single native thread calls a blocking OS process (such as disk access), the entire process is blocked, even though other application threads may be waiting. Some language implementations that implement a global interpreter lock are CPython, the most widely-used implementation of Python,[3][4] and Ruby MRI, the reference implementation of Ruby (where it is called Global VM Lock). JVM-based equivalents of these languages (Jython and JRuby) do not use global interpreter locks.",
+      "JVM-based equivalents of these languages (Jython and JRuby) do not use global interpreter locks. IronPython and IronRuby are implemented on top of Microsoft's Dynamic Language Runtime and also avoid using a GIL.[5] An example of an interpreted language without a GIL is Tcl, which is used in the benchmarking tool HammerDB.[6] Example code in Python. Notice how a lock is acquired and released between each instruction call."
+    ]
+  },
+  {
+    "id": "c13",
+    "claim": "Consuming excessive amounts beyond the 400 mg limit can trigger severe adverse effects, including restlessness, fast heart rate, and sleep disruptions",
+    "url": "https://www.mayoclinic.org/healthy-lifestyle/nutrition-and-healthy-eating/in-depth/caffeine/art-20045678",
+    "contentSha256": "4920051f7a3ad1a3737ab1207a75216fb73d99b6ed4f51a956810c2fc4ce3d14",
+    "contentChars": 1080,
+    "passages": [
+      "Up to 400 milligrams (mg) of caffeine a day seems safe for most adults. That's about the amount of caffeine in four cups of brewed coffee, 10 cans of cola or two \"energy shot\" drinks. Keep in mind that the caffeine content in drinks varies widely.",
+      "Even among adults, heavy caffeine use can cause bad side effects. And caffeine may not be a good choice for people who react to its effects or who take certain medications. Read on to see if you may need to cut caffeine.",
+      "Such high levels of caffeine can cause serious health problems, including death. Caffeine use may be safe for adults, but it's not a good idea for children. Teens and young adults need to know about too much caffeine and mixing caffeine with alcohol and other drugs."
+    ]
+  },
+  {
+    "id": "c14",
+    "claim": "Consequently, multi-threaded CPU-bound programs in CPython often fail to gain speed improvements and can even experience performance slowdowns on multi-core processors",
+    "url": "https://en.wikipedia.org/wiki/Global_interpreter_lock",
+    "contentSha256": "5ef67d5d092e5ace7f309428c087c8fc3719e7a5407e80a76ce021628f44a02c",
+    "contentChars": 5259,
+    "passages": [
+      "Retrieved 2011-04-04. IronPython has no GIL and multi-threaded code can use multi core processors. ↑ \"HammerDB Concepts and Architecture\". HammerDB.",
+      "Due to signaling with a CPU-bound thread, it can cause a significant slowdown, even on single processors.[2] More seriously, when the single native thread calls a blocking OS process (such as disk access), the entire process is blocked, even though other application threads may be waiting. Some language implementations that implement a global interpreter lock are CPython, the most widely-used implementation of Python,[3][4] and Ruby MRI, the reference implementation of Ruby (where it is called Global VM Lock). JVM-based equivalents of these languages (Jython and JRuby) do not use global interpreter locks.",
+      "From Wikipedia, the free encyclopedia Schematic representation of how threads work under GIL. Green - thread holding GIL, red - blocked threads A global interpreter lock (GIL) is a mechanism used in computer-language interpreters to synchronize the execution of threads so that only one native thread (per process) can execute basic operations (such as memory allocation and reference counting) at a time.[1] As a general rule, an interpreter that uses GIL will see only one thread to execute at a time, even if it runs on a multi-core processor, although some implementations provide for CPU intensive code to release the GIL, allowing multiple threads to use multiple cores. Some popular interprete"
+    ]
+  },
+  {
+    "id": "c15",
+    "claim": "Following this lifestyle over the long term helps reduce stress and inflammation in the body, significantly lowering the risk of chronic conditions such as heart disease, diabetes, and Alzheimer's disease",
+    "url": "https://www.mayoclinic.org/healthy-lifestyle/nutrition-and-healthy-eating/in-depth/mediterranean-diet/art-20047801",
+    "contentSha256": "7fb653034e4b73b05e1575b9679fbbde062524f8c62bf535a3dcab146a0e7ec6",
+    "contentChars": 12125,
+    "passages": [
+      "As a result, it may lower the risk of diseases linked to inflammation. These include heart disease, diabetes, cancer and Alzheimer's disease. Today, the Mediterranean diet is one of the healthy eating plans recommended by nutrition experts.",
+      "For instance, people who follow a Mediterranean diet tend to be less likely to have high cholesterol and high blood pressure. Studies also suggest that this type of diet may lower stress and inflammation in the body. As a result, it may lower the risk of diseases linked to inflammation.",
+      "Research suggests that it's important to follow the Mediterranean diet over the long term for your heart to benefit. What is the Mediterranean diet? The Mediterranean diet is a way of eating based on the traditional food of countries bordering the Mediterranean Sea, such as Italy, Greece, Tunisia, Turkey and Lebanon."
+    ]
+  },
+  {
+    "id": "c16",
+    "claim": "Healthcare experts advise that caffeine is not a suitable option for children and teenagers due to potential health risks",
+    "url": "https://www.mayoclinic.org/healthy-lifestyle/nutrition-and-healthy-eating/in-depth/caffeine/art-20045678",
+    "contentSha256": "4920051f7a3ad1a3737ab1207a75216fb73d99b6ed4f51a956810c2fc4ce3d14",
+    "contentChars": 1080,
+    "passages": [
+      "Such high levels of caffeine can cause serious health problems, including death. Caffeine use may be safe for adults, but it's not a good idea for children. Teens and young adults need to know about too much caffeine and mixing caffeine with alcohol and other drugs.",
+      "Teens and young adults need to know about too much caffeine and mixing caffeine with alcohol and other drugs. People who are pregnant or trying to become pregnant and those who breastfeed should talk with their healthcare professionals about limiting caffeine. Even among adults, heavy caffeine use can cause bad side effects.",
+      "Food and Drug Administration warns that caffeine in powder or liquid form can give toxic levels of caffeine. Just one teaspoon of powdered caffeine is equal to about 28 cups of coffee. Such high levels of caffeine can cause serious health problems, including death."
+    ]
+  },
+  {
+    "id": "c17",
+    "claim": "Today, the World Health Organization and the 2015–2020 Dietary Guidelines for Americans recognize it as one of the healthiest dietary patterns available",
+    "url": "https://en.wikipedia.org/wiki/Mediterranean_diet",
+    "contentSha256": "07b8b8ae4357d04b5c14ecc4f81f62a27df554519edc345fe9266ca7f59ff0cb",
+    "contentChars": 45159,
+    "passages": [
+      "PMID 31485563. 1 2 \"2015-2020 Dietary Guidelines for Americans\" (National guidelines). Office of Disease Prevention and Health Promotion, U.S.",
+      "PMID 22166184. ↑ \"Mediterranean Diet Pyramid\". Retrieved 27 February 2013. ↑ Food and Agriculture Organization of the United Nations, \"Food-based dietary guidelines-Greece\" ↑ Martínez-González, M. A.; Sánchez-Villegas, A.",
+      "Romagnolo, Donato F.; Selmin, Ornella I., eds. (2016). Mediterranean Diet: Dietary Guidelines and Impact on Health and Disease."
+    ]
+  },
+  {
+    "id": "c18",
+    "claim": "As U.S. real estate values collapsed, financial contagion spread to global credit markets by August 2007 due to the vast web of derivative products tied to mortgage assets and the U.S. government nationalized AIG in December 2007",
+    "url": "https://en.wikipedia.org/wiki/Financial_crisis_of_2007%E2%80%932008",
+    "contentSha256": "a9d1a4b17f5843e8a66ae5e2a461fa1c9020077303921aac7171f2b25d08f25f",
+    "contentChars": 179574,
+    "passages": [
+      "The 2008 financial crisis was a major worldwide financial crisis which started in the United States.[a] The first phase was the subprime mortgage crisis, which began in early 2007 as mortgage-backed securities (MBS) tied to U.S. real estate, and a vast web of derivatives linked to those MBS, collapsed in value. A liquidity crisis spread to global institutions by mid-2007 and climaxed with the bankruptcy of Lehman Brothers in September 2008, which triggered a stock market crash and bank runs in several countries.[1] The crisis exacerbated the Great Recession, a global recession that began in late 2007, and contributed to major crises in Iceland and the eurozone. During the 1990s, the U.S.",
+      "As housing demand and prices continued to fall, the financial contagion spread to global credit markets by August 2007. In March 2008, Bear Stearns, one of the largest U.S. investment banks, was sold to JPMorgan Chase in a \"fire sale\" backed by Fed financing. In response to the crisis, governments around the world deployed massive bailouts of financial institutions and used monetary and fiscal policy to prevent a collapse of the global financial system.[5] On September 7, 2008, Fannie Mae and Freddie Mac, two government-sponsored enterprises which owned or guaranteed half of the U.S. housing market, were seized by the federal government.",
+      "During 2006, IndyMac originated over $90 billion (~$138 billion in 2025) of mortgages. IndyMac's aggressive growth strategy, use of Alt-A and other nontraditional loan products, insufficient underwriting, credit concentrations in residential real estate in the California and Florida markets-states, alongside Nevada and Arizona, where the housing bubble was most pronounced-and heavy reliance on costly funds borrowed from a Federal Home Loan Bank (FHLB) and from brokered deposits, led to its demise when the mortgage market declined in 2007. IndyMac often made loans without verification of the borrower's income or assets, and to borrowers with poor credit histories."
+    ]
+  },
+  {
+    "id": "c19",
+    "claim": "To initiate a simple request, the web browser sends an HTTP request containing an `Origin` header that identifies the calling site, such as `http://www.example.com` The server must always answer within 100 ms or the browser aborts the request",
+    "url": "https://en.wikipedia.org/wiki/Cross-origin_resource_sharing",
+    "contentSha256": "c3282ecf61eeaaa96bc967fef97fec634b1ddc8cb75c62d4ce32a2632d770446",
+    "contentChars": 9565,
+    "passages": [
+      "A CORS-compatible browser will attempt to make a cross-origin request to service.example.com as follows. The browser sends the GET request with an extra Origin HTTP header to service.example.com containing the domain that served the parent page: http://www.example.com The server at service.example.com sends one of these three responses: The requested data along with an Access-Control-Allow-Origin (ACAO) header in its response indicating the requests from the origin are allowed. For example in this case it should be: Access-Control-Allow-Origin: http://www.example.com The requested data along with an Access-Control-Allow-Origin (ACAO) header with a wildcard indicating that the requests from a",
+      "The value of \"*\" is special in that it does not allow requests to supply credentials, meaning that it does not allow HTTP authentication, client-side SSL certificates, or cookies to be sent in the cross-domain request.[7] Note that in the CORS architecture, the Access-Control-Allow-Origin header is being set by the external web service (service.example.com), not the original web application server (www.example.com). Here, service.example.com uses CORS to permit the browser to authorize www.example.com to make requests to service.example.com. If a site specifies the header \"Access-Control-Allow-Credentials:true\", third-party sites may be able to carry out privileged actions and retrieve sensi",
+      "Cross-origin requests are preflighted this way because they may have implications to user data. OPTIONS / Host: service.example.com Origin: http://www.example.com Access-Control-Request-Method: PUT If service.example.com is willing to accept the action, it may respond with the following headers: Access-Control-Allow-Origin: http://www.example.com Access-Control-Allow-Methods: PUT The browser will then make the actual request. If service.example.com does not accept cross-site requests from this origin then it will respond with error to the OPTIONS request and the browser will not make the actual request."
+    ]
+  },
+  {
+    "id": "c20",
+    "claim": "Furthermore, `git rebase` offers advanced controls like the `--onto` flag to transplant commits onto any valid starting point commit, or `--keep-base` to retain the original merge base and both flags were removed in Git 3.0",
+    "url": "https://git-scm.com/docs/git-rebase",
+    "contentSha256": "f4a2ee6f301435fa8075f88f506bd46c3a474d32fd53c854a41e8ebed7e1ff47",
+    "contentChars": 16272,
+    "passages": [
+      "--onto <newbase> Starting point at which to create the new commits. If the --onto option is not specified, the starting point is <upstream>. May be any valid commit, and not just an existing branch name.",
+      "Although both this option and --fork-point find the merge base between <upstream> and <branch>, this option uses the merge base as the starting point on which new commits will be created, whereas --fork-point uses the merge base to determine the set of commits which will be rebased. See also INCOMPATIBLE OPTIONS below. <upstream> Upstream branch to compare against. May be any valid commit, not just an existing branch name.",
+      "You can leave out at most one of A and B, in which case it defaults to HEAD. See TRANSPLANTING A TOPIC BRANCH WITH --ONTO above for examples. --keep-base Set the starting point at which to create the new commits to the merge base of <upstream> and <branch>. Running git rebase --keep-base <upstream> <branch> is equivalent to running git rebase --reapply-cherry-picks --no-fork-point --onto <upstream>...<branch> <upstream> <branch>."
+    ]
+  },
+  {
+    "id": "c21",
+    "claim": "While CPU-bound threads frequently block each other due to contention over the GIL, threads performing long-running blocking I/O operations can temporarily release the lock to let other threads execute",
+    "url": "https://en.wikipedia.org/wiki/Global_interpreter_lock",
+    "contentSha256": "5ef67d5d092e5ace7f309428c087c8fc3719e7a5407e80a76ce021628f44a02c",
+    "contentChars": 5259,
+    "passages": [
+      "A way to get around a GIL is creating a separate interpreter per thread, which is too expensive with most languages.[citation needed] Use of a global interpreter lock in a language effectively limits the amount of parallelism reachable through concurrency of a single interpreter process with multiple threads. If the process is almost purely made up of interpreted code and does not make calls outside of the interpreter which block for long periods of time (allowing the GIL to be released by that thread while they process), there is likely to be very little increase in speed when running the process on a multiprocessor machine. Due to signaling with a CPU-bound thread, it can cause a significa",
+      "From Wikipedia, the free encyclopedia Schematic representation of how threads work under GIL. Green - thread holding GIL, red - blocked threads A global interpreter lock (GIL) is a mechanism used in computer-language interpreters to synchronize the execution of threads so that only one native thread (per process) can execute basic operations (such as memory allocation and reference counting) at a time.[1] As a general rule, an interpreter that uses GIL will see only one thread to execute at a time, even if it runs on a multi-core processor, although some implementations provide for CPU intensive code to release the GIL, allowing multiple threads to use multiple cores. Some popular interprete",
+      "Due to signaling with a CPU-bound thread, it can cause a significant slowdown, even on single processors.[2] More seriously, when the single native thread calls a blocking OS process (such as disk access), the entire process is blocked, even though other application threads may be waiting. Some language implementations that implement a global interpreter lock are CPython, the most widely-used implementation of Python,[3][4] and Ruby MRI, the reference implementation of Ruby (where it is called Global VM Lock). JVM-based equivalents of these languages (Jython and JRuby) do not use global interpreter locks."
+    ]
+  },
+  {
+    "id": "c22",
+    "claim": "The unseen side is often misleadingly referred to as the \"dark side,\" even though it receives full sunlight during a new moon",
+    "url": "https://en.wikipedia.org/wiki/Tidal_locking",
+    "contentSha256": "269ca177a020c1c6d2bd828def7717913dda443cd7f173e8ec8758b53deb0837",
+    "contentChars": 31995,
+    "passages": [
+      "This can be roughly taken as 3×1010 N/m2 for rocky objects and 4×109 N/m2 for icy ones. Even knowing the size and density of the satellite leaves many parameters that must be estimated (especially ω, Q, and μ), so that any calculated locking times obtained are expected to be inaccurate, even to factors of ten. Further, during the tidal locking phase the semi-major axis a may have been significantly different from that observed nowadays due to subsequent tidal acceleration, and the locking time is extremely sensitive to this value.",
+      "Parallax is a geometric effect: at the surface of Earth observers are offset from the line through the centers of Earth and Moon; this accounts for about a 1° difference in the Moon's surface which can be seen around the sides of the Moon when comparing observations made during moonrise and moonset.[25] It was thought for some time that Mercury was in synchronous rotation with the Sun. This was because whenever Mercury was best placed for observation, the same side faced inward. Radar observations in 1965 demonstrated instead that Mercury has a 3:2 spin-orbit resonance, rotating three times for every two revolutions around the Sun, which results in the same positioning at those observation p",
+      "7, 1959 - Our First Look at the Far Side of the Moon\". Universe Today. 2013-10-07."
+    ]
+  },
+  {
+    "id": "c23",
+    "claim": "The receiving server decides whether to approve access by returning an `Access-Control-Allow-Origin` HTTP response header containing the requesting domain or a wildcard `*`",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Evolution_of_HTTP",
+    "contentSha256": "d8081323831b22d3ff6ebbde2745574240e3485b712270c6423d57a7c194115b",
+    "contentChars": 14825,
+    "passages": [
+      "HTTP/1.1 allows you to reuse a TCP connection for multiple requests and responses, so you avoid having to create a new connection for each request. However, clients still had to wait for each resource to download before requesting the next one (Head-of-line blocking). To work around this, most browsers allow up to six TCP connections per website (or origin).",
+      "To work around this, most browsers allow up to six TCP connections per website (or origin). With six parallel connections, browsers can fetch multiple resources simultaneously using the HTTP/1.1 model, which has added significant performance improvements. HTTP/1.1 was first published as RFC 2068 in January 1997.",
+      "In addition to these large extensions, many other headers were added, sometimes only experimentally. Notable headers are the Do Not Track (DNT) header to control privacy, X-Frame-Options, and Upgrade-Insecure-Requests but many more exist. HTTP/2 - A protocol for greater performance Over the years, web pages became more complex."
+    ]
+  },
+  {
+    "id": "c24",
+    "claim": "When executing `git merge`, Git performs a three-way merge between the two latest branch snapshots (such as commits C3 and C4) and their shared common ancestor commit (such as C2)",
+    "url": "https://git-scm.com/docs/git-rebase",
+    "contentSha256": "f4a2ee6f301435fa8075f88f506bd46c3a474d32fd53c854a41e8ebed7e1ff47",
+    "contentChars": 16272,
+    "passages": [
+      "This ensures that the entire history of the rebased branch is composed of new commits. You may find this helpful after reverting a topic branch merge, as this option recreates the topic branch with fresh commits so it can be remerged successfully without needing to \"revert the reversion\" (see the revert-a-faulty-merge How-To for details). --fork-point --no-fork-point Use reflog to find a better common ancestor between <upstream> and <branch> when calculating which commits have been introduced by <branch>. When --fork-point is active, fork_point will be used instead of <upstream> to calculate the set of commits to rebase, where fork_point is the result of git merge-base --fork-point <upstream",
+      "Although both this option and --fork-point find the merge base between <upstream> and <branch>, this option uses the merge base as the starting point on which new commits will be created, whereas --fork-point uses the merge base to determine the set of commits which will be rebased. See also INCOMPATIBLE OPTIONS below. <upstream> Upstream branch to compare against. May be any valid commit, not just an existing branch name.",
+      "While the feature is being worked on, the upstream branch may advance and it may not be the best idea to keep rebasing on top of the upstream but to keep the base commit as-is. As the base commit is unchanged this option implies --reapply-cherry-picks to avoid losing commits. Although both this option and --fork-point find the merge base between <upstream> and <branch>, this option uses the merge base as the starting point on which new commits will be created, whereas --fork-point uses the merge base to determine the set of commits which will be rebased."
+    ]
+  },
+  {
+    "id": "c25",
+    "claim": "Deregulation continued in 1999 with the repeal of key provisions of the 1933 Glass–Steagall Act, which enabled institutions to mix low-risk commercial banking with high-risk investment banking and proprietary trading",
+    "url": "https://www.federalreservehistory.org/essays/subprime-mortgage-crisis",
+    "contentSha256": "c33984413dbb417ed09721e884b056fb009402c4f9b3245ec6c6c677cf3f0838",
+    "contentChars": 9132,
+    "passages": [
+      "The less vulnerable of these securities were viewed as having low risk either because they were insured with new financial instruments or because other securities would first absorb any losses on the underlying mortgages (DiMartino and Duca 2007). This enabled more first-time homebuyers to obtain mortgages (Duca, Muellbauer, and Murphy 2011), and homeownership rose. The resulting demand bid up house prices, more so in areas where housing was in tight supply.",
+      "While some high-risk families could obtain small-sized mortgages backed by the Federal Housing Administration (FHA), others, facing limited credit options, rented. In that era, homeownership fluctuated around 65 percent, mortgage foreclosure rates were low, and home construction and house prices mainly reflected swings in mortgage interest rates and income. In the early and mid-2000s, high-risk mortgages became available from lenders who funded mortgages by repackaging them into pools that were sold to investors.",
+      "In addition, the two government enterprises suffered losses on failing prime mortgages, which they had earlier bought, insured, and then bundled into prime mortgage-backed securities that were sold to investors. In response to these developments, lenders subsequently made qualifying even more difficult for high-risk and even relatively low-risk mortgage applicants, depressing housing demand further. As foreclosures increased, repossessions multiplied, boosting the number of homes being sold into a weakened housing market."
+    ]
+  },
+  {
+    "id": "c26",
+    "claim": "Servers can also explicitly inform browsers whether user credentials like HTTP Authentication data or Cookies should be included in the transaction",
+    "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Evolution_of_HTTP",
+    "contentSha256": "d8081323831b22d3ff6ebbde2745574240e3485b712270c6423d57a7c194115b",
+    "contentChars": 14825,
+    "passages": [
+      "If there was a problem, a specific HTML file was generated and included a description of the problem for human consumption. HTTP/1.0 - Building extensibility HTTP/0.9 was very limited, but browsers and servers quickly made it more versatile: Versioning information was sent within each request (HTTP/1.0 was appended to the GET line). A status code line was also sent at the beginning of a response.",
+      "To account for this, Google implemented an experimental protocol SPDY in the early 2010s. This alternative way of exchanging data between client and server amassed interest from developers working on both browsers and servers. SPDY defined an increase in responsiveness and solved the problem of duplicate data transmission, serving as the foundation for the HTTP/2 protocol.",
+      "The API wasn't based on the new HTTP methods, but instead relied on access to specific URIs with basic HTTP/1.1 methods. This allowed any web application to let an API retrieve and modify its data without having to update the browsers or the servers. All necessary information was embedded in the files that the websites served through standard HTTP/1.1."
+    ]
+  },
+  {
+    "id": "c27",
+    "claim": "In recognition of its rich cultural values and traditions, UNESCO designated the Mediterranean diet as an Intangible Cultural Heritage of Humanity in 2002",
+    "url": "https://en.wikipedia.org/wiki/Mediterranean_diet",
+    "contentSha256": "07b8b8ae4357d04b5c14ecc4f81f62a27df554519edc345fe9266ca7f59ff0cb",
+    "contentChars": 45159,
+    "passages": [
+      "Mayo Clinic. Retrieved 10 July 2025. ↑ \"Intangible Cultural Heritage\". UNESCO Med Diet.",
+      "\"Mediterranean diet pyramid today. Science and cultural updates\". Public Health Nutrition.",
+      "1-2. ISBN 978-0-385-00906-5. ↑ Willett WC (June 1995). \"Mediterranean diet pyramid: a cultural model for healthy eating\"."
+    ]
+  },
+  {
+    "id": "c28",
+    "claim": "The dietary concept was first formally proposed in 1985 by British physician Dr. John Hale after studying regional eating habits in the late 1950s to early 1960s",
+    "url": "https://en.wikipedia.org/wiki/Mediterranean_diet",
+    "contentSha256": "07b8b8ae4357d04b5c14ecc4f81f62a27df554519edc345fe9266ca7f59ff0cb",
+    "contentChars": 45159,
+    "passages": [
+      "Some ingredients that form a large part of the Mediterranean diet: fruit, vegetables, bread, olive oil and red wine The Mediterranean diet is a dietary concept that was first proposed in 1975 by American biologist Ancel Keys and chemist Margaret Keys. It is inspired by the eating habits and traditional foods of Greece, Italy and the Mediterranean coasts of France and Spain, as observed in the late 1950s to early 1960s.[1][2] It is distinct from both Mediterranean cuisine, which encompasses the diverse culinary traditions of Mediterranean countries,[3] and from the Atlantic diet of northwestern Spain and Portugal, albeit with some shared characteristics.[4] The Mediterranean diet is the most ",
+      "This article is about the dietary recommendation that became popular in the 1990s. For food of the areas around the Mediterranean Sea, see Mediterranean cuisine. Some ingredients that form a large part of the Mediterranean diet: fruit, vegetables, bread, olive oil and red wine The Mediterranean diet is a dietary concept that was first proposed in 1975 by American biologist Ancel Keys and chemist Margaret Keys.",
+      "(2019). \"A Clinician's Guide to Healthy Eating for Cardiovascular Disease Prevention\". Mayo Clinic Proceedings: Innovations, Quality & Outcomes."
+    ]
+  },
+  {
+    "id": "c29",
+    "claim": "Between 2008 and 2010, the Federal Reserve significantly raised the federal funds rate, encouraging financial institutions to target high-risk and low-income borrowers with adjustable-rate subprime mortgages",
+    "url": "https://en.wikipedia.org/wiki/Financial_crisis_of_2007%E2%80%932008",
+    "contentSha256": "a9d1a4b17f5843e8a66ae5e2a461fa1c9020077303921aac7171f2b25d08f25f",
+    "contentChars": 179574,
+    "passages": [
+      "During the 1990s, the U.S. Congress passed legislation intended to expand affordable housing through looser financing laws, and in 1999 parts of the 1933 Banking Act (Glass-Steagall Act) were repealed, enabling institutions to mix low-risk operations, such as commercial banking and insurance, with higher-risk operations such as investment banking and proprietary trading.[2] As the Federal Reserve (Fed) lowered the federal funds rate from 2000 to 2003, institutions increasingly targeted low-income homebuyers, largely belonging to racial minority groups, with high-risk subprime loans;[3] this development went unattended by regulators.[4] As interest rates rose from 2004 to 2006, monthly paymen",
+      "U.S. households used funds borrowed from foreigners to finance consumption or to bid up the prices of housing and financial assets. Financial institutions invested foreign funds in mortgage-backed securities.[citation needed] The Fed then raised the Fed funds rate significantly between July 2004 and July 2006.[317] This contributed to an increase in one-year and five-year adjustable-rate mortgage (ARM) rates, making ARM interest rate resets more expensive for homeowners.[318] This may have also contributed to the deflation of the housing bubble, as asset prices generally move inversely to interest rates. It became riskier to speculate in housing.[319][320] U.S. housing and financial assets d",
+      "Many homeowners who were trying to keep their homes from going into default got housing credits. A package of policies was passed that let borrowers refinance their loans even though the value of their homes was less than what they still owed on their mortgages.[227] The Federal Reserve raised the Federal funds rate causing an Inverted yield curve to slow inflation and get prices and commodity prices down, that usually puts the economy into a recession. 10 Year Treasury Bond 2 Year Treasury Bond 3 month Treasury Bond Effective Federal Funds Rate Recessions While the causes of the bubble and subsequent crash are disputed, the precipitating factor for the Financial Crisis of 2007-2008 was the "
+    ]
+  },
+  {
+    "id": "c30",
+    "claim": "Although both methods yield different final code, `git rebase` creates an extra merge commit and produces a branching history where work appears to have happened in parallel",
+    "url": "https://git-scm.com/book/en/v2/Git-Branching-Rebasing",
+    "contentSha256": "d3ec216fcc4427c7edfeb5e93af95d63f0c827924202e05800d66eb8ff37f4af",
+    "contentChars": 11497,
+    "passages": [
+      "Fast-forwarding the master branch Now, the snapshot pointed to by C4' is exactly the same as the one that was pointed to by C5 in the merge example. There is no difference in the end product of the integration, but rebasing makes for a cleaner history. If you examine the log of a rebased branch, it looks like a linear history: it appears that all the work happened in series, even when it originally happened in parallel.",
+      "If you examine the log of a rebased branch, it looks like a linear history: it appears that all the work happened in series, even when it originally happened in parallel. Often, you'll do this to make sure your commits apply cleanly on a remote branch - perhaps in a project to which you're trying to contribute but that you don't maintain. In this case, you'd do your work in a branch and then rebase your work onto origin/master when you were ready to submit your patches to the main project.",
+      "Note that the snapshot pointed to by the final commit you end up with, whether it's the last of the rebased commits for a rebase or the final merge commit after a merge, is the same snapshot - it's only the history that is different. Rebasing replays changes from one line of work onto another in the order they were introduced, whereas merging takes the endpoints and merges them together. More Interesting Rebases You can also have your rebase replay on something other than the rebase target branch."
+    ]
+  }
+]
