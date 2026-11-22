@@ -24,6 +24,7 @@ for (const f of readdirSync("evidence/spike")) {
   const fromQuery = d.query?.match(/judge=([\w.-]+)/)?.[1];
   const fromLabel = /lite|^prod-|^enforced/.test(d.label) ? "gemini-3.5-flash-lite" : /hydrogen/.test(d.label) ? "gemini-4-hydrogen" : "gemini-3.8-flash";
   if (SPIKE_CLOUD.has(r.name)) add(r.model ?? fromMsg ?? fromQuery ?? fromLabel, r.ok ? "ok" : status(r.error?.message));
+  // Assumption: the spike triage instance's cloud fallback is gemini-3.5-flash-lite (hard-coded in src/app/spike/page.tsx on 2026-11-22).
   else if (r.name === "triage" && r.inferenceSource === "in_cloud") add("gemini-3.5-flash-lite", "ok (triage cloud fallback)");
 }
 for (const set of ["eval-30", "eval-fresh-20"]) {
