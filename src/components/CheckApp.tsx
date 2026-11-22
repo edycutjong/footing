@@ -1,0 +1,382 @@
+"use client";
+// The check page: answer sheet → Check sources → chips flip per citation (route badge = the response's real
+// inferenceSource) → footed total → evidence pane → Copy answer with flags.
+import { useEffect, useMemo, useRef, useState, useCallback } from "react";
+import { parseAnswer, answerToText, type Parsed } from "@/lib/parse";
+import { DEFAULT_CONFIG } from "@/lib/config";
+import { tally, copyWithFlags, type ChipState } from "@/lib/tally";
+import type { Device, Force } from "@/lib/route/router";
+import { Check, type PairRun } from "@/lib/check/engine";
+import { normalize } from "@/lib/text";
+import { Mark, Badges } from "./Mark";
+
+export interface Hero { id: string; question: string; answer: string; sources: string[]; capturedAt: string; provenance: string; how: string }
+export interface MeterStats { show: boolean; settledPct?: number; right?: number; settled?: number; n?: number }
+
+const cfg = DEFAULT_CONFIG;
+
+function chipText(r: PairRun | undefined, style: "likely" | "neutral"): { title: string; sub?: string } {
+  if (!r) return { title: "not checked yet" };
+  switch (r.state) {
+    case "SUPPORTS": return { title: "says it" };
+    case "PARTIAL": return { title: "says part of it", sub: r.reason };
+    case "NOT_SUPPORTED": return { title: "doesn't say this", sub: r.reason };
+    case "LIKELY_UNSUPPORTED": return { title: style === "likely" ? "likely doesn't say this · confirm" : "not found on device · confirm", sub: "Nano, unconfirmed" };
+    case "UNVERIFIED": return { title: "quote not found in what the model read", sub: r.note };
+    case "NOT_FOUND_TRUNCATED": return { title: r.note ?? "not found in the part read" };
+    case "NOT_CHECKED": return { title: r.reason ?? "not checked" };
+    case "CAP_REACHED": return { title: r.reason ?? "check skipped (cap) — tap to confirm" };
+    case "escalated": return { title: r.nanoQuoteHeld ? "Nano found a candidate quote · checking in the cloud" : "Nano's result needs the cloud · checking" };
+    case "triage": return { title: "reading on this laptop…" };
+    case "deciding": return { title: "deciding in the cloud…" };
+    default: return { title: "checking…" };
+  }
+}
+
+const VERDICT_WORDS: Partial<Record<ChipState, string>> = {
+  SUPPORTS: "source says it", PARTIAL: "source says only part of it", NOT_SUPPORTED: "source doesn't say this",
+  LIKELY_UNSUPPORTED: "likely doesn't say this (on device, unconfirmed)", UNVERIFIED: "quote not found", NOT_FOUND_TRUNCATED: "not found in the part read",
+  NOT_CHECKED: "not checked", CAP_REACHED: "check skipped, tap to confirm",
+};
+
+function where(r: PairRun): string {
+  if (!r.sources.length) return "not run";
+  const last = r.sources[r.sources.length - 1];
+  return r.sources.length > 1 ? "triaged on this laptop, decided in the cloud" : last === "on_device" ? "checked on this laptop" : "checked in the cloud";
+}
+
+function fragment(url: string, quote?: string): string {
+  if (!quote) return url;
+  const enc = (s: string) => encodeURIComponent(s).replace(/-/g, "%2D").replace(/,/g, "%2C");
+  const w = normalize(quote).split(" ");
+  const frag = w.length <= 8 ? enc(w.join(" ")) : `${enc(w.slice(0, 4).join(" "))},${enc(w.slice(-4).join(" "))}`;
+  return `${url}#:~:text=${frag}`;
+}
+
+function Excerpt({ input, quote }: { input?: string; quote?: string }) {
+  if (!input) return <p className="data">No source text (read in the cloud from the URL).</p>;
+  const text = normalize(input);
+  const q = quote ? normalize(quote) : "";
+  const at = q ? text.indexOf(q) : -1;
+  if (at < 0) return <p>{text.slice(0, 500)}{text.length > 500 ? "…" : ""}</p>;
+  const a = Math.max(0, at - 220), b = Math.min(text.length, at + q.length + 220);
+  return <p>{a > 0 ? "…" : ""}{text.slice(a, at)}<span className="found">{text.slice(at, at + q.length)}</span>{text.slice(at + q.length, b)}{b < text.length ? "…" : ""}</p>;
+}
+
+function Circled({ sentence, words }: { sentence: string; words?: string[] }) {
+  if (!words?.length) return <p>{sentence}</p>;
+  const set = new Set(words);
+  return <p>{sentence.split(/(\s+)/).map((tok, i) => {
+    const core = tok.toLowerCase().normalize("NFKC").replace(/[^\p{L}\p{N}]+/gu, "");
+    return set.has(core) ? <span key={i} className="miss" title="not in the quote">{tok}</span> : <span key={i}>{tok}</span>;
+  })}</p>;
+}
+
+function Pane({ r, onClose, onConfirm }: { r: PairRun; onClose: () => void; onConfirm: (id: string) => void }) {
+  const t = r.trail;
+  const triage = t.find((s) => s.step === "triage");
+  const judge = [...t].reverse().find((s) => s.step.startsWith("judge"));
+  const showQuote = r.quote && (r.state === "SUPPORTS" || r.state === "PARTIAL" || r.state === "NOT_SUPPORTED");
+  const canConfirm = ["LIKELY_UNSUPPORTED", "CAP_REACHED", "NOT_CHECKED", "UNVERIFIED"].includes(r.state) && r.source?.kind !== "failed";
+  return (
+    <aside className="pane" role="dialog" aria-label={`Evidence for sentence ${r.pair.s + 1}`}>
+      <button className="ghost close" onClick={onClose} aria-label="Close evidence">Close ✕</button>
+      <h2>Sentence {r.pair.s + 1}{r.pair.n !== null ? ` · source [${r.pair.n}]` : ""}</h2>
+      <div className={`s-${r.state}${cfg.deviceNegativeStyle === "neutral" && r.state === "LIKELY_UNSUPPORTED" ? " neutral" : ""}`} style={{ display: "flex", gap: 8, alignItems: "center" }}>
+        <Mark state={r.state} held={r.nanoQuoteHeld} neutral={cfg.deviceNegativeStyle === "neutral"} /> <b>{VERDICT_WORDS[r.state] ?? chipText(r, cfg.deviceNegativeStyle).title}</b> <Badges sources={r.sources} />
+      </div>
+      {r.reason && <p style={{ margin: "6px 0 0" }}>{r.reason}</p>}
+      <div className="cols">
+        <div>
+          <h4>The sentence{r.uncovered?.length ? " — circled: not in the quote" : ""}</h4>
+          <Circled sentence={r.pair.sentence} words={r.uncovered} />
+        </div>
+        <div>
+          <h4>{r.state === "NOT_SUPPORTED" && r.quote ? "What the page says instead" : "The source"}</h4>
+          <Excerpt input={r.modelInput ?? r.passages?.join(" ")} quote={showQuote ? r.quote : (triage?.gateHeld ? triage.quote : undefined)} />
+          {r.source?.finalUrl && <p className="data" style={{ marginTop: 8 }}><a href={fragment(r.source.finalUrl, showQuote ? r.quote : undefined)} target="_blank" rel="noreferrer">open source ↗</a> {r.source.finalUrl}</p>}
+        </div>
+      </div>
+      {canConfirm && <p><button className="primary" onClick={() => onConfirm(r.pair.id)}>{r.state === "NOT_CHECKED" ? "Check this one in the cloud" : "Confirm in the cloud"}</button></p>}
+      <h4 style={{ margin: "16px 0 4px", fontSize: 12, letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--muted)" }}>Route trail</h4>
+      {r.planned && r.sources.length > 0 && !r.sources.includes("on_device") && r.planned.to === "DEVICE_TRIAGE" && (
+        <p className="data">planned on a Nano laptop: {r.planned.reason} → ran: {r.sources.map((s) => (s === "on_device" ? "d" : "c")).join(" → ")}</p>
+      )}
+      <ul className="trail data">
+        {t.map((s, i) => (
+          <li key={i}>
+            <b>{s.step}</b>{s.inferenceSource ? ` · ${s.inferenceSource.toUpperCase()}` : ""}{s.route ? ` · ${s.route}` : ""}{s.verdict ? ` · ${s.verdict}` : ""}
+            {s.gateHeld !== undefined ? ` · gate ${s.gateHeld ? "✓" : "✗"}` : ""}{s.ms !== undefined ? ` · ${s.ms} ms` : ""}{s.attempt && s.attempt > 1 ? ` · attempt ${s.attempt}` : ""}
+            {s.quote ? <div>quote: “{s.quote}”</div> : null}
+            {s.reason ? <div>{s.reason}</div> : null}
+            {s.error ? <div style={{ color: "var(--after)" }}>{s.error}</div> : null}
+          </li>
+        ))}
+      </ul>
+      <p className="meta data">
+        {judge && triage ? `${triage.verdict ?? "—"} on device → ${judge.verdict ?? "—"} in the cloud · ` : ""}
+        fetched {r.source?.fetchedAt ?? "—"} · {r.source?.kind ?? ""} · sha256 {r.source?.sha256?.slice(0, 12) ?? "—"}… · {r.cloudCalls} cloud call{r.cloudCalls === 1 ? "" : "s"}
+      </p>
+    </aside>
+  );
+}
+
+export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStats }) {
+  const [text, setText] = useState(() => answerToText(hero.answer, hero.sources));
+  const [mine, setMine] = useState(false);
+  const [draft, setDraft] = useState("");
+  const [showPaste, setShowPaste] = useState(false);
+  const parsed: Parsed = useMemo(() => parseAnswer(text), [text]);
+  const draftCount = useMemo(() => (draft ? parseAnswer(draft).pairs.length : 0), [draft]);
+  const [force, setForce] = useState<Force>("auto");
+  const [device, setDevice] = useState<Device | "checking">("checking");
+  const [progress, setProgress] = useState<number | undefined>();
+  const [runs, setRuns] = useState<PairRun[]>([]);
+  const [running, setRunning] = useState(false);
+  const [done, setDone] = useState(false);
+  const [open, setOpen] = useState<string | null>(null);
+  const [withUnconfirmed, setWithUnconfirmed] = useState(false);
+  const [toast, setToast] = useState<string | null>(null);
+  const [banner, setBanner] = useState<string | null>(null);
+  const check = useRef<Check | null>(null);
+  const [cloudUsed, setCloudUsed] = useState(0);
+
+  useEffect(() => {
+    import("@/lib/ai/deviceModel").then((m) => m.deviceAvailability()).then(setDevice);
+  }, []);
+
+  const byId = useMemo(() => new Map(runs.map((r) => [r.pair.id, r])), [runs]);
+  const states = parsed.pairs.map((p) => byId.get(p.id)?.state).filter((s): s is ChipState => !!s);
+  const t = tally(states);
+  const nanoLaptop = parsed.pairs.length;
+
+  useEffect(() => {
+    (window as unknown as { __footing: unknown }).__footing = {
+      done, running, device, force, tally: t, cloudUsed,
+      runs: runs.map((r) => ({ id: r.pair.id, s: r.pair.s, n: r.pair.n, url: r.pair.url, sentence: r.pair.sentence, state: r.state, route: r.route, after: r.after, planned: r.planned, sources: r.sources, quote: r.quote, reason: r.reason, note: r.note, trail: r.trail, source: r.source, cloudCalls: r.cloudCalls })),
+    };
+  });
+
+  const update = useCallback((_r: PairRun, all: PairRun[]) => {
+    setRuns(all.map((x) => ({ ...x, trail: [...x.trail], sources: [...x.sources] })));
+    setCloudUsed(check.current?.cloudUsed ?? 0);
+  }, []);
+
+  async function runCheck() {
+    setRunning(true); setDone(false); setOpen(null); setBanner(null);
+    const [{ appCheckStatus }, { browserDeps, initDevice }] = await Promise.all([import("@/lib/firebase"), import("@/lib/check/browserDeps")]);
+    const ac = await appCheckStatus();
+    if (!ac.ok) {
+      setBanner("This browser could not be verified (App Check). Reload, or open /eval for the measured results.");
+      setRunning(false);
+      return;
+    }
+    let dev: Device = device === "checking" ? "unavailable" : device;
+    if (dev !== "unavailable" && force !== "cloud") {
+      const init = initDevice(cfg, (p) => { setProgress(p); if (p < 1) setDevice("downloading"); });
+      if (dev === "available") {
+        try { await init; } catch { dev = "unavailable"; }
+      } else {
+        setDevice("downloading");
+        init.then(() => setDevice("available")).catch(() => setDevice("unavailable"));
+      }
+    }
+    const c = new Check(parsed.pairs, browserDeps(cfg), { cfg, force, device: dev, progress, onUpdate: update });
+    check.current = c;
+    setRuns(c.runs.map((x) => ({ ...x })));
+    await c.run();
+    setRuns(c.runs.map((x) => ({ ...x })));
+    setCloudUsed(c.cloudUsed);
+    setRunning(false); setDone(true);
+  }
+
+  async function confirm(id: string) {
+    if (!check.current) return;
+    await check.current.confirm(id);
+    setRuns(check.current.runs.map((x) => ({ ...x })));
+    setCloudUsed(check.current.cloudUsed);
+  }
+  async function confirmAll() {
+    const ids = runs.filter((r) => r.state === "LIKELY_UNSUPPORTED").map((r) => r.pair.id);
+    for (let i = 0; i < ids.length; i += cfg.cloudConcurrency) await Promise.all(ids.slice(i, i + cfg.cloudConcurrency).map(confirm));
+  }
+
+  async function copy() {
+    const { text: out, flags } = copyWithFlags(parsed, (id) => byId.get(id)?.state, withUnconfirmed);
+    await navigator.clipboard.writeText(out).catch(() => undefined);
+    (window as unknown as { __footingCopy: string }).__footingCopy = out;
+    setToast(`Copied the answer with ${flags} flag${flags === 1 ? "" : "s"}${withUnconfirmed ? " (unconfirmed on-device flags included)" : " (cloud-decided only)"}`);
+    setTimeout(() => setToast(null), 3500);
+  }
+
+  useEffect(() => {
+    const k = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(null); };
+    window.addEventListener("keydown", k);
+    return () => window.removeEventListener("keydown", k);
+  }, []);
+
+  const openRun = open ? byId.get(open) : undefined;
+  const checked = runs.filter((r) => !["queued", "fetching", "triage", "escalated", "deciding"].includes(r.state)).length;
+  const style = cfg.deviceNegativeStyle;
+  const nanoFirst = useMemo(
+    () => runs.filter((r) => r.planned?.to === "DEVICE_TRIAGE").length,
+    [runs],
+  );
+
+  return (
+    <div className="pad">
+      <header className="strip">
+        <div>
+          <h1>Footing</h1>
+          <p className="tag">Does each source say what the sentence claims? Nano triages on your laptop, the cloud decides the hard calls, code checks every quote.</p>
+        </div>
+        <div className="controls">
+          <div className="seg" role="group" aria-label="Route">
+            {(["auto", "device", "cloud"] as Force[]).map((f) => (
+              <button key={f} aria-pressed={force === f} onClick={() => setForce(f)} disabled={running}>{f === "auto" ? "Auto" : f === "device" ? "On-device only" : "Cloud only"}</button>
+            ))}
+          </div>
+          <DevicePill device={device} progress={progress} onDownload={async () => {
+            const { initDevice } = await import("@/lib/check/browserDeps");
+            setDevice("downloading");
+            initDevice(cfg, (p) => setProgress(p)).then(() => setDevice("available")).catch(() => setDevice("unavailable"));
+          }} />
+        </div>
+        <div className="prov">
+          <span><b>{mine ? "Your pasted answer" : hero.provenance}</b></span>
+          <span>{parsed.pairs.length} citations · {parsed.sentences.length} sentences{parsed.unresolved.length ? ` · ${parsed.unresolved.length} unresolved marker(s)` : ""}</span>
+          {!mine && <span title={hero.how}>how captured: unedited, see <a href="/eval">/eval</a></span>}
+          <button className="ghost" style={{ padding: "2px 8px" }} onClick={() => setShowPaste((v) => !v)} aria-expanded={showPaste}>{showPaste ? "Hide paste box" : "Paste your own answer"}</button>
+        </div>
+      </header>
+
+      {banner && <div className="banner" role="alert">{banner}</div>}
+
+      <div className="work">
+        <section className="sheet" aria-label="Answer sheet">
+          {showPaste && (
+            <div className="paste">
+              <label htmlFor="paste" className="data">Paste an AI answer with Markdown links, [n] references + a source list, or bare URLs</label>
+              <textarea id="paste" value={draft} onChange={(e) => setDraft(e.target.value)} placeholder={"The Moon takes 27.3 days to orbit Earth [1].\n\nSources:\n[1] https://en.wikipedia.org/wiki/Moon"} />
+              <div style={{ display: "flex", gap: 10, alignItems: "center", marginTop: 6 }}>
+                <span className="data">{draftCount} citation{draftCount === 1 ? "" : "s"} found</span>
+                <button className="ghost" disabled={!draftCount || running} onClick={() => { setText(draft); setMine(true); setRuns([]); setDone(false); setShowPaste(false); }}>Use this answer</button>
+                <button className="ghost" onClick={() => setDraft(answerToText(hero.answer, hero.sources))}>Fill the sample</button>
+                {mine && <button className="ghost" onClick={() => { setText(answerToText(hero.answer, hero.sources)); setMine(false); setRuns([]); setDone(false); }}>Back to the sample answer</button>}
+              </div>
+            </div>
+          )}
+          {!mine && <p className="q">Question asked: <b>{hero.question}</b> · captured {hero.capturedAt}</p>}
+          <ol className="rows">
+            {parsed.sentences.map((s) => {
+              const pairs = parsed.pairs.filter((p) => p.s === s.index);
+              return (
+                <li key={s.index} className={`row${openRun?.pair.s === s.index ? " active" : ""}`}>
+                  <div className="no data">{s.index + 1}</div>
+                  <div className="txt">
+                    {s.text}
+                    {pairs.map((p) => {
+                      const r = byId.get(p.id);
+                      return (
+                        <button key={p.id} className="cite" onClick={() => r && setOpen(p.id)} aria-label={`Source ${p.n ?? ""} for sentence ${s.index + 1}`} tabIndex={-1}>
+                          <span className="n">[{p.n ?? "↗"}]</span>{r && <Mark state={r.state} held={r.nanoQuoteHeld} neutral={style === "neutral"} />}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <div className="side">
+                    {pairs.map((p) => {
+                      const r = byId.get(p.id);
+                      if (!r) return <span key={p.id} className="data" style={{ color: "var(--muted)" }}>[{p.n ?? "↗"}] {hostOf(p.url)}</span>;
+                      const ct = chipText(r, style);
+                      return (
+                        <button key={p.id} className={`chip s-${r.state}${style === "neutral" && r.state === "LIKELY_UNSUPPORTED" ? " neutral" : ""}`} aria-pressed={open === p.id} onClick={() => setOpen(p.id)}
+                          aria-label={`Sentence ${s.index + 1}: ${VERDICT_WORDS[r.state] ?? ct.title}, ${where(r)}`}>
+                          <Mark state={r.state} held={r.nanoQuoteHeld} neutral={style === "neutral"} />
+                          <span className="what">{ct.title}<small>[{p.n ?? "↗"}] {hostOf(r.source?.finalUrl ?? p.url)}</small></span>
+                          <Badges sources={r.sources} />
+                        </button>
+                      );
+                    })}
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
+          <div className="actions">
+            <button className="primary" onClick={runCheck} disabled={running || !parsed.pairs.length}>
+              {running ? `Checking ${checked} of ${parsed.pairs.length}…` : done ? "Check again" : "Check sources"}
+            </button>
+            {done && (
+              <>
+                <button className="ghost" onClick={copy}>Copy answer with flags</button>
+                <label className="data" style={{ display: "inline-flex", gap: 6, alignItems: "center" }}>
+                  <input type="checkbox" checked={withUnconfirmed} onChange={(e) => setWithUnconfirmed(e.target.checked)} /> Include unconfirmed on-device flags
+                </label>
+              </>
+            )}
+          </div>
+          <div className="foot">
+            <div className="total" aria-live="polite">
+              <span className="big">{runs.length ? `${t.k} of ${t.n}` : "— of —"}</span>
+              <span style={{ fontSize: 18 }}>sources don&apos;t say this</span>
+              {t.j > 0 && (
+                <span className={`likely${style === "neutral" ? " neutral" : ""}`}>+ {t.j} {style === "likely" ? "likely" : "not found on device"} (unconfirmed){" "}
+                  <button className="ghost" style={{ padding: "2px 8px" }} onClick={confirmAll} disabled={running}>Confirm all in cloud</button>
+                </span>
+              )}
+            </div>
+            <div className="typed data">
+              {t.settledOnDevice} settled on this laptop · {t.decidedInCloud} decided in the cloud · {t.unverified} quote not found · {t.pending} pending · {t.notChecked} not checked
+              {runs.length ? ` · ${cloudUsed} cloud call${cloudUsed === 1 ? "" : "s"} (cap ${cfg.citationCloudCap})` : ""}
+            </div>
+            {runs.length > 0 && !runs.some((r) => r.sources.includes("on_device")) && (
+              <div className="meter">
+                On a Nano laptop, <b>{nanoFirst} of {nanoLaptop}</b> citations would be read on-device first (readable pages; PDFs and pages that need JavaScript go to the cloud).
+                {meter.show && meter.settledPct !== undefined ? ` On our held-out set Nano settled ${meter.settledPct}% of those without the cloud, and ${meter.right} of ${meter.settled} of those on-device flags matched the label (M1 Max).` : ""}{" "}
+                <a href="/eval">Measured results →</a>
+              </div>
+            )}
+          </div>
+          <Legend style={style} />
+        </section>
+      </div>
+      {openRun && <Pane r={openRun} onClose={() => setOpen(null)} onConfirm={confirm} />}
+      {toast && <div className="toast" role="status">{toast}</div>}
+    </div>
+  );
+}
+
+function hostOf(u: string) {
+  try { return new URL(u).hostname.replace(/^www\./, ""); } catch { return u; }
+}
+
+function DevicePill({ device, progress, onDownload }: { device: Device | "checking"; progress?: number; onDownload: () => void }) {
+  if (device === "checking") return <span className="pill">Checking for an on-device model…</span>;
+  if (device === "available") return <span className="pill"><span className="badge d">ON DEVICE</span> On-device model ready</span>;
+  if (device === "downloading")
+    return <span className="pill">Downloading {progress !== undefined ? `${Math.round(progress * 100)}%` : "…"} <span className="bar"><i style={{ width: `${Math.round((progress ?? 0) * 100)}%` }} /></span> checks run in the cloud meanwhile</span>;
+  if (device === "downloadable") return <span className="pill">On-device model not downloaded <button onClick={onDownload}>Download on-device model</button></span>;
+  return (
+    <span className="pill">No on-device model in this browser — checks run in the cloud{" "}
+      <a href="https://developer.chrome.com/docs/ai/get-started" target="_blank" rel="noreferrer">why?</a>
+    </span>
+  );
+}
+
+function Legend({ style }: { style: "likely" | "neutral" }) {
+  return (
+    <div className="legend" aria-label="Tick-mark legend">
+      <h3>Tick-mark legend</h3>
+      <span><Mark state="SUPPORTS" /> says it</span>
+      <span><Mark state="PARTIAL" /> says part</span>
+      <span><Mark state="NOT_SUPPORTED" /> doesn&apos;t say this</span>
+      <span><Mark state="LIKELY_UNSUPPORTED" neutral={style === "neutral"} /> {style === "likely" ? "likely (on device, unconfirmed)" : "not found on device (unconfirmed)"}</span>
+      <span><Mark state="UNVERIFIED" /> quote not found / not found in a truncated read</span>
+      <span><Mark state="escalated" held /> pending (Nano candidate, cloud deciding)</span>
+      <span><Mark state="NOT_CHECKED" /> not checked</span>
+      <span><span className="badge d">ON DEVICE</span> / <span className="badge c">IN CLOUD</span> = where the model actually ran (inferenceSource)</span>
+    </div>
+  );
+}
+

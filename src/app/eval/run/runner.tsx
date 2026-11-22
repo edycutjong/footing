@@ -83,6 +83,7 @@ export default function Runner() {
   const [ready, setReady] = useState(false);
   useEffect(() => {
     (window as unknown as { __evalPair: typeof evalPair }).__evalPair = evalPair;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-shot readiness flag for the E2E driver
     setReady(true);
   }, []);
   return <main id="eval-runner" data-ready={ready}>eval runner {ready ? "ready" : "loading"}</main>;

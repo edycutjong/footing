@@ -34,3 +34,24 @@ export function judgePrompt(sentence: string, passages: string[], pageWindow: st
     pageWindow,
   ].join("\n");
 }
+
+export const JUDGE_PDF_PROMPT_VERSION = "judge-3class-pdf-v1";
+export const JUDGE_URL_PROMPT_VERSION = "judge-3class-url-v1";
+
+const JUDGE_RULES = [
+  "SUPPORTS: the source states everything the sentence claims.",
+  "PARTIAL: the source states part of it, but some claim (a number, date, cause, scope or qualifier) is missing, weaker or broader than the sentence says.",
+  "NOT_SUPPORTED: the source does not state it, or says something different.",
+  "quote: copy, character for character, the source sentence your verdict relies on (for NOT_SUPPORTED, what the source says instead), or an empty string if nothing in the source is about it.",
+  "reason: one short line in plain English.",
+];
+
+/** The attached PDF is the source (PDF input is cloud-only). */
+export function judgePdfPrompt(sentence: string): string {
+  return ["You check whether a cited source supports a sentence from an AI answer. The source is the attached PDF.", ...JUDGE_RULES, "", `SENTENCE: ${sentence}`].join("\n");
+}
+
+/** A page that needs JavaScript, read by the cloud's URL context tool. */
+export function judgeUrlPrompt(sentence: string, url: string): string {
+  return ["You check whether a cited source supports a sentence from an AI answer. Read the source at this URL with the URL context tool.", ...JUDGE_RULES, "", `SOURCE URL: ${url}`, `SENTENCE: ${sentence}`].join("\n");
+}

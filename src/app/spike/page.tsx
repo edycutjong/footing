@@ -168,7 +168,9 @@ export default function Spike() {
   const [out, setOut] = useState<Record<string, Result>>({});
   async function run(name: string) {
     const r = await timed(name, SPIKES[name]);
-    (window as unknown as { __spike: Record<string, Result> }).__spike = { ...(window as unknown as { __spike?: Record<string, Result> }).__spike, [name]: r };
+    const w = window as unknown as { __spike?: Record<string, Result> };
+    // eslint-disable-next-line react-hooks/immutability -- E2E hook on window, read by scripts/spike.mjs
+    w.__spike = { ...w.__spike, [name]: r };
     setOut((o) => ({ ...o, [name]: r }));
   }
   return (

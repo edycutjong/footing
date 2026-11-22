@@ -18,6 +18,9 @@ export function extractHtml(html: string, url: string, parse: ParseHtml = browse
     doc.head?.appendChild(base);
   } catch { /* documents without a head */ }
   const title = doc.title ?? "";
+  // Footnote markers ("…death;[14] it may…") are not prose: models drop them when quoting, which would fail the
+  // verbatim gate. Removed here, before any model sees the text, so the gate still checks the exact model input.
+  doc.querySelectorAll("sup.reference, sup.noprint, .mw-editsection, .reference-accessdate").forEach((n) => n.remove());
   let text = "";
   try {
     const art = new Readability(doc.cloneNode(true) as Document, { charThreshold: 200 }).parse();
@@ -27,7 +30,12 @@ export function extractHtml(html: string, url: string, parse: ParseHtml = browse
     doc.querySelectorAll("script,style,noscript,template,svg,nav,footer,header").forEach((n) => n.remove());
     text = doc.body?.textContent ?? "";
   }
-  return { title, text: normalize(text) };
+  return { title, text: stripMarkers(normalize(text)) };
+}
+
+/** Bracketed footnote markers left in plain text: [14], [a], [citation needed], [note 3]. */
+export function stripMarkers(s: string): string {
+  return s.replace(/\s?\[(?:\d{1,3}|[a-z]|citation needed|note \d{1,3}|nb \d{1,3}|clarification needed)\]/gi, "").replace(/ {2,}/g, " ");
 }
 
 /** Plain text bodies (text/plain) pass through normalised. */

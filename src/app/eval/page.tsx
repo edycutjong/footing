@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import summary from "../../../evidence/summary.json";
 
 export const metadata: Metadata = { title: "Footing · measured results" };
@@ -68,7 +69,7 @@ export default function EvalPage() {
         we show. On-device runs: {summary.machine}. Generated {summary.generatedAt}.
       </p>
       {Object.entries(sets).map(([name, s]) => <SetBlock key={name} name={name} s={s} />)}
-      <p><a href="/">Home</a></p>
+      <p><Link href="/">Check an answer</Link></p>
     </main>
   );
 }

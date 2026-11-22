@@ -23,7 +23,8 @@ export interface FetchResult {
   error?: string;
 }
 
-const UA = "Mozilla/5.0 (compatible; FootingCitationCheck/0.1; +https://footing.edycu.dev/about)";
+// A browser-compatible UA (many publishers refuse unknown clients) that still names Footing and links its about page.
+const UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36 FootingCitationCheck/0.1 (+https://footing.edycu.dev/about)";
 
 export const safeLookup: LookupFunction = (hostname, options, cb) => {
   dns.lookup(hostname, { all: true, verbatim: true }, (err, addrs) => {
@@ -47,7 +48,16 @@ function request(url: URL, signal: AbortSignal): Promise<Hop> {
       method: "GET",
       lookup: safeLookup,
       signal,
-      headers: { "user-agent": UA, accept: "text/html,application/xhtml+xml,application/pdf;q=0.9,text/plain;q=0.8,*/*;q=0.1", "accept-encoding": "gzip, deflate, br", "accept-language": "en" },
+      headers: {
+        "user-agent": UA,
+        accept: "text/html,application/xhtml+xml,application/xml;q=0.9,application/pdf;q=0.9,text/plain;q=0.8,*/*;q=0.1",
+        "accept-encoding": "gzip, deflate, br",
+        "accept-language": "en-US,en;q=0.9",
+        "sec-fetch-mode": "navigate",
+        "sec-fetch-dest": "document",
+        "sec-fetch-site": "none",
+        "upgrade-insecure-requests": "1",
+      },
     });
     req.on("response", (res) => resolve({ status: res.statusCode ?? 0, headers: res.headers, res, address: res.socket?.remoteAddress }));
     req.on("error", reject);
