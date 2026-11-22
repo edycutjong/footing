@@ -135,5 +135,6 @@ export async function fetchSource(raw: string): Promise<FetchResult> {
     return fail(`fetch failed: ${err.code ?? err.message}`);
   } finally {
     clearTimeout(timer);
+    ctl.abort(); // closes any socket left open by an early return (too large, refused type, redirect cap)
   }
 }

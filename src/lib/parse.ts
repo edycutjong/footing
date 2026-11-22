@@ -13,10 +13,12 @@ export interface Parsed {
   unresolved: number[];
 }
 
-const URL_RE = /https?:\/\/[^\s<>()\[\]"']+[^\s<>()\[\]"'.,;:!?]/g;
-const SOURCE_LINE = /^\s*(?:[-*]\s*)?\[?(\d{1,3})\]?[.:)]?\s+(?:.*?)(https?:\/\/[^\s<>()"']+[^\s<>()"'.,;:!?])\)?\s*$/;
+// URL bodies may contain balanced parentheses (Wikipedia: /wiki/Mercury_(planet)); trailing punctuation is not part of the URL.
+const URL_BODY = String.raw`(?:[^\s<>()\[\]"']|\([^\s<>()"']*\))+`;
+const URL_RE = new RegExp(String.raw`https?:\/\/${URL_BODY}(?<![.,;:!?])`, "g");
+const SOURCE_LINE = new RegExp(String.raw`^\s*(?:[-*]\s*)?\[?(\d{1,3})\]?[.:)]?\s+(?:.*?)(https?:\/\/${URL_BODY}?(?<![.,;:!?]))\)?\s*$`);
 const SOURCE_HEADER = /^\s*(?:#+\s*)?(?:\*\*)?(sources|references|citations|links)(?:\*\*)?\s*:?\s*$/i;
-const MD_LINK = /\[([^\]\n]+)\]\((https?:\/\/[^)\s]+)\)/g;
+const MD_LINK = /\[([^\]\n]+)\]\((https?:\/\/(?:[^()\s]|\([^()\s]*\))+)\)/g;
 const REF = /\[(\d{1,3}(?:\s*[,–-]\s*\d{1,3})*)\]/g;
 
 /** Expand "1, 3" and "2-4" inside one bracket. */

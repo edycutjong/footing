@@ -23,6 +23,18 @@ describe("parseAnswer()", () => {
     expect(p.pairs[0].url).toBe("https://www.heart.org/x");
     expect(p.pairs[0].sentence).toBe("Olive oil is the main fat (AHA).");
   });
+  it("keeps balanced parentheses in URLs (Wikipedia disambiguation pages)", () => {
+    const md = parseAnswer("Mercury is the smallest planet ([wiki](https://en.wikipedia.org/wiki/Mercury_(planet))).");
+    expect(md.pairs[0].url).toBe("https://en.wikipedia.org/wiki/Mercury_(planet)");
+    const ref = parseAnswer("Mercury is small [1].\n\n[1] https://en.wikipedia.org/wiki/Mercury_(planet)");
+    expect(ref.pairs[0].url).toBe("https://en.wikipedia.org/wiki/Mercury_(planet)");
+    expect(ref.unresolved).toEqual([]);
+    const bare = parseAnswer("See https://en.wikipedia.org/wiki/Mercury_(planet), it is small.");
+    expect(bare.pairs[0].url).toBe("https://en.wikipedia.org/wiki/Mercury_(planet)");
+  });
+  it("does not swallow a closing parenthesis that wraps a bare URL", () => {
+    expect(parseAnswer("Small planet (see https://example.org/a).").pairs[0].url).toBe("https://example.org/a");
+  });
   it("reads bare URLs", () => {
     const p = parseAnswer("See the facts at https://science.nasa.gov/moon/facts/ for details.");
     expect(p.pairs[0].url).toBe("https://science.nasa.gov/moon/facts/");

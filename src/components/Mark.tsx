@@ -32,14 +32,18 @@ export function Mark({ state, held, neutral }: { state: ChipState; held?: boolea
   }
 }
 
+/** Route badges: the response's real inferenceSource per model call; repeated cloud attempts collapse to one badge.
+ *  A device attempt that timed out / errored has no inferenceSource and is marked as such, never as ON DEVICE. */
 export function Badges({ sources }: { sources: string[] }) {
-  if (!sources.length) return null;
+  const seq = sources.filter((s, i) => i === 0 || s !== sources[i - 1]);
+  if (!seq.length) return null;
+  const label = (s: string) => (s === "on_device" ? "ON DEVICE" : s === "in_cloud" ? "IN CLOUD" : s === "device_timeout" ? "DEVICE TIMED OUT" : "DEVICE ERROR");
   return (
     <span className="badges">
-      {sources.map((s, i) => (
+      {seq.map((s, i) => (
         <span key={i} style={{ display: "inline-flex", gap: 3, alignItems: "center" }}>
           {i > 0 && <span className="arrow">→</span>}
-          <span className={`badge ${s === "on_device" ? "d" : "c"}`} title={`inferenceSource: ${s}`}>{s === "on_device" ? "ON DEVICE" : "IN CLOUD"}</span>
+          <span className={`badge ${s === "in_cloud" ? "c" : s === "on_device" ? "d" : "dx"}`} title={s.startsWith("device_") ? "on-device attempt, no answer" : `inferenceSource: ${s}`}>{label(s)}</span>
         </span>
       ))}
     </span>

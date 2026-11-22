@@ -145,4 +145,50 @@ describe("Check engine", () => {
     await new Check(answer(6).pairs, d, { cfg, force: "auto", device: "unavailable" }).run();
     expect(peak).toBe(cfg.cloudConcurrency);
   });
+
+  it("an escalated pair shows the pending mark until the cloud lands (never 'deciding')", async () => {
+    const seen: string[] = [];
+    const d = deps({ triage: async () => ({ verdict: "SUPPORTS", quote: "Olive oil is the main source of fat in the diet.", inferenceSource: "on_device", ms: 5 }) });
+    await new Check(answer(1).pairs, d, { cfg, force: "auto", device: "available", onUpdate: (r) => seen.push(r.state) }).run();
+    expect(seen).toContain("escalated");
+    expect(seen).not.toContain("deciding");
+    expect(seen.at(-1)).toBe("SUPPORTS");
+  });
+
+  it("reserves a slot before a PREFER_ON_DEVICE triage: with 1 slot left and a retry in flight it cannot overshoot", async () => {
+    // pairs 0..6 go straight to the cloud (PDFs), pair 7 is HTML on device; the SDK falls back to the cloud on pair 7.
+    const srcs: Record<string, SourceDoc> = {};
+    for (let i = 0; i < 7; i++) srcs[`https://s${i}.example/p`] = pdf(`https://s${i}.example/p`);
+    let n = 0;
+    const d = deps({
+      judgePdf: async () => (++n === 1 ? { error: "[503]", errorKind: "server", ms: 1 } : { verdict: "SUPPORTS", quote: "UNESCO listed it in 2010.", inferenceSource: "in_cloud", ms: 1 }),
+      triage: async (_s, _p, mode) => (mode === "PREFER_ON_DEVICE"
+        ? { verdict: "SUPPORTS", quote: "Olive oil is the main source of fat in the diet.", inferenceSource: "in_cloud", ms: 1 }
+        : { verdict: "SUPPORTS", quote: "Olive oil is the main source of fat in the diet.", inferenceSource: "on_device", ms: 1 }),
+    }, srcs);
+    const c = new Check(answer(8).pairs, d, { cfg, force: "auto", device: "available" });
+    await c.run();
+    expect(c.cloudUsed).toBeLessThanOrEqual(cfg.citationCloudCap);
+  });
+
+  it("a settled negative releases its reserved fallback slot (cloudUsed stays 0)", async () => {
+    const c = new Check(answer(3).pairs, deps(), { cfg, force: "auto", device: "available" });
+    await c.run();
+    expect(c.cloudUsed).toBe(0);
+  });
+
+  it("marks a timed-out device attempt in the badge sequence", async () => {
+    const d = deps({ triage: async () => ({ error: "timeout 20000 ms", errorKind: "timeout", ms: 20000 }) });
+    const { runs } = await new Check(answer(1).pairs, d, { cfg, force: "auto", device: "available" }).run();
+    expect(runs[0].sources).toEqual(["device_timeout", "in_cloud"]);
+    expect(runs[0].after?.reason).toBe("on-device timed out");
+  });
+
+  it("ignores a second tap while a confirm is in flight", async () => {
+    const d = deps();
+    const c = new Check(answer(1).pairs, d, { cfg, force: "auto", device: "available" });
+    await c.run();
+    await Promise.all([c.confirm(c.runs[0].pair.id), c.confirm(c.runs[0].pair.id)]);
+    expect(d.calls.filter((x) => x === "judge")).toHaveLength(1);
+  });
 });

@@ -191,9 +191,19 @@ export class Check {
       run.state = "triage";
       this.emit(run);
       const passages = inputs?.passages ?? [];
-      const t = await this.deps.triage(run.pair.sentence, passages, r.deviceMode ?? "PREFER_ON_DEVICE", src);
+      // PREFER_ON_DEVICE may fall back to the cloud inside the SDK, so a slot is reserved BEFORE dispatch (no slot →
+      // ONLY_ON_DEVICE, which cannot make a cloud call) and released only if the answer really came from the device.
+      let mode = r.deviceMode ?? "PREFER_ON_DEVICE";
+      let reserved = false;
+      if (mode === "PREFER_ON_DEVICE" && force !== "device") {
+        reserved = this.reserve(userInitiated);
+        if (!reserved) mode = "ONLY_ON_DEVICE";
+      }
+      const t = await this.deps.triage(run.pair.sentence, passages, mode, src);
       if (t.inferenceSource) run.sources.push(t.inferenceSource);
-      if (t.inferenceSource === "in_cloud") { this.cloudUsed++; run.cloudCalls++; } // SDK fallback: an (already made) cloud call
+      else if (t.error) run.sources.push(t.errorKind === "timeout" ? "device_timeout" : "device_error");
+      if (reserved && t.inferenceSource === "on_device") this.cloudUsed--;
+      else if (reserved) run.cloudCalls++; // SDK fallback (or an error after a possible fallback): counted
       const held = !!t.quote && gate(t.quote, passages.join("\n"));
       run.nanoQuoteHeld = held;
       run.trail.push({ step: "triage", inferenceSource: t.inferenceSource, verdict: t.verdict, quote: t.quote, gateHeld: held, ms: t.ms, error: t.error });
@@ -243,7 +253,8 @@ export class Check {
     const { cfg } = this.opts;
     const s = run.pair.sentence;
     const inputs = how === "text" ? pickInputs(s, src.text, cfg) : null;
-    run.state = "deciding";
+    // An escalated pair keeps its pending mark (`p`, "Nano found a candidate quote · checking in the cloud") until the cloud lands.
+    if (run.state !== "escalated") run.state = "deciding";
     this.emit(run);
     const reply = await this.withCloud(() =>
       how === "pdf" ? this.deps.judgePdf(s, src.pdfBase64 ?? "")
@@ -281,12 +292,13 @@ export class Check {
   /** User tap: confirm / retry one citation in the cloud (exempt from the cap, still counted). */
   async confirm(pairId: string): Promise<void> {
     const run = this.runs.find((r) => r.pair.id === pairId);
-    if (!run) return;
+    if (!run || ["queued", "fetching", "triage", "escalated", "deciding"].includes(run.state)) return; // no double taps
     const src = await this.source(run.pair.url);
-    if (!src.ok) return;
     const fetchInfo = { ok: src.ok, status: src.status, error: src.error, textChars: src.text.length };
     const kind = effectiveKind(src.kind, fetchInfo, this.opts.cfg);
-    if (kind === "failed") return;
+    if (kind === "failed" || run.state === "deciding") return;
+    run.state = "deciding";
+    this.emit(run);
     this.reserve(true);
     run.trail.push({ step: "route", route: "USER_CONFIRM", reason: "you asked the cloud to confirm" });
     await this.cloudDecide(run, src, kind === "js-only" ? "url" : kind === "pdf" ? "pdf" : "text", true);

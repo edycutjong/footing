@@ -35,14 +35,23 @@ function chipText(r: PairRun | undefined, style: "likely" | "neutral"): { title:
 
 const VERDICT_WORDS: Partial<Record<ChipState, string>> = {
   SUPPORTS: "source says it", PARTIAL: "source says only part of it", NOT_SUPPORTED: "source doesn't say this",
-  LIKELY_UNSUPPORTED: "likely doesn't say this (on device, unconfirmed)", UNVERIFIED: "quote not found", NOT_FOUND_TRUNCATED: "not found in the part read",
+  UNVERIFIED: "quote not found", NOT_FOUND_TRUNCATED: "not found in the part read",
   NOT_CHECKED: "not checked", CAP_REACHED: "check skipped, tap to confirm",
 };
 
+function verdictWords(st: ChipState, style: "likely" | "neutral"): string | undefined {
+  if (st === "LIKELY_UNSUPPORTED") return style === "likely" ? "likely doesn't say this (on device, unconfirmed)" : "not found on device (unconfirmed)";
+  return VERDICT_WORDS[st];
+}
+
 function where(r: PairRun): string {
-  if (!r.sources.length) return "not run";
-  const last = r.sources[r.sources.length - 1];
-  return r.sources.length > 1 ? "triaged on this laptop, decided in the cloud" : last === "on_device" ? "checked on this laptop" : "checked in the cloud";
+  const dev = r.sources.includes("on_device");
+  const cloud = r.sources.includes("in_cloud");
+  const timedOut = r.sources.some((s) => s.startsWith("device_"));
+  if (dev && cloud) return "triaged on this laptop, decided in the cloud";
+  if (dev) return "checked on this laptop";
+  if (cloud) return timedOut ? "on-device attempt failed, decided in the cloud" : "checked in the cloud";
+  return "not run";
 }
 
 function fragment(url: string, quote?: string): string {
@@ -53,8 +62,9 @@ function fragment(url: string, quote?: string): string {
   return `${url}#:~:text=${frag}`;
 }
 
-function Excerpt({ input, quote }: { input?: string; quote?: string }) {
+function Excerpt({ input, quote, empty }: { input?: string; quote?: string; empty?: boolean }) {
   if (!input) return <p className="data">No source text (read in the cloud from the URL).</p>;
+  if (empty) return <p>No passage in what the model read says this.</p>;
   const text = normalize(input);
   const q = quote ? normalize(quote) : "";
   // modelInput = passages + page window; the last occurrence sits in the page window, i.e. in page order.
@@ -74,17 +84,33 @@ function Circled({ sentence, words }: { sentence: string; words?: string[] }) {
 }
 
 function Pane({ r, onClose, onConfirm }: { r: PairRun; onClose: () => void; onConfirm: (id: string) => void }) {
+  const ref = useRef<HTMLElement>(null);
+  useEffect(() => {
+    // Modal focus: move focus in, keep Tab inside, give it back to the chip that opened the pane.
+    const opener = document.activeElement as HTMLElement | null;
+    ref.current?.querySelector<HTMLElement>("button.close")?.focus();
+    const trap = (e: KeyboardEvent) => {
+      if (e.key !== "Tab" || !ref.current) return;
+      const f = [...ref.current.querySelectorAll<HTMLElement>("button, a[href], input")];
+      if (!f.length) return;
+      const first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    };
+    document.addEventListener("keydown", trap);
+    return () => { document.removeEventListener("keydown", trap); opener?.focus?.(); };
+  }, [r.pair.id]);
   const t = r.trail;
   const triage = t.find((s) => s.step === "triage");
   const judge = [...t].reverse().find((s) => s.step.startsWith("judge"));
   const showQuote = r.quote && (r.state === "SUPPORTS" || r.state === "PARTIAL" || r.state === "NOT_SUPPORTED");
   const canConfirm = ["LIKELY_UNSUPPORTED", "CAP_REACHED", "NOT_CHECKED", "UNVERIFIED"].includes(r.state) && r.source?.kind !== "failed";
   return (
-    <aside className="pane" role="dialog" aria-label={`Evidence for sentence ${r.pair.s + 1}`}>
+    <aside className="pane" role="dialog" aria-modal="true" ref={ref} aria-label={`Evidence for sentence ${r.pair.s + 1}`}>
       <button className="ghost close" onClick={onClose} aria-label="Close evidence">Close ✕</button>
       <h2>Sentence {r.pair.s + 1}{r.pair.n !== null ? ` · source [${r.pair.n}]` : ""}</h2>
       <div className={`verdict s-${r.state}${cfg.deviceNegativeStyle === "neutral" && r.state === "LIKELY_UNSUPPORTED" ? " neutral" : ""}`}>
-        <Mark state={r.state} held={r.nanoQuoteHeld} neutral={cfg.deviceNegativeStyle === "neutral"} /> <b>{VERDICT_WORDS[r.state] ?? chipText(r, cfg.deviceNegativeStyle).title}</b> <Badges sources={r.sources} />
+        <Mark state={r.state} held={r.nanoQuoteHeld} neutral={cfg.deviceNegativeStyle === "neutral"} /> <b>{verdictWords(r.state, cfg.deviceNegativeStyle) ?? chipText(r, cfg.deviceNegativeStyle).title}</b> <Badges sources={r.sources} />
       </div>
       {r.reason && <p style={{ margin: "6px 0 0" }}>{r.reason}</p>}
       <div className="cols">
@@ -94,14 +120,14 @@ function Pane({ r, onClose, onConfirm }: { r: PairRun; onClose: () => void; onCo
         </div>
         <div>
           <h4>{r.state === "NOT_SUPPORTED" && r.quote ? "What the page says instead" : "The source"}</h4>
-          <Excerpt input={r.modelInput ?? r.passages?.join(" ")} quote={showQuote ? r.quote : (triage?.gateHeld ? triage.quote : undefined)} />
+          <Excerpt input={r.modelInput ?? r.passages?.join(" ")} quote={showQuote ? r.quote : (triage?.gateHeld ? triage.quote : undefined)} empty={(r.state === "NOT_SUPPORTED" || r.state === "LIKELY_UNSUPPORTED") && !r.quote?.trim()} />
           {r.source?.finalUrl && <p className="data" style={{ marginTop: 8 }}><a href={fragment(r.source.finalUrl, showQuote ? r.quote : undefined)} target="_blank" rel="noreferrer">open source ↗</a> {r.source.finalUrl}</p>}
         </div>
       </div>
       {canConfirm && <p><button className="primary" onClick={() => onConfirm(r.pair.id)}>{r.state === "NOT_CHECKED" ? "Check this one in the cloud" : "Confirm in the cloud"}</button></p>}
       <h4 style={{ margin: "16px 0 4px", fontSize: 12, letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--muted)" }}>Route trail</h4>
-      {r.planned && r.sources.length > 0 && !r.sources.includes("on_device") && r.planned.to === "DEVICE_TRIAGE" && (
-        <p className="data">planned on a Nano laptop: {r.planned.reason} → ran: {r.sources.map((s) => (s === "on_device" ? "d" : "c")).join(" → ")}</p>
+      {r.planned && r.sources.length > 0 && !r.sources.includes("on_device") && (
+        <p className="data">planned on a Nano laptop: {r.planned.to === "DEVICE_TRIAGE" ? "on-device first" : `cloud — ${r.planned.reason}`} → ran: {r.sources.map((s) => (s === "on_device" ? "d" : s.startsWith("device_") ? "d✗" : "c")).join(" → ")}</p>
       )}
       <ul className="trail data">
         {t.map((s, i) => (
@@ -130,7 +156,7 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
   const parsed: Parsed = useMemo(() => parseAnswer(text), [text]);
   const draftCount = useMemo(() => (draft ? parseAnswer(draft).pairs.length : 0), [draft]);
   const [force, setForce] = useState<Force>("auto");
-  const [device, setDevice] = useState<Device | "checking">("checking");
+  const [device, setDevice] = useState<Device | "checking" | "slow">("checking");
   const [progress, setProgress] = useState<number | undefined>();
   const [runs, setRuns] = useState<PairRun[]>([]);
   const [running, setRunning] = useState(false);
@@ -146,7 +172,7 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
     // availability() can take minutes on a fresh profile (P1a: 152 s). After 4 s the page treats the device as
     // unavailable (checks run in the cloud); a late answer still updates the pill.
     let settled = false;
-    const timer = setTimeout(() => { if (!settled) setDevice((d) => (d === "checking" ? "unavailable" : d)); }, 4000);
+    const timer = setTimeout(() => { if (!settled) setDevice((d) => (d === "checking" ? "slow" : d)); }, 4000);
     import("@/lib/ai/deviceModel").then((m) => m.deviceAvailability()).then((d) => { settled = true; setDevice(d); });
     return () => clearTimeout(timer);
   }, []);
@@ -177,7 +203,7 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
       setRunning(false);
       return;
     }
-    let dev: Device = device === "checking" ? "unavailable" : device;
+    let dev: Device = device === "checking" || device === "slow" ? "unavailable" : device;
     if (dev !== "unavailable" && force !== "cloud") {
       const init = initDevice(cfg, (p) => { setProgress(p); if (p < 1) setDevice("downloading"); });
       if (dev === "available") {
@@ -297,7 +323,7 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
                       const ct = chipText(r, style);
                       return (
                         <button key={p.id} className={`chip s-${r.state}${style === "neutral" && r.state === "LIKELY_UNSUPPORTED" ? " neutral" : ""}`} aria-pressed={open === p.id} onClick={() => setOpen(p.id)}
-                          aria-label={`Sentence ${s.index + 1}: ${VERDICT_WORDS[r.state] ?? ct.title}, ${where(r)}`}>
+                          aria-label={`Sentence ${s.index + 1}: ${verdictWords(r.state, style) ?? ct.title}${(r.state === "NOT_CHECKED" || r.state === "CAP_REACHED") && r.reason ? ` — ${r.reason}` : ""}, ${where(r)}`}>
                           <Mark state={r.state} held={r.nanoQuoteHeld} neutral={style === "neutral"} />
                           <span className="what">{ct.title}<small>[{p.n ?? "↗"}] {hostOf(r.source?.finalUrl ?? p.url)}</small></span>
                           <Badges sources={r.sources} />
@@ -325,7 +351,10 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
           <div className="foot">
             <div className="total" aria-live="polite">
               <span className="big">{runs.length ? `${t.k} of ${t.n}` : "— of —"}</span>
-              <span style={{ fontSize: 18 }}>sources don&apos;t say this</span>
+              <span style={{ fontSize: 18 }}>checked citations: the source doesn&apos;t say it (or says only part)</span>
+              {runs.length > 0 && t.notChecked + t.unverified > 0 && (
+                <span className="unread">· {t.notChecked + t.unverified} of {t.total} could not be checked (see the typed line)</span>
+              )}
               {t.j > 0 && (
                 <span className={`likely${style === "neutral" ? " neutral" : ""}`}>+ {t.j} {style === "likely" ? "likely" : "not found on device"} (unconfirmed){" "}
                   <button className="ghost" style={{ padding: "2px 8px" }} onClick={confirmAll} disabled={running}>Confirm all in cloud</button>
@@ -357,8 +386,9 @@ function hostOf(u: string) {
   try { return new URL(u).hostname.replace(/^www\./, ""); } catch { return u; }
 }
 
-function DevicePill({ device, progress, onDownload }: { device: Device | "checking"; progress?: number; onDownload: () => void }) {
+function DevicePill({ device, progress, onDownload }: { device: Device | "checking" | "slow"; progress?: number; onDownload: () => void }) {
   if (device === "checking") return <span className="pill">Checking for an on-device model…</span>;
+  if (device === "slow") return <span className="pill">Still checking for an on-device model — checks run in the cloud for now</span>;
   if (device === "available") return <span className="pill"><span className="badge d">ON DEVICE</span> On-device model ready</span>;
   if (device === "downloading")
     return <span className="pill">Downloading {progress !== undefined ? `${Math.round(progress * 100)}%` : "…"} <span className="bar"><i style={{ width: `${Math.round((progress ?? 0) * 100)}%` }} /></span> checks run in the cloud meanwhile</span>;
