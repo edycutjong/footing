@@ -40,7 +40,7 @@ opening every tab.
 
 ### The Solution
 Footing fetches each cited page, picks the three best-matching passages (BM25), and asks one question per (sentence, passage) pair.
-**Gemini Nano on your laptop triages every citation with a median under 2 seconds on our M1 Max; only the hard calls go to a cloud model.** Then plain code
+**Gemini Nano on your laptop triages every citation with a median under 2 seconds on our M1 Max and marks the ones with no supporting passage itself; every citation Nano thinks is supported goes to a cloud model for the final call.** Then plain code
 checks that every quote the model relied on exists, word for word, in the text the model was given. A verdict whose quote is not found is
 shown as `UNVERIFIED`, never as supported.
 
