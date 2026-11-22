@@ -8,7 +8,7 @@ const data = Courier_Prime({ subsets: ["latin"], weight: ["400", "700"], variabl
 
 const description =
   "Checks that each link cited in an AI answer actually says what the sentence claims. Gemini Nano triages on your laptop; the cloud decides the hard calls; code checks every quote.";
-const ogImage = { url: "/og-image.png?v=2", width: 2400, height: 1260, alt: "Footing — a cited sentence circled in red pencil beside the source line that doesn't say it" };
+const ogImage = { url: "/og-image.png?v=3", width: 2400, height: 1260, alt: "Footing — a cited sentence circled in red pencil beside the source line that doesn't say it" };
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://footing.edycu.dev"),
