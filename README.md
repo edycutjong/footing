@@ -44,7 +44,7 @@ Footing fetches each cited page, picks the three best-matching passages (BM25), 
 **Gemini Nano on your laptop triages every readable cited page (PDFs and JavaScript-only pages go to the cloud) with a median under 2 seconds on our M1 Max and marks the ones with no supporting passage itself; every citation Nano thinks is supported goes to a cloud model for the final call.** Then plain code
 checks that every quote the model relied on exists, word for word, in the text the model was given. A verdict whose quote is not found is
 shown as `UNVERIFIED`, never as supported. The gate proves the quoted words are in the source; it does not prove the model read them
-correctly (on the fresh 20, 6 wrong cloud verdicts still carried a quote that was found, `/eval`).
+correctly (on the fresh 20, 6 wrong cloud verdicts still carried a quote that was found, by the eval's joined-text rule, `/eval`).
 
 ## 🏗️ Architecture & Tech Stack
 
@@ -110,12 +110,14 @@ Machine for on-device runs: MacBook Pro M1 Max, 32 GB, Chrome 157. Cloud judge: 
 How the work splits between laptop and cloud: on the frozen 30, Nano settled 8 of 30 pairs on device (all 8 labelled partial or not supported) and escalated 22; on the
 fresh 20 it settled 1 and escalated 19 (`evidence/summary.json`). So the measured cloud saving is small: 8 of 30 and 1 of 20 calls, and 1 of 9 on
 the sample answer's recorded Nano run (`evidence/check/nano-hero-if-2026-11-22.json`). Escalation is the design, not a failure: `SUPPORTS` is never final on device.
-An escalated citation pays for both calls, and Nano triage runs one citation at a time, so the hybrid is not faster end to end: on the deployed site
-the sample answer took 18.0–36.0 s wall clock with Nano (median 27.0 s, 3 runs, `evidence/check/live-r03-nano-hero-*.json`) and 17.0–41.0 s without
-(median 21.0 s, 7 runs, `evidence/check/live-*fresh-hero*.json`). What the laptop buys is that the citations it settles never reach a model server.
+An escalated citation pays for both calls, and Nano triage runs one citation at a time, so the hybrid is not faster end to end. Recorded runs of the sample answer on the
+deployed site took 18.0–36.0 s wall clock with Nano (median 27.0 s, 3 runs, `evidence/check/live-r03-nano-hero-*.json`) and 17.0–41.0 s without (median
+21.0 s, 7 runs, `evidence/check/live-*fresh-hero*.json`); all but one ran at the earlier cap of 8 and left at least one citation for a click (the 18.0 s
+Nano run left 4, after rate-limit errors, before automatic retries existed). The one 9-of-9 run, at cap 10, took 21.0 s without Nano
+(`evidence/check/live-r05-fresh-hero-2026-11-22.json`). What the laptop buys is that the citations it settles never reach a model server.
 
 Tests: **193 passing** in 12 files (`npm test`), covering the router, quote gate, SSRF guard, App Check verification, parser,
-extractor, tally and the check engine. Line coverage of `src/lib` is 88.5% (`npm run test:coverage`; the Firebase-SDK glue files are excluded
+extractor, tally and the check engine. Line coverage of `src/lib` is 88.6% (`npm run test:coverage`, receipt `evidence/coverage-2026-11-23.txt`; the Firebase-SDK glue files are excluded
 and covered by the E2E run instead, see `vitest.config.ts`).
 
 **Latency per claim** (`npm run bench`, raw rows in [`evidence/bench.json`](evidence/bench.json); 20 held-out claims × 2 reps per route, one untimed warm-up

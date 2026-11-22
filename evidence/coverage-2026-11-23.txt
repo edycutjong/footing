@@ -1,0 +1,18 @@
+
+ RUN  v5.1.1 /Users/edycu/Hackathon/devpost/devpost-firebasehybridaihackathon/footing/build
+      Coverage enabled with v8
+
+
+ Test Files  12 passed (12)
+      Tests  193 passed (193)
+   Start at  00:24:18
+   Duration  910ms (import 52%, tests 28%, transform 12%, worker 8%)
+
+ % Coverage report from v8
+
+=============================== Coverage summary ===============================
+Statements   : 85.77% ( 603/703 )
+Branches     : 77.52% ( 407/525 )
+Functions    : 86.13% ( 87/101 )
+Lines        : 88.63% ( 468/528 )
+================================================================================
