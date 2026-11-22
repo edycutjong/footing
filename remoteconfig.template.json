@@ -1,0 +1,81 @@
+{
+  "parameters": {
+    "judge_model": {
+      "defaultValue": {
+        "value": "gemini-3.5-flash-lite"
+      },
+      "description": "Cloud model that decides SUPPORTS / PARTIAL / NOT_SUPPORTED",
+      "valueType": "STRING"
+    },
+    "triage_cloud_model": {
+      "defaultValue": {
+        "value": "gemini-3.5-flash-lite"
+      },
+      "description": "Cloud fallback of the triage instance when Nano is unavailable",
+      "valueType": "STRING"
+    },
+    "citation_cloud_cap": {
+      "defaultValue": {
+        "value": "8"
+      },
+      "description": "Cloud calls per check",
+      "valueType": "NUMBER"
+    },
+    "nano_timeout_ms": {
+      "defaultValue": {
+        "value": "20000"
+      },
+      "description": "Triage race timeout",
+      "valueType": "NUMBER"
+    },
+    "quote_max_chars": {
+      "defaultValue": {
+        "value": "300"
+      },
+      "description": "maxLength of the quote in both schemas",
+      "valueType": "NUMBER"
+    },
+    "passages_top_k": {
+      "defaultValue": {
+        "value": "3"
+      },
+      "description": "BM25 passages per pair",
+      "valueType": "NUMBER"
+    },
+    "passage_max_chars": {
+      "defaultValue": {
+        "value": "700"
+      },
+      "description": "Characters per passage",
+      "valueType": "NUMBER"
+    },
+    "js_min_text_chars": {
+      "defaultValue": {
+        "value": "400"
+      },
+      "description": "Below this, the page needs JavaScript",
+      "valueType": "NUMBER"
+    },
+    "cloud_concurrency": {
+      "defaultValue": {
+        "value": "2"
+      },
+      "description": "Parallel cloud calls",
+      "valueType": "NUMBER"
+    },
+    "judge_max_chars": {
+      "defaultValue": {
+        "value": "24000"
+      },
+      "description": "Extracted-text window the judge reads",
+      "valueType": "NUMBER"
+    },
+    "device_negative_style": {
+      "defaultValue": {
+        "value": "likely"
+      },
+      "description": "likely or neutral",
+      "valueType": "STRING"
+    }
+  }
+}

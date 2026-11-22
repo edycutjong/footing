@@ -1,0 +1,24 @@
+{
+  "label": "nano-lite",
+  "recordedAt": "2026-11-22T10:53:17.435Z",
+  "baseUrl": "http://localhost:3101",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+  "appCheckDebugTokenInjected": true,
+  "machine": "MacBook Pro M1 Max, 32 GB",
+  "result": {
+    "name": "urlContext",
+    "ok": true,
+    "ms": 4306,
+    "url": "https://example.com/",
+    "inferenceSource": "in_cloud",
+    "text": "I am unable to browse or retrieve the contents of that specific URL directly. However, the standard text for `https://example.com/` typically reads:\n\n\"This domain is for use in illustrative examples in documents. You may use this domain in literature without prior coordination or asking for permission.\"",
+    "urlContextMetadata": {
+      "urlMetadata": [
+        {
+          "retrievedUrl": "https://example.com/",
+          "urlRetrievalStatus": "URL_RETRIEVAL_STATUS_ERROR"
+        }
+      ]
+    }
+  }
+}

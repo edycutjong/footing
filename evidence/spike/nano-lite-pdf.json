@@ -1,0 +1,32 @@
+{
+  "label": "nano-lite",
+  "recordedAt": "2026-11-22T10:53:13.116Z",
+  "baseUrl": "http://localhost:3101",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+  "appCheckDebugTokenInjected": true,
+  "machine": "MacBook Pro M1 Max, 32 GB",
+  "result": {
+    "name": "pdf",
+    "ok": true,
+    "ms": 5598,
+    "inferenceSource": "in_cloud",
+    "pdfBytes": 789,
+    "text": "{\n  \"verdict\": \"NOT_SUPPORTED\",\n  \"quote\": \"On Saturdays the library opens at 10 a.m. and closes at 1 p.m.\",\n  \"reason\": \"The claim states the library opens at 9 a.m. on Saturdays, whereas the document states it opens at 10 a.m.\"\n}",
+    "usage": {
+      "promptTokenCount": 561,
+      "candidatesTokenCount": 79,
+      "totalTokenCount": 640,
+      "promptTokensDetails": [
+        {
+          "modality": "TEXT",
+          "tokenCount": 41
+        },
+        {
+          "modality": "IMAGE",
+          "tokenCount": 520
+        }
+      ],
+      "serviceTier": "standard"
+    }
+  }
+}

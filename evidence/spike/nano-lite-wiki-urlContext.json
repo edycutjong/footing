@@ -1,0 +1,24 @@
+{
+  "label": "nano-lite-wiki",
+  "recordedAt": "2026-11-22T10:53:59.783Z",
+  "baseUrl": "http://localhost:3101",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+  "appCheckDebugTokenInjected": true,
+  "machine": "MacBook Pro M1 Max, 32 GB",
+  "result": {
+    "name": "urlContext",
+    "ok": true,
+    "ms": 13054,
+    "url": "https://en.wikipedia.org/wiki/Footing_(accounting)",
+    "inferenceSource": "in_cloud",
+    "text": "I am unable to access the requested Wikipedia page directly to retrieve a verbatim quote.",
+    "urlContextMetadata": {
+      "urlMetadata": [
+        {
+          "retrievedUrl": "https://en.wikipedia.org/wiki/Footing_(accounting)",
+          "urlRetrievalStatus": "URL_RETRIEVAL_STATUS_ERROR"
+        }
+      ]
+    }
+  }
+}

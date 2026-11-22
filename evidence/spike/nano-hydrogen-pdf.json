@@ -1,0 +1,18 @@
+{
+  "label": "nano-hydrogen",
+  "recordedAt": "2026-11-22T10:46:51.847Z",
+  "baseUrl": "http://localhost:3101",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+  "appCheckDebugTokenInjected": true,
+  "machine": "MacBook Pro M1 Max, 32 GB",
+  "result": {
+    "name": "pdf",
+    "ok": false,
+    "ms": 10472,
+    "error": {
+      "name": "FirebaseError",
+      "code": "fetch-error",
+      "message": "AI: Error fetching from https://firebasevertexai.googleapis.com/v1beta/projects/footing-hybrid-ai/models/gemini-4-hydrogen:generateContent: [500 ] This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later. (AI/fetch-error)"
+    }
+  }
+}

@@ -18,3 +18,7 @@ next-env.d.ts
 *.tsbuildinfo
 test-results/
 playwright-report/
+AGENTS.md
+CLAUDE.md
+.claude/
+graphify-out/

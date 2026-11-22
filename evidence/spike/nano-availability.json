@@ -1,0 +1,15 @@
+{
+  "label": "nano",
+  "recordedAt": "2026-11-22T10:31:09.865Z",
+  "baseUrl": "http://localhost:3101",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+  "appCheckDebugTokenInjected": true,
+  "machine": "MacBook Pro M1 Max, 32 GB",
+  "result": {
+    "name": "availability",
+    "ok": true,
+    "ms": 6407,
+    "languageModelGlobal": true,
+    "availability": "available"
+  }
+}
