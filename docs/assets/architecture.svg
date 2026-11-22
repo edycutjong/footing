@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" width="960" height="520" role="img" aria-labelledby="t d">
+  <title id="t">Footing architecture</title>
+  <desc id="d">The browser parses the answer, asks a non-AI proxy to fetch each cited source, picks passages with BM25, routes each pair by the router rule. Gemini Nano triages on the laptop; the cloud model decides full, partial or not supported; a code quote gate checks every quote against the text the model was given.</desc>
+  <style>
+    text{font-family:"Helvetica Neue",Arial,sans-serif;font-size:13px;fill:#1E2B23}
+    .h{font-family:Georgia,serif;font-weight:700;font-size:15px}
+    .m{font-family:"Courier New",monospace;font-size:11.5px;fill:#5B6A5F}
+    .box{fill:#F7F9F2;stroke:#7F9F78;stroke-width:1.5}
+    .dev{fill:#F7F9F2;stroke:#1E2B23;stroke-width:2}
+    .cld{fill:#F7F9F2;stroke:#2B5C9E;stroke-width:2}
+    .gate{fill:#F7F9F2;stroke:#2F6B45;stroke-width:2.5}
+    .a{stroke:#1E2B23;stroke-width:1.5;fill:none;marker-end:url(#ar)}
+    .ac{stroke:#2B5C9E;stroke-width:1.8;fill:none;marker-end:url(#arc)}
+  </style>
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#1E2B23"/></marker>
+    <marker id="arc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#2B5C9E"/></marker>
+  </defs>
+  <rect width="960" height="520" fill="#EEF2E6"/>
+  <text x="24" y="32" class="h" style="font-size:18px">Footing: where each citation goes</text>
+  <text x="24" y="52" class="m">solid ink = on this laptop · blue = cloud (all AI through Firebase AI Logic) · green = plain code</text>
+
+  <rect x="24" y="84" width="150" height="70" class="box"/>
+  <text x="38" y="108" class="h">Pasted answer</text><text x="38" y="128">sentences + [n] links</text><text x="38" y="144" class="m">src/lib/parse.ts</text>
+
+  <rect x="214" y="84" width="190" height="70" class="box"/>
+  <text x="228" y="108" class="h">Fetch proxy (no AI)</text><text x="228" y="128">SSRF guard, App Check JWT</text><text x="228" y="144" class="m">src/app/api/fetch/route.ts</text>
+
+  <rect x="444" y="84" width="200" height="70" class="box"/>
+  <text x="458" y="108" class="h">Readability + BM25</text><text x="458" y="128">top 3 passages per claim</text><text x="458" y="144" class="m">src/lib/extract.ts, bm25.ts</text>
+
+  <rect x="684" y="84" width="252" height="70" class="box"/>
+  <text x="698" y="108" class="h">Router (pure function)</text><text x="698" y="128">html, pdf, js-only, device state, cap</text><text x="698" y="144" class="m">src/lib/route/router.ts</text>
+
+  <path class="a" d="M174 119H212"/><path class="a" d="M404 119H442"/><path class="a" d="M644 119H682"/>
+
+  <rect x="24" y="230" width="270" height="110" class="dev"/>
+  <text x="40" y="254" class="h">ON DEVICE · Gemini Nano</text>
+  <text x="40" y="274">PREFER_ON_DEVICE, binary triage</text>
+  <text x="40" y="292">SUPPORTS | NOT_SUPPORTED + quote</text>
+  <text x="40" y="312" class="m">src/lib/ai/models.ts:28</text>
+  <text x="40" y="328" class="m">badge: inferenceSource = on_device</text>
+
+  <rect x="350" y="230" width="270" height="110" class="cld"/>
+  <text x="366" y="254" class="h" style="fill:#2B5C9E">IN CLOUD · deciding judge</text>
+  <text x="366" y="274">ONLY_IN_CLOUD, responseSchema</text>
+  <text x="366" y="292">SUPPORTS | PARTIAL | NOT_SUPPORTED</text>
+  <text x="366" y="312" class="m">src/lib/ai/models.ts:39 (PDF, URL context :46)</text>
+  <text x="366" y="328" class="m">badge: inferenceSource = in_cloud</text>
+
+  <rect x="676" y="230" width="260" height="110" class="gate"/>
+  <text x="692" y="254" class="h" style="fill:#2F6B45">Quote gate (code)</text>
+  <text x="692" y="274">quote must sit verbatim in ONE</text>
+  <text x="692" y="292">segment the model was given</text>
+  <text x="692" y="312" class="m">src/lib/gate/quote.ts:21</text>
+  <text x="692" y="328" class="m">fail = UNVERIFIED, never SUPPORTS</text>
+
+  <path class="a" d="M810 154V196H160V228"/>
+  <text x="170" y="190" class="m">readable page + Nano present</text>
+  <path class="ac" d="M810 196H485V228"/>
+  <text x="500" y="190" class="m" style="fill:#2B5C9E">PDF, JS-only, no Nano, forced cloud</text>
+  <path class="ac" d="M294 285H348"/>
+  <text x="250" y="222" class="m" style="fill:#2B5C9E"> </text>
+  <text x="297" y="274" class="m" style="fill:#2B5C9E">every SUPPORTS</text>
+  <path class="a" d="M620 285H674"/>
+
+  <rect x="24" y="400" width="912" height="96" class="box"/>
+  <text x="40" y="424" class="h">Output: one chip per citation + a footed total</text>
+  <text x="40" y="446">Each chip carries its route badge and, when it holds, the exact quote the source contains. Nano alone can settle only</text>
+  <text x="40" y="464">"no supporting passage found" (shown as likely unsupported, one tap to confirm in the cloud). No Nano? Every pair runs in the</text>
+  <text x="40" y="482">cloud, capped at 8 per answer (Remote Config), and a meter says how many a Nano laptop would have settled locally.</text>
+  <path class="a" d="M810 340V398"/>
+</svg>
