@@ -4,6 +4,7 @@ import http from "node:http";
 import https from "node:https";
 import dns from "node:dns";
 import zlib from "node:zlib";
+import { pipeline } from "node:stream";
 import { createHash } from "node:crypto";
 import type { LookupFunction } from "node:net";
 import { checkUrl, isPublicAddress, sniffKind, LIMITS, type SourceKind } from "./ssrf";
@@ -65,12 +66,21 @@ function request(url: URL, signal: AbortSignal): Promise<Hop> {
   });
 }
 
-function decoded(res: http.IncomingMessage): NodeJS.ReadableStream {
+/** Decompressed body stream. pipeline(), not pipe(): pipe() does not forward the source's abort/reset to the
+ *  decompressor, so a stalled gzip source left readCapped() pending past the 8 s timeout (a2a r03). */
+function decoded(res: NodeJS.ReadableStream & { headers: http.IncomingHttpHeaders }): NodeJS.ReadableStream {
   const enc = String(res.headers["content-encoding"] ?? "").toLowerCase();
-  if (enc === "gzip" || enc === "x-gzip") return res.pipe(zlib.createGunzip());
-  if (enc === "deflate") return res.pipe(zlib.createInflate());
-  if (enc === "br") return res.pipe(zlib.createBrotliDecompress());
-  return res;
+  const z = enc === "gzip" || enc === "x-gzip" ? zlib.createGunzip()
+    : enc === "deflate" ? zlib.createInflate()
+      : enc === "br" ? zlib.createBrotliDecompress() : null;
+  if (!z) return res;
+  pipeline(res, z, () => undefined); // errors surface through z's async iterator
+  return z;
+}
+
+/** Decoded body, capped at `cap` decompressed bytes; rejects (never hangs) if the source is aborted mid-stream. */
+export function readBody(res: NodeJS.ReadableStream & { headers: http.IncomingHttpHeaders }, cap: number): Promise<Buffer> {
+  return readCapped(decoded(res), cap);
 }
 
 async function readCapped(stream: NodeJS.ReadableStream, cap: number): Promise<Buffer> {
@@ -117,7 +127,7 @@ export async function fetchSource(raw: string): Promise<FetchResult> {
       }
       const ct = String(r.headers["content-type"] ?? "");
       const declaredPdf = ct.toLowerCase().includes("pdf");
-      const buf = await readCapped(decoded(r.res), declaredPdf ? LIMITS.pdf : Math.max(LIMITS.html, LIMITS.pdf));
+      const buf = await readBody(r.res, declaredPdf ? LIMITS.pdf : Math.max(LIMITS.html, LIMITS.pdf));
       const kind = sniffKind(ct, buf.subarray(0, 1024));
       if (kind === "unsupported") return fail(`unsupported content type ${ct.split(";")[0] || "unknown"}`, r.status, url.href);
       if (kind === "html" && buf.length > LIMITS.html) return fail("source larger than 2 MB", r.status, url.href);

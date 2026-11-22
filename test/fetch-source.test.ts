@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { safeLookup, fetchSource } from "@/lib/net/fetchSource";
+import { PassThrough } from "node:stream";
+import zlib from "node:zlib";
+import { safeLookup, fetchSource, readBody } from "@/lib/net/fetchSource";
 
 const lookup = (host: string) =>
   new Promise<{ err: NodeJS.ErrnoException | null; addr: unknown }>((resolve) =>
@@ -20,5 +22,27 @@ describe("fetchSource SSRF guard (no network needed)", () => {
   });
   it("refuses a non-http scheme", async () => {
     expect((await fetchSource("file:///etc/passwd")).error).toMatch(/scheme file: not allowed/);
+  });
+});
+
+describe("readBody (decompression never outlives an aborted source)", () => {
+  const res = (enc: string) => Object.assign(new PassThrough(), { headers: { "content-encoding": enc } });
+  it("rejects when a gzip source is aborted mid-stream instead of hanging", async () => {
+    const r = res("gzip");
+    const partial = zlib.gzipSync(Buffer.from("<html>" + "a".repeat(5000))).subarray(0, 40);
+    const p = readBody(r, 1024 * 1024);
+    r.write(partial);
+    setTimeout(() => r.destroy(Object.assign(new Error("aborted"), { code: "ECONNRESET" })), 20);
+    await expect(p).rejects.toThrow();
+  });
+  it("decodes a complete gzip body and enforces the decompressed-size cap", async () => {
+    const ok = res("gzip");
+    const p = readBody(ok, 1024);
+    ok.end(zlib.gzipSync(Buffer.from("<html>hello</html>")));
+    expect((await p).toString()).toBe("<html>hello</html>");
+    const big = res("gzip");
+    const q = readBody(big, 1024);
+    big.end(zlib.gzipSync(Buffer.alloc(64 * 1024, 97)));
+    await expect(q).rejects.toThrow(/larger than/);
   });
 });
