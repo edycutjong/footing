@@ -20,3 +20,15 @@ describe("Remote Config template", () => {
     expect(params.triage_cloud_model.defaultValue.value).toMatch(/^gemini-/);
   });
 });
+
+import { DEFAULT_CONFIG, RC_KEYS } from "@/lib/config";
+
+describe("code defaults mirror the Remote Config template", () => {
+  it("has a code default for every template key, with the same value", () => {
+    for (const [key, p] of Object.entries(params)) {
+      const field = RC_KEYS[key];
+      expect(field, key).toBeDefined();
+      expect(String(DEFAULT_CONFIG[field])).toBe(p.defaultValue.value);
+    }
+  });
+});
