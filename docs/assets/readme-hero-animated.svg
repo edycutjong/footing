@@ -86,16 +86,16 @@
   <rect x="561" y="161" width="405" height="106" fill="#C2412D" opacity=".05"><animate attributeName="opacity" values=".05;.05;0;0;.05;.05" keyTimes="0;.10;.14;.58;.62;1" dur="8s" repeatCount="indefinite"/></rect>
 
   <g class="sans" font-size="14" fill="#1E2B23">
-    <text x="566" y="70" font-size="9" class="mono" fill="#8E948B">2</text>
+    <text x="566" y="70" font-size="9" class="mono" fill="#5B6A5F">2</text>
     <text x="580" y="74">These early clinical studies investigated</text>
-    <text x="580" y="93">short-term starvation periods…<tspan class="mono" font-size="9" fill="#8E948B" dy="-5"> [1]</tspan></text>
-    <text x="566" y="126" font-size="9" class="mono" fill="#8E948B">4</text>
+    <text x="580" y="93">short-term starvation periods…<tspan class="mono" font-size="9" fill="#5B6A5F" dy="-5"> [1]</tspan></text>
+    <text x="566" y="126" font-size="9" class="mono" fill="#5B6A5F">4</text>
     <text x="580" y="130">In human populations, research has evaluated</text>
-    <text x="580" y="149">whether intermittent fasting can lower…<tspan class="mono" font-size="9" fill="#8E948B" dy="-5"> [1]</tspan></text>
-    <text x="566" y="182" font-size="9" class="mono" fill="#8E948B">5</text>
+    <text x="580" y="149">whether intermittent fasting can lower…<tspan class="mono" font-size="9" fill="#5B6A5F" dy="-5"> [1]</tspan></text>
+    <text x="566" y="182" font-size="9" class="mono" fill="#5B6A5F">5</text>
     <text x="580" y="183">…its effect on lowering blood pressure</text>
     <text x="580" y="212" textLength="196" lengthAdjust="spacingAndGlyphs">appears less pronounced than</text>
-    <text x="781" y="212">that of…<tspan class="mono" font-size="9" fill="#8E948B" dy="-5"> [2]</tspan></text>
+    <text x="808" y="212">that of…<tspan class="mono" font-size="9" fill="#5B6A5F" dy="-5"> [2]</tspan></text>
   </g>
   <!-- ticks: wiped in like a pencil stroke (clip width) -->
   <g clip-path="url(#tk1)"><use href="#tk" x="914" y="58" width="32" height="30"/></g>
@@ -154,6 +154,7 @@
     <text x="984" y="228" font-weight="400">insulin.</text>
   </g>
   <path d="M984 193 C1050 191 1150 195 1243 192" fill="none" stroke="#2F6B45" stroke-width="2.4" stroke-linecap="round" pathLength="100" stroke-dasharray="100 102"><animate attributeName="stroke-dashoffset" values="0;0;101;101;0;0" keyTimes="0;.10;.14;.47;.52;1" dur="8s" repeatCount="indefinite"/></path>
-  <text class="mono" x="984" y="252" font-size="9.5" fill="#2B5C9E" font-weight="700">the cloud's quote · found word for word<animate attributeName="opacity" values="1;1;0;0;1;1" keyTimes="0;.10;.14;.50;.53;1" dur="8s" repeatCount="indefinite"/></text>
-  <text class="mono" x="984" y="290" font-size="9.5" fill="#8E948B">fetched by the proxy · no AI in the fetch</text>
+  <text class="mono" x="984" y="250" font-size="9.5" fill="#2B5C9E" font-weight="700">the line the cloud's reason points to<animate attributeName="opacity" values="1;1;0;0;1;1" keyTimes="0;.10;.14;.50;.53;1" dur="8s" repeatCount="indefinite"/></text>
+  <text class="mono" x="984" y="264" font-size="9.5" fill="#5B6A5F">page text verbatim · fetched, no AI</text>
+  <text class="mono" x="984" y="290" font-size="9" fill="#5B6A5F">row 5: live check, 2026-11-22</text>
 </svg>
