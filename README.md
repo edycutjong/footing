@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/assets/readme-hero-animated.svg" alt="Footing — checks each cited sentence against the page it cites: Every citation ticked in pencil, the bad ones circled red; the sentence beside the source line that doesn't say it." width="100%">
+</p>
+
 # Footing
 
 Checks that each link cited in an AI answer actually says what the sentence claims.

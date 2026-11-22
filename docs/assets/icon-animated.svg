@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Footing — checks each cited sentence against the page it cites: Every citation ticked in pencil, the bad ones circled red; the sentence beside the source line that doesn't say it.">
+<!-- STORYBOARD (dur 6s — must equal this file's single master dur)
+  0-10%   steady state: the complete mark — entry 1 ticked green, entry 2's last words looped in red, the double rule (footing) beneath. Poster = static icon.svg.
+  10-20%  the marks lift: the tick wipes out, the loop and the double rule un-draw; two bare cited lines remain (state: cited)
+  22-36%  trigger: a green pencil tick wipes in over entry 1 (vouched)
+  36-58%  mechanism: Every citation ticked in pencil, the bad ones circled red; the sentence beside the source line that doesn't say it.
+          (the red pencil point travels round entry 2's last words; the loop stays)  data-story="beat-3"
+  58-72%  resolution: the double rule draws under both entries — the column is footed — and persists
+  72-92%  glow breath on the red loop  data-story="beat-4"
+  92-100% seam: end state = poster state, nothing pops
+-->
+  <style>
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F7F9F2"/><stop offset="1" stop-color="#EEF2E6"/></linearGradient>
+    <filter id="breath" x="-30%" y="-60%" width="160%" height="220%"><feGaussianBlur stdDeviation="9"/></filter>
+    <clipPath id="tkclip"><rect x="258" y="74" height="176" width="184"><animate attributeName="width" values="184;184;0;0;184;184" keyTimes="0;.10;.16;.24;.34;1" dur="6s" repeatCount="indefinite"/></rect></clipPath>
+  </defs>
+  <rect x="8" y="8" width="496" height="496" rx="88" fill="url(#paper)" stroke="#7F9F78" stroke-width="8"/>
+  <path d="M440 40 V472" stroke="#B7CBB0" stroke-width="6"/>
+  <!-- entry 1 words + the tick (wiped in like a pencil stroke) -->
+  <path d="M80 176 H128 M176 176 H232" stroke="#1E2B23" stroke-width="32" stroke-linecap="round"/>
+  <g clip-path="url(#tkclip)"><path d="M270 166 C281 157 293 157 301 167 L322 196 C350 150 380 116 420 84 C428 78 437 87 431 95 C392 136 362 180 343 226 C338 238 321 240 313 228 L269 186 C263 179 263 172 270 166 Z" fill="#2F6B45"/></g>
+  <!-- entry 2 words -->
+  <path d="M80 300 H116 M164 300 H204 M252 300 H314 M362 300 H400" stroke="#1E2B23" stroke-width="32" stroke-linecap="round"/>
+  <g transform="rotate(-3 330 296)">
+    <!-- glow breath (story) -->
+    <path data-story="beat-4" d="M262 262 C318 240 420 242 444 270 C466 296 438 336 350 340 C276 344 214 334 212 304 C210 280 248 260 318 252 C346 249 372 250 392 254" fill="none" stroke="#C2412D" stroke-width="30" stroke-linecap="round" filter="url(#breath)" opacity="0"><animate attributeName="opacity" values="0;0;.55;.55;0;0" keyTimes="0;.72;.80;.84;.92;1" dur="6s" repeatCount="indefinite"/></path>
+    <!-- the red pencil loop (signature event) -->
+    <path d="M262 262 C318 240 420 242 444 270 C466 296 438 336 350 340 C276 344 214 334 212 304 C210 280 248 260 318 252 C346 249 372 250 392 254" fill="none" stroke="#C2412D" stroke-width="20" stroke-linecap="round" stroke-linejoin="round" pathLength="100" stroke-dasharray="100 102"><animate attributeName="stroke-dashoffset" values="0;0;101;101;0;0" keyTimes="0;.10;.18;.38;.56;1" dur="6s" repeatCount="indefinite"/></path>
+    <!-- the pencil point that draws it (story) -->
+    <g data-story="beat-3" opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;.37;.38;.56;.58;1" dur="6s" repeatCount="indefinite"/>
+      <animateMotion path="M262 262 C318 240 420 242 444 270 C466 296 438 336 350 340 C276 344 214 334 212 304 C210 280 248 260 318 252 C346 249 372 250 392 254" keyPoints="0;0;1;1" keyTimes="0;.38;.56;1" calcMode="linear" dur="6s" repeatCount="indefinite"/>
+      <g transform="rotate(-40)"><path d="M0 0 L26 -11 L26 11 Z" fill="#C2412D"/><path d="M26 -11 L36 -15 L36 15 L26 11 Z" fill="#E8D9B0"/><rect x="36" y="-15" width="96" height="30" fill="#2F6B45"/><rect x="132" y="-15" width="18" height="30" fill="#B7CBB0"/></g>
+    </g>
+  </g>
+  <!-- the footing: a double rule that draws under the entries -->
+  <path d="M80 404 H432" stroke="#1E2B23" stroke-width="15" stroke-linecap="round" pathLength="100" stroke-dasharray="100 102"><animate attributeName="stroke-dashoffset" values="0;0;101;101;0;0" keyTimes="0;.10;.18;.58;.66;1" dur="6s" repeatCount="indefinite"/></path>
+  <path d="M80 440 H432" stroke="#1E2B23" stroke-width="15" stroke-linecap="round" pathLength="100" stroke-dasharray="100 102"><animate attributeName="stroke-dashoffset" values="0;0;101;101;0;0" keyTimes="0;.10;.18;.63;.71;1" dur="6s" repeatCount="indefinite"/></path>
+</svg>

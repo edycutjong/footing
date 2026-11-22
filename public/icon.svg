@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Footing — two cited lines on a workpaper: one ticked in green pencil, one circled in red pencil, footed by a double rule">
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="var(--sheet, #F7F9F2)"/>
+      <stop offset="100%" stop-color="var(--bg, #EEF2E6)"/>
+    </linearGradient>
+  </defs>
+  <!-- plate: the columnar pad (self-plated, so the mark holds on GitHub light and dark) -->
+  <rect x="8" y="8" width="496" height="496" rx="88" fill="url(#paper)" stroke="var(--rule-strong, #7F9F78)" stroke-width="8"/>
+  <path d="M440 40 V472" stroke="var(--rule, #B7CBB0)" stroke-width="6"/>
+  <!-- entry 1: cited words, vouched — a hand pencil tick (thick down-stroke, tapering up-stroke) -->
+  <path d="M80 176 H128 M176 176 H232" stroke="var(--ink, #1E2B23)" stroke-width="32" stroke-linecap="round"/>
+  <path d="M270 166 C281 157 293 157 301 167 L322 196 C350 150 380 116 420 84 C428 78 437 87 431 95 C392 136 362 180 343 226 C338 238 321 240 313 228 L269 186 C263 179 263 172 270 166 Z" fill="var(--vouched, #2F6B45)"/>
+  <!-- entry 2: cited words, excepted — the red pencil loops the words the source does not say -->
+  <path d="M80 300 H116 M164 300 H204 M252 300 H314 M362 300 H400" stroke="var(--ink, #1E2B23)" stroke-width="32" stroke-linecap="round"/>
+  <path d="M262 262 C318 240 420 242 444 270 C466 296 438 336 350 340 C276 344 214 334 212 304 C210 280 248 260 318 252 C346 249 372 250 392 254" fill="none" stroke="var(--after, #C2412D)" stroke-width="20" stroke-linecap="round" stroke-linejoin="round" transform="rotate(-3 330 296)"/>
+  <!-- the footing: a double rule under the entries -->
+  <path d="M80 404 H432 M80 440 H432" stroke="var(--ink, #1E2B23)" stroke-width="15" stroke-linecap="round"/>
+</svg>
