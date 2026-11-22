@@ -15,6 +15,7 @@
   ![Next.js](https://img.shields.io/badge/Next.js_16-black?style=flat&logo=next.js)
   ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
   ![Firebase AI Logic](https://img.shields.io/badge/Firebase_AI_Logic-hybrid_inference-FFCA28?style=flat)
+  [![CI/CD](https://github.com/edycutjong/footing/actions/workflows/ci.yml/badge.svg)](https://github.com/edycutjong/footing/actions/workflows/ci.yml)
   ![Tests](https://img.shields.io/badge/tests-191_passing-2F6B45?style=flat)
   [![License](https://img.shields.io/badge/License-Apache_2.0-yellow)](LICENSE)
 
@@ -105,7 +106,23 @@ How the work splits between laptop and cloud: on the frozen 30, Nano settled 8 o
 fresh 20 it settled 1 and escalated 19 (`evidence/summary.json`). Escalation is the design, not a failure: `SUPPORTS` is never final on device.
 
 Tests: **191 passing** in 12 files (`npm test`), covering the router, quote gate, SSRF guard, App Check verification, parser,
-extractor, tally and the check engine.
+extractor, tally and the check engine. Line coverage of `src/lib` is 88.5% (`npm run test:coverage`; the Firebase-SDK glue files are excluded
+and covered by the E2E run instead, see `vitest.config.ts`).
+
+**Latency per claim** (`npm run bench`, raw rows in [`evidence/bench.json`](evidence/bench.json); 20 held-out claims × 2 reps per route, one untimed warm-up
+each, M1 Max, Chrome 157, source fetching excluded): on device (Nano binary triage) **p50 1699 ms, p95 2067 ms**; in the cloud (`gemini-3.5-flash-lite`
+judge reading a 24,000-character source window) **p50 4095 ms, p95 11476 ms**. All 80 calls returned the `inferenceSource` they were meant to.
+
+### 🧪 Testing & CI
+Every push runs [`.github/workflows/ci.yml`](.github/workflows/ci.yml) as seven stages: quality (lint, typecheck, unit tests with a coverage floor on Node 20 and 22)
+and security (gitleaks over the full history, `npm audit` failing on high or critical, registry signatures, licence check) in parallel; production build with a
+bundle budget; deploy to Vercel (prebuilt); **Playwright E2E against the live URL**; Lighthouse gates on the live URL; and a release gate. [`codeql.yml`](.github/workflows/codeql.yml)
+(security-extended queries) runs on push, PR and weekly once the repo is public, [`release.yml`](.github/workflows/release.yml) tags a version from the commit messages,
+and Dependabot is grouped and monthly.
+
+The E2E suite (`e2e/`) drives the real, unmocked flow: it opens the hosted page, presses **Check sources** on the sample answer, and asserts that chips land with an
+`IN CLOUD` route badge, every decided verdict carries a quote, and the evidence pane opens. `e2e/unplug.spec.ts` cuts the network after load and asserts the check
+reports failure and never produces a verdict. `npm run e2e:nano` repeats the flow on a Nano-enabled profile and asserts the `ON DEVICE` route really ran.
 
 ### Honest limits (7)
 1. Footing checks that a source says what a sentence claims. It does not check the source is true.
@@ -140,6 +157,9 @@ Node 22 (what we developed on), a Firebase web app with AI Logic enabled and an 
 npm ci
 npm run dev        # http://localhost:3101
 npm test           # 191 tests
+npm run ci         # audit + lint + typecheck + tests with coverage
+npm run e2e        # Playwright against https://footing.edycu.dev (BASE_URL=http://localhost:3101 npm run e2e for local)
+npm run bench      # per-claim p50/p95 on device and in the cloud (needs a Nano profile, see DEMO.md)
 ```
 
 ## 📁 Project Structure

@@ -26,6 +26,8 @@ npm test          # 191 tests
 Live re-run (real Chrome with Nano plus Firebase AI Logic; needs a Firebase web config in `.env.local`):
 `npm run eval:live -- <set> <triage|judge> <userDataDir> [judgeModel]`, or open `/eval/run` on a local dev server (`npm run dev`; the route is disabled in production).
 
+Latency bench: `BENCH_REPS=2 FIREBASE_APPCHECK_DEBUG_TOKEN=… npm run bench -- <nanoUserDataDir>` (dev server running, Nano-enabled profile) times 20 held-out claims per route and rewrites `evidence/bench.json`. Local E2E on that profile: `npm run e2e:nano`.
+
 | Set | Nano binary triage | Cloud judge (3-class) |
 |---|---|---|
 | Fresh 20 (held-out, labels committed before any run) | 13/20 = 65% | 14/20 = 70% |
