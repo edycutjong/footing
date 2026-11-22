@@ -1,0 +1,200 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  LIVE_URL: https://footing.edycu.dev
+
+jobs:
+  # ── Stage 1: quality ──────────────────────────────────────
+  quality:
+    name: "Stage 1 · Quality (lint, types, unit tests)"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: ${{ github.event_name == 'push' && fromJSON('[20, 22]') || fromJSON('[22]') }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - name: Unit tests with coverage
+        run: npm run test:coverage
+      - name: Upload coverage
+        if: matrix.node-version == 22
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage/
+          retention-days: 7
+
+  # ── Stage 2: security (parallel with stage 1) ─────────────
+  secret-scan:
+    name: "Stage 2 · Secret scan (gitleaks, full history)"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install gitleaks
+        run: |
+          set -euo pipefail
+          VER=8.28.0
+          curl -sSfL "https://github.com/gitleaks/gitleaks/releases/download/v${VER}/gitleaks_${VER}_linux_x64.tar.gz" | tar -xz gitleaks
+          ./gitleaks version
+      - name: gitleaks detect (all history)
+        run: ./gitleaks detect --source . --log-opts="--all" --redact --verbose
+
+  dependency-audit:
+    name: "Stage 2 · Dependency audit"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: npm audit (high + critical fail the build)
+        run: npm audit --audit-level=high
+      - name: npm audit signatures (registry provenance)
+        run: npm audit signatures
+      - name: Production dependency licences (no GPL/AGPL)
+        run: npx --yes license-checker --production --failOn "GPL-2.0;GPL-3.0;AGPL-3.0" --summary
+
+  # ── Stage 3: build ────────────────────────────────────────
+  build:
+    name: "Stage 3 · Production build + bundle budget"
+    needs: [quality]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: next build
+        run: npm run build
+        env:
+          # Public web config is not a secret, but it is not committed either; the real values live in Vercel.
+          # This build only proves the code compiles and the bundle fits its budget.
+          NEXT_PUBLIC_FIREBASE_API_KEY: ci-placeholder
+          NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: ci-placeholder.firebaseapp.com
+          NEXT_PUBLIC_FIREBASE_PROJECT_ID: ci-placeholder
+          NEXT_PUBLIC_FIREBASE_APP_ID: ci-placeholder
+          NEXT_PUBLIC_RECAPTCHA_SITE_KEY: ci-placeholder
+      - name: Bundle budget (client JS, gzip, all chunks)
+        run: |
+          set -euo pipefail
+          KB=$(find .next/static -name '*.js' -print0 | xargs -0 cat | gzip -9 | wc -c | awk '{printf "%d", $1/1024}')
+          echo "client JS gzip total: ${KB} KB (measured 716 KB on 2026-11-22; budget 900 KB)"
+          if [ "$KB" -gt 900 ]; then echo "::error::client JS ${KB} KB gzip exceeds the 900 KB budget"; exit 1; fi
+
+  # ── Stage 4: deploy (main only), needs VERCEL_TOKEN ───────
+  deploy:
+    name: "Stage 4 · Deploy to Vercel (prebuilt)"
+    needs: [quality, secret-scan, dependency-audit, build]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Vercel pull / build / deploy
+        run: |
+          set -euo pipefail
+          export BUILD_SHA="${GITHUB_SHA}"
+          npx vercel pull --yes --environment=production --token "$VERCEL_TOKEN"
+          npx vercel build --prod --token "$VERCEL_TOKEN"
+          npx vercel deploy --prebuilt --prod --token "$VERCEL_TOKEN"
+      - name: Wait for the live build to report this commit
+        run: |
+          set -euo pipefail
+          WANT="${GITHUB_SHA:0:7}"
+          for i in $(seq 1 30); do
+            GOT=$(curl -sS "$LIVE_URL/api/health" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{try{console.log(JSON.parse(s).sha||"")}catch{console.log("")}})')
+            echo "live sha: ${GOT:-none} (want $WANT)"
+            [ "$GOT" = "$WANT" ] && exit 0
+            sleep 10
+          done
+          echo "::error::live URL never reported sha $WANT"; exit 1
+
+  # ── Stage 5: E2E against the live URL ─────────────────────
+  e2e:
+    name: "Stage 5 · E2E on the live URL (Playwright)"
+    needs: [deploy]
+    if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main' && (needs.deploy.result == 'success' || needs.deploy.result == 'skipped')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Playwright (smoke, responsive, live check flow, unplug-must-fail)
+        run: npx playwright test
+        env:
+          CI: "true"
+          BASE_URL: ${{ env.LIVE_URL }}
+      - name: Upload report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7
+
+  # ── Stage 6: performance gate on the live URL ─────────────
+  performance:
+    name: "Stage 6 · Lighthouse gates on the live URL"
+    needs: [e2e]
+    if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main' && needs.e2e.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Lighthouse CI (accessibility and best-practices are hard gates)
+        run: npx lhci autorun --config=lighthouserc.json
+
+  gate:
+    name: "Stage 7 · Release gate"
+    needs: [quality, secret-scan, dependency-audit, build, deploy, e2e, performance]
+    if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Every stage passed
+        run: |
+          echo '${{ toJSON(needs) }}' | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{const n=JSON.parse(s);const bad=Object.entries(n).filter(([,v])=>v.result!=="success");bad.forEach(([k,v])=>console.log("::error::"+k+" = "+v.result));process.exit(bad.length?1:0)})'
