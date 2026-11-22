@@ -10,7 +10,7 @@ export async function GET(req: Request): Promise<Response> {
   const json = (body: unknown, status = 200) =>
     new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json", "cache-control": "no-store" } });
   // Vercel sets x-real-ip / x-vercel-forwarded-for itself; a client-sent X-Forwarded-For is only the last resort.
-  const ip = req.headers.get("x-real-ip") ?? req.headers.get("x-vercel-forwarded-for") ?? (req.headers.get("x-forwarded-for") ?? "").split(",").pop()?.trim() ?? "local";
+  const ip = req.headers.get("x-real-ip") ?? req.headers.get("x-vercel-forwarded-for") ?? ((req.headers.get("x-forwarded-for") ?? "").split(",").pop()?.trim() || "local");
   if (!bucket.take(ip)) return json({ ok: false, error: "too many requests" }, 429);
   const ac = await verifyAppCheck(req.headers.get("x-firebase-appcheck"));
   if (!ac.ok) return json({ ok: false, error: ac.reason }, 401);

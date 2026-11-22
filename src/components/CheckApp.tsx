@@ -51,7 +51,7 @@ function where(r: PairRun): string {
   if (dev && cloud) return "triaged on this laptop, decided in the cloud";
   if (dev) return "checked on this laptop";
   if (cloud) return timedOut ? "on-device attempt failed, decided in the cloud" : "checked in the cloud";
-  return "not run";
+  return timedOut ? "on-device attempt failed" : "not run";
 }
 
 function fragment(url: string, quote?: string): string {
@@ -87,19 +87,20 @@ function Pane({ r, onClose, onConfirm }: { r: PairRun; onClose: () => void; onCo
   const ref = useRef<HTMLElement>(null);
   useEffect(() => {
     // Modal focus: move focus in, keep Tab inside, give it back to the chip that opened the pane.
-    const opener = document.activeElement as HTMLElement | null;
-    ref.current?.querySelector<HTMLElement>("button.close")?.focus();
+    const opener = document.activeElement as HTMLElement | null; // captured once, on open
     const trap = (e: KeyboardEvent) => {
       if (e.key !== "Tab" || !ref.current) return;
       const f = [...ref.current.querySelectorAll<HTMLElement>("button, a[href], input")];
       if (!f.length) return;
       const first = f[0], last = f[f.length - 1];
-      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      const inside = ref.current.contains(document.activeElement);
+      if (!inside || (e.shiftKey && document.activeElement === first)) { e.preventDefault(); (e.shiftKey ? last : first).focus(); }
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     };
     document.addEventListener("keydown", trap);
     return () => { document.removeEventListener("keydown", trap); opener?.focus?.(); };
-  }, [r.pair.id]);
+  }, []);
+  useEffect(() => { ref.current?.querySelector<HTMLElement>("button.close")?.focus(); }, [r.pair.id]);
   const t = r.trail;
   const triage = t.find((s) => s.step === "triage");
   const judge = [...t].reverse().find((s) => s.step.startsWith("judge"));
@@ -112,6 +113,11 @@ function Pane({ r, onClose, onConfirm }: { r: PairRun; onClose: () => void; onCo
       <div className={`verdict s-${r.state}${cfg.deviceNegativeStyle === "neutral" && r.state === "LIKELY_UNSUPPORTED" ? " neutral" : ""}`}>
         <Mark state={r.state} held={r.nanoQuoteHeld} neutral={cfg.deviceNegativeStyle === "neutral"} /> <b>{verdictWords(r.state, cfg.deviceNegativeStyle) ?? chipText(r, cfg.deviceNegativeStyle).title}</b> <Badges sources={r.sources} />
       </div>
+      {triage?.verdict && judge?.verdict && (
+        <p className="data" style={{ margin: "6px 0 0" }}>
+          Nano on this laptop said {triage.verdict}{triage.gateHeld ? " (its quote is in the page)" : ""} → the cloud ruled {judge.verdict}{judge.verdict !== triage.verdict ? " (overruled)" : " (confirmed)"}
+        </p>
+      )}
       {r.reason && <p style={{ margin: "6px 0 0" }}>{r.reason}</p>}
       <div className="cols">
         <div>
