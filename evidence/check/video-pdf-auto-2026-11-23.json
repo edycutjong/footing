@@ -1,0 +1,263 @@
+{
+ "label": "video-pdf-auto",
+ "recordedAt": "2026-11-23T13:33:53.604Z",
+ "baseUrl": "https://footing.edycu.dev",
+ "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+ "machine": "MacBook Pro M1 Max, 32 GB",
+ "purpose": "P6 demo video capture (real production run)",
+ "force": "auto",
+ "answer": "test/fixtures/pdf-mixed-answer.md",
+ "deviceBefore": "available",
+ "done": true,
+ "running": false,
+ "device": "available",
+ "tally": {
+  "k": 1,
+  "n": 3,
+  "j": 0,
+  "settledOnDevice": 0,
+  "decidedInCloud": 3,
+  "unverified": 1,
+  "pending": 0,
+  "notChecked": 0,
+  "total": 4
+ },
+ "cloudUsed": 4,
+ "config": {
+  "source": "remote",
+  "applied": [],
+  "judgeModel": "gemini-3.5-flash-lite",
+  "cap": 10
+ },
+ "runs": [
+  {
+   "id": "s0-0",
+   "s": 0,
+   "n": 1,
+   "url": "https://www.cdc.gov/nchs/data/databriefs/db492.pdf",
+   "sentence": "Life expectancy in the United States rose to 77.5 years in 2022.",
+   "state": "UNVERIFIED",
+   "route": {
+    "to": "CLOUD_DECIDE",
+    "reason": "PDF input is cloud-only"
+   },
+   "planned": {
+    "to": "CLOUD_DECIDE",
+    "reason": "PDF input is cloud-only"
+   },
+   "sources": [
+    "in_cloud"
+   ],
+   "quote": "In 2022, life expectancy at birth was 77.5 years for the total U.S. population—an increase of 1.1 years from 76.4 years in 2021 (Figure 1).",
+   "reason": "The report explicitly states that life expectancy for the U.S. population in 2022 was 77.5 years.",
+   "note": "quote not found in what the model read",
+   "trail": [
+    {
+     "step": "fetch",
+     "ms": 1266,
+     "reason": "pdf · 200"
+    },
+    {
+     "step": "route",
+     "route": "CLOUD_DECIDE",
+     "reason": "PDF input is cloud-only"
+    },
+    {
+     "step": "judge-pdf",
+     "inferenceSource": "in_cloud",
+     "verdict": "SUPPORTS",
+     "quote": "In 2022, life expectancy at birth was 77.5 years for the total U.S. population—an increase of 1.1 years from 76.4 years in 2021 (Figure 1).",
+     "reason": "The report explicitly states that life expectancy for the U.S. population in 2022 was 77.5 years.",
+     "ms": 5278,
+     "attempt": 1,
+     "gateHeld": false
+    }
+   ],
+   "source": {
+    "finalUrl": "https://www.cdc.gov/nchs/data/databriefs/db492.pdf",
+    "sha256": "02156ddfa7d88f2998c91d1a43875605b0b7d21844a648774332e1d8a2e3da77",
+    "fetchedAt": "2026-11-23T13:33:39.125Z",
+    "kind": "pdf",
+    "bytes": 445378,
+    "status": 200
+   },
+   "cloudCalls": 1
+  },
+  {
+   "id": "s1-1",
+   "s": 1,
+   "n": 1,
+   "url": "https://www.cdc.gov/nchs/data/databriefs/db492.pdf",
+   "sentence": "The rise was driven mainly by fewer COVID-19 deaths and better cancer screening.",
+   "state": "NOT_SUPPORTED",
+   "route": {
+    "to": "CLOUD_DECIDE",
+    "reason": "PDF input is cloud-only"
+   },
+   "planned": {
+    "to": "CLOUD_DECIDE",
+    "reason": "PDF input is cloud-only"
+   },
+   "sources": [
+    "in_cloud"
+   ],
+   "quote": "77.5 in 2022, largely because of decreases in mortality due to COVID-19, heart disease, cancer, unintentional injuries, and homicide.",
+   "reason": "The report attributes the changes to mortality decreases from COVID-19, heart disease, cancer, unintentional injuries, and homicide, but does not mention better cancer screening.",
+   "trail": [
+    {
+     "step": "fetch",
+     "ms": 1266,
+     "reason": "pdf · 200"
+    },
+    {
+     "step": "route",
+     "route": "CLOUD_DECIDE",
+     "reason": "PDF input is cloud-only"
+    },
+    {
+     "step": "judge-pdf",
+     "inferenceSource": "in_cloud",
+     "verdict": "NOT_SUPPORTED",
+     "quote": "77.5 in 2022, largely because of decreases in mortality due to COVID-19, heart disease, cancer, unintentional injuries, and homicide.",
+     "reason": "The report attributes the changes to mortality decreases from COVID-19, heart disease, cancer, unintentional injuries, and homicide, but does not mention better cancer screening.",
+     "ms": 4600,
+     "attempt": 1,
+     "gateHeld": true
+    }
+   ],
+   "source": {
+    "finalUrl": "https://www.cdc.gov/nchs/data/databriefs/db492.pdf",
+    "sha256": "02156ddfa7d88f2998c91d1a43875605b0b7d21844a648774332e1d8a2e3da77",
+    "fetchedAt": "2026-11-23T13:33:39.125Z",
+    "kind": "pdf",
+    "bytes": 445378,
+    "status": 200
+   },
+   "cloudCalls": 1
+  },
+  {
+   "id": "s2-2",
+   "s": 2,
+   "n": 1,
+   "url": "https://www.cdc.gov/nchs/data/databriefs/db492.pdf",
+   "sentence": "Heart disease and cancer remained the two leading causes of death in 2022.",
+   "state": "SUPPORTS",
+   "route": {
+    "to": "CLOUD_DECIDE",
+    "reason": "PDF input is cloud-only"
+   },
+   "planned": {
+    "to": "CLOUD_DECIDE",
+    "reason": "PDF input is cloud-only"
+   },
+   "sources": [
+    "in_cloud"
+   ],
+   "quote": "Heart disease and cancer remained the top 2 leading causes in 2022.",
+   "reason": "The report explicitly states that heart disease and cancer remained the top two leading causes of death in 2022.",
+   "trail": [
+    {
+     "step": "fetch",
+     "ms": 1266,
+     "reason": "pdf · 200"
+    },
+    {
+     "step": "route",
+     "route": "CLOUD_DECIDE",
+     "reason": "PDF input is cloud-only"
+    },
+    {
+     "step": "judge-pdf",
+     "inferenceSource": "in_cloud",
+     "verdict": "SUPPORTS",
+     "quote": "Heart disease and cancer remained the top 2 leading causes in 2022.",
+     "reason": "The report explicitly states that heart disease and cancer remained the top two leading causes of death in 2022.",
+     "ms": 4735,
+     "attempt": 1,
+     "gateHeld": true
+    }
+   ],
+   "source": {
+    "finalUrl": "https://www.cdc.gov/nchs/data/databriefs/db492.pdf",
+    "sha256": "02156ddfa7d88f2998c91d1a43875605b0b7d21844a648774332e1d8a2e3da77",
+    "fetchedAt": "2026-11-23T13:33:39.125Z",
+    "kind": "pdf",
+    "bytes": 445378,
+    "status": 200
+   },
+   "cloudCalls": 1
+  },
+  {
+   "id": "s3-3",
+   "s": 3,
+   "n": 2,
+   "url": "https://en.wikipedia.org/wiki/Mediterranean_diet",
+   "sentence": "The Mediterranean diet was first proposed in 1975 by Ancel Keys.",
+   "state": "SUPPORTS",
+   "route": {
+    "to": "DEVICE_TRIAGE",
+    "deviceMode": "PREFER_ON_DEVICE",
+    "reason": "readable page — checked on this laptop first"
+   },
+   "after": {
+    "to": "ESCALATE",
+    "reason": "Nano found a quote — the cloud decides full or partial"
+   },
+   "planned": {
+    "to": "DEVICE_TRIAGE",
+    "deviceMode": "PREFER_ON_DEVICE",
+    "reason": "readable page — checked on this laptop first"
+   },
+   "sources": [
+    "on_device",
+    "in_cloud"
+   ],
+   "quote": "The Mediterranean diet is a dietary concept that was first proposed in 1975 by American biologist Ancel Keys and chemist Margaret Keys.",
+   "reason": "The source explicitly states that the Mediterranean diet was first proposed in 1975 by Ancel Keys.",
+   "trail": [
+    {
+     "step": "fetch",
+     "ms": 1062,
+     "reason": "html · 200"
+    },
+    {
+     "step": "route",
+     "route": "DEVICE_TRIAGE",
+     "reason": "readable page — checked on this laptop first"
+    },
+    {
+     "step": "triage",
+     "inferenceSource": "on_device",
+     "verdict": "SUPPORTS",
+     "quote": "The Mediterranean diet is a dietary concept that was first proposed in 1975 by American biologist Ancel Keys and chemist Margaret Keys.",
+     "gateHeld": true,
+     "ms": 4811
+    },
+    {
+     "step": "after",
+     "route": "ESCALATE",
+     "reason": "Nano found a quote — the cloud decides full or partial"
+    },
+    {
+     "step": "judge",
+     "inferenceSource": "in_cloud",
+     "verdict": "SUPPORTS",
+     "quote": "The Mediterranean diet is a dietary concept that was first proposed in 1975 by American biologist Ancel Keys and chemist Margaret Keys.",
+     "reason": "The source explicitly states that the Mediterranean diet was first proposed in 1975 by Ancel Keys.",
+     "ms": 1635,
+     "attempt": 1,
+     "gateHeld": true
+    }
+   ],
+   "source": {
+    "finalUrl": "https://en.wikipedia.org/wiki/Mediterranean_diet",
+    "sha256": "20b12fcc2f06b9627f107a80285eb42c032b5bd83820592b2030f2c2c8c9a57a",
+    "fetchedAt": "2026-11-23T13:33:39.139Z",
+    "kind": "html",
+    "bytes": 587890,
+    "status": 200
+   },
+   "cloudCalls": 1
+  }
+ ]
+}

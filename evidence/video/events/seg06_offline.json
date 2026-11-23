@@ -1,0 +1,11 @@
+{
+ "note": "Reconstructed from the capture console log of record-footing.mjs (2026-11-23 20:30 WIB): the capture process exited on a later step (a pane button below the fold), before it wrote this events file. Times are seconds from the segment's recorder start.",
+ "events": [
+  {"t": 3.52, "ev": "force:On-device only"},
+  {"t": 6.43, "ev": "check"},
+  {"t": 7.51, "ev": "offline", "fetchesDone": 2},
+  {"t": 27.37, "ev": "done"},
+  {"t": 32.54, "ev": "requests-while-offline", "n": 0},
+  {"t": 32.54, "ev": "online"}
+ ]
+}

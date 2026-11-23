@@ -1,0 +1,671 @@
+{
+ "label": "video-nano-auto",
+ "recordedAt": "2026-11-23T13:21:40.189Z",
+ "baseUrl": "https://footing.edycu.dev",
+ "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+ "machine": "MacBook Pro M1 Max, 32 GB",
+ "purpose": "P6 demo video capture (real production run)",
+ "force": "auto",
+ "wallMs": 28123,
+ "deviceBefore": "available",
+ "done": true,
+ "running": false,
+ "device": "available",
+ "tally": {
+  "k": 1,
+  "n": 7,
+  "j": 1,
+  "settledOnDevice": 1,
+  "decidedInCloud": 7,
+  "unverified": 1,
+  "pending": 0,
+  "notChecked": 0,
+  "total": 9
+ },
+ "cloudUsed": 8,
+ "config": {
+  "source": "remote",
+  "applied": [],
+  "judgeModel": "gemini-3.5-flash-lite",
+  "cap": 10
+ },
+ "runs": [
+  {
+   "id": "s0-0",
+   "s": 0,
+   "n": 1,
+   "url": "https://en.wikipedia.org/wiki/Intermittent_fasting",
+   "sentence": "Research on therapeutic intermittent fasts for treating obesity dates back to at least 1915, with renewed medical interest occurring in the 1960s after Bloom and his colleagues published an enthusiastic report.",
+   "state": "SUPPORTS",
+   "route": {
+    "to": "DEVICE_TRIAGE",
+    "deviceMode": "PREFER_ON_DEVICE",
+    "reason": "readable page — checked on this laptop first"
+   },
+   "after": {
+    "to": "ESCALATE",
+    "reason": "quote not in what Nano read"
+   },
+   "planned": {
+    "to": "DEVICE_TRIAGE",
+    "deviceMode": "PREFER_ON_DEVICE",
+    "reason": "readable page — checked on this laptop first"
+   },
+   "sources": [
+    "on_device",
+    "in_cloud"
+   ],
+   "quote": "Therapeutic intermittent fasts for the treatment of obesity have been investigated since at least 1915, with a renewed interest in the medical community in the 1960s after Bloom and his colleagues published an \"enthusiastic report\".",
+   "reason": "The source explicitly states that research on therapeutic intermittent fasts for obesity dates back to at least 1915 and saw renewed medical interest in the 1960s following an enthusiastic report by Bloom and colleagues.",
+   "trail": [
+    {
+     "step": "fetch",
+     "ms": 804,
+     "reason": "html · 200"
+    },
+    {
+     "step": "route",
+     "route": "DEVICE_TRIAGE",
+     "reason": "readable page — checked on this laptop first"
+    },
+    {
+     "step": "triage",
+     "inferenceSource": "on_device",
+     "verdict": "SUPPORTS",
+     "quote": "History Fasting is an ancient tradition, having been practiced by many cultures and religions over centuries. Therapeutic intermittent fasts for the treatment of obesity have been investigated since at least 1915, with a renewed interest in the medical community in the 1960s after Bloom and his 's's",
+     "gateHeld": false,
+     "ms": 8219
+    },
+    {
+     "step": "after",
+     "route": "ESCALATE",
+     "reason": "quote not in what Nano read"
+    },
+    {
+     "step": "judge",
+     "inferenceSource": "in_cloud",
+     "verdict": "SUPPORTS",
+     "quote": "Therapeutic intermittent fasts for the treatment of obesity have been investigated since at least 1915, with a renewed interest in the medical community in the 1960s after Bloom and his colleagues published an \"enthusiastic report\".",
+     "reason": "The source explicitly states that research on therapeutic intermittent fasts for obesity dates back to at least 1915 and saw renewed medical interest in the 1960s following an enthusiastic report by Bloom and colleagues.",
+     "ms": 2491,
+     "attempt": 1,
+     "gateHeld": true
+    }
+   ],
+   "source": {
+    "finalUrl": "https://en.wikipedia.org/wiki/Intermittent_fasting",
+    "sha256": "fb79034c32da91d16f99f96b35c46db9224c7c488218d8615169c88cd0bd8046",
+    "fetchedAt": "2026-11-23T13:21:06.754Z",
+    "kind": "html",
+    "bytes": 606194,
+    "status": 200
+   },
+   "cloudCalls": 1
+  },
+  {
+   "id": "s1-1",
+   "s": 1,
+   "n": 1,
+   "url": "https://en.wikipedia.org/wiki/Intermittent_fasting",
+   "sentence": "These early clinical studies investigated short-term starvation periods ranging from 1 to 14 days.",
+   "state": "SUPPORTS",
+   "route": {
+    "to": "DEVICE_TRIAGE",
+    "deviceMode": "PREFER_ON_DEVICE",
+    "reason": "readable page — checked on this laptop first"
+   },
+   "after": {
+    "to": "ESCALATE",
+    "reason": "Nano found a quote — the cloud decides full or partial"
+   },
+   "planned": {
+    "to": "DEVICE_TRIAGE",
+    "deviceMode": "PREFER_ON_DEVICE",
+    "reason": "readable page — checked on this laptop first"
+   },
+   "sources": [
+    "on_device",
+    "in_cloud"
+   ],
+   "quote": "Intermittent fasts, or \"short-term starvation periods\", ranged from 1 to 14 days in these early studies.",
+   "reason": "The source explicitly states that early intermittent fasts or short-term starvation periods ranged from 1 to 14 days.",
+   "trail": [
+    {
+     "step": "fetch",
+     "ms": 804,
+     "reason": "html · 200"
+    },
+    {
+     "step": "route",
+     "route": "DEVICE_TRIAGE",
+     "reason": "readable page — checked on this laptop first"
+    },
+    {
+     "step": "triage",
+     "inferenceSource": "on_device",
+     "verdict": "SUPPORTS",
+     "quote": "Intermittent fasts, or \"short-term starvation periods\", ranged from 1 to 14 days in these early studies.",
+     "gateHeld": true,
+     "ms": 1656
+    },
+    {
+     "step": "after",
+     "route": "ESCALATE",
+     "reason": "Nano found a quote — the cloud decides full or partial"
+    },
+    {
+     "step": "judge",
+     "inferenceSource": "in_cloud",
+     "verdict": "SUPPORTS",
+     "quote": "Intermittent fasts, or \"short-term starvation periods\", ranged from 1 to 14 days in these early studies.",
+     "reason": "The source explicitly states that early intermittent fasts or short-term starvation periods ranged from 1 to 14 days.",
+     "ms": 3665,
+     "attempt": 1,
+     "gateHeld": true
+    }
+   ],
+   "source": {
+    "finalUrl": "https://en.wikipedia.org/wiki/Intermittent_fasting",
+    "sha256": "fb79034c32da91d16f99f96b35c46db9224c7c488218d8615169c88cd0bd8046",
+    "fetchedAt": "2026-11-23T13:21:06.754Z",
+    "kind": "html",
+    "bytes": 606194,
+    "status": 200
+   },
+   "cloudCalls": 1
+  },
+  {
+   "id": "s2-2",
+   "s": 2,
+   "n": 2,
+   "url": "https://www.hsph.harvard.edu/nutritionsource/healthy-weight/diet-reviews/intermittent-fasting/",
+   "sentence": "In animal studies, calorie restriction has been shown to successfully increase lifespan and improve overall tolerance to metabolic stresses.",
+   "state": "SUPPORTS",
+   "route": {
+    "to": "DEVICE_TRIAGE",
+    "deviceMode": "PREFER_ON_DEVICE",
+    "reason": "readable page — checked on this laptop first"
+   },
+   "after": {
+    "to": "ESCALATE",
+    "reason": "Nano found a quote — the cloud decides full or partial"
+   },
+   "planned": {
+    "to": "DEVICE_TRIAGE",
+    "deviceMode": "PREFER_ON_DEVICE",
+    "reason": "readable page — checked on this laptop first"
+   },
+   "sources": [
+    "on_device",
+    "in_cloud"
+   ],
+   "quote": "Physiologically, calorie restriction has been shown in animals to increase lifespan and improve tolerance to various metabolic stresses in the body.",
+   "reason": "The source explicitly states that calorie restriction in animals increases lifespan and improves tolerance to metabolic stresses.",
+   "trail": [
+    {
+     "step": "fetch",
+     "ms": 518,
+     "reason": "html · 200"
+    },
+    {
+     "step": "route",
+     "route": "DEVICE_TRIAGE",
+     "reason": "readable page — checked on this laptop first"
+    },
+    {
+     "step": "triage",
+     "inferenceSource": "on_device",
+     "verdict": "SUPPORTS",
+     "quote": "The Research So Far Physiologically, calorie restriction has been shown in animals to increase lifespan and improve tolerance to various metabolic stresses in the body.",
+     "gateHeld": true,
+     "ms": 1686
+    },
+    {
+     "step": "after",
+     "route": "ESCALATE",
+     "reason": "Nano found a quote — the cloud decides full or partial"
+    },
+    {
+     "step": "judge",
+     "inferenceSource": "in_cloud",
+     "verdict": "SUPPORTS",
+     "quote": "Physiologically, calorie restriction has been shown in animals to increase lifespan and improve tolerance to various metabolic stresses in the body.",
+     "reason": "The source explicitly states that calorie restriction in animals increases lifespan and improves tolerance to metabolic stresses.",
+     "ms": 2401,
+     "attempt": 1,
+     "gateHeld": true
+    }
+   ],
+   "source": {
+    "finalUrl": "https://nutritionsource.hsph.harvard.edu/healthy-weight/diet-reviews/intermittent-fasting/",
+    "sha256": "87de253b95fb08dc9c75c4c80dcd02ffcb1975d9092873d5beba9c9c2e27b0ee",
+    "fetchedAt": "2026-11-23T13:21:06.839Z",
+    "kind": "html",
+    "bytes": 107212,
+    "status": 200
+   },
+   "cloudCalls": 1
+  },
+  {
+   "id": "s3-3",
+   "s": 3,
+   "n": 1,
+   "url": "https://en.wikipedia.org/wiki/Intermittent_fasting",
+   "sentence": "In human populations, research has evaluated whether intermittent fasting can lower the risk of diet-related conditions such as metabolic syndrome.",
+   "state": "SUPPORTS",
+   "route": {
+    "to": "DEVICE_TRIAGE",
+    "deviceMode": "PREFER_ON_DEVICE",
+    "reason": "readable page — checked on this laptop first"
+   },
+   "after": {
+    "to": "ESCALATE",
+    "reason": "Nano found a quote — the cloud decides full or partial"
+   },
+   "planned": {
+    "to": "DEVICE_TRIAGE",
+    "deviceMode": "PREFER_ON_DEVICE",
+    "reason": "readable page — checked on this laptop first"
+   },
+   "sources": [
+    "on_device",
+    "in_cloud"
+   ],
+   "quote": "Intermittent fasting has been studied to find whether it can reduce the risk of diet-related diseases, such as metabolic syndrome.",
+   "reason": "The source explicitly states that intermittent fasting has been studied to see if it lowers the risk of metabolic syndrome.",
+   "trail": [
+    {
+     "step": "fetch",
+     "ms": 804,
+     "reason": "html · 200"
+    },
+    {
+     "step": "route",
+     "route": "DEVICE_TRIAGE",
+     "reason": "readable page — checked on this laptop first"
+    },
+    {
+     "step": "triage",
+     "inferenceSource": "on_device",
+     "verdict": "SUPPORTS",
+     "quote": "Intermittent fasting has been studied to find whether it can reduce the risk of diet-related diseases, such as metabolic syndrome.",
+     "gateHeld": true,
+     "ms": 1573
+    },
+    {
+     "step": "after",
+     "route": "ESCALATE",
+     "reason": "Nano found a quote — the cloud decides full or partial"
+    },
+    {
+     "step": "judge",
+     "inferenceSource": "in_cloud",
+     "verdict": "SUPPORTS",
+     "quote": "Intermittent fasting has been studied to find whether it can reduce the risk of diet-related diseases, such as metabolic syndrome.",
+     "reason": "The source explicitly states that intermittent fasting has been studied to see if it lowers the risk of metabolic syndrome.",
+     "ms": 2425,
+     "attempt": 1,
+     "gateHeld": true
+    }
+   ],
+   "source": {
+    "finalUrl": "https://en.wikipedia.org/wiki/Intermittent_fasting",
+    "sha256": "fb79034c32da91d16f99f96b35c46db9224c7c488218d8615169c88cd0bd8046",
+    "fetchedAt": "2026-11-23T13:21:06.754Z",
+    "kind": "html",
+    "bytes": 606194,
+    "status": 200
+   },
+   "cloudCalls": 1
+  },
+  {
+   "id": "s4-4",
+   "s": 4,
+   "n": 2,
+   "url": "https://www.hsph.harvard.edu/nutritionsource/healthy-weight/diet-reviews/intermittent-fasting/",
+   "sentence": "Although it may improve several health outcomes in overweight or obese adults, its effect on lowering blood pressure appears less pronounced than that of continuous energy restriction.",
+   "state": "LIKELY_UNSUPPORTED",
+   "route": {
+    "to": "DEVICE_TRIAGE",
+    "deviceMode": "PREFER_ON_DEVICE",
+    "reason": "readable page — checked on this laptop first"
+   },
+   "after": {
+    "to": "SETTLED_ON_DEVICE",
+    "reason": "Nano found no supporting passage in the 3 it read — confirm in cloud"
+   },
+   "planned": {
+    "to": "DEVICE_TRIAGE",
+    "deviceMode": "PREFER_ON_DEVICE",
+    "reason": "readable page — checked on this laptop first"
+   },
+   "sources": [
+    "on_device"
+   ],
+   "reason": "Nano found no supporting passage in the 3 it read — confirm in cloud",
+   "trail": [
+    {
+     "step": "fetch",
+     "ms": 518,
+     "reason": "html · 200"
+    },
+    {
+     "step": "route",
+     "route": "DEVICE_TRIAGE",
+     "reason": "readable page — checked on this laptop first"
+    },
+    {
+     "step": "triage",
+     "inferenceSource": "on_device",
+     "verdict": "NOT_SUPPORTED",
+     "quote": "",
+     "gateHeld": false,
+     "ms": 1367
+    },
+    {
+     "step": "after",
+     "route": "SETTLED_ON_DEVICE",
+     "reason": "Nano found no supporting passage in the 3 it read — confirm in cloud"
+    }
+   ],
+   "source": {
+    "finalUrl": "https://nutritionsource.hsph.harvard.edu/healthy-weight/diet-reviews/intermittent-fasting/",
+    "sha256": "87de253b95fb08dc9c75c4c80dcd02ffcb1975d9092873d5beba9c9c2e27b0ee",
+    "fetchedAt": "2026-11-23T13:21:06.839Z",
+    "kind": "html",
+    "bytes": 107212,
+    "status": 200
+   },
+   "cloudCalls": 0
+  },
+  {
+   "id": "s5-5",
+   "s": 5,
+   "n": 2,
+   "url": "https://www.hsph.harvard.edu/nutritionsource/healthy-weight/diet-reviews/intermittent-fasting/",
+   "sentence": "Additionally, research does not consistently demonstrate that intermittent fasting is superior to continuous low-calorie diets regarding overall weight loss efficiency.",
+   "state": "SUPPORTS",
+   "route": {
+    "to": "DEVICE_TRIAGE",
+    "deviceMode": "PREFER_ON_DEVICE",
+    "reason": "readable page — checked on this laptop first"
+   },
+   "after": {
+    "to": "ESCALATE",
+    "reason": "Nano found a quote — the cloud decides full or partial"
+   },
+   "planned": {
+    "to": "DEVICE_TRIAGE",
+    "deviceMode": "PREFER_ON_DEVICE",
+    "reason": "readable page — checked on this laptop first"
+   },
+   "sources": [
+    "on_device",
+    "in_cloud"
+   ],
+   "quote": "However, research does not consistently show that intermittent fasting is superior to continuous low calorie diets for weight loss efficiency.",
+   "reason": "The source text explicitly confirms that research does not consistently show intermittent fasting to be superior to continuous low-calorie diets for weight loss efficiency.",
+   "trail": [
+    {
+     "step": "fetch",
+     "ms": 518,
+     "reason": "html · 200"
+    },
+    {
+     "step": "route",
+     "route": "DEVICE_TRIAGE",
+     "reason": "readable page — checked on this laptop first"
+    },
+    {
+     "step": "triage",
+     "inferenceSource": "on_device",
+     "verdict": "SUPPORTS",
+     "quote": "However, research does not consistently show that intermittent fasting is superior to continuous low calorie diets for weight loss efficiency.",
+     "gateHeld": true,
+     "ms": 1587
+    },
+    {
+     "step": "after",
+     "route": "ESCALATE",
+     "reason": "Nano found a quote — the cloud decides full or partial"
+    },
+    {
+     "step": "judge",
+     "inferenceSource": "in_cloud",
+     "verdict": "SUPPORTS",
+     "quote": "However, research does not consistently show that intermittent fasting is superior to continuous low calorie diets for weight loss efficiency.",
+     "reason": "The source text explicitly confirms that research does not consistently show intermittent fasting to be superior to continuous low-calorie diets for weight loss efficiency.",
+     "ms": 1596,
+     "attempt": 1,
+     "gateHeld": true
+    }
+   ],
+   "source": {
+    "finalUrl": "https://nutritionsource.hsph.harvard.edu/healthy-weight/diet-reviews/intermittent-fasting/",
+    "sha256": "87de253b95fb08dc9c75c4c80dcd02ffcb1975d9092873d5beba9c9c2e27b0ee",
+    "fetchedAt": "2026-11-23T13:21:06.839Z",
+    "kind": "html",
+    "bytes": 107212,
+    "status": 200
+   },
+   "cloudCalls": 1
+  },
+  {
+   "id": "s6-6",
+   "s": 6,
+   "n": 2,
+   "url": "https://www.hsph.harvard.edu/nutritionsource/healthy-weight/diet-reviews/intermittent-fasting/",
+   "sentence": "Specific dietary methods evaluated in research include alternate-day fasting restricting intake to 25% of daily calorie needs, as well as the 5:2 diet which limits intake to 400–500 calories on two days of the week.",
+   "state": "UNVERIFIED",
+   "route": {
+    "to": "DEVICE_TRIAGE",
+    "deviceMode": "PREFER_ON_DEVICE",
+    "reason": "readable page — checked on this laptop first"
+   },
+   "after": {
+    "to": "ESCALATE",
+    "reason": "Nano found a quote — the cloud decides full or partial"
+   },
+   "planned": {
+    "to": "DEVICE_TRIAGE",
+    "deviceMode": "PREFER_ON_DEVICE",
+    "reason": "readable page — checked on this laptop first"
+   },
+   "sources": [
+    "on_device",
+    "in_cloud"
+   ],
+   "quote": "Alternate-day fasting-Alternating between days of no food restriction with days that consist of one meal that provides about 25% of daily calorie needs. Example: The 5:2 diet approach advocates no food restriction five days of the week, cycled with a 400-500 calorie diet the other two days of the week.",
+   "reason": "The source text explicitly details alternate-day fasting as restricting intake to 25% of daily calorie needs and describes the 5:2 diet as limiting intake to 400-500 calories on two days of the week.",
+   "note": "quote not found in what the model read",
+   "trail": [
+    {
+     "step": "fetch",
+     "ms": 518,
+     "reason": "html · 200"
+    },
+    {
+     "step": "route",
+     "route": "DEVICE_TRIAGE",
+     "reason": "readable page — checked on this laptop first"
+    },
+    {
+     "step": "triage",
+     "inferenceSource": "on_device",
+     "verdict": "SUPPORTS",
+     "quote": "-1-2 days per week of complete fasting or up to 25% of daily calorie needs, with no food restriction on the other days. Example: The 5:2 diet approach advocates no food restriction five days of the week, cycled with a 400-500 calorie diet the other two days of the week.",
+     "gateHeld": true,
+     "ms": 2246
+    },
+    {
+     "step": "after",
+     "route": "ESCALATE",
+     "reason": "Nano found a quote — the cloud decides full or partial"
+    },
+    {
+     "step": "judge",
+     "inferenceSource": "in_cloud",
+     "verdict": "SUPPORTS",
+     "quote": "Alternate-day fasting-Alternating between days of no food restriction with days that consist of one meal that provides about 25% of daily calorie needs. Example: The 5:2 diet approach advocates no food restriction five days of the week, cycled with a 400-500 calorie diet the other two days of the week.",
+     "reason": "The source text explicitly details alternate-day fasting as restricting intake to 25% of daily calorie needs and describes the 5:2 diet as limiting intake to 400-500 calories on two days of the week.",
+     "ms": 1712,
+     "attempt": 1,
+     "gateHeld": false
+    }
+   ],
+   "source": {
+    "finalUrl": "https://nutritionsource.hsph.harvard.edu/healthy-weight/diet-reviews/intermittent-fasting/",
+    "sha256": "87de253b95fb08dc9c75c4c80dcd02ffcb1975d9092873d5beba9c9c2e27b0ee",
+    "fetchedAt": "2026-11-23T13:21:06.839Z",
+    "kind": "html",
+    "bytes": 107212,
+    "status": 200
+   },
+   "cloudCalls": 1
+  },
+  {
+   "id": "s7-7",
+   "s": 7,
+   "n": 1,
+   "url": "https://en.wikipedia.org/wiki/Intermittent_fasting",
+   "sentence": "Regarding public safety, the United States National Institute on Aging states that current research remains limited and inconclusive, choosing not to recommend intermittent fasting to the general public.",
+   "state": "SUPPORTS",
+   "route": {
+    "to": "DEVICE_TRIAGE",
+    "deviceMode": "PREFER_ON_DEVICE",
+    "reason": "readable page — checked on this laptop first"
+   },
+   "after": {
+    "to": "ESCALATE",
+    "reason": "Nano found a quote — the cloud decides full or partial"
+   },
+   "planned": {
+    "to": "DEVICE_TRIAGE",
+    "deviceMode": "PREFER_ON_DEVICE",
+    "reason": "readable page — checked on this laptop first"
+   },
+   "sources": [
+    "on_device",
+    "in_cloud"
+   ],
+   "quote": "The National Institute on Aging states current human research is limited, inconclusive, and not enough to recommend these diets for the general public.",
+   "reason": "The source explicitly confirms that the National Institute on Aging views research as limited and inconclusive and does not recommend the diets to the general public.",
+   "trail": [
+    {
+     "step": "fetch",
+     "ms": 804,
+     "reason": "html · 200"
+    },
+    {
+     "step": "route",
+     "route": "DEVICE_TRIAGE",
+     "reason": "readable page — checked on this laptop first"
+    },
+    {
+     "step": "triage",
+     "inferenceSource": "on_device",
+     "verdict": "SUPPORTS",
+     "quote": "The United States National Institute on Aging states that current research is limited and inconclusive; they do not recommend intermittent fasting to the general public.",
+     "gateHeld": true,
+     "ms": 1971
+    },
+    {
+     "step": "after",
+     "route": "ESCALATE",
+     "reason": "Nano found a quote — the cloud decides full or partial"
+    },
+    {
+     "step": "judge",
+     "inferenceSource": "in_cloud",
+     "verdict": "SUPPORTS",
+     "quote": "The National Institute on Aging states current human research is limited, inconclusive, and not enough to recommend these diets for the general public.",
+     "reason": "The source explicitly confirms that the National Institute on Aging views research as limited and inconclusive and does not recommend the diets to the general public.",
+     "ms": 1692,
+     "attempt": 1,
+     "gateHeld": true
+    }
+   ],
+   "source": {
+    "finalUrl": "https://en.wikipedia.org/wiki/Intermittent_fasting",
+    "sha256": "fb79034c32da91d16f99f96b35c46db9224c7c488218d8615169c88cd0bd8046",
+    "fetchedAt": "2026-11-23T13:21:06.754Z",
+    "kind": "html",
+    "bytes": 606194,
+    "status": 200
+   },
+   "cloudCalls": 1
+  },
+  {
+   "id": "s8-8",
+   "s": 8,
+   "n": 1,
+   "url": "https://en.wikipedia.org/wiki/Intermittent_fasting",
+   "sentence": "Meanwhile, the New Zealand Ministry of Health notes that while the practice may aid weight loss, it can cause low energy and hunger, and it is explicitly not recommended for individuals with insulin-dependent diabetes.",
+   "state": "PARTIAL",
+   "route": {
+    "to": "DEVICE_TRIAGE",
+    "deviceMode": "PREFER_ON_DEVICE",
+    "reason": "readable page — checked on this laptop first"
+   },
+   "after": {
+    "to": "ESCALATE",
+    "reason": "Nano found a quote — the cloud decides full or partial"
+   },
+   "planned": {
+    "to": "DEVICE_TRIAGE",
+    "deviceMode": "PREFER_ON_DEVICE",
+    "reason": "readable page — checked on this laptop first"
+   },
+   "sources": [
+    "on_device",
+    "in_cloud"
+   ],
+   "quote": "The New Zealand Ministry of Health states that intermittent fasting may aid weight loss but is not recommended for people with insulin-dependent diabetes and can cause low energy and hunger.",
+   "reason": "The source supports the claims about weight loss, low energy, hunger, and diabetes, but specifies people with diabetes rather than explicitly mentioning insulin-dependent diabetes.",
+   "trail": [
+    {
+     "step": "fetch",
+     "ms": 804,
+     "reason": "html · 200"
+    },
+    {
+     "step": "route",
+     "route": "DEVICE_TRIAGE",
+     "reason": "readable page — checked on this laptop first"
+    },
+    {
+     "step": "triage",
+     "inferenceSource": "on_device",
+     "verdict": "SUPPORTS",
+     "quote": "The New Zealand Ministry of Health states that intermittent fasting may aid weight loss but is not recommended for people with insulin-dependent diabetes and can cause low energy and hunger.",
+     "gateHeld": true,
+     "ms": 1931
+    },
+    {
+     "step": "after",
+     "route": "ESCALATE",
+     "reason": "Nano found a quote — the cloud decides full or partial"
+    },
+    {
+     "step": "judge",
+     "inferenceSource": "in_cloud",
+     "verdict": "PARTIAL",
+     "quote": "The New Zealand Ministry of Health states that intermittent fasting may aid weight loss but is not recommended for people with insulin-dependent diabetes and can cause low energy and hunger.",
+     "reason": "The source supports the claims about weight loss, low energy, hunger, and diabetes, but specifies people with diabetes rather than explicitly mentioning insulin-dependent diabetes.",
+     "ms": 2687,
+     "attempt": 1,
+     "gateHeld": true
+    }
+   ],
+   "source": {
+    "finalUrl": "https://en.wikipedia.org/wiki/Intermittent_fasting",
+    "sha256": "fb79034c32da91d16f99f96b35c46db9224c7c488218d8615169c88cd0bd8046",
+    "fetchedAt": "2026-11-23T13:21:06.754Z",
+    "kind": "html",
+    "bytes": 606194,
+    "status": 200
+   },
+   "cloudCalls": 1
+  }
+ ]
+}

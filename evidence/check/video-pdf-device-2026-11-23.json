@@ -1,0 +1,234 @@
+{
+ "label": "video-pdf-device",
+ "recordedAt": "2026-11-23T13:34:10.684Z",
+ "baseUrl": "https://footing.edycu.dev",
+ "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+ "machine": "MacBook Pro M1 Max, 32 GB",
+ "purpose": "P6 demo video capture (real production run)",
+ "force": "device",
+ "answer": "test/fixtures/pdf-mixed-answer.md",
+ "deviceBefore": "available",
+ "done": true,
+ "running": false,
+ "device": "available",
+ "tally": {
+  "k": 0,
+  "n": 0,
+  "j": 0,
+  "settledOnDevice": 0,
+  "decidedInCloud": 0,
+  "unverified": 0,
+  "pending": 1,
+  "notChecked": 3,
+  "total": 4
+ },
+ "cloudUsed": 0,
+ "config": {
+  "source": "remote",
+  "applied": [],
+  "judgeModel": "gemini-3.5-flash-lite",
+  "cap": 10
+ },
+ "runs": [
+  {
+   "id": "s0-0",
+   "s": 0,
+   "n": 1,
+   "url": "https://www.cdc.gov/nchs/data/databriefs/db492.pdf",
+   "sentence": "Life expectancy in the United States rose to 77.5 years in 2022.",
+   "state": "NOT_CHECKED",
+   "route": {
+    "to": "DEVICE_TRIAGE",
+    "deviceMode": "ONLY_ON_DEVICE",
+    "reason": "On-device only: PDF sent to the on-device model (PDF input is cloud-only)"
+   },
+   "planned": {
+    "to": "CLOUD_DECIDE",
+    "reason": "PDF input is cloud-only"
+   },
+   "sources": [
+    "device_error"
+   ],
+   "reason": "On-device only: PDF input is cloud-only — the on-device model refused it (\"The source image could not be decoded.\")",
+   "trail": [
+    {
+     "step": "fetch",
+     "ms": 1223,
+     "reason": "pdf · 200"
+    },
+    {
+     "step": "route",
+     "route": "DEVICE_TRIAGE",
+     "reason": "On-device only: PDF sent to the on-device model (PDF input is cloud-only)"
+    },
+    {
+     "step": "triage",
+     "gateHeld": false,
+     "ms": 10,
+     "error": "The source image could not be decoded."
+    }
+   ],
+   "source": {
+    "finalUrl": "https://www.cdc.gov/nchs/data/databriefs/db492.pdf",
+    "sha256": "02156ddfa7d88f2998c91d1a43875605b0b7d21844a648774332e1d8a2e3da77",
+    "fetchedAt": "2026-11-23T13:34:06.897Z",
+    "kind": "pdf",
+    "bytes": 445378,
+    "status": 200
+   },
+   "cloudCalls": 0
+  },
+  {
+   "id": "s1-1",
+   "s": 1,
+   "n": 1,
+   "url": "https://www.cdc.gov/nchs/data/databriefs/db492.pdf",
+   "sentence": "The rise was driven mainly by fewer COVID-19 deaths and better cancer screening.",
+   "state": "NOT_CHECKED",
+   "route": {
+    "to": "DEVICE_TRIAGE",
+    "deviceMode": "ONLY_ON_DEVICE",
+    "reason": "On-device only: PDF sent to the on-device model (PDF input is cloud-only)"
+   },
+   "planned": {
+    "to": "CLOUD_DECIDE",
+    "reason": "PDF input is cloud-only"
+   },
+   "sources": [
+    "device_error"
+   ],
+   "reason": "On-device only: PDF input is cloud-only — the on-device model refused it (\"The source image could not be decoded.\")",
+   "trail": [
+    {
+     "step": "fetch",
+     "ms": 1223,
+     "reason": "pdf · 200"
+    },
+    {
+     "step": "route",
+     "route": "DEVICE_TRIAGE",
+     "reason": "On-device only: PDF sent to the on-device model (PDF input is cloud-only)"
+    },
+    {
+     "step": "triage",
+     "gateHeld": false,
+     "ms": 11,
+     "error": "The source image could not be decoded."
+    }
+   ],
+   "source": {
+    "finalUrl": "https://www.cdc.gov/nchs/data/databriefs/db492.pdf",
+    "sha256": "02156ddfa7d88f2998c91d1a43875605b0b7d21844a648774332e1d8a2e3da77",
+    "fetchedAt": "2026-11-23T13:34:06.897Z",
+    "kind": "pdf",
+    "bytes": 445378,
+    "status": 200
+   },
+   "cloudCalls": 0
+  },
+  {
+   "id": "s2-2",
+   "s": 2,
+   "n": 1,
+   "url": "https://www.cdc.gov/nchs/data/databriefs/db492.pdf",
+   "sentence": "Heart disease and cancer remained the two leading causes of death in 2022.",
+   "state": "NOT_CHECKED",
+   "route": {
+    "to": "DEVICE_TRIAGE",
+    "deviceMode": "ONLY_ON_DEVICE",
+    "reason": "On-device only: PDF sent to the on-device model (PDF input is cloud-only)"
+   },
+   "planned": {
+    "to": "CLOUD_DECIDE",
+    "reason": "PDF input is cloud-only"
+   },
+   "sources": [
+    "device_error"
+   ],
+   "reason": "On-device only: PDF input is cloud-only — the on-device model refused it (\"The source image could not be decoded.\")",
+   "trail": [
+    {
+     "step": "fetch",
+     "ms": 1223,
+     "reason": "pdf · 200"
+    },
+    {
+     "step": "route",
+     "route": "DEVICE_TRIAGE",
+     "reason": "On-device only: PDF sent to the on-device model (PDF input is cloud-only)"
+    },
+    {
+     "step": "triage",
+     "gateHeld": false,
+     "ms": 15,
+     "error": "The source image could not be decoded."
+    }
+   ],
+   "source": {
+    "finalUrl": "https://www.cdc.gov/nchs/data/databriefs/db492.pdf",
+    "sha256": "02156ddfa7d88f2998c91d1a43875605b0b7d21844a648774332e1d8a2e3da77",
+    "fetchedAt": "2026-11-23T13:34:06.897Z",
+    "kind": "pdf",
+    "bytes": 445378,
+    "status": 200
+   },
+   "cloudCalls": 0
+  },
+  {
+   "id": "s3-3",
+   "s": 3,
+   "n": 2,
+   "url": "https://en.wikipedia.org/wiki/Mediterranean_diet",
+   "sentence": "The Mediterranean diet was first proposed in 1975 by Ancel Keys.",
+   "state": "CAP_REACHED",
+   "route": {
+    "to": "DEVICE_TRIAGE",
+    "deviceMode": "ONLY_ON_DEVICE",
+    "reason": "On-device only: checked on this laptop"
+   },
+   "after": {
+    "to": "ESCALATE",
+    "reason": "Nano found a quote — the cloud decides full or partial"
+   },
+   "planned": {
+    "to": "DEVICE_TRIAGE",
+    "deviceMode": "PREFER_ON_DEVICE",
+    "reason": "readable page — checked on this laptop first"
+   },
+   "sources": [
+    "on_device"
+   ],
+   "quote": "The Mediterranean diet is a dietary concept that was first proposed in 1975 by American biologist Ancel Keys and chemist Margaret Keys.",
+   "reason": "On-device only: Nano found a candidate quote (never final on device) — tap to decide in the cloud",
+   "trail": [
+    {
+     "step": "fetch",
+     "ms": 982,
+     "reason": "html · 200"
+    },
+    {
+     "step": "route",
+     "route": "DEVICE_TRIAGE",
+     "reason": "On-device only: checked on this laptop"
+    },
+    {
+     "step": "triage",
+     "inferenceSource": "on_device",
+     "verdict": "SUPPORTS",
+     "quote": "The Mediterranean diet is a dietary concept that was first proposed in 1975 by American biologist Ancel Keys and chemist Margaret Keys.",
+     "gateHeld": true,
+     "ms": 1051
+    }
+   ],
+   "source": {
+    "finalUrl": "https://en.wikipedia.org/wiki/Mediterranean_diet",
+    "sha256": "20b12fcc2f06b9627f107a80285eb42c032b5bd83820592b2030f2c2c8c9a57a",
+    "fetchedAt": "2026-11-23T13:34:06.896Z",
+    "kind": "html",
+    "bytes": 587890,
+    "status": 200
+   },
+   "cloudCalls": 0
+  }
+ ]
+}

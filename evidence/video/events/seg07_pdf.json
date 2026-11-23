@@ -1,0 +1,132 @@
+[
+ {
+  "t": 2.35,
+  "ev": "use-answer"
+ },
+ {
+  "t": 5.02,
+  "ev": "check"
+ },
+ {
+  "t": 12.56,
+  "ev": "in_cloud",
+  "i": 1
+ },
+ {
+  "t": 12.56,
+  "ev": "final",
+  "i": 1,
+  "state": "NOT_SUPPORTED"
+ },
+ {
+  "t": 12.76,
+  "ev": "on_device",
+  "i": 3
+ },
+ {
+  "t": 13.16,
+  "ev": "in_cloud",
+  "i": 0
+ },
+ {
+  "t": 13.16,
+  "ev": "final",
+  "i": 0,
+  "state": "UNVERIFIED"
+ },
+ {
+  "t": 14.78,
+  "ev": "in_cloud",
+  "i": 3
+ },
+ {
+  "t": 14.78,
+  "ev": "final",
+  "i": 3,
+  "state": "SUPPORTS"
+ },
+ {
+  "t": 17.2,
+  "ev": "in_cloud",
+  "i": 2
+ },
+ {
+  "t": 17.2,
+  "ev": "final",
+  "i": 2,
+  "state": "SUPPORTS"
+ },
+ {
+  "t": 17.2,
+  "ev": "done"
+ },
+ {
+  "t": 20.83,
+  "ev": "open-pdf-auto"
+ },
+ {
+  "t": 31.18,
+  "ev": "force:On-device only"
+ },
+ {
+  "t": 32.83,
+  "ev": "check"
+ },
+ {
+  "t": 32.83,
+  "ev": "in_cloud",
+  "i": 0
+ },
+ {
+  "t": 32.83,
+  "ev": "final",
+  "i": 0,
+  "state": "UNVERIFIED"
+ },
+ {
+  "t": 32.83,
+  "ev": "in_cloud",
+  "i": 1
+ },
+ {
+  "t": 32.83,
+  "ev": "final",
+  "i": 1,
+  "state": "NOT_SUPPORTED"
+ },
+ {
+  "t": 32.83,
+  "ev": "in_cloud",
+  "i": 2
+ },
+ {
+  "t": 32.83,
+  "ev": "final",
+  "i": 2,
+  "state": "SUPPORTS"
+ },
+ {
+  "t": 32.83,
+  "ev": "on_device",
+  "i": 3
+ },
+ {
+  "t": 32.83,
+  "ev": "in_cloud",
+  "i": 3
+ },
+ {
+  "t": 32.83,
+  "ev": "final",
+  "i": 3,
+  "state": "SUPPORTS"
+ },
+ {
+  "t": 35.29,
+  "ev": "done"
+ },
+ {
+  "t": 39.01,
+  "ev": "open-pdf-device"
+ }
+]
