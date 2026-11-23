@@ -23,7 +23,7 @@ read on-device first. Recorded runs of this flow on the deployed URL are in `evi
 ```bash
 npm ci
 npm run eval      # recomputes every figure in evidence/summary.json from the committed raw rows; exits 1 on a mismatch
-npm test          # 193 tests
+npm test          # 194 tests
 ```
 Live re-run (real Chrome with Nano plus Firebase AI Logic; needs a Firebase web config in `.env.local`):
 `npm run eval:live -- <set> <triage|judge> <userDataDir> [judgeModel]`, or open `/eval/run` on a local dev server (`npm run dev`; the route is disabled in production).
