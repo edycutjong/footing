@@ -279,6 +279,7 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
     const c = new Check(parsed.pairs, browserDeps(live), { cfg: live, force, device: dev, progress, onUpdate: update });
     check.current = c;
     setRuns(c.runs.map((x) => ({ ...x })));
+    setCloudUsed(c.cloudUsed); // the rows were just reset; the count must not keep the previous check's calls
     await c.run();
     if (check.current !== c) return;
     setRuns(c.runs.map((x) => ({ ...x })));
@@ -323,6 +324,10 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
     () => runs.filter((r) => r.planned?.to === "DEVICE_TRIAGE").length,
     [runs],
   );
+  // A run gets its Nano-laptop plan only after its page is fetched: until every run has one, the count would read low ("0 of 9").
+  const allPlanned = runs.length > 0 && runs.every((r) => r.planned);
+  // The meter stands in for Nano when Nano is not running here; while an on-device check is under way it would only flash.
+  const nanoWillRun = device === "available" && force !== "cloud";
 
   return (
     <main className="pad">
@@ -440,9 +445,9 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
               {t.settledOnDevice} settled on this laptop · {t.decidedInCloud} decided in the cloud · {t.unverified} quote not found · {t.pending} pending · {t.notChecked} not checked
               {runs.length ? ` · ${cloudUsed} cloud call${cloudUsed === 1 ? "" : "s"} (cap ${cfg.citationCloudCap})` : ""}
             </div>
-            {runs.length > 0 && !runs.some((r) => r.sources.includes("on_device")) && (
+            {runs.length > 0 && !runs.some((r) => r.sources.includes("on_device")) && (!nanoWillRun || done) && (
               <div className="meter">
-                On a Nano laptop, <b>{nanoFirst} of {nanoLaptop}</b> citations would be read on-device first (readable pages; PDFs and pages that need JavaScript go to the cloud).
+                On a Nano laptop, <b>{allPlanned ? nanoFirst : "…"} of {nanoLaptop}</b> citations would be read on-device first (readable pages; PDFs and pages that need JavaScript go to the cloud).
                 {meter.show && meter.settledPct !== undefined ? ` On our held-out set Nano settled ${meter.settledPct}% of those without the cloud, and ${meter.right} of ${meter.settled} of those on-device flags matched the label (M1 Max).` : ""}{" "}
                 <a href="/about#fx-hero">Watch a recorded Nano run of the sample answer →</a>{" "}
                 <a href="/eval">Measured results →</a>
