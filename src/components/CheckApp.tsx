@@ -396,11 +396,13 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
                       const r = byId.get(p.id);
                       if (!r) return <span key={p.id} className="data" style={{ color: "var(--muted)" }}>[{p.n ?? "↗"}] {hostOf(p.url)}</span>;
                       const ct = chipText(r, style);
+                      // Only an in-flight note is shown on the chip ("cloud busy (rate limit) · retrying in 15 s"); settled reasons live in the pane.
+                      const wait = r.state === "deciding" || r.state === "escalated" ? ct.sub : undefined;
                       return (
                         <button key={p.id} className={`chip s-${r.state}${style === "neutral" && r.state === "LIKELY_UNSUPPORTED" ? " neutral" : ""}`} aria-pressed={open === p.id} onClick={() => setOpen(p.id)}
-                          aria-label={`Sentence ${s.index + 1}: ${verdictWords(r.state, style) ?? ct.title}${(r.state === "NOT_CHECKED" || r.state === "CAP_REACHED") && r.reason ? ` — ${r.reason}` : ""}, ${where(r)}`}>
+                          aria-label={`Sentence ${s.index + 1}: ${verdictWords(r.state, style) ?? ct.title}${(r.state === "NOT_CHECKED" || r.state === "CAP_REACHED") && r.reason ? ` — ${r.reason}` : ""}${wait ? ` — ${wait}` : ""}, ${where(r)}`}>
                           <Mark state={r.state} held={r.nanoQuoteHeld} neutral={style === "neutral"} />
-                          <span className="what">{ct.title}<small>[{p.n ?? "↗"}] {hostOf(r.source?.finalUrl ?? p.url)}</small></span>
+                          <span className="what">{ct.title}<small>{wait ? `${wait} · ` : ""}[{p.n ?? "↗"}] {hostOf(r.source?.finalUrl ?? p.url)}</small></span>
                           <Badges sources={r.sources} />
                         </button>
                       );
