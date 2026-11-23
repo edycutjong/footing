@@ -363,7 +363,7 @@ body.debug-contrast .slide *{outline:1px dashed rgba(194,65,45,.35)}
 <div class="lane"><span class="lane-l d">ON DEVICE</span><div class="track"><i class="bar d" style="left:4.060%;width:15.377%" data-s="1624" data-e="7775">1 · 6.2 s</i><i class="bar d" style="left:19.438%;width:5.277%" data-s="7775" data-e="9886">2</i><i class="bar d" style="left:24.715%;width:4.990%" data-s="9886" data-e="11882">3</i><i class="bar d" style="left:29.705%;width:5.045%" data-s="11882" data-e="13900">4</i><i class="bar d settle" style="left:34.750%;width:3.890%" data-s="13900" data-e="15456">5</i><i class="bar d" style="left:38.640%;width:4.680%" data-s="15456" data-e="17328">6</i><i class="bar d" style="left:43.320%;width:7.418%" data-s="17328" data-e="20295">7</i><i class="bar d" style="left:50.737%;width:5.897%" data-s="20295" data-e="22654">8</i><i class="bar d" style="left:56.635%;width:5.350%" data-s="22654" data-e="24794">9</i></div></div>
 <div class="lane"><span class="lane-l c">IN CLOUD</span><div class="track two"><i class="bar c s0" style="left:19.438%;width:20.515%" data-s="7775" data-e="15981">1</i><i class="bar c s1" style="left:24.715%;width:26.317%" data-s="9886" data-e="20413">2</i><i class="bar c s0" style="left:39.953%;width:24.067%" data-s="15981" data-e="25608">3</i><i class="bar c s1" style="left:51.032%;width:27.122%" data-s="20413" data-e="31262">4</i><i class="bar c s0" style="left:64.020%;width:25.043%" data-s="25608" data-e="35625">6</i><i class="bar c s1" style="left:78.155%;width:4.695%" data-s="31262" data-e="33140">7</i><i class="bar c s1" style="left:82.850%;width:16.038%" data-s="33140" data-e="39555">8</i><i class="bar c s0" style="left:89.062%;width:4.935%" data-s="35625" data-e="37599">9</i></div></div>
 <div class="axis"><span></span><span><i>0 s</i><i>10</i><i>20</i><i>30</i><i>40 s</i></span></div><i class="playhead" aria-hidden="true"></i></div>
-<div class="fx-total"><div class="line"><span class="big"><span data-k>1</span> of <span data-n>7</span></span><span class="words">checked citations: the source doesn't say it (or says only part)</span><span class="likely">+ <span data-likely>1</span> likely, on device (unconfirmed)</span></div><p class="data"><span data-settled>1</span> settled on this laptop · <span data-cloudn>7</span> decided in the cloud · <span data-unv>1</span> quote not found · <span style="white-space:nowrap">8 cloud calls (cap 8 when recorded; now 10)</span></p><p class="fx-key"><sub>d</sub> device · <sub>c</sub> cloud · the 1 = row 9 (says part) · the likely = row 5 (no passage, on device)</p></div>
+<div class="fx-total"><div class="line"><span class="big"><span data-k>1</span> of <span data-n>7</span></span><span class="words">checked citations: the source doesn't say it (or says only part)</span><span class="likely">+ <span data-likely>1</span> likely not, on device (unconfirmed)</span></div><p class="data"><span data-settled>1</span> settled on this laptop · <span data-cloudn>7</span> decided in the cloud · <span data-unv>1</span> quote not found · <span style="white-space:nowrap">run total: 8 cloud calls (cap 8 when recorded; now 10)</span></p><p class="fx-key"><sub>d</sub> device · <sub>c</sub> cloud · the 1 = row 9 (says part) · the likely = row 5 (no passage, on device)</p></div>
 </figure>
   </div>
   <div class="foot"><span>Footing · <b>v1.0.0</b> · figures at 23f0b3e</span><span>01 / 11</span></div>
@@ -385,7 +385,7 @@ body.debug-contrast .slide *{outline:1px dashed rgba(194,65,45,.35)}
   <p class="lbl">The problem</p>
   <h2>Nine citations, checked by hand.</h2>
   <p class="body">Dewi has an AI answer and an essay due. Checking it means opening every source and hunting for the line.</p>
-  <p class="impact">In the sample answer, <b>3 of 9</b> citations did not check out cleanly.</p>
+  <p class="impact">In the sample answer, <b>3 of 9</b> citations need a second look.</p>
   <div class="tabs" data-stage aria-label="Nine cited pages, none opened">
 <div class="tab" style="--i:0"><span class="tn">[1]</span>en.wikipedia.org<span class="dot"></span></div>
 <div class="tab" style="--i:1"><span class="tn">[1]</span>en.wikipedia.org<span class="dot"></span></div>
@@ -437,7 +437,7 @@ body.debug-contrast .slide *{outline:1px dashed rgba(194,65,45,.35)}
 <section class="slide" id="s6w" aria-label="Slide 6, why hybrid">
   <h2>Why not one model?</h2>
   <div class="why3">
-    <div class="w x"><h3>Nano alone</h3><p><b>21/30</b> at full vs partial. Under our 24/30 bar.</p></div>
+    <div class="w x"><h3>Nano alone</h3><p><b>21/30</b> on the three-way verdict. Under our 24/30 bar.</p></div>
     <div class="w x"><h3>Cloud alone</h3><p>All 20 held-out claims go up. With Nano: 19.</p></div>
     <div class="w on"><h3>Both</h3><p>Nano reads readable pages locally; the cloud decides every “supports”.</p></div>
   </div>
@@ -486,7 +486,7 @@ body.debug-contrast .slide *{outline:1px dashed rgba(194,65,45,.35)}
 <div class="lane"><span class="lane-l d">ON DEVICE</span><div class="track"><i class="bar d" style="left:4.060%;width:15.377%" data-s="1624" data-e="7775">1 · 6.2 s</i><i class="bar d" style="left:19.438%;width:5.277%" data-s="7775" data-e="9886">2</i><i class="bar d" style="left:24.715%;width:4.990%" data-s="9886" data-e="11882">3</i><i class="bar d" style="left:29.705%;width:5.045%" data-s="11882" data-e="13900">4</i><i class="bar d settle" style="left:34.750%;width:3.890%" data-s="13900" data-e="15456">5</i><i class="bar d" style="left:38.640%;width:4.680%" data-s="15456" data-e="17328">6</i><i class="bar d" style="left:43.320%;width:7.418%" data-s="17328" data-e="20295">7</i><i class="bar d" style="left:50.737%;width:5.897%" data-s="20295" data-e="22654">8</i><i class="bar d" style="left:56.635%;width:5.350%" data-s="22654" data-e="24794">9</i></div></div>
 <div class="lane"><span class="lane-l c">IN CLOUD</span><div class="track two"><i class="bar c s0" style="left:19.438%;width:20.515%" data-s="7775" data-e="15981">1</i><i class="bar c s1" style="left:24.715%;width:26.317%" data-s="9886" data-e="20413">2</i><i class="bar c s0" style="left:39.953%;width:24.067%" data-s="15981" data-e="25608">3</i><i class="bar c s1" style="left:51.032%;width:27.122%" data-s="20413" data-e="31262">4</i><i class="bar c s0" style="left:64.020%;width:25.043%" data-s="25608" data-e="35625">6</i><i class="bar c s1" style="left:78.155%;width:4.695%" data-s="31262" data-e="33140">7</i><i class="bar c s1" style="left:82.850%;width:16.038%" data-s="33140" data-e="39555">8</i><i class="bar c s0" style="left:89.062%;width:4.935%" data-s="35625" data-e="37599">9</i></div></div>
 <div class="axis"><span></span><span><i>0 s</i><i>10</i><i>20</i><i>30</i><i>40 s</i></span></div><i class="playhead" aria-hidden="true"></i></div>
-<div class="fx-total"><div class="line"><span class="big"><span data-k>1</span> of <span data-n>7</span></span><span class="words">checked citations: the source doesn't say it (or says only part)</span><span class="likely">+ <span data-likely>1</span> likely, on device (unconfirmed)</span></div><p class="data"><span data-settled>1</span> settled on this laptop · <span data-cloudn>7</span> decided in the cloud · <span data-unv>1</span> quote not found · <span style="white-space:nowrap">8 cloud calls (cap 8 when recorded; now 10)</span></p><p class="fx-key"><sub>d</sub> device · <sub>c</sub> cloud · the 1 = row 9 (says part) · the likely = row 5 (no passage, on device)</p></div>
+<div class="fx-total"><div class="line"><span class="big"><span data-k>1</span> of <span data-n>7</span></span><span class="words">checked citations: the source doesn't say it (or says only part)</span><span class="likely">+ <span data-likely>1</span> likely not, on device (unconfirmed)</span></div><p class="data"><span data-settled>1</span> settled on this laptop · <span data-cloudn>7</span> decided in the cloud · <span data-unv>1</span> quote not found · <span style="white-space:nowrap">run total: 8 cloud calls (cap 8 when recorded; now 10)</span></p><p class="fx-key"><sub>d</sub> device · <sub>c</sub> cloud · the 1 = row 9 (says part) · the likely = row 5 (no passage, on device)</p></div>
 </figure>
   </div>
   <ol class="steps">
@@ -495,8 +495,8 @@ body.debug-contrast .slide *{outline:1px dashed rgba(194,65,45,.35)}
     <li>Footed: 1 of 7.</li>
   </ol>
   <p class="hint">press → to replay the run</p>
-  <div class="foot"><span>Footing · <b>v1.0.0</b> · run nano-hero-if, dev server, 2026-11-22 12:20 UTC · slide 4 is a later production run</span><span>08 / 11</span></div>
-  <aside class="speaker-notes">This replays a recorded run from its own step times. Watch the device lane: Nano takes the citations one by one; the first call is slow, then about two seconds each. Row five has no supporting passage, so it is settled right there, with no cloud call. The other eight go up for the final word.</aside>
+  <div class="foot"><span>Footing · <b>v1.0.0</b> · run nano-hero-if, dev server, 2026-11-22 12:20 UTC · slide 4 and the video are later production runs (in the video Nano said supports on row 5; the cloud overruled)</span><span>08 / 11</span></div>
+  <aside class="speaker-notes">This replays a recorded run from its own step times. Watch the device lane: Nano takes the citations one by one; the first call is slow (about 8 s), then about 1.7 s each. Row five has no supporting passage, so it is settled right there, with no cloud call. The other eight go up for the final word.</aside>
 </section>
 
 <section class="slide" id="s8" aria-label="Slide 9, measured">
@@ -510,7 +510,7 @@ body.debug-contrast .slide *{outline:1px dashed rgba(194,65,45,.35)}
       <div class="lrow"><span>Cloud 3-way</span><span class="v">23/30</span></div></div>
     <div class="lat"><span><b>1,699 ms</b> device</span><span><b>4,095 ms</b> cloud</span></div>
   </div>
-  <div class="foot"><span>Footing · <b>v1.0.0</b> · evidence/summary.json · latency = bench medians, evidence/bench.json, 40 calls per route, M1 Max</span><span>09 / 11</span></div>
+  <div class="foot"><span>Footing · <b>v1.0.0</b> · evidence/summary.json · bench medians, evidence/bench.json, 40 calls per route, M1 Max · different inputs: the cloud reads a longer window</span><span>09 / 11</span></div>
   <aside class="speaker-notes">We print accuracy as measured. On twenty claims labelled before any model ran, Nano's yes-or-no triage got 13 and the cloud's three-way verdict got 14. That is why every verdict shows the page's own words. Latency is from a separate bench of 40 calls per route on our M1 Max.</aside>
 </section>
 
@@ -525,7 +525,7 @@ body.debug-contrast .slide *{outline:1px dashed rgba(194,65,45,.35)}
     <div><b>10</b><span>automatic cloud checks per answer, set in Remote Config</span></div>
     <div><b>v1.0.0</b><span>Apache-2.0</span></div>
   </div>
-  <div class="foot"><span>Footing · <b>v1.0.0</b> · evidence/ci-local-2026-11-22.txt · Lighthouse best practices 0.77 (the reCAPTCHA cookie App Check needs)</span><span>10 / 11</span></div>
+  <div class="foot"><span>Footing · <b>v1.0.0</b> · evidence/vitest-2026-11-22.txt (unit) · ci-local-2026-11-22.txt (E2E) · Lighthouse best practices 0.77 (the reCAPTCHA cookie App Check needs)</span><span>10 / 11</span></div>
   <aside class="speaker-notes">Everything here can be checked from the repo. The CI pipeline is configured but GitHub Actions has not run it, because of an account billing block; every stage was run locally against the deployed build, and the receipt is committed.</aside>
 </section>
 
