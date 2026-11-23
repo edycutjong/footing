@@ -42,8 +42,19 @@ describe("bm25TopK", () => {
 
 describe("quoteHeld (the gate)", () => {
   const given = "PASSAGE 1: The Moon makes a complete orbit around Earth in 27 Earth days.";
-  it("holds a verbatim quote, including NBSP / curly-quote variants", () => {
+  it("holds a verbatim quote across an NBSP in the source", () => {
+    expect(given).toContain("\u00A0"); // the source line really has the NBSP ("27\u00A0Earth")
     expect(quoteHeld("orbit around Earth in 27 Earth days", given)).toBe(true);
+  });
+  it("holds a quote across curly-quote / soft-hyphen variants, in either direction", () => {
+    const fancy = "PASSAGE 1: The Moon\u2019s orbit takes 27\u00A0Earth days, the \u201Csidereal month\u201D, by obser\u00ADvation.";
+    expect(quoteHeld('27 Earth days, the "sidereal month"', fancy)).toBe(true);
+    expect(quoteHeld("The Moon's orbit", fancy)).toBe(true);
+    expect(quoteHeld("by observation", fancy)).toBe(true);
+    expect(quoteHeld("27\u00A0Earth days, the \u201Csidereal month\u201D", 'the orbit takes 27 Earth days, the "sidereal month".')).toBe(true);
+  });
+  it("still refuses a variant that changes a word", () => {
+    expect(quoteHeld("27 Earth days, the \u201Csynodic month\u201D", "the orbit takes 27\u00A0Earth days, the \u201Csidereal month\u201D.")).toBe(false);
   });
   it("refuses a paraphrase", () => {
     expect(quoteHeld("The Moon circles Earth every 27 days", given)).toBe(false);
