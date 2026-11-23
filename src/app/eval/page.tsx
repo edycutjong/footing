@@ -10,6 +10,8 @@ type SetSummary = { heldOut: boolean; note: string; device?: Dev; cloud?: Cloud 
 
 const REPO = "https://github.com/edycutjong/footing/blob/main/";
 const LABELS = ["SUPPORTS", "PARTIAL", "NOT_SUPPORTED"] as const;
+/** "NOT_SUPPORTED" may break after the underscore, so the matrix fits a 390 px phone without sideways scroll. */
+const breakable = (l: string) => { const [head, ...rest] = l.split("_"); return rest.length ? <>{head}_<wbr />{rest.join("_")}</> : l; };
 
 function SetBlock({ name, s }: { name: string; s: SetSummary }) {
   return (
@@ -45,14 +47,16 @@ function SetBlock({ name, s }: { name: string; s: SetSummary }) {
               {s.cloud.wrongWithQuoteHeld !== undefined && <> A found quote proves the words are in the source, not that the verdict is right: {s.cloud.wrongWithQuoteHeld} wrong verdict{s.cloud.wrongWithQuoteHeld === 1 ? "" : "s"} still had a quote that passed the recorded check (rule above).</>}
             </p>
           )}
-          <table style={{ borderCollapse: "collapse" }}>
-            <thead><tr><th style={{ textAlign: "left", paddingRight: 12 }}>label ↓ / verdict →</th>{LABELS.map((l) => <th key={l} style={{ paddingRight: 12 }}>{l}</th>)}</tr></thead>
-            <tbody>
-              {LABELS.map((g) => (
-                <tr key={g}><td style={{ paddingRight: 12 }}>{g}</td>{LABELS.map((p) => <td key={p} style={{ textAlign: "center" }}>{s.cloud!.confusion[g][p]}</td>)}</tr>
-              ))}
-            </tbody>
-          </table>
+          <div style={{ overflowX: "auto", maxWidth: "100%" }}>
+            <table style={{ borderCollapse: "collapse", fontSize: "0.9em" }}>
+              <thead><tr><th style={{ textAlign: "left", paddingRight: 12 }}>label ↓ / verdict →</th>{LABELS.map((l) => <th key={l} style={{ paddingRight: 12 }}>{breakable(l)}</th>)}</tr></thead>
+              <tbody>
+                {LABELS.map((g) => (
+                  <tr key={g}><td style={{ paddingRight: 12 }}>{breakable(g)}</td>{LABELS.map((p) => <td key={p} style={{ textAlign: "center" }}>{s.cloud!.confusion[g][p]}</td>)}</tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
           {s.cloud.correct / s.cloud.n < 0.8 ? (
             <p>
               The cloud model is under 80% too, the accuracy bar we set for the on-device kill test. So a SUPPORTS or PARTIAL verdict is shown only
