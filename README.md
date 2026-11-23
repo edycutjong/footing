@@ -105,7 +105,7 @@ Machine for on-device runs: MacBook Pro M1 Max, 32 GB, Chrome 157. Cloud judge: 
 | Set | Nano binary triage | Cloud judge (3-class) |
 |---|---|---|
 | **Fresh 20, held-out** (labelled and committed before any run, `13d2240`) | **13/20 = 65%**; latency p50 1729 ms, p95 2335 ms | **14/20 = 70%**; latency p50 2284 ms, p95 6924 ms |
-| Frozen 30 (**not** held-out: an earlier prompt was scored on it) | 24/30 = 80% (binary cut); p50 1838 ms, p95 3099 ms | 23/30 = 76.7% |
+| Frozen 30 (**not** held-out: an earlier prompt was scored on it) | 24/30 = 80% (binary-only run, 22 Nov; the 21 Nov three-way run cut to binary also gave 24/30); p50 1838 ms, p95 3099 ms | 23/30 = 76.7% |
 
 How the work splits between laptop and cloud: on the frozen 30, Nano settled 8 of 30 pairs on device (all 8 labelled partial or not supported) and escalated 22; on the
 fresh 20 it settled 1 and escalated 19 (`evidence/summary.json`). So the measured cloud saving is small: 8 of 30 and 1 of 20 calls, and 1 of 9 on

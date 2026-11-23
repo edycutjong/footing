@@ -33,7 +33,7 @@ Latency bench: `BENCH_REPS=2 FIREBASE_APPCHECK_DEBUG_TOKEN=… npm run bench -- 
 | Set | Nano binary triage | Cloud judge (3-class) |
 |---|---|---|
 | Fresh 20 (held-out, labels committed before any run) | 13/20 = 65% | 14/20 = 70% |
-| Frozen 30 (not held-out) | 24/30 = 80% (binary cut) | 23/30 = 76.7% |
+| Frozen 30 (not held-out) | 24/30 = 80% (binary-only run, 22 Nov) | 23/30 = 76.7% |
 
 Raw rows: `evidence/eval-30/`, `evidence/eval-fresh-20/`. Machine for on-device runs: MacBook Pro M1 Max, 32 GB, Chrome 157.
 Friction log for Firebase AI Logic hybrid inference: [`docs/DX-REPORT.md`](docs/DX-REPORT.md).
