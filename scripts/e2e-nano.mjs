@@ -1,7 +1,7 @@
 // Local E2E on the Nano-enabled profile: drives the real page, then asserts the on-device route really ran.
 // Usage: FIREBASE_APPCHECK_DEBUG_TOKEN=… npm run e2e:nano -- [userDataDir]   (needs `npm run dev` on port 3101)
 // Exit 1 unless: the check finished with no banner, >= 1 citation was triaged ON DEVICE (inferenceSource on_device),
-// every decided verdict carries a quote, and the cloud still decided at least one call (the hybrid split).
+// every SUPPORTS / PARTIAL carries a quote (a quote-less NOT_SUPPORTED carries its note), and the cloud still decided at least one call (the hybrid split).
 import { spawnSync } from "node:child_process";
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { homedir } from "node:os";
@@ -20,7 +20,9 @@ const onDevice = rec.runs.filter((x) => x.sources.includes("on_device"));
 const cloud = rec.runs.filter((x) => x.sources.includes("in_cloud"));
 if (onDevice.length < 1) fail.push("no citation was triaged on device");
 if (cloud.length < 1) fail.push("the cloud decided nothing (expected the hybrid escalation)");
-for (const x of rec.runs.filter((x) => ["SUPPORTS", "PARTIAL", "NOT_SUPPORTED"].includes(x.state))) if (!(x.quote ?? "").trim()) fail.push(`decided verdict without a quote: ${x.id}`);
+// SUPPORTS / PARTIAL need a quote; a cloud NOT_SUPPORTED may have none (the model's "no passage says this", src/lib/gate/quote.ts).
+for (const x of rec.runs.filter((x) => ["SUPPORTS", "PARTIAL"].includes(x.state))) if (!(x.quote ?? "").trim()) fail.push(`decided verdict without a quote: ${x.id}`);
+for (const x of rec.runs.filter((x) => x.state === "NOT_SUPPORTED" && !(x.quote ?? "").trim())) if (x.note !== "no passage says this") fail.push(`quote-less NOT_SUPPORTED without its note: ${x.id}`);
 console.log(`e2e-nano: on_device=${onDevice.length} in_cloud=${cloud.length} file=${f}`);
 if (fail.length) { console.error("FAIL\n- " + fail.join("\n- ")); process.exit(1); }
 console.log("PASS");
