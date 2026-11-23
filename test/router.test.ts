@@ -74,6 +74,9 @@ describe("route(): force control", () => {
     expect(r).toMatchObject({ to: "DEVICE_TRIAGE", deviceMode: "ONLY_ON_DEVICE" });
     expect(r.reason).toMatch(/50%/);
   });
+  it("On-device only with the model not downloaded yet waits for the download (no cloud call)", () => {
+    expect(route("html", okHtml, "downloadable", cfg, "device", 0)).toMatchObject({ to: "DEVICE_TRIAGE", deviceMode: "ONLY_ON_DEVICE" });
+  });
   it("On-device only ignores the cloud cap (no cloud call is made)", () => {
     expect(route("html", okHtml, "available", cfg, "device", CAP + 3).to).toBe("DEVICE_TRIAGE");
   });
