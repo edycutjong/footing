@@ -43,7 +43,7 @@ for (const [set, s] of Object.entries(summary.sets)) {
     console.log(`  Cloud judge ${s.cloud.model} (3-class): ${correct}/${rows.length} = ${pct(correct, rows.length)}%`);
     console.log(`    label \\ predicted   SUPPORTS  PARTIAL  NOT_SUPPORTED`);
     for (const g of L) console.log(`    ${g.padEnd(18)} ${L.map((p) => String(m[g][p]).padStart(8)).join(" ")}`);
-    console.log(`    quote gate held: ${ok.filter((r) => r.gateHeld).length}/${ok.length} · latency p50 ${q(ms, 0.5)} ms, p95 ${q(ms, 0.95)} ms`);
+    console.log(`    quote found (eval rule, passages joined): ${ok.filter((r) => r.gateHeld).length}/${ok.length} · latency p50 ${q(ms, 0.5)} ms, p95 ${q(ms, 0.95)} ms`);
     same(`${set} cloud correct`, correct, s.cloud.correct);
     same(`${set} cloud confusion`, m, s.cloud.confusion);
     same(`${set} cloud latency`, { p50: q(ms, 0.5), p95: q(ms, 0.95) }, s.cloud.latencyMs);

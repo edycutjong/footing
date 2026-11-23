@@ -111,7 +111,7 @@ How the work splits between laptop and cloud: on the frozen 30, Nano settled 8 o
 fresh 20 it settled 1 and escalated 19 (`evidence/summary.json`). So the measured cloud saving is small: 8 of 30 and 1 of 20 calls, and 1 of 9 on
 the sample answer's recorded Nano run (`evidence/check/nano-hero-if-2026-11-22.json`). Escalation is the design, not a failure: `SUPPORTS` is never final on device.
 An escalated citation pays for both calls, and Nano triage runs one citation at a time, so the hybrid is not faster end to end. Recorded runs of the sample answer on the
-deployed site took 18.0–36.0 s wall clock with Nano (median 27.0 s, 3 runs, `evidence/check/live-r03-nano-hero-*.json`) and 17.0–41.0 s without (median
+deployed site on 22 Nov took 18.0–36.0 s wall clock with Nano (median 27.0 s, 3 runs, `evidence/check/live-r03-nano-hero-*.json`) and 17.0–41.0 s without (median
 21.0 s, 7 runs, `evidence/check/live-*fresh-hero*.json`); all but one ran at the earlier cap of 8 and left at least one citation for a click (the 18.0 s
 Nano run left 4, after rate-limit errors, before automatic retries existed). The one 9-of-9 run, at cap 10, took 21.0 s without Nano
 (`evidence/check/live-r05-fresh-hero-2026-11-22.json`). What the laptop buys is that the citations it settles never reach a model server.
@@ -149,7 +149,7 @@ Nano-enabled profile and asserts the `ON DEVICE` route really ran (`evidence/che
 
 A judge on a laptop without Gemini Nano still gets every check: each pair is checked in the cloud (up to 10 per answer automatically, the rest
 on a click) and badged `IN CLOUD`, and a meter reads how many citations the same router rule would have read on-device first on a Nano laptop.
-What that judge cannot see live is Nano itself; a recorded Nano run of the sample answer plays at [/about](https://footing.edycu.dev/about). A **force path** control (Auto, On-device only, Cloud only) shows both routes.
+What that judge cannot see live is Nano itself; a recorded Nano run of the sample answer plays at [/about](https://footing.edycu.dev/about). On a Nano laptop, a **force path** control (Auto, On-device only, Cloud only) shows both routes; without Nano, On-device only marks every citation "no on-device model in this browser" (`router.ts`), so the recorded run is how to see that path.
 
 To turn Nano on in desktop Chrome: enable `chrome://flags/#gemma4-for-built-in-ai` (**Gemma 4 for Built-in AI**, the flag the hackathon FAQ names) and
 `chrome://flags/#prompt-api`, relaunch, and make sure

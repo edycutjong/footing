@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import summary from "../../../evidence/summary.json";
+import hero from "../../../seed/answers/hero.json";
 
 export const metadata: Metadata = { title: "Footing · measured results" };
 
@@ -81,6 +82,15 @@ export default function EvalPage() {
         we show. Machine: {summary.machine}. Generated {summary.generatedAt}.
       </p>
       {Object.entries(sets).map(([name, s]) => <SetBlock key={name} name={name} s={s} />)}
+      <section id="sample" style={{ margin: "2rem 0" }}>
+        <h2>The sample answer on the home page</h2>
+        <p>{hero.how}</p>
+        <p className="data">
+          Question: &ldquo;{hero.question}&rdquo; · captured {hero.capturedAt} · cited pages:{" "}
+          {hero.sources.map((u, i) => <span key={u}>{i ? ", " : ""}<a href={u}>{new URL(u).hostname}</a></span>)} · file:{" "}
+          <a href="https://github.com/edycutjong/footing/blob/main/seed/answers/hero.json">seed/answers/hero.json</a>
+        </p>
+      </section>
       <p><Link href="/">Check an answer</Link></p>
     </main>
   );

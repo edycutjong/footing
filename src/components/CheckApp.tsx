@@ -354,7 +354,7 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
         <div className="prov">
           <span><b>{mine ? "Your pasted answer" : hero.provenance}</b></span>
           <span>{parsed.pairs.length} citations · {parsed.sentences.length} sentences{parsed.unresolved.length ? ` · ${parsed.unresolved.length} unresolved marker(s)` : ""}</span>
-          {!mine && <span title={hero.how}>how captured: unedited, see <a href="/eval">/eval</a></span>}
+          {!mine && <span title={hero.how}>how captured: unedited, see <a href="/eval#sample">/eval</a></span>}
           <span><a href="/about">what it checks</a> · <a href="/about#fx-hero">recorded Nano run</a> · <a href="/eval">measured results</a></span>
           <button className="ghost" style={{ padding: "2px 8px" }} onClick={() => setShowPaste((v) => !v)} aria-expanded={showPaste}>{showPaste ? "Hide paste box" : "Paste your own answer"}</button>
         </div>
