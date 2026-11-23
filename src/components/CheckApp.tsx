@@ -236,6 +236,9 @@ export default function CheckApp({ hero, meter }: { hero: Hero; meter: MeterStat
 
   async function runCheck() {
     setRunning(true); setDone(false); setOpen(null); setBanner(null);
+    // Drop the previous check's rows and cloud count now, not when the new engine exists: start-up (App Check, Remote
+    // Config, device init) can take a second, and stale rows read as "Checking 9 of 9" with the old count (a2a r07).
+    setRuns([]); setCloudUsed(0);
     check.current = null;
     const gen = ++generation.current;
     try {
