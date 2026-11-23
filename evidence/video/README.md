@@ -16,7 +16,7 @@ segment event times (seconds from that segment's recording start) are in `events
 | Sentence 7 (pill: "earlier run · 23 Nov 2026"): the cloud said SUPPORTS, its quote joins two separate parts of the page → "quote not found" | state `UNVERIFIED`, `recordedAt` 2026-11-23T13:21:40Z | `../check/video-nano-auto-r1-2026-11-23.json` (`runs[6]`), `stitched-quote-2026-11-23.md`, `events/seg05_gate_r1.json` |
 | Unit test card: the three `quoteHeld` tests and "Tests 3 passed \| 10 skipped (13)" | real filtered run, 2026-11-23 | `gate-test-2026-11-23.txt`, `../../test/text-bm25-gate.test.ts` |
 | On-device only, "network: OFFLINE" indicator, "Offline, on the pages it already fetched … all nine citations", "zero cloud calls", "9 pending · 0 cloud calls (cap 10)" | 9 of 9 `on_device`, `cloudUsed` 0, `navigator.onLine` false after the cut, 0 requests while offline (cut after the 2 source fetches) | `../check/video-nano-device-offline-v2-2026-11-23.json` (`offline`), `events/seg06_offline_v2.json` |
-| Pill "sped up ×1.5–×2.5 · real 21 s" | check 6.06 s → done 27.01 s = 20.95 s | `events/seg06_offline_v2.json` |
+| Pill "sped up ×1.6–×2.5 · real 21 s" | check 6.06 s → done 27.01 s = 20.95 s | `events/seg06_offline_v2.json` |
 | Pasted PDF answer, Auto: PDF chips IN CLOUD ("PDF input is cloud-only") | 3 PDF citations `in_cloud`, 1 web page `on_device → in_cloud`, 4 cloud calls | `../check/video-pdf-auto-2026-11-23.json` |
 | Pill "sped up ×4 · real 12 s" | check 5.02 s → done 17.20 s = 12.2 s | `events/seg07_pdf.json` |
 | On-device only on the PDF: "the on-device model refused it ("The source image could not be decoded.")" (pill: "expected: Nano can't take PDFs") | 3 PDF citations `NOT_CHECKED`, `device_error` | `../check/video-pdf-device-2026-11-23.json` |
@@ -25,7 +25,7 @@ segment event times (seconds from that segment's recording start) are in `events
 | Pill "sped up ×2–×4 · real 18 s" | check 5.18 s → done 23.24 s = 18.1 s | `events/seg08_nonano.json` |
 | /eval and the cards "13/20" (Nano binary triage, on device) and "14/20" (cloud 3-way judge), held-out fresh 20 | 13/20, 14/20 | `../summary.json`, `README.md` (Engineering Rigor) |
 | "Copied the answer with 2 flags (cloud-decided only)" and the two flags in the pasted text | sentence 5 (doesn't say this), sentence 9 (says only part) | `../check/video-nonano-auto-2026-11-23.json` (states `NOT_SUPPORTED`, `PARTIAL`), `copy-with-flags-2026-11-23.txt` |
-| "Open source · Apache-2.0" | licence | `../../LICENSE` |
+| "Open source (Apache-2.0): github.com/edycutjong/footing" | licence; the repository is public from submission | `../../LICENSE` |
 
 Not part of Footing, and labelled as such on screen: the plain text editor the copied answer is pasted into (it shows the copied
 text unchanged; checked 2026-11-23: identical to `copy-with-flags-2026-11-23.txt` apart from line breaks), the "network:" indicator
