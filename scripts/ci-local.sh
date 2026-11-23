@@ -15,7 +15,7 @@ stage "1 unit tests + coverage floor" npm run test:coverage
 stage "2 gitleaks (all history)" gitleaks detect --source . --log-opts="--all" --redact
 stage "2 npm audit (high+critical)" npm audit --audit-level=high
 stage "2 npm audit signatures" npm audit signatures
-stage "2 licences (no GPL/AGPL)" npx --yes license-checker --production --failOn "GPL-2.0;GPL-3.0;AGPL-3.0" --summary
+stage "2 licences (no GPL/AGPL)" npx --yes license-checker@25.0.1 --production --failOn "GPL-2.0;GPL-3.0;AGPL-3.0" --summary
 stage "3 production build"     env NEXT_PUBLIC_FIREBASE_API_KEY=ci-placeholder NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=ci-placeholder.firebaseapp.com NEXT_PUBLIC_FIREBASE_PROJECT_ID=ci-placeholder NEXT_PUBLIC_FIREBASE_APP_ID=ci-placeholder NEXT_PUBLIC_RECAPTCHA_SITE_KEY=ci-placeholder npm run build
 bundle() { local kb; kb=$(find .next/static -name '*.js' -print0 | xargs -0 cat | gzip -9 | wc -c | awk '{printf "%d", $1/1024}'); echo "client JS gzip ${kb} KB (budget 900)"; [ "$kb" -le 900 ]; }
 stage "3 bundle budget"        bundle
