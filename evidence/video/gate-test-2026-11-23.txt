@@ -1,0 +1,26 @@
+# npx vitest run test/text-bm25-gate.test.ts -t "quoteHeld" --reporter=verbose   (run 2026-11-23 20:29 WIB, ANSI colours stripped)
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - ESM syntax in a file loaded as CommonJS (vitest.config.ts:1:1). Use a `.mjs` extension or set `"type": "module"` in the closest package.json
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v5.1.1 /Users/edycu/Hackathon/devpost/devpost-firebasehybridaihackathon/footing/build
+
+ ↓ test/text-bm25-gate.test.ts > normalize > folds curly quotes, dashes, NBSP and soft hyphens
+ ↓ test/text-bm25-gate.test.ts > splitSentences / toPassages > splits at sentence ends before a capital or digit
+ ↓ test/text-bm25-gate.test.ts > splitSentences / toPassages > does not split on decimals or lowercase continuations
+ ↓ test/text-bm25-gate.test.ts > splitSentences / toPassages > makes 3-sentence windows advancing 2, capped at maxChars
+ ↓ test/text-bm25-gate.test.ts > bm25TopK > ranks the passage sharing rare query terms first
+ ↓ test/text-bm25-gate.test.ts > bm25TopK > drops stopwords and single characters
+ ↓ test/text-bm25-gate.test.ts > bm25TopK > returns [] for no passages
+ ✓ test/text-bm25-gate.test.ts > quoteHeld (the gate) > holds a verbatim quote, including NBSP / curly-quote variants 2ms
+ ✓ test/text-bm25-gate.test.ts > quoteHeld (the gate) > refuses a paraphrase 0ms
+ ✓ test/text-bm25-gate.test.ts > quoteHeld (the gate) > refuses an empty quote 0ms
+ ↓ test/text-bm25-gate.test.ts > schemas > parses a triage verdict and rejects PARTIAL from the device
+ ↓ test/text-bm25-gate.test.ts > schemas > parses a judge verdict and rejects off-schema output
+ ↓ test/text-bm25-gate.test.ts > schemas > caps the device quote with maxLength
+
+ Test Files  1 passed (1)
+      Tests  3 passed | 10 skipped (13)
+   Start at  20:29:56
+   Duration  109ms (import 41%, transform 33%, worker 14%, tests 13%)
+

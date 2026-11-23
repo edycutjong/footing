@@ -1,0 +1,140 @@
+[
+ {
+  "t": 3.33,
+  "ev": "force:On-device only"
+ },
+ {
+  "t": 6.06,
+  "ev": "check"
+ },
+ {
+  "t": 7.2,
+  "ev": "offline",
+  "fetchesDone": 2
+ },
+ {
+  "t": 7.2,
+  "ev": "navigator.onLine",
+  "value": false
+ },
+ {
+  "t": 13.4,
+  "ev": "on_device",
+  "i": 0
+ },
+ {
+  "t": 13.4,
+  "ev": "final",
+  "i": 0,
+  "state": "CAP_REACHED"
+ },
+ {
+  "t": 14.81,
+  "ev": "on_device",
+  "i": 1
+ },
+ {
+  "t": 14.81,
+  "ev": "final",
+  "i": 1,
+  "state": "CAP_REACHED"
+ },
+ {
+  "t": 16.42,
+  "ev": "on_device",
+  "i": 2
+ },
+ {
+  "t": 16.42,
+  "ev": "final",
+  "i": 2,
+  "state": "CAP_REACHED"
+ },
+ {
+  "t": 17.85,
+  "ev": "on_device",
+  "i": 3
+ },
+ {
+  "t": 17.85,
+  "ev": "final",
+  "i": 3,
+  "state": "CAP_REACHED"
+ },
+ {
+  "t": 19.48,
+  "ev": "on_device",
+  "i": 4
+ },
+ {
+  "t": 19.48,
+  "ev": "final",
+  "i": 4,
+  "state": "CAP_REACHED"
+ },
+ {
+  "t": 21.51,
+  "ev": "on_device",
+  "i": 5
+ },
+ {
+  "t": 21.51,
+  "ev": "final",
+  "i": 5,
+  "state": "CAP_REACHED"
+ },
+ {
+  "t": 23.74,
+  "ev": "on_device",
+  "i": 6
+ },
+ {
+  "t": 23.74,
+  "ev": "final",
+  "i": 6,
+  "state": "CAP_REACHED"
+ },
+ {
+  "t": 25.58,
+  "ev": "on_device",
+  "i": 7
+ },
+ {
+  "t": 25.58,
+  "ev": "final",
+  "i": 7,
+  "state": "CAP_REACHED"
+ },
+ {
+  "t": 27.01,
+  "ev": "on_device",
+  "i": 8
+ },
+ {
+  "t": 27.01,
+  "ev": "final",
+  "i": 8,
+  "state": "CAP_REACHED"
+ },
+ {
+  "t": 27.01,
+  "ev": "done"
+ },
+ {
+  "t": 28.41,
+  "ev": "pan-top"
+ },
+ {
+  "t": 32.53,
+  "ev": "pan-chips-done"
+ },
+ {
+  "t": 33.85,
+  "ev": "footer"
+ },
+ {
+  "t": 37.05,
+  "ev": "requests-while-offline",
+  "n": 0
+ }
+]

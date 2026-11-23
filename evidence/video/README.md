@@ -8,24 +8,28 @@ segment event times (seconds from that segment's recording start) are in `events
 | On screen (video or voice-over) | Value | Source |
 |---|---|---|
 | "only 74.5% of citations supported their sentence" (2023 human audit, 4 generative search engines) | 74.5% | `../problem/liu-2023-verifiability.md` (arXiv:2304.09848) |
-| "triages the claim in about two seconds" | Nano triage p50 1699 ms, p95 2067 ms | `../bench.json`, `README.md` (Engineering Rigor) |
+| "triages the claim in about two seconds once warm" | Nano triage p50 1699 ms, p95 2067 ms (warm); the first call of a run is a cold start (8.0 s and 8.2 s in the two Nano Auto runs) | `../bench.json`, `README.md` (Engineering Rigor), `../check/video-nano-auto*-2026-11-23.json` (`trail` → `triage` `ms`) |
+| "it reads the page's best-matching passages" | Nano reads the top BM25 passages of the fetched page, not the whole page | `README.md` (The Problem & Solution), `../../src/lib/route/router.ts` |
 | Live Nano run, chips ON DEVICE → IN CLOUD, total "2 of 8" | 9 of 9 triaged `on_device`; 8 decided `in_cloud`; 1 quote not found; 9 cloud calls (cap 10) | `../check/video-nano-auto-2026-11-23.json` |
-| Pill "sped up ×2–×8 · real 42 s" | click 39.81 s → last verdict 81.49 s = 41.7 s | `events/seg03_split.json` (`check`, `done`) |
-| Sentence 5: "Nano … said SUPPORTS → the cloud ruled NOT_SUPPORTED (overruled)" + the page's line "No significant differences in blood pressure, heart rate, fasting glucose, and fasting insulin." | run state `NOT_SUPPORTED`, sources `on_device, in_cloud` | `../check/video-nano-auto-2026-11-23.json` (`runs[4]`) |
-| Sentence 7: "quote not found" after the cloud said SUPPORTS (pill: "an earlier live run of the same answer (2026-11-23, 20:21 WIB)") | run state `UNVERIFIED`; recordedAt 13:21:40Z = 20:21 WIB | `../check/video-nano-auto-r1-2026-11-23.json` (`runs[6]`), `events/seg05_gate_r1.json` |
-| Unit test replay: `quoteHeld` holds a verbatim quote, refuses a paraphrase and an empty quote; "Tests 3 passed" | 3 passed | `../../test/text-bm25-gate.test.ts` (describe "quoteHeld (the gate)") |
-| On-device only with the tab offline: "all nine citations", "zero cloud calls", "9 pending · 0 cloud calls (cap 10)" | 9 of 9 `on_device`, `cloudUsed` 0, 0 requests while offline (cut after the 2 source fetches) | `../check/video-nano-device-offline-2026-11-23.json` (`offline`), `events/seg06_offline.json` |
-| Pill "sped up ×2.5 · real 20 s" | the sped part runs 7.7 s → 27.5 s of the segment = 19.8 s (offline at 7.51 s, done at 27.37 s) | `events/seg06_offline.json` |
+| Pill "sped up ×1.2–×8 · real 42 s" | click 39.81 s → last verdict 81.49 s = 41.7 s. (The run file's `wallMs` 77,822 also counts about 36 s before the click, when the capture window was paused; the events file has the click.) | `events/seg03_split.json` (`check`, `done`) |
+| Sentence 5: "Nano … said SUPPORTS → the cloud ruled NOT_SUPPORTED (overruled)" + the page's line "No significant differences in blood pressure, heart rate, fasting glucose, and fasting insulin." | state `NOT_SUPPORTED`, sources `on_device, in_cloud` | `../check/video-nano-auto-2026-11-23.json` (`runs[4]`) |
+| Sentence 7 (pill: "an earlier live run of the same answer · 23 Nov 2026"): the cloud said SUPPORTS, its quote joins two separate parts of the page → "quote not found" | state `UNVERIFIED`, `recordedAt` 2026-11-23T13:21:40Z | `../check/video-nano-auto-r1-2026-11-23.json` (`runs[6]`), `stitched-quote-2026-11-23.md`, `events/seg05_gate_r1.json` |
+| Unit test card: the three `quoteHeld` tests and "Tests 3 passed \| 10 skipped (13)" | real filtered run, 2026-11-23 | `gate-test-2026-11-23.txt`, `../../test/text-bm25-gate.test.ts` |
+| On-device only, "network: OFFLINE" indicator, "all nine citations", "zero cloud calls", "9 pending · 0 cloud calls (cap 10)" | 9 of 9 `on_device`, `cloudUsed` 0, `navigator.onLine` false after the cut, 0 requests while offline (cut after the 2 source fetches) | `../check/video-nano-device-offline-v2-2026-11-23.json` (`offline`), `events/seg06_offline_v2.json` |
+| Pill "sped up ×1.5–×2.5 · real 21 s" | check 6.06 s → done 27.01 s = 20.95 s | `events/seg06_offline_v2.json` |
 | Pasted PDF answer, Auto: PDF chips IN CLOUD ("PDF input is cloud-only") | 3 PDF citations `in_cloud`, 1 web page `on_device → in_cloud`, 4 cloud calls | `../check/video-pdf-auto-2026-11-23.json` |
 | Pill "sped up ×4 · real 12 s" | check 5.02 s → done 17.20 s = 12.2 s | `events/seg07_pdf.json` |
-| On-device only on the PDF: "the on-device model refused it ("The source image could not be decoded.")" | 3 PDF citations `NOT_CHECKED`, `device_error` | `../check/video-pdf-device-2026-11-23.json` |
+| On-device only on the PDF: "the on-device model refused it ("The source image could not be decoded.")" (pill: "expected: the on-device model takes no PDF input") | 3 PDF citations `NOT_CHECKED`, `device_error` | `../check/video-pdf-device-2026-11-23.json` |
 | Pill "sped up ×1.5 · real 4.5 s" | segment 30.9 s → 35.4 s (check 32.83 s, done 35.29 s) | `events/seg07_pdf.json` |
-| No-Nano run: every chip IN CLOUD; meter "On a Nano laptop, 9 of 9 citations would be read on-device first" | 0 `on_device`, 9 cloud calls, `deviceBefore` "slow" (fresh profile, no model) | `../check/video-nonano-auto-2026-11-23.json` |
+| No-Nano run: status pill "Still checking for an on-device model — checks run in the cloud for now", every chip IN CLOUD, meter "On a Nano laptop, 9 of 9 citations would be read on-device first" | 0 `on_device`, 9 cloud calls, `deviceBefore` "slow" (fresh profile, no model) | `../check/video-nonano-auto-2026-11-23.json` |
 | Pill "sped up ×4 · real 18 s" | check 5.18 s → done 23.24 s = 18.1 s | `events/seg08_nonano.json` |
-| /eval: "13 of 20 correct (65%)" (Nano binary triage), "14 of 20 correct (70%)" (cloud 3-class), held-out fresh 20 | 13/20, 14/20 | `../summary.json`, `README.md` (Engineering Rigor) |
-| "Copied the answer with 2 flags (cloud-decided only)" and the two flags in the pasted text | 2 flags: sentence 5 (doesn't say this), sentence 9 (says only part) | `../check/video-nonano-auto-2026-11-23.json` (states `NOT_SUPPORTED`, `PARTIAL`) |
+| /eval and the cards "13/20" (Nano binary triage, on device) and "14/20" (cloud 3-way judge), held-out fresh 20 | 13/20, 14/20 | `../summary.json`, `README.md` (Engineering Rigor) |
+| "Copied the answer with 2 flags (cloud-decided only)" and the two flags in the pasted text | sentence 5 (doesn't say this), sentence 9 (says only part) | `../check/video-nonano-auto-2026-11-23.json` (states `NOT_SUPPORTED`, `PARTIAL`), `copy-with-flags-2026-11-23.txt` |
 | "Open source · Apache-2.0" | licence | `../../LICENSE` |
 
-Not part of Footing, and labelled as such on screen: the plain text editor the copied answer is pasted into, and the
-DevTools network emulation used to take the tab offline. The opening and closing title cards show the sample answer's
-real sentence 5 and its cited page's real line (both above), and an excerpt of `src/lib/ai/models.ts` (tokens verbatim, lines reflowed).
+Not part of Footing, and labelled as such on screen: the plain text editor the copied answer is pasted into (it shows the copied
+text unchanged; checked 2026-11-23: identical to `copy-with-flags-2026-11-23.txt` apart from line breaks), the "network:" indicator
+in the offline shot (a capture overlay that reads the browser's own `navigator.onLine`), and the DevTools network emulation used to
+take the tab offline. The opening and closing title cards show the sample answer's real sentence 5 and its cited page's real line
+(both above), and an excerpt of `src/lib/ai/models.ts` (tokens verbatim, lines reflowed).
+Superseded capture kept for the record: `../check/video-nano-device-offline-2026-11-23.json` (first offline take, no indicator).
