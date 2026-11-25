@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="docs/assets/icon.svg" alt="Footing icon" width="144">
+  <img src="docs/assets/icon-animated.svg" alt="Footing icon" width="144" height="144">
   <h1>Footing ✓</h1>
   <p><em>Checks that each link cited in an AI answer actually says what the sentence claims.</em></p>
   <img src="docs/assets/readme-hero-animated.svg" alt="Footing: every citation ticked in pencil, the bad ones circled red, the sentence beside the source line that does not say it." width="100%">
@@ -13,14 +13,14 @@
   [![Devpost entry](https://img.shields.io/badge/Devpost-Project_page-003E54?style=for-the-badge&logo=devpost&logoColor=white)](https://devpost.com/software/footing)
   [![dev.to write-up](https://img.shields.io/badge/dev.to-Write--up-0A0A0A?style=for-the-badge&logo=devdotto&logoColor=white)](https://dev.to/edycutjong/nano-couldnt-say-partly-supported-2130-so-i-changed-its-job-o8m)
   [![X thread](https://img.shields.io/badge/X-Thread-000000?style=for-the-badge&logo=x&logoColor=white)](https://x.com/edycutjong/status/2125689453692002396)
+  [![Release](https://img.shields.io/github/v/release/edycutjong/footing?style=for-the-badge&logo=github&label=Release)](https://github.com/edycutjong/footing/releases/latest)
 
   <br/>
 
   ![Next.js](https://img.shields.io/badge/Next.js_16-black?style=flat&logo=next.js)
   ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
   ![Firebase AI Logic](https://img.shields.io/badge/Firebase_AI_Logic-hybrid_inference-FFCA28?style=flat)
-  [![Release](https://img.shields.io/github/v/release/edycutjong/footing?style=flat&color=2B5C9E)](https://github.com/edycutjong/footing/releases)
-  ![Tests](https://img.shields.io/badge/tests-194_passing-2F6B45?style=flat)
+  ![Tests](https://img.shields.io/badge/tests-225_passing-2F6B45?style=flat)
   [![License](https://img.shields.io/badge/License-Apache_2.0-yellow)](LICENSE)
 
 </div>
@@ -125,7 +125,7 @@ model was not ready at the click, `live-r03-nano-hero-2026-11-22.json` and `-125
 click (the 18.0 s run left 4, after rate-limit errors, before automatic retries existed). The one 9-of-9 run, at cap 10, took 21.0 s without Nano
 (`evidence/check/live-r05-fresh-hero-2026-11-22.json`). What the laptop buys is that the citations it settles never reach a model server.
 
-Tests: **194 passing** in 12 files (`npm test`), covering the router, quote gate, SSRF guard, App Check verification, parser,
+Tests: **225 passing** in 13 files (`npm test`), covering the router, quote gate, SSRF guard (incl. DNS answers and redirect hops), App Check verification, parser,
 extractor, tally and the check engine. Line coverage of `src/lib` is 88.6% (`npm run test:coverage`, receipt `evidence/coverage-2026-11-23.txt`; the Firebase-SDK glue files are excluded
 and covered by the E2E run instead, see `vitest.config.ts`).
 
@@ -136,7 +136,7 @@ judge reading a 24,000-character source window) **p50 4095 ms, p95 11476 ms**. A
 ### 🧪 Testing & CI
 **Status, stated plainly:** the pipeline below is committed and configured, but **GitHub Actions has not run it** (the account's Actions billing blocked every job on
 2026-11-22, and the repo is private until submission), so there is no green CI badge here. Instead every stage was run on the maintainer's machine with
-[`scripts/ci-local.sh`](scripts/ci-local.sh) against the commit deployed at the time (2026-11-22), all passing; the receipt is [`evidence/ci-local-2026-11-22.txt`](evidence/ci-local-2026-11-22.txt) (191 unit tests then; the 194 on the current commit are in [`evidence/vitest-2026-11-23.txt`](evidence/vitest-2026-11-23.txt)).
+[`scripts/ci-local.sh`](scripts/ci-local.sh) against the commit deployed at the time (2026-11-22), all passing; the receipt is [`evidence/ci-local-2026-11-22.txt`](evidence/ci-local-2026-11-22.txt) (191 unit tests then; the 225 on the current commit are in [`evidence/vitest-2026-11-26.txt`](evidence/vitest-2026-11-26.txt)).
 `v1.0.0` was tagged by hand for the same reason (`release.yml` has not executed yet).
 
 [`.github/workflows/ci.yml`](.github/workflows/ci.yml) is configured to run seven stages on every push to `main`: quality (lint, typecheck, unit tests with a coverage floor
@@ -174,7 +174,7 @@ Node 22 (what we developed on), a Firebase web app with AI Logic enabled and an 
 ```bash
 npm ci
 npm run dev        # http://localhost:3101
-npm test           # 194 tests
+npm test           # 225 tests
 npm run ci         # audit + lint + typecheck + tests with coverage
 npm run e2e        # Playwright against https://footing.edycu.dev (BASE_URL=http://localhost:3101 npm run e2e for local)
 npm run bench      # per-claim p50/p95 on device and in the cloud (needs a Nano profile, see DEMO.md)
