@@ -7,6 +7,22 @@ describe("isPublicAddress()", () => {
   it.each(["127.0.0.1", "10.0.0.5", "172.16.3.4", "192.168.1.1", "169.254.169.254", "100.64.0.1", "0.0.0.0", "::1", "fc00::1", "fe80::1", "::ffff:127.0.0.1", "::ffff:10.0.0.1", "224.0.0.1", "255.255.255.255", "not-an-ip"])(
     "refuses %s", (ip) => expect(isPublicAddress(ip)).toBe(false));
   it.each(["93.184.215.14", "208.80.154.224", "2620:0:862:ed1a::1", "::ffff:8.8.8.8"])("allows %s", (ip) => expect(isPublicAddress(ip)).toBe(true));
+  // IPv6 wrappers around IPv4 and the cloud control-plane addresses (hardening pass, 2026-11-26).
+  it.each([
+    ["IPv4-mapped metadata, hex form", "::ffff:a9fe:a9fe"],
+    ["IPv4-compatible loopback (::/96)", "::7f00:1"],
+    ["IPv4-compatible private", "::10.0.0.1"],
+    ["NAT64 to loopback", "64:ff9b::7f00:1"],
+    ["IPv4-translated (rfc6145)", "::ffff:0:7f00:1"],
+    ["6to4 wrapping loopback", "2002:7f00:1::"],
+    ["Teredo", "2001::1"],
+    ["AWS IMDS over IPv6 (ULA)", "fd00:ec2::254"],
+    ["deprecated site-local", "fec0::1"],
+    ["Alibaba metadata (CGNAT)", "100.100.100.200"],
+    ["Azure WireServer", "168.63.129.16"],
+    ["documentation range", "2001:db8::1"],
+    ["benchmarking range", "198.18.0.1"],
+  ])("refuses %s (%s)", (_name, ip) => expect(isPublicAddress(ip)).toBe(false));
 });
 
 describe("checkUrl()", () => {
@@ -27,6 +43,18 @@ describe("checkUrl()", () => {
   it("refuses localhost names and metadata hosts", () => {
     expect(checkUrl("http://localhost:8080/").ok).toBe(false);
     expect(checkUrl("http://metadata.google.internal/").ok).toBe(false);
+  });
+  it("refuses the same names written with a trailing root dot, and home.arpa", () => {
+    expect(checkUrl("http://localhost./").ok).toBe(false);
+    expect(checkUrl("http://metadata.google.internal./computeMetadata/v1/").ok).toBe(false);
+    expect(checkUrl("http://printer.home.arpa/").ok).toBe(false);
+    expect(checkUrl("https://en.wikipedia.org./wiki/Moon").ok).toBe(true);
+  });
+  it("refuses IPv6 literals that wrap a private IPv4 address", () => {
+    expect(checkUrl("http://[::ffff:169.254.169.254]/").ok).toBe(false);
+    expect(checkUrl("http://[::ffff:7f00:1]/").ok).toBe(false);
+    expect(checkUrl("http://[::127.0.0.1]/").ok).toBe(false);
+    expect(checkUrl("http://[fd00:ec2::254]/latest/meta-data/").ok).toBe(false);
   });
   it("refuses credentials and odd ports", () => {
     expect(checkUrl("https://user:pw@example.org/").ok).toBe(false);

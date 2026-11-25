@@ -6,9 +6,18 @@ import ipaddr from "ipaddr.js";
 export function isPublicAddress(ip: string): boolean {
   if (!ipaddr.isValid(ip)) return false;
   let addr = ipaddr.parse(ip);
-  if (addr.kind() === "ipv6" && (addr as ipaddr.IPv6).isIPv4MappedAddress()) addr = (addr as ipaddr.IPv6).toIPv4Address();
+  if (addr.kind() === "ipv6") {
+    const v6 = addr as ipaddr.IPv6;
+    if (v6.isIPv4MappedAddress()) addr = v6.toIPv4Address();
+    // Deprecated IPv4-compatible ::a.b.c.d (::/96): ipaddr.js calls it "unicast", but it only wraps an IPv4 address.
+    else if (v6.parts.slice(0, 6).every((p) => p === 0)) return false;
+  }
+  if (DENY.has(addr.toNormalizedString())) return false;
   return addr.range() === "unicast";
 }
+
+/** Globally-routable addresses that still answer as a cloud host's control plane (Azure WireServer / IMDS fallback). */
+const DENY = new Set(["168.63.129.16"]);
 
 export type UrlCheck = { ok: true; url: URL } | { ok: false; reason: string };
 
@@ -23,10 +32,11 @@ export function checkUrl(raw: string, base?: string): UrlCheck {
   if (url.protocol !== "http:" && url.protocol !== "https:") return { ok: false, reason: `scheme ${url.protocol} not allowed` };
   if (url.username || url.password) return { ok: false, reason: "credentials in URL not allowed" };
   if (url.port && !["80", "443", "8080", "8443"].includes(url.port)) return { ok: false, reason: `port ${url.port} not allowed` };
-  const host = url.hostname.replace(/^\[|\]$/g, "");
+  // Brackets off an IPv6 literal; a trailing root dot off a name ("localhost." resolves like "localhost").
+  const host = url.hostname.replace(/^\[|\]$/g, "").replace(/\.+$/, "");
   if (!host) return { ok: false, reason: "no host" };
   if (ipaddr.isValid(host) && !isPublicAddress(host)) return { ok: false, reason: "private address refused" };
-  if (/^(localhost|.*\.localhost|.*\.local|.*\.internal|metadata\.google\.internal)$/i.test(host)) return { ok: false, reason: "private host refused" };
+  if (/^(?:localhost|.*\.localhost|.*\.local|.*\.internal|.*\.home\.arpa)$/i.test(host)) return { ok: false, reason: "private host refused" };
   url.hash = "";
   return { ok: true, url };
 }
