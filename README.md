@@ -148,7 +148,7 @@ with a gzip bundle budget (716 KB measured, budget 900 KB); deploy to Vercel (bu
 release gate. [`codeql.yml`](.github/workflows/codeql.yml) (security-extended queries) runs on push, PR and weekly, [`release.yml`](.github/workflows/release.yml) tags a version from conventional commit messages, and Dependabot is grouped and monthly with majors ignored.
 
 Measured on the deployed build (`evidence/lighthouse-live-2026-11-22.json`, desktop preset, 3 runs per page): performance 1.00, accessibility 1.00, SEO 1.00 and layout shift
-0.003 on `/`; best practices 0.77 on `/` because reCAPTCHA Enterprise, which App Check needs, sets a third-party cookie (the gate is 0.75, `lighthouserc.json`), and 1.00 on `/eval`.
+0.003 on `/`; best practices 0.77 on `/` because reCAPTCHA Enterprise, which App Check needs, sets a third-party cookie, and 1.00 on `/eval`. In CI (`lighthouserc.json`) every gate is an error on `/eval`; on `/` best practices and console errors are warnings only, because reCAPTCHA refuses the runner's automated Chrome and logs that refusal (best practices 0.73 there); accessibility, contrast, layout shift and landmarks stay errors on `/`.
 
 The E2E suite (`e2e/`, 12 tests, run against the live URL) drives the real, unmocked flow: it opens the hosted page, presses **Check sources** on the sample answer, and
 asserts that chips land with an `IN CLOUD` route badge, every decided verdict carries a non-empty quote (the verbatim-in-source check itself is unit-tested in
