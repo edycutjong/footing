@@ -49,7 +49,7 @@ correctly (on the fresh 20, 6 wrong cloud verdicts still carried a quote that wa
 
 ## 🏗️ Architecture & Tech Stack
 
-<p align="center"><img src="docs/assets/architecture.svg" alt="Footing architecture: parse, SSRF-guarded fetch proxy, Readability and BM25, router, Gemini Nano triage on device, cloud judge, code quote gate." width="100%"></p>
+<p align="center"><img src="docs/assets/architecture.png" alt="Footing architecture: in the Chrome tab the answer is parsed and routed; only the cited URL goes to a no-AI fetch proxy; Gemini Nano triages readable pages on device; the sentence, passages and page text go to a Gemini cloud judge through Firebase AI Logic only for PDFs, JS-only pages, no Nano, or Nano escalations; a code quote gate checks every quote, and a Nano no with no quote is settled on device without sending anything to a cloud model." width="100%"></p>
 
 | Layer | What | Where |
 |---|---|---|
