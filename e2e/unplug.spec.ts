@@ -39,9 +39,13 @@ test("whole network cut after load: the check reports failure and never produces
   assertNoFakeVerdict(await checkAndRead(page));
 });
 
+// Matched on the parsed hostname, anchored (incl. regional "<region>-aiplatform" hosts), so a source URL that merely
+// mentions one of these names in its path or query is never cut by mistake.
+const AI_HOST = /^(?:[a-z0-9-]+-)?(?:firebasevertexai|firebaseml|generativelanguage|aiplatform)\.googleapis\.com$/i;
+
 test("AI Logic / Gemini hosts blocked, sources still readable: the cloud route fails loudly, no verdict", async ({ page }) => {
   const blocked: string[] = [];
-  await page.route(/(firebasevertexai|firebaseml|generativelanguage|aiplatform)\.googleapis\.com/, (route) => { blocked.push(route.request().url()); return route.abort("internetdisconnected"); });
+  await page.route((url) => AI_HOST.test(url.hostname), (route) => { blocked.push(route.request().url()); return route.abort("internetdisconnected"); });
   await openAndWait(page);
   const f = await checkAndRead(page);
   expect(blocked.length, "the cloud model calls were really attempted and cut").toBeGreaterThan(0);
