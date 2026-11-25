@@ -29,6 +29,10 @@ Footing checks **citation faithfulness**, not truth: paste an AI answer with its
 
 ## 📸 See it in Action
 
+<p align="center"><img src="docs/assets/broll.gif" alt="Screen capture of Footing checking a 9-citation AI answer: the cursor presses Check sources, each citation chip goes from 'reading on this laptop' to a tick with ON DEVICE then IN CLOUD badges, and the result reads 2 of 8 flagged; tapping sentence 5's red 'doesn't say this' chip opens the evidence pane, where Nano's SUPPORTS was overruled by the cloud as NOT_SUPPORTED, the sentence's words ('appears less pronounced') are circled in red, and the source's own line 'No significant differences in blood pressure' is underlined beside it." width="100%"></p>
+
+*Real capture of footing.edycu.dev in desktop Chrome with on-device Gemini Nano; the 42-second check is sped up (7x while ticks land, up to 16x on waits), the click and the evidence pane play at real speed.*
+
 Open **https://footing.edycu.dev**, the sample answer is pre-filled (or press **Fill the sample**), then press **Check sources**. No login. Each chip shows which model decided it
 (`ON DEVICE` or `IN CLOUD`, taken from the response's `inferenceSource`), and the evidence pane shows the quote the source contains.
 A judge without Gemini Nano still gets the full check through the cloud (see [No Nano? Still works](#-no-nano-still-works)).
