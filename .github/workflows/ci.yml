@@ -116,7 +116,7 @@ jobs:
 
   # ── Stage 4: deploy (main only), needs VERCEL_TOKEN ───────
   deploy:
-    name: "Stage 4 · Deploy to Vercel (prebuilt)"
+    name: "Stage 4 · Deploy to Vercel"
     needs: [quality, secret-scan, dependency-audit, build]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
@@ -129,26 +129,37 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
-      - run: npm ci
-      - name: Vercel pull / build / deploy
+      - name: Resolve the latest GitHub release (this job's token; the Vercel build gets only the tag)
+        id: rel
         env:
-          # `vercel build` runs `npm run build`, whose first step stamps the latest GitHub release into /about and /pitch.
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: echo "tag=$(node scripts/release-version.mjs --print)" >> "$GITHUB_OUTPUT"
+      - name: Vercel deploy (built on Vercel)
+        # Built remotely, not with `vercel build --prebuilt`: the Firebase web config is stored as Sensitive env vars,
+        # which `vercel pull` returns as "[SENSITIVE]" placeholders, so a runner-side build ships a broken client
+        # (seen on 172f632: "API key not valid", App Check refused). Only Vercel's own build can read the real values.
+        env:
+          RELEASE_TAG: ${{ steps.rel.outputs.tag }}
         run: |
           set -euo pipefail
-          export BUILD_SHA="${GITHUB_SHA}"
-          npx --yes vercel@66.6.0 pull --yes --environment=production --token "$VERCEL_TOKEN"
-          npx --yes vercel@66.6.0 build --prod --token "$VERCEL_TOKEN"
-          npx --yes vercel@66.6.0 deploy --prebuilt --prod --env BUILD_SHA="$BUILD_SHA" --build-env BUILD_SHA="$BUILD_SHA" --token "$VERCEL_TOKEN"
+          npx --yes vercel@66.6.0 deploy --prod --yes \
+            --env BUILD_SHA="$GITHUB_SHA" --build-env BUILD_SHA="$GITHUB_SHA" \
+            --build-env FOOTING_RELEASE_TAG="$RELEASE_TAG" --token "$VERCEL_TOKEN"
       - name: Wait for the live build to report this commit
         run: |
           set -euo pipefail
           WANT="${GITHUB_SHA:0:7}"
           for i in $(seq 1 30); do
-            GOT=$(curl -sS "$LIVE_URL/api/health" | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{try{console.log(JSON.parse(s).sha||"")}catch{console.log("")}})')
+            H=$(curl -sS "$LIVE_URL/api/health" || true)
+            GOT=$(node -e 'try{console.log(JSON.parse(process.argv[1]).sha||"")}catch{console.log("")}' "$H")
             echo "live sha: ${GOT:-none} (want $WANT)"
-            [ "$GOT" = "$WANT" ] && exit 0
+            if [ "$GOT" = "$WANT" ]; then
+              # The build-time Firebase config must be real: with placeholder values the server's Remote Config probe
+              # returns nothing (rcTemplateVersion null) and every browser fails App Check.
+              RC=$(node -e 'try{console.log(JSON.parse(process.argv[1]).rcTemplateVersion??"")}catch{console.log("")}' "$H")
+              [ -n "$RC" ] && { echo "Remote Config template $RC: build has a working Firebase config"; exit 0; }
+              echo "::error::live build $WANT has no working Firebase config (rcTemplateVersion null)"; exit 1
+            fi
             sleep 10
           done
           echo "::error::live URL never reported sha $WANT"; exit 1
