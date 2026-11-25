@@ -7,6 +7,7 @@
   <br/>
 
   [![Live Demo](https://img.shields.io/badge/🚀_Live-Demo-2B5C9E?style=for-the-badge)](https://footing.edycu.dev)
+  [![Demo Video](https://img.shields.io/badge/▶_Demo-Video_2:48-C4302B?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/1okeD78D7Nw)
   [![Measured results](https://img.shields.io/badge/📊_Measured-/eval-2F6B45?style=for-the-badge)](https://footing.edycu.dev/eval)
   [![Built for Firebase Hybrid AI Hackathon](https://img.shields.io/badge/Devpost-Firebase_Hybrid_AI-B7791F?style=for-the-badge)](https://firebasehybridaihackathon.devpost.com/)
 
@@ -193,7 +194,7 @@ a scratch harness before the repo existed; their outputs are committed under `ev
 
 ## 📽️ Demo Materials
 
-Live: https://footing.edycu.dev · Measured results: https://footing.edycu.dev/eval · Walkthrough with reproduce steps: [`DEMO.md`](DEMO.md) ·
+Demo video (2:48): https://youtu.be/1okeD78D7Nw · Live: https://footing.edycu.dev · Measured results: https://footing.edycu.dev/eval · Walkthrough with reproduce steps: [`DEMO.md`](DEMO.md) ·
 Build notes: [`docs/DX-REPORT.md`](docs/DX-REPORT.md)
 
 ## 📄 License
