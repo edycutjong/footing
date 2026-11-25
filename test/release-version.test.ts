@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
-import { fromGitHub, fromGit, fromPackage, resolveRelease, stamp, PAGES } from "../scripts/release-version.mjs";
+import { cleanTag, fromPinned, fromGitHub, fromGit, fromPackage, resolveRelease, stamp, PAGES } from "../scripts/release-version.mjs";
 
 const ok = (body: unknown) => async () => ({ ok: true, json: async () => body }) as Response;
 const api = { tag_name: "v1.1.0", html_url: "https://github.com/edycutjong/footing/releases/tag/v1.1.0" };
@@ -26,14 +26,29 @@ describe("release stamp: source of truth is the GitHub release", () => {
     const r = await fromGitHub({ fetchImpl: ok({ tag_name: "v2.0.0", html_url: "https://evil.example/x" }) });
     expect(r?.url).toBe("https://github.com/edycutjong/footing/releases/tag/v2.0.0");
   });
+  it("writes a tag rebuilt from its numbers, and refuses anything else", () => {
+    expect(cleanTag("v01.2.3\n")).toBe("v1.2.3");
+    expect(cleanTag("1.2.3")).toBe("1.2.3");
+    expect(cleanTag('v1.2.3"><script>')).toBeNull();
+    expect(cleanTag("v1.2.3-rc.1")).toBeNull();
+  });
   it("falls back to git describe, then package.json, so an offline build still stamps", async () => {
     const offline = async () => { throw new Error("offline"); };
-    expect(await resolveRelease({ fetchImpl: offline, run: () => "v1.0.0\n" })).toMatchObject({ tag: "v1.0.0", source: "git-describe" });
+    expect(await resolveRelease({ pinned: "", fetchImpl: offline, run: () => "v1.0.0\n" })).toMatchObject({ tag: "v1.0.0", source: "git-describe" });
     const noGit = () => { throw new Error("no tags"); };
-    expect(await resolveRelease({ fetchImpl: offline, run: noGit, pkgJson: '{"version":"1.1.0"}' }))
+    expect(await resolveRelease({ pinned: "", fetchImpl: offline, run: noGit, pkgJson: '{"version":"1.1.0"}' }))
       .toEqual({ tag: "v1.1.0", url: "https://github.com/edycutjong/footing/releases/latest", source: "package.json" });
     expect(fromGit(() => "not-a-tag")).toBeNull();
     expect(fromPackage('{"version":"oops"}').tag).toBe("v0.0.0");
+  });
+});
+
+describe("pinned tag (CI resolves, the Vercel build stamps)", () => {
+  it("uses FOOTING_RELEASE_TAG before any network call, and ignores a malformed one", async () => {
+    const never = async () => { throw new Error("must not fetch"); };
+    expect(await resolveRelease({ pinned: "v1.4.2", fetchImpl: never })).toEqual({ tag: "v1.4.2", url: "https://github.com/edycutjong/footing/releases/tag/v1.4.2", source: "FOOTING_RELEASE_TAG" });
+    expect(fromPinned("")).toBeNull();
+    expect(fromPinned("v1.2.3; rm -rf /")).toBeNull();
   });
 });
 

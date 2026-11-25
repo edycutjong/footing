@@ -2,7 +2,8 @@
 // Runs before `next build` (npm run build), so it runs in CI's `vercel build` too. The pages never call GitHub
 // themselves (CSP, privacy): the tag is resolved here, once, and written into the HTML as a plain link.
 // Source of truth: the GitHub Releases API (GITHUB_TOKEN / GH_TOKEN if set, unauthenticated otherwise).
-// Fallbacks, so an offline build never fails: `git describe --tags --abbrev=0`, then package.json's version.
+// A tag pinned by CI (FOOTING_RELEASE_TAG) wins. Fallbacks, so an offline build never fails: `git describe --tags
+// --abbrev=0`, then package.json's version.
 import { readFileSync, writeFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -10,7 +11,14 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 export const REPO = "edycutjong/footing";
 export const PAGES = ["public/landing/index.html", "public/pitch/index.html"];
 const RELEASES = `https://github.com/${REPO}/releases`;
-const TAG = /^v?\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/;
+// Plain release tags only (release.yml cuts vX.Y.Z; /releases/latest never returns a pre-release).
+const TAG = /^(v?)(\d{1,6})\.(\d{1,6})\.(\d{1,6})$/;
+
+/** Rebuilds a tag from its parsed numbers, so nothing read off the network is written into a page verbatim. */
+export function cleanTag(raw) {
+  const m = TAG.exec(String(raw).trim());
+  return m ? `${m[1] ? "v" : ""}${Number(m[2])}.${Number(m[3])}.${Number(m[4])}` : null;
+}
 // The one element the stamp rewrites. Anything else in the page is left byte-for-byte alone.
 const MARK = /<a data-release href="[^"]*">[^<]*<\/a>/g;
 
@@ -22,9 +30,9 @@ export async function fromGitHub({ fetchImpl = fetch, token = process.env.GITHUB
     const r = await fetchImpl(`https://api.github.com/repos/${REPO}/releases/latest`, { headers, signal: AbortSignal.timeout(timeoutMs) });
     if (!r.ok) return null;
     const j = await r.json();
-    if (typeof j?.tag_name !== "string" || !TAG.test(j.tag_name)) return null;
-    const url = typeof j.html_url === "string" && j.html_url.startsWith(`${RELEASES}/`) ? j.html_url : `${RELEASES}/tag/${j.tag_name}`;
-    return { tag: j.tag_name, url, source: "github-api" };
+    const tag = cleanTag(j?.tag_name ?? "");
+    // The link is built from the cleaned tag, never taken from the response body.
+    return tag ? { tag, url: `${RELEASES}/tag/${tag}`, source: "github-api" } : null;
   } catch {
     return null;
   }
@@ -32,21 +40,26 @@ export async function fromGitHub({ fetchImpl = fetch, token = process.env.GITHUB
 
 export function fromGit(run = (cmd, args) => execFileSync(cmd, args, { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] })) {
   try {
-    const tag = run("git", ["describe", "--tags", "--abbrev=0"]).trim();
-    return TAG.test(tag) ? { tag, url: `${RELEASES}/tag/${tag}`, source: "git-describe" } : null;
+    const tag = cleanTag(run("git", ["describe", "--tags", "--abbrev=0"]));
+    return tag ? { tag, url: `${RELEASES}/tag/${tag}`, source: "git-describe" } : null;
   } catch {
     return null;
   }
 }
 
 export function fromPackage(pkgJson = readFileSync(new URL("../package.json", import.meta.url), "utf8")) {
-  const v = JSON.parse(pkgJson).version;
-  const tag = `v${v}`;
-  return { tag: TAG.test(tag) ? tag : "v0.0.0", url: `${RELEASES}/latest`, source: "package.json" };
+  const tag = cleanTag(`v${JSON.parse(pkgJson).version}`) ?? "v0.0.0";
+  return { tag, url: `${RELEASES}/latest`, source: "package.json" };
+}
+
+/** A tag CI already resolved with its token and handed to a remote (Vercel) build, which has no token and no .git. */
+export function fromPinned(env = process.env.FOOTING_RELEASE_TAG) {
+  const tag = env ? cleanTag(env) : null;
+  return tag ? { tag, url: `${RELEASES}/tag/${tag}`, source: "FOOTING_RELEASE_TAG" } : null;
 }
 
 export async function resolveRelease(deps = {}) {
-  return (await fromGitHub(deps)) ?? fromGit(deps.run) ?? fromPackage(deps.pkgJson);
+  return fromPinned(deps.pinned) ?? (await fromGitHub(deps)) ?? fromGit(deps.run) ?? fromPackage(deps.pkgJson);
 }
 
 /** Rewrites every release link in a page. Returns the new HTML and how many links it stamped. */
@@ -58,6 +71,7 @@ export function stamp(html, { tag, url }) {
 
 async function main() {
   const rel = await resolveRelease();
+  if (process.argv.includes("--print")) return void console.log(rel.tag); // CI: resolve only, stamp nothing
   const root = fileURLToPath(new URL("..", import.meta.url));
   for (const page of PAGES) {
     const path = `${root}${page}`;
