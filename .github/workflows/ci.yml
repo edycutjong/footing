@@ -105,6 +105,8 @@ jobs:
           NEXT_PUBLIC_FIREBASE_PROJECT_ID: ci-placeholder
           NEXT_PUBLIC_FIREBASE_APP_ID: ci-placeholder
           NEXT_PUBLIC_RECAPTCHA_SITE_KEY: ci-placeholder
+          # Read-only token for the build step that stamps the latest GitHub release into /about and /pitch.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Bundle budget (client JS, gzip, all chunks)
         run: |
           set -euo pipefail
@@ -130,6 +132,9 @@ jobs:
           cache: npm
       - run: npm ci
       - name: Vercel pull / build / deploy
+        env:
+          # `vercel build` runs `npm run build`, whose first step stamps the latest GitHub release into /about and /pitch.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
           export BUILD_SHA="${GITHUB_SHA}"
