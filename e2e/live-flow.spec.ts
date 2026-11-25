@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { useDebugTokenIfSet } from "./appcheck";
 
 // The judged flow, unmocked: open the URL, the sample answer is pre-filled, press "Check sources", and every
 // citation is decided by a real Firebase AI Logic call behind the real App Check gate. CI's Chromium has no
@@ -6,7 +7,8 @@ import { test, expect } from "@playwright/test";
 type Run = { id: string; state: string; sources: string[]; quote?: string; reason?: string; note?: string; url: string };
 type Footing = { done: boolean; device: string; tally: { k: number; n: number; total: number; notChecked: number; unverified: number }; runs: Run[]; cloudUsed: number };
 
-test("check sources: chips land with a routing badge and every verdict carries a quote that passed the gate", async ({ page }) => {
+test("check sources: chips land with a routing badge and every verdict carries a quote that passed the gate @appcheck", async ({ page }) => {
+  await useDebugTokenIfSet(page);
   await page.goto("/");
   await page.waitForFunction(() => (window as unknown as { __footing?: Footing }).__footing?.device !== "checking", undefined, { timeout: 60_000 });
   await page.getByRole("button", { name: /Check sources/ }).click();

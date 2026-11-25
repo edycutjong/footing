@@ -1,4 +1,5 @@
 import { test, expect, type Page } from "@playwright/test";
+import { useDebugTokenIfSet } from "./appcheck";
 
 // "Unplug must fail": when a route is cut, the check must report failure and may never invent a verdict, so no chip
 // may read SUPPORTS / PARTIAL / NOT_SUPPORTED and nothing may be counted as decided or flagged.
@@ -43,7 +44,8 @@ test("whole network cut after load: the check reports failure and never produces
 // mentions one of these names in its path or query is never cut by mistake.
 const AI_HOST = /^(?:[a-z0-9-]+-)?(?:firebasevertexai|firebaseml|generativelanguage|aiplatform)\.googleapis\.com$/i;
 
-test("AI Logic / Gemini hosts blocked, sources still readable: the cloud route fails loudly, no verdict", async ({ page }) => {
+test("AI Logic / Gemini hosts blocked, sources still readable: the cloud route fails loudly, no verdict @appcheck", async ({ page }) => {
+  await useDebugTokenIfSet(page);
   const blocked: string[] = [];
   await page.route((url) => AI_HOST.test(url.hostname), (route) => { blocked.push(route.request().url()); return route.abort("internetdisconnected"); });
   await openAndWait(page);

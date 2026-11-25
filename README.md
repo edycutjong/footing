@@ -134,16 +134,18 @@ each, M1 Max, Chrome 157, source fetching excluded): on device (Nano binary tria
 judge reading a 24,000-character source window) **p50 4095 ms, p95 11476 ms**. All 80 calls returned the `inferenceSource` they were meant to. This is a separate run from the table above (a dev-server harness, so its numbers differ from the 1729 / 2284 ms in that table).
 
 ### 🧪 Testing & CI
-**Status, stated plainly:** the pipeline below is committed and configured, but **GitHub Actions has not run it** (the account's Actions billing blocked every job on
-2026-11-22, and the repo is private until submission), so there is no green CI badge here. Instead every stage was run on the maintainer's machine with
-[`scripts/ci-local.sh`](scripts/ci-local.sh) against the commit deployed at the time (2026-11-22), all passing; the receipt is [`evidence/ci-local-2026-11-22.txt`](evidence/ci-local-2026-11-22.txt) (191 unit tests then; the 227 on the current commit are in [`evidence/vitest-2026-11-26.txt`](evidence/vitest-2026-11-26.txt)).
-`v1.0.0` was tagged by hand for the same reason (`release.yml` has not executed yet).
+**Status, stated plainly:** GitHub Actions blocked every job while the repo was private (account billing), so the 2026-11-22 build was verified on the maintainer's
+machine with [`scripts/ci-local.sh`](scripts/ci-local.sh) (receipt: [`evidence/ci-local-2026-11-22.txt`](evidence/ci-local-2026-11-22.txt), 191 unit tests then). Since the repo
+went public on 2026-11-26 the pipeline runs on GitHub ([Actions](https://github.com/edycutjong/footing/actions)): quality, security, build, deploy, the live E2E gate and Lighthouse.
+One honest exception: the two E2E tests that run a real check (tagged `@appcheck`) need an App Check token, and reCAPTCHA Enterprise refuses automated Chromium on
+GitHub-hosted runners (403 on the token exchange). Production never honours a debug token (`src/lib/firebase.ts`), so they run in a separate, non-blocking job and
+are not part of the gate; locally they run against a development build with a registered debug token ([`e2e/appcheck.ts`](e2e/appcheck.ts)). The 227 unit tests on the
+current commit are in [`evidence/vitest-2026-11-26.txt`](evidence/vitest-2026-11-26.txt). `v1.0.0` was tagged by hand; `v1.1.0` was cut by `release.yml`.
 
 [`.github/workflows/ci.yml`](.github/workflows/ci.yml) is configured to run seven stages on every push to `main`: quality (lint, typecheck, unit tests with a coverage floor
-on Node 20 and 22) and security (gitleaks over the full history, `npm audit` failing on high or critical, registry signatures, licence check) in parallel; production build
-with a gzip bundle budget (716 KB measured, budget 900 KB); deploy to Vercel (built on Vercel, which alone can read the Sensitive Firebase config); **Playwright E2E against the live URL**; Lighthouse gates on the live URL; and a
-release gate. [`codeql.yml`](.github/workflows/codeql.yml) (security-extended queries) is set to run on push, PR and weekly once the repo is public (it needs GitHub Advanced
-Security while private), [`release.yml`](.github/workflows/release.yml) tags a version from conventional commit messages, and Dependabot is grouped and monthly with majors ignored.
+on Node 22 and 24) and security (gitleaks over the full history, `npm audit` failing on high or critical, registry signatures, licence check) in parallel; production build
+with a gzip bundle budget (716 KB measured, budget 900 KB); deploy to Vercel (built on Vercel, which alone can read the Sensitive Firebase config); **Playwright E2E against the live URL** (10 tests gate; the 2 `@appcheck` tests report without gating, see above); Lighthouse gates on the live URL; and a
+release gate. [`codeql.yml`](.github/workflows/codeql.yml) (security-extended queries) runs on push, PR and weekly, [`release.yml`](.github/workflows/release.yml) tags a version from conventional commit messages, and Dependabot is grouped and monthly with majors ignored.
 
 Measured on the deployed build (`evidence/lighthouse-live-2026-11-22.json`, desktop preset, 3 runs per page): performance 1.00, accessibility 1.00, SEO 1.00 and layout shift
 0.003 on `/`; best practices 0.77 on `/` because reCAPTCHA Enterprise, which App Check needs, sets a third-party cookie (the gate is 0.75, `lighthouserc.json`), and 1.00 on `/eval`.

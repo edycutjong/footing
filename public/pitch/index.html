@@ -528,7 +528,7 @@ body.debug-contrast .slide *{outline:1px dashed rgba(194,65,45,.35)}
     <div><b><a data-release href="https://github.com/edycutjong/footing/releases/tag/v1.1.0">v1.1.0</a></b><span>latest release · Apache-2.0</span></div>
   </div>
   <div class="foot"><span>Footing · <b><a data-release href="https://github.com/edycutjong/footing/releases/tag/v1.1.0">v1.1.0</a></b> · evidence/vitest-2026-11-26.txt (unit) · ci-local-2026-11-22.txt (E2E) · Lighthouse best practices 0.77 (the reCAPTCHA cookie App Check needs)</span><span>10 / 11</span></div>
-  <aside class="speaker-notes">Everything here can be checked from the repo. The CI pipeline is configured but GitHub Actions has not run it, because of an account billing block; every stage was run locally against the deployed build, and the receipt is committed.</aside>
+  <aside class="speaker-notes">Everything here can be checked from the repo. Since the repo went public, GitHub Actions runs the pipeline on every push: tests, security, build, deploy, the live E2E gate and Lighthouse. The two E2E tests that run a real check need App Check, which refuses automated browsers on GitHub runners, so they report without gating; they run locally with a debug token.</aside>
 </section>
 
 <section class="slide" id="s10" aria-label="Slide 11, try it">
