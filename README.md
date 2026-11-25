@@ -10,6 +10,9 @@
   [![Demo Video](https://img.shields.io/badge/▶_Demo-Video_2:48-C4302B?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/1okeD78D7Nw)
   [![Measured results](https://img.shields.io/badge/📊_Measured-/eval-2F6B45?style=for-the-badge)](https://footing.edycu.dev/eval)
   [![Built for Firebase Hybrid AI Hackathon](https://img.shields.io/badge/Devpost-Firebase_Hybrid_AI-B7791F?style=for-the-badge)](https://firebasehybridaihackathon.devpost.com/)
+  [![Devpost entry](https://img.shields.io/badge/Devpost-Project_page-003E54?style=for-the-badge&logo=devpost&logoColor=white)](https://devpost.com/software/footing)
+  [![dev.to write-up](https://img.shields.io/badge/dev.to-Write--up-0A0A0A?style=for-the-badge&logo=devdotto&logoColor=white)](https://dev.to/edycutjong/nano-couldnt-say-partly-supported-2130-so-i-changed-its-job-o8m)
+  [![X thread](https://img.shields.io/badge/X-Thread-000000?style=for-the-badge&logo=x&logoColor=white)](https://x.com/edycutjong/status/2125689453692002396)
 
   <br/>
 
