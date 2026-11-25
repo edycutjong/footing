@@ -1,11 +1,12 @@
 // Latency bench: per-claim p50/p95 on device (Gemini Nano, binary triage) and in the cloud (3-class judge),
 // through the same Firebase AI Logic calls the app makes. Writes evidence/bench.json with every raw row.
 // Usage: BENCH_SET=eval-fresh-20 BENCH_REPS=2 npm run bench -- <nanoUserDataDir> [judgeModel]
-// Needs: `npm run dev` (port 3101; /eval/run is dev-only), /tmp/footing-eval/<set>-windows.json (npm run eval:prepare),
+// Needs: `npm run dev` (port 3101; /eval/run is dev-only), .cache/footing-eval/<set>-windows.json (npm run eval:prepare),
 //        the Nano-enabled Chrome profile, FIREBASE_APPCHECK_DEBUG_TOKEN (local only, never written to disk).
 // Timings include the SDK call, the network (cloud) and the model; they exclude source fetching.
 import { readFileSync, writeFileSync } from "node:fs";
 import { openChrome } from "./chrome.mjs";
+import { windowsPath } from "./eval-windows.mjs";
 
 const [userDataDir, judgeModel = "gemini-3.5-flash-lite"] = process.argv.slice(2);
 if (!userDataDir) { console.error("usage: npm run bench -- <nanoUserDataDir> [judgeModel]"); process.exit(2); }
@@ -14,7 +15,7 @@ const reps = Number(process.env.BENCH_REPS ?? 2);
 const base = process.env.BASE_URL ?? "http://localhost:3101";
 const token = process.env.FIREBASE_APPCHECK_DEBUG_TOKEN;
 const pairs = JSON.parse(readFileSync(`evidence/${set}/passages.json`, "utf8"));
-const windows = JSON.parse(readFileSync(`/tmp/footing-eval/${set}-windows.json`, "utf8"));
+const windows = JSON.parse(readFileSync(windowsPath(set), "utf8"));
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const q = (xs, p) => { const s = [...xs].sort((a, b) => a - b); return s.length ? s[Math.min(s.length - 1, Math.ceil(p * s.length) - 1)] : null; };
 

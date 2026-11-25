@@ -1,14 +1,15 @@
 // Runs one eval set through the real Chrome profile and writes raw rows to evidence/<set>/<mode>-<date>.json.
 // Usage: npm run eval:live -- <set> <triage|judge> <userDataDir> [judgeModel]
-// Needs: npm run dev (port 3101), evidence/<set>/labels.json + passages.json, /tmp/footing-eval/<set>-windows.json (judge).
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
+// Needs: npm run dev (port 3101), evidence/<set>/labels.json + passages.json, .cache/footing-eval/<set>-windows.json (judge; written by eval:prepare).
+import { readFileSync, writeFileSync } from "node:fs";
 import { openChrome } from "./chrome.mjs";
+import { windowsPath } from "./eval-windows.mjs";
 
 const [set, mode, userDataDir, judgeModel = "gemini-3.5-flash-lite"] = process.argv.slice(2);
 const base = process.env.BASE_URL ?? "http://localhost:3101";
 const labels = Object.fromEntries(JSON.parse(readFileSync(`evidence/${set}/labels.json`, "utf8")).map((l) => [l.id, l]));
 const pairs = JSON.parse(readFileSync(`evidence/${set}/passages.json`, "utf8"));
-const wpath = `/tmp/footing-eval/${set}-windows.json`;
+const wpath = windowsPath(set);
 const windows = mode === "judge" ? JSON.parse(readFileSync(wpath, "utf8")) : {};
 const token = process.env.FIREBASE_APPCHECK_DEBUG_TOKEN;
 const date = new Date().toISOString().slice(0, 10);
@@ -43,8 +44,15 @@ try {
     if (mode === "judge") await sleep(Number(process.env.JUDGE_GAP_MS ?? 2000));
   }
   const rec = { set, mode, judgeModel: mode === "judge" ? judgeModel : null, recordedAt: new Date().toISOString(), gateRule: "segment", machine: "MacBook Pro M1 Max, 32 GB", userAgent: ua, rows };
-  if (existsSync(outPath)) console.log(`overwriting ${outPath}`);
-  writeFileSync(outPath, JSON.stringify(rec, null, 2) + "\n");
+  const out = JSON.stringify(rec, null, 2) + "\n";
+  // Create-exclusive first, then overwrite only on EEXIST: no check-then-write window on the path.
+  try {
+    writeFileSync(outPath, out, { flag: "wx" });
+  } catch (e) {
+    if (e.code !== "EEXIST") throw e;
+    console.log(`overwriting ${outPath}`);
+    writeFileSync(outPath, out);
+  }
   console.log(`wrote ${outPath}`);
 } finally {
   await close();

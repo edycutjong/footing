@@ -1,11 +1,12 @@
 // Builds the model inputs for an eval set from a labels file and a folder of extracted source texts.
 // Usage: npx tsx scripts/eval-prepare.mts <set> <labels.json> <sourcesDir>
 // Writes evidence/<set>/passages.json (committed: top-3 excerpts ≤ 700 chars + URL + content sha256)
-// and /tmp/footing-eval/<set>-windows.json (the judge's source-text window; third-party text, not committed).
+// and .cache/footing-eval/<set>-windows.json (the judge's source-text window; third-party text, gitignored, never committed).
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { normalize, toPassages } from "../src/lib/text.ts";
 import { bm25TopK } from "../src/lib/bm25.ts";
+import { ensureWindowsDir, windowsPath } from "./eval-windows.mjs";
 
 const [set, labelsPath, sourcesDir] = process.argv.slice(2);
 const JUDGE_MAX = 24000;
@@ -27,7 +28,7 @@ for (const l of labels) {
   windows[l.id] = { window: text.slice(0, JUDGE_MAX), truncated: text.length > JUDGE_MAX };
 }
 mkdirSync(`evidence/${set}`, { recursive: true });
-mkdirSync("/tmp/footing-eval", { recursive: true });
+ensureWindowsDir();
 writeFileSync(`evidence/${set}/passages.json`, JSON.stringify(rows, null, 2) + "\n");
-writeFileSync(`/tmp/footing-eval/${set}-windows.json`, JSON.stringify(windows));
+writeFileSync(windowsPath(set), JSON.stringify(windows), { mode: 0o600 });
 console.log(`${set}: ${rows.length} pairs prepared`);

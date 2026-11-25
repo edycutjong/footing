@@ -24,3 +24,4 @@ CLAUDE.md
 graphify-out/
 lhci-reports/
 .lighthouseci/
+.cache/
