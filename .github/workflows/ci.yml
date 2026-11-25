@@ -138,9 +138,9 @@ jobs:
         run: |
           set -euo pipefail
           export BUILD_SHA="${GITHUB_SHA}"
-          npx --yes vercel@53.2.0 pull --yes --environment=production --token "$VERCEL_TOKEN"
-          npx --yes vercel@53.2.0 build --prod --token "$VERCEL_TOKEN"
-          npx --yes vercel@53.2.0 deploy --prebuilt --prod --env BUILD_SHA="$BUILD_SHA" --build-env BUILD_SHA="$BUILD_SHA" --token "$VERCEL_TOKEN"
+          npx --yes vercel@66.6.0 pull --yes --environment=production --token "$VERCEL_TOKEN"
+          npx --yes vercel@66.6.0 build --prod --token "$VERCEL_TOKEN"
+          npx --yes vercel@66.6.0 deploy --prebuilt --prod --env BUILD_SHA="$BUILD_SHA" --build-env BUILD_SHA="$BUILD_SHA" --token "$VERCEL_TOKEN"
       - name: Wait for the live build to report this commit
         run: |
           set -euo pipefail
